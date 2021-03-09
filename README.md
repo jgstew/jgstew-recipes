@@ -1,2 +1,2 @@
 # jgstew-recipes
-For JGStew AutoPkg Recipes
+For JGStew's AutoPkg Recipes

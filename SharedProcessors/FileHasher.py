@@ -2,15 +2,16 @@
 #
 # James Stewart @JGStew - 2021
 #
+# pylint: disable=C0103
 """See docstring for FileHasher class"""
 
 import os
 from hashlib import sha1, sha256, md5
-from autopkglib import Processor, ProcessorError
+from autopkglib import Processor # pylint: disable=import-error
 
 __all__ = ["FileHasher"]
 
-class FileHasher(Processor):
+class FileHasher(Processor): # pylint: disable=invalid-name
     """Hashes file at pathname and returns hash metadata."""
 
     description = __doc__
@@ -50,10 +51,10 @@ class FileHasher(Processor):
         chunksize = max(409600, max(a_hash.block_size for a_hash in hashes))
         size = 0
 
-        f = open(file_path, "rb")
+        file_stream = open(file_path, "rb")
 
         while True:
-            chunk = f.read(chunksize)
+            chunk = file_stream.read(chunksize)
             if not chunk:
                 break
             # get size of chunk and add to existing size
@@ -62,15 +63,25 @@ class FileHasher(Processor):
             for a_hash in hashes:
                 a_hash.update(chunk)
 
-        self.output("File MD5    = {filehasher_md5}".format(filehasher_md5=hashes[2].hexdigest()), 1)
-        self.output("File SHA1   = {filehasher_sha1}".format(filehasher_sha1=hashes[0].hexdigest()), 1)
-        self.output("File SHA256 = {filehasher_sha256}".format(filehasher_sha256=hashes[1].hexdigest()), 1)
-        self.output("File Size   = {filehasher_size}".format(filehasher_size=size), 1)
+        self.output("File MD5    = {filehasher_md5}".format(
+            filehasher_md5=hashes[2].hexdigest()), 1)
+        self.output("File SHA1   = {filehasher_sha1}".format(
+            filehasher_sha1=hashes[0].hexdigest()), 1)
+        self.output("File SHA256 = {filehasher_sha256}".format(
+            filehasher_sha256=hashes[1].hexdigest()), 1)
+        self.output("File Size   = {filehasher_size}".format(
+            filehasher_size=size), 1)
         if self.env.get('verbose') == 1:
             try:
-                self.output("prefetch %s sha1:%s size:%d %s sha256:%s" % ( os.path.basename(file_path), hashes[0].hexdigest(), size, self.env.get('url'), hashes[1].hexdigest()) )
+                self.output("prefetch %s sha1:%s size:%d %s sha256:%s" % (
+                    os.path.basename(file_path),
+                    hashes[0].hexdigest(),
+                    size,
+                    self.env.get('url'),
+                    hashes[1].hexdigest()
+                    ))
                 #print(self.env)
-            except:
+            except: # pylint: disable=bare-except
                 pass
         self.env['filehasher_sha1'] = hashes[0].hexdigest()
         self.env['filehasher_sha256'] = hashes[1].hexdigest()
@@ -78,15 +89,10 @@ class FileHasher(Processor):
         self.env['filehasher_size'] = size
 
     def main(self):
-        file_path = self.env.get("file_path", self.env.get("pathname"))
+        """Execution starts here"""
 
-        # clear any pre-exising results
-        if 'filehasher_sha1' in self.env:
-            del self.env['filehasher_sha1']
-        if 'filehasher_sha256' in self.env:
-            del self.env['filehasher_sha256']
-        if 'filehasher_size' in self.env:
-            del self.env['filehasher_size']
+        # I think this gets the pathname value if `file_path` is not specified?
+        file_path = self.env.get("file_path", self.env.get("pathname"))
 
         self.hash(file_path)
 

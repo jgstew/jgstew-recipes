@@ -1,0 +1,21 @@
+name: YAML Lint
+
+on:
+  push:
+    paths: 
+    - "**.yaml"
+    - "**.yml"
+  pull_request:
+    paths:
+    - "**.yaml"
+    - "**.yml"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: GitHub YAMLlint
+      uses: ibiqlik/action-yamllint@v3

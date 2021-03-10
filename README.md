@@ -18,6 +18,7 @@ Where possible recipes will be in YAML format for better cross platform support 
 ```
 
 References:
+- https://github.com/homebysix/recipe-robot/issues/74
 - https://github.com/autopkg/autopkg/pull/698#issuecomment-783522503
 - https://github.com/autopkg/n8felton-recipes/tree/master/SharedProcessors 
 - https://github.com/autopkg/autopkg/wiki/Processor-Locations

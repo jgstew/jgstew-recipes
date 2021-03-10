@@ -1,12 +1,13 @@
+---
 name: pylint
 
 on:
   push:
-    paths: 
-    - "**.py"
+    paths:
+      - "**.py"
   pull_request:
     paths:
-    - "**.py"
+      - "**.py"
 
 jobs:
   build:

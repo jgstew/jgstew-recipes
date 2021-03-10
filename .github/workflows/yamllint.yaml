@@ -3,13 +3,13 @@ name: YAML Lint
 
 on:
   push:
-    paths: 
-    - "**.yaml"
-    - "**.yml"
+    paths:
+      - "**.yaml"
+      - "**.yml"
   pull_request:
     paths:
-    - "**.yaml"
-    - "**.yml"
+      - "**.yaml"
+      - "**.yml"
 
 jobs:
   test:

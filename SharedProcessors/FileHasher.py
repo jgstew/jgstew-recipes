@@ -69,18 +69,18 @@ class FileHasher(Processor):  # pylint: disable=invalid-name
             filehasher_sha256=hashes[1].hexdigest()), 1)
         self.output("File Size   = {filehasher_size}".format(
             filehasher_size=size), 1)
-        if self.env.get('verbose') == 1:
-            try:
-                self.output("prefetch %s sha1:%s size:%d %s sha256:%s" % (
-                    os.path.basename(file_path),
-                    hashes[0].hexdigest(),
-                    size,
-                    self.env.get('url'),
-                    hashes[1].hexdigest()
-                    ))
-                #print(self.env)
-            except: # pylint: disable=bare-except
-                pass
+        #if self.env.get('verbose') == 1:
+        try:
+            self.output("prefetch %s sha1:%s size:%d %s sha256:%s" % (
+                os.path.basename(file_path),
+                hashes[0].hexdigest(),
+                size,
+                self.env.get('url'),
+                hashes[1].hexdigest()
+                ))
+            #print(self.env)
+        except: # pylint: disable=bare-except
+            pass
         self.env['filehasher_sha1'] = hashes[0].hexdigest()
         self.env['filehasher_sha256'] = hashes[1].hexdigest()
         self.env['filehasher_md5'] = hashes[2].hexdigest()

@@ -80,7 +80,7 @@ class FileHasher(Processor):  # pylint: disable=invalid-name
                 hashes[1].hexdigest()
                 ))
             # print(self.env)
-        except:  # pylint: disable=bare-except
+        except:  # pylint: disable=bare-except  # noqa: E722
             pass
         self.env['filehasher_sha1'] = hashes[0].hexdigest()
         self.env['filehasher_sha256'] = hashes[1].hexdigest()

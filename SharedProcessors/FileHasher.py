@@ -20,8 +20,6 @@ class FileHasher(Processor): # pylint: disable=invalid-name
             "required": False,
             "description": (
                 "Path to hash. Defaults to %pathname%."
-                "This path may also contain basic globbing characters such as "
-                "the wildcard '*', but only the first result will be returned."
             ),
         }
     }

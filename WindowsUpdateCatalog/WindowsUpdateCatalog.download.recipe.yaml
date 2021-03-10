@@ -9,9 +9,3 @@ Process:
     url: http://download.windowsupdate.com/microsoftupdate/v6/wsusscan/wsusscn2.cab
 - Processor: EndOfCheckPhase
 - Processor: FileHasher
-- Processor: com.github.n8felton.shared/SHA256Checksum
-  Arguments:
-    pathname: '%pathname%'
-- Processor: com.github.n8felton.shared/SHA1Checksum
-  Arguments:
-    pathname: '%pathname%'

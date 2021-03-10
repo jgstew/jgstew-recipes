@@ -7,11 +7,11 @@
 
 import os
 from hashlib import sha1, sha256, md5
-from autopkglib import Processor # pylint: disable=import-error
+from autopkglib import Processor  # pylint: disable=import-error
 
 __all__ = ["FileHasher"]
 
-class FileHasher(Processor): # pylint: disable=invalid-name
+class FileHasher(Processor):  # pylint: disable=invalid-name
     """Hashes file at pathname and returns hash metadata."""
 
     description = __doc__

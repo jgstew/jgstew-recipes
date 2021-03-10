@@ -11,6 +11,7 @@ from autopkglib import Processor  # pylint: disable=import-error
 
 __all__ = ["FileHasher"]
 
+
 class FileHasher(Processor):  # pylint: disable=invalid-name
     """Hashes file at pathname and returns hash metadata."""
 
@@ -27,13 +28,13 @@ class FileHasher(Processor):  # pylint: disable=invalid-name
         "filehasher_sha1": {
             "description": "The input file SHA1"
         },
-        "filehasher_sha256":{
+        "filehasher_sha256": {
             "description": "The input file SHA256"
         },
-        "filehasher_md5":{
+        "filehasher_md5": {
             "description": "The input file MD5"
         },
-        "filehasher_size":{
+        "filehasher_size": {
             "description": "The input file size"
         }
     }
@@ -69,7 +70,7 @@ class FileHasher(Processor):  # pylint: disable=invalid-name
             filehasher_sha256=hashes[1].hexdigest()), 1)
         self.output("File Size   = {filehasher_size}".format(
             filehasher_size=size), 1)
-        #if self.env.get('verbose') == 1:
+        # if self.env.get('verbose') == 1:
         try:
             self.output("prefetch %s sha1:%s size:%d %s sha256:%s" % (
                 os.path.basename(file_path),
@@ -78,8 +79,8 @@ class FileHasher(Processor):  # pylint: disable=invalid-name
                 self.env.get('url'),
                 hashes[1].hexdigest()
                 ))
-            #print(self.env)
-        except: # pylint: disable=bare-except
+            # print(self.env)
+        except:  # pylint: disable=bare-except
             pass
         self.env['filehasher_sha1'] = hashes[0].hexdigest()
         self.env['filehasher_sha256'] = hashes[1].hexdigest()
@@ -93,6 +94,7 @@ class FileHasher(Processor):  # pylint: disable=invalid-name
         file_path = self.env.get("file_path", self.env.get("pathname"))
 
         self.hash(file_path)
+
 
 if __name__ == "__main__":
     PROCESSOR = FileHasher()

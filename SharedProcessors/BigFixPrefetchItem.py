@@ -11,11 +11,11 @@ import site
 
 # add path this script is in
 site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
-import prefetch_from_dictionary
+import prefetch_from_dictionary  # pylint: disable=wrong-import-position
 
 # add "/Library/AutoPkg"
 site.addsitedir("/Library/AutoPkg")
-from autopkglib import Processor, ProcessorError  # pylint: disable=import-error
+from autopkglib import Processor, ProcessorError  # pylint: disable=import-error,wrong-import-position,unused-import
 
 __all__ = ["BigFixPrefetchItem"]
 
@@ -61,6 +61,7 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
             'download_url': self.env.get("download_url", self.env.get("url"))
             }
         print(prefetch_from_dictionary.prefetch_from_dictionary(prefetch_dictionary))
+
 
 if __name__ == "__main__":
     PROCESSOR = BigFixPrefetchItem()

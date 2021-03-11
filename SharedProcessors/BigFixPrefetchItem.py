@@ -51,7 +51,7 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
     }
     output_variables = {
         "bigfix_prefetch_item": {
-            "description": "The bigfix prefetch statement"
+            "description": "The rendered bigfix prefetch string"
         }
     }
     __doc__ = description

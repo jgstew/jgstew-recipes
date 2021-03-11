@@ -41,7 +41,7 @@ def prefetch_from_dictionary(prefetch_dictionary, prefetch_type=None):
             file_sha1=prefetch_dictionary['file_sha1'],
             file_size=prefetch_dictionary['file_size'],
             download_url=prefetch_dictionary['download_url']
-            )
+        )
         if 'file_sha256' in prefetch_dictionary:
             prefetch_output += " sha256=" + prefetch_dictionary['file_sha256']
     else:
@@ -51,25 +51,27 @@ def prefetch_from_dictionary(prefetch_dictionary, prefetch_type=None):
             file_sha1=prefetch_dictionary['file_sha1'],
             file_size=prefetch_dictionary['file_size'],
             download_url=prefetch_dictionary['download_url']
-            )
+        )
         if 'file_sha256' in prefetch_dictionary:
             prefetch_output += " sha256:" + prefetch_dictionary['file_sha256']
 
     # if sha256, then append it to string
     return prefetch_output
 
+
 def main():
     """Only called if this script is run directly"""
     prefetch_dictionary = {
-                'file_name': 'unzip.exe',
-                'file_size': '167936',
-                'file_sha1': 'e1652b058195db3f5f754b7ab430652ae04a50b8',
-                'download_url':
-                    'http://software.bigfix.com/download/redist/unzip-5.52.exe'
-                }
+        'file_name': 'unzip.exe',
+        'file_size': '167936',
+        'file_sha1': 'e1652b058195db3f5f754b7ab430652ae04a50b8',
+        'download_url':
+            'http://software.bigfix.com/download/redist/unzip-5.52.exe'
+    }
     print(prefetch_from_dictionary(prefetch_dictionary))
     prefetch_dictionary['prefetch_type'] = "block"
     print(prefetch_from_dictionary(prefetch_dictionary))
+
 
 # if called directly, then run this example:
 if __name__ == '__main__':

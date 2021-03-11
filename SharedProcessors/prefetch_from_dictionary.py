@@ -6,7 +6,7 @@ From: https://github.com/jgstew/bigfix_prefetch/blob/master/prefetch_from_dictio
 This is the opposite of parse_prefech.py
 
 Related:
-- https://github.com/jgstew/generate_bes_from_template/blob/master/action_prefetch_from_template.py
+- https://github.com/jgstew/generate_bes_from_template/blob/master/action_prefetch_from_template.py # pylint: disable=line-too-long
 """
 
 # from __future__ import absolute_import

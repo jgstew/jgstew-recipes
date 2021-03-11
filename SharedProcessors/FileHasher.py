@@ -7,7 +7,7 @@
 
 import os
 from hashlib import sha1, sha256, md5
-from autopkglib import Processor  # pylint: disable=import-error
+from autopkglib import Processor, ProcessorError  # pylint: disable=import-error
 
 __all__ = ["FileHasher"]
 

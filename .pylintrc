@@ -1,5 +1,5 @@
 [MESSAGES CONTROL]
-disable = C0330, C0326
+disable = C0330, C0326, C0103
 
 [format]
 max-line-length = 88

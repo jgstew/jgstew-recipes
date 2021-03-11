@@ -60,7 +60,7 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
         """format prefetch from data"""
         bigfix_prefetch_item = prefetch_from_dictionary.prefetch_from_dictionary(
             prefetch_dictionary
-            )
+        )
         self.env['bigfix_prefetch_item'] = bigfix_prefetch_item
         self.output("Prefetch = {bigfix_prefetch_item}".format(
             bigfix_prefetch_item=bigfix_prefetch_item), 1)

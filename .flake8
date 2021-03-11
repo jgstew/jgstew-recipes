@@ -1,6 +1,6 @@
 [flake8]
 max-line-length = 88
-extend-ignore = E203, W503
+extend-ignore = E203, W503, F401
 
 ### DEFAULT IGNORES FOR 4-space INDENTED PROJECTS ###
 # E127, E128 are hard to silence in certain nested formatting situations.

@@ -14,7 +14,7 @@ site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
 import prefetch_from_dictionary  # pylint: disable=wrong-import-position
 
 # add "/Library/AutoPkg"
-site.addsitedir("/Library/AutoPkg")
+#site.addsitedir("/Library/AutoPkg")
 from autopkglib import Processor, ProcessorError  # pylint: disable=import-error,wrong-import-position,unused-import
 
 __all__ = ["BigFixPrefetchItem"]
@@ -28,7 +28,8 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
         "file_name": {
             "required": False,
             "description": (
-                "File name the file should be saved as. Defaults to parsed tail of %pathname%."
+                "File name the file should be saved as in the BigFix action. "
+                "Defaults to parsed tail of %pathname%."
             ),
         },
         "file_sha1": {
@@ -42,6 +43,10 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
         "file_size": {
             "required": False,
             "description": "The input file size. Defaults to %filehasher_size%"
+        },
+        "prefetch_type": {
+            "required": False,
+            "description": "Either 'block' or 'statement'. Defaults to 'statement'"
         }
     }
     output_variables = {
@@ -51,6 +56,15 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
     }
     __doc__ = description
 
+    def get_prefetch(self, prefetch_dictionary):
+        """format prefetch from data"""
+        bigfix_prefetch_item = prefetch_from_dictionary.prefetch_from_dictionary(
+                prefetch_dictionary
+            )
+        self.env['bigfix_prefetch_item'] = bigfix_prefetch_item
+        self.output("Prefetch = {bigfix_prefetch_item}".format(
+            bigfix_prefetch_item=bigfix_prefetch_item), 1)
+
     def main(self):
         """Execution starts here"""
         prefetch_dictionary = {
@@ -58,9 +72,10 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
             'file_size': self.env.get("file_size", self.env.get("filehasher_size")),
             'file_sha1': self.env.get("file_sha1", self.env.get("filehasher_sha1")),
             'file_sha256': self.env.get("file_sha256", self.env.get("filehasher_sha256")),
-            'download_url': self.env.get("download_url", self.env.get("url"))
+            'download_url': self.env.get("download_url", self.env.get("url")),
+            'prefetch_type': self.env.get("prefetch_type", "statement")
             }
-        print(prefetch_from_dictionary.prefetch_from_dictionary(prefetch_dictionary))
+        self.get_prefetch(prefetch_dictionary)
 
 
 if __name__ == "__main__":

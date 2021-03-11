@@ -4,18 +4,9 @@ AutoPkg recipes which anyone can use from [JGStew](https://github.com/jgstew).
 
 Where possible recipes will be in YAML format for better cross platform support at the expense of requiring AutoPkg 2.3+
 
-## Setup:
-
-- Requires "com.github.n8felton.shared" processors
-  - `autopkg repo-add n8felton-recipes`
+Currently has a copy of `prefetch_from_dictionary.py` from https://github.com/jgstew/bigfix_prefetch/blob/master/prefetch_from_dictionary.py until it is turned into a proper published module. 
 
 
-## Example YAML for VirusTotal:
-```
-- Processor: io.github.hjuutilainen.VirusTotalAnalyzer/VirusTotalAnalyzer
-  Arguments:
-    pathname: '%pathname%'
-```
 
 References:
 - https://github.com/homebysix/recipe-robot/issues/74

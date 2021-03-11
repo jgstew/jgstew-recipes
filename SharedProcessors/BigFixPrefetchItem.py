@@ -2,20 +2,20 @@
 #
 # James Stewart @JGStew - 2021
 #
-# Related: https://github.com/jgstew/bigfix_prefetch/blob/master/prefetch_from_dictionary.py
+# Related:
+# - https://github.com/jgstew/bigfix_prefetch/blob/master/prefetch_from_dictionary.py
 #
 """See docstring for BigFixPrefetchItem class"""
 
 import os.path
 import site
 
+from autopkglib import Processor, ProcessorError  # pylint: disable=import-error,wrong-import-position,unused-import
+
 # add path this script is in
 site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
 import prefetch_from_dictionary  # pylint: disable=wrong-import-position
 
-# add "/Library/AutoPkg"
-#site.addsitedir("/Library/AutoPkg")
-from autopkglib import Processor, ProcessorError  # pylint: disable=import-error,wrong-import-position,unused-import
 
 __all__ = ["BigFixPrefetchItem"]
 
@@ -68,12 +68,36 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
     def main(self):
         """Execution starts here"""
         prefetch_dictionary = {
-            'file_name': self.env.get("file_name", os.path.basename(self.env.get("pathname"))),
-            'file_size': self.env.get("file_size", self.env.get("filehasher_size")),
-            'file_sha1': self.env.get("file_sha1", self.env.get("filehasher_sha1")),
-            'file_sha256': self.env.get("file_sha256", self.env.get("filehasher_sha256")),
-            'download_url': self.env.get("download_url", self.env.get("url")),
-            'prefetch_type': self.env.get("prefetch_type", "statement")
+            'file_name':
+                self.env.get(
+                    "file_name",
+                    os.path.basename(self.env.get("pathname"))
+                ),
+            'file_size':
+                self.env.get(
+                    "file_size",
+                    self.env.get("filehasher_size")
+                ),
+            'file_sha1':
+                self.env.get(
+                    "file_sha1",
+                    self.env.get("filehasher_sha1")
+                ),
+            'file_sha256':
+                self.env.get(
+                    "file_sha256",
+                    self.env.get("filehasher_sha256")
+                ),
+            'download_url':
+                self.env.get(
+                    "download_url",
+                    self.env.get("url")
+                ),
+            'prefetch_type':
+                self.env.get(
+                    "prefetch_type",
+                    "statement"
+                )
             }
         self.get_prefetch(prefetch_dictionary)
 

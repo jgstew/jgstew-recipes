@@ -7,3 +7,4 @@ MinimumVersion: '2.3'
 ParentRecipe: com.github.jgstew.download.WindowsUpdateCatalog
 Process:
   - Processor: com.github.jgstew.SharedProcessors/FileHasher
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem

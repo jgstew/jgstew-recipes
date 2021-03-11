@@ -6,7 +6,7 @@ rules:
   # for some reason my github actions YAML trip this one but I don't understand why
   truthy:
     level: warning
-  # 80 chars should be enough, but don't fail if a line is longer
+  # 88 chars should be enough, but don't fail if a line is longer
   line-length:
-    max: 80
+    max: 88
     level: warning

@@ -60,7 +60,7 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
             'file_sha256': self.env.get("file_sha256", self.env.get("filehasher_sha256")),
             'download_url': self.env.get("download_url", self.env.get("url"))
             }
-        #print(prefetch_from_dictionary.prefetch_from_dictionary(prefetch_dictionary) )
+        print(prefetch_from_dictionary.prefetch_from_dictionary(prefetch_dictionary))
 
 if __name__ == "__main__":
     PROCESSOR = BigFixPrefetchItem()

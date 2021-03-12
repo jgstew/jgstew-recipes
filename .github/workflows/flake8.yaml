@@ -5,9 +5,13 @@ on:
   push:
     paths:
       - "**.py"
+      - ".flake8"
+      - ".github/workflows/flake8.yaml"
   pull_request:
     paths:
       - "**.py"
+      - ".flake8"
+      - ".github/workflows/flake8.yaml"
 
 jobs:
   flake8:

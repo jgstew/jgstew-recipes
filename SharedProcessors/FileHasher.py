@@ -41,7 +41,12 @@ class FileHasher(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def hash(self, file_path):
-        """run hashes"""
+        """
+        run hashes on file
+
+        Keyword arguments:
+        file_path -- the file to hash
+        """
 
         # https://github.com/jgstew/bigfix_prefetch/blob/master/url_to_prefetch.py
         hashes = sha1(), sha256(), md5()

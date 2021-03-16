@@ -60,7 +60,12 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def get_prefetch(self, prefetch_dictionary):
-        """format prefetch from data"""
+        """
+        formats prefetch from data in dictionary
+
+        Keyword arguments:
+        prefetch_dictionary -- dictionary with required keys
+        """
         bigfix_prefetch_item = prefetch_from_dictionary.prefetch_from_dictionary(
             prefetch_dictionary
         )

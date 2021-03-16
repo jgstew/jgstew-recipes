@@ -9,3 +9,6 @@ Process:
     Arguments:
       url: http://download.windowsupdate.com/microsoftupdate/v6/wsusscan/wsusscn2.cab
   - Processor: EndOfCheckPhase
+# Related:
+# - https://docs.microsoft.com/en-us/windows/win32/wua_sdk/searching--downloading--and-installing-updates
+# - https://docs.microsoft.com/en-us/windows/win32/wua_sdk/using-wua-to-scan-for-updates-offline

@@ -5,13 +5,13 @@ See docstring for VersionMaximumArray class
 
 import distutils.version
 
-from autopkglib import Processor, ProcessorError
+from autopkglib import Processor, ProcessorError  # pylint: disable=import-error,unused-import
 
 
 __all__ = ["VersionMaximumArray"]
 
 
-class VersionMaximumArray(Processor):
+class VersionMaximumArray(Processor):  # pylint: disable=too-few-public-methods
     """Gets the maximum version string from an array."""
 
     description = __doc__
@@ -39,7 +39,7 @@ class VersionMaximumArray(Processor):
 
         #print(version_maximum)
 
-        self.env["version_maximum"] = version_array
+        self.env["version_maximum"] = version_maximum
 
 
 if __name__ == "__main__":

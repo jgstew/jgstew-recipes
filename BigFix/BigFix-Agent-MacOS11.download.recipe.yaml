@@ -1,0 +1,19 @@
+---
+Description: Downloads the latest BigFix Agent for MacOS 11+
+Identifier: com.github.jgstew.download.BigFix-Agent-MacOS11
+Input:
+  NAME: BigFix-Agent-MacOS11
+MinimumVersion: '2.3'
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLTextSearcherArray
+    Arguments:
+      url: https://support.bigfix.com/bes/release/index.html
+      re_pattern: '>(?P<version>\d+\.\d+\.\d+\.\d+)<'
+  - Processor: com.github.jgstew.SharedProcessors/VersionMaximumArray
+  - Processor: com.github.jgstew.SharedProcessors/VersionGetMajorMinor
+    Arguments:
+      separator_string: ""
+  - Processor: URLDownloader
+    Arguments:
+      url: https://software.bigfix.com/download/bes/%version_major_minor%/BESAgent-%version_maximum%-BigFix_MacOS11.0.pkg
+  - Processor: EndOfCheckPhase

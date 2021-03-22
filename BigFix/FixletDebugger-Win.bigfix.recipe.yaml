@@ -1,0 +1,15 @@
+---
+Description: Generates a BigFix Task for the latest Fixlet Debugger
+Identifier: com.github.jgstew.bigfix.FixletDebugger-Win
+Input:
+  NAME: FixletDebugger
+MinimumVersion: '2.3'
+ParentRecipe: com.github.jgstew.download.FixletDebugger
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/FileHasher
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: ./BigFix/FixletDebugger-Win.bes.mustache
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%_%version_maximum%.bes"

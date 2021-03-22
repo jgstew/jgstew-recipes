@@ -1,0 +1,19 @@
+---
+Description: Downloads the latest BigFix Relay for Windows
+Identifier: com.github.jgstew.download.BigFix-Relay-Win
+Input:
+  NAME: BigFix-Relay-Win
+MinimumVersion: '2.3'
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLTextSearcherArray
+    Arguments:
+      url: https://support.bigfix.com/bes/release/index.html
+      re_pattern: '>(?P<version>\d+\.\d+\.\d+\.\d+)<'
+  - Processor: com.github.jgstew.SharedProcessors/VersionMaximumArray
+  - Processor: com.github.jgstew.SharedProcessors/VersionGetMajorMinor
+    Arguments:
+      separator_string: ""
+  - Processor: URLDownloader
+    Arguments:
+      url: https://software.bigfix.com/download/bes/%version_major_minor%/BigFix-BES-Relay-%version_maximum%.exe
+  - Processor: EndOfCheckPhase

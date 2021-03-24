@@ -14,5 +14,4 @@ Process:
       url: "https://bbuilds2.getgocdn.com/builds/g2m/%build%/G2MCoreInstExtractor.exe"
       # NOTE: `getgocdn.com` does not support `If-Modified-Since` headers properly
       CHECK_FILESIZE_ONLY: True
-      # prefetch_filename: True
   - Processor: EndOfCheckPhase

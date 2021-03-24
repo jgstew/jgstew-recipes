@@ -11,7 +11,7 @@ import os
 import datetime
 import re
 
-#import pystache
+# pylint: disable=line-too-long
 import chevron  # pylint: disable=import-error
 
 

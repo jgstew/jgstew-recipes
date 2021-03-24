@@ -29,9 +29,7 @@ class ClearFileXattr(Processor):  # pylint: disable=invalid-name
         }
     }
     output_variables = {
-        "None": {
-            
-        }
+        "None": {}
     }
 
     __doc__ = description

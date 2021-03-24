@@ -84,7 +84,9 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
                 ),
             #'template_file_path': "./BigFix/FixletDebugger-Win.bes.mustache"
         }
-        self.env['template_dictionary'] = generate_bes_from_template.get_missing_bes_values(
+        self.env[
+            'template_dictionary'
+        ] = generate_bes_from_template.get_missing_bes_values(
             template_dict
         )
 

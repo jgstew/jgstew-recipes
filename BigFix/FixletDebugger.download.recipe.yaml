@@ -16,4 +16,5 @@ Process:
   - Processor: URLDownloader
     Arguments:
       url: https://software.bigfix.com/download/bes/%version_major_minor%/util/QNA%version_maximum%.zip
+  - Processor: com.github.jgstew.SharedProcessors/ClearFileXattr
   - Processor: EndOfCheckPhase

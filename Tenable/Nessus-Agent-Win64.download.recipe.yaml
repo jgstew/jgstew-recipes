@@ -1,0 +1,20 @@
+---
+Description: Downloads the latest Nessus Windows 64bit agent
+# based upon https://github.com/autopkg/neilmartin83-recipes/blob/master/Tenable/Nessus%20Agent.download.recipe
+Identifier: com.github.jgstew.download.Nessus-Agent-Win64
+Input:
+  NAME: Nessus-Agent-Win64
+MinimumVersion: '2.3'
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLTextSearcher
+    Arguments:
+      url: https://www.tenable.com/downloads/nessus-agents?loginAttempted=true
+      re_pattern: '"id":(?P<id>\d+),"file":"NessusAgent-(?P<version>\d+\.\d+\.\d+)\-x64.msi"'
+  - Processor: URLDownloader
+    Arguments:
+      url: https://www.tenable.com/downloads/api/v1/public/pages/nessus-agents/downloads/%id%/download?i_agree_to_tenable_license_agreement=true
+      # NOTE: the filename isn't in the url tail
+      prefetch_filename: True
+      # NOTE: `www.tenable.com/downloads` doesn't seem to provide etag or last modified header info so we can't be smart about this
+      CHECK_FILESIZE_ONLY: True
+  - Processor: EndOfCheckPhase

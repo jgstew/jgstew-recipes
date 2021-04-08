@@ -1,0 +1,31 @@
+---
+Description: Downloads the latest SQL Server Management Studio
+Identifier: com.github.jgstew.download.SQLServerManagementStudio-Win
+Input:
+  NAME: SQLServerManagementStudio
+MinimumVersion: '2.3'
+Process:
+  - Processor: URLDownloader
+    Arguments:
+      url: https://aka.ms/ssmsfullsetup
+      prefetch_filename: True
+  - Processor: EndOfCheckPhase  # how do I stop here if nothing changed?
+  # Probably only need to do this if new download:
+  # Probably better to get this info from the EXE itself, but this should work in most cases:
+  - Processor: com.github.jgstew.SharedProcessors/URLTextSearcher
+    Arguments:
+      url: https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms
+      # example match `Build number: 15.0.18369.0`
+      re_pattern: 'Build number: (?P<version>\d+\.\d+\.\d+\.\d+)'
+  - Processor: com.github.jgstew.SharedProcessors/URLTextSearcher
+    Arguments:
+      url: https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms
+      # example match `Release number: 18.8` or `Release number: 18.8.1`
+      re_pattern: 'Release number: (?P<release_version>\d+(\.\d+){1,2})'
+  - Processor: com.github.jgstew.SharedProcessors/URLTextSearcher
+    Arguments:
+      url: https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms
+      # example match `Release date: December 17, 2020`
+      re_pattern: 'Release date: (?P<release_date>\w+ \d{1,2}, \d{4})'
+# Install if not installed: not exists keys whose(value "DisplayName" of it as string starts with "SQL Server " AND value "DisplayName" of it as string contains " Management Studio") of keys "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" of (x64 registries; x32 registries)
+# Install/Update: not exists maxima whose(it >= "13.0.16100.1") of (it as string as version) of values "DisplayVersion" of keys whose(value "DisplayName" of it as string starts with "SQL Server " AND value "DisplayName" of it as string contains " Management Studio") of keys "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" of (x64 registries; x32 registries)

@@ -10,7 +10,7 @@ Process:
       url: https://aka.ms/ssmsfullsetup
       prefetch_filename: True
   - Processor: EndOfCheckPhase  # how do I stop here if nothing changed?
-  - Processor: com.github.jgstew.SharedProcessors/StopProcessingIfDownloadUnchanged
+  #- Processor: com.github.jgstew.SharedProcessors/StopProcessingIfDownloadUnchanged
   # Probably only need to do this if new download:
   # Probably better to get this info from the EXE itself, but this should work in most cases:
   - Processor: com.github.jgstew.SharedProcessors/URLTextSearcher

@@ -58,6 +58,8 @@ class StopProcessingIfDownloadUnchanged(Processor):  # pylint: disable=invalid-n
 
         if str(env_var_value_test) in str(env_var_value_real):
             self.env["stop_processing_recipe"] = True
+        else:
+            self.env["stop_processing_recipe"] = False
 
 
 if __name__ == "__main__":

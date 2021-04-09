@@ -46,6 +46,10 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
             "required": False,
             "description": "Either 'block' or 'statement'. Defaults to 'statement'"
         },
+        "template_version": {
+            "required": False,
+            "description": "version to use. Defaults to 'version'"
+        },
     }
     output_variables = {
         "template_dictionary": {
@@ -70,7 +74,7 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
             'version':
                 self.env.get(
                     "template_version",
-                    self.env.get("version_maximum")
+                    self.env.get("version")
                 ),
             'DownloadSize':
                 self.env.get(

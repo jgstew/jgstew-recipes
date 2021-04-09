@@ -1,16 +1,20 @@
 ---
-Description: Generates a BigFix Task for the latest Fixlet Debugger
-Identifier: com.github.jgstew.bigfix.FixletDebugger-Win
+Description: Generates BigFix Task for latest SQL Server Management Studio
+Identifier: com.github.jgstew.bigfix.SQLServerManagementStudio-Win
 Input:
-  NAME: FixletDebugger
+  NAME: SQLServerManagementStudio
 MinimumVersion: '2.3'
-ParentRecipe: com.github.jgstew.download.FixletDebugger
+ParentRecipe: com.github.jgstew.download.SQLServerManagementStudio-Win
 Process:
   - Processor: com.github.jgstew.SharedProcessors/FileHasher
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
   - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
     Arguments:
-      template_version: "%version_maximum%"
+      template_version: "%version%"
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "release_version"
+      append_value: "%release_version%"
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
       template_file_path: ./BigFix/FixletDebugger-Win.bes.mustache

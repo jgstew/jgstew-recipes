@@ -1,0 +1,24 @@
+---
+Description: Downloads the latest NVD Data Feeds JSON
+Identifier: com.github.jgstew.download.NVD-Data-Feeds-JSON
+Input:
+  NAME: "NVD-Data-Feeds-JSON"
+  #YEAR: "2020"
+  # TYPE must be `gz` or `zip`
+  TYPE: "zip"
+MinimumVersion: '2.3'
+Process:
+  # DangerousEvaluate is a bad idea - I kind of love it - I also hate it.
+  - Processor: com.github.jgstew.SharedProcessors/DangerousEvaluate
+    Arguments:
+      # verify TYPE is `gz` or `zip` otherwise HALT
+      evaluate_string: 'self.env["stop_processing_recipe"] = True if "zip" not in self.env.get("TYPE") and "gz" not in self.env.get("TYPE") else False'
+  - Processor: com.github.jgstew.SharedProcessors/DangerousEvaluate
+    Arguments:
+      # set current YEAR if unset
+      evaluate_string: 'if not self.env.get("YEAR"): from datetime import datetime; self.env["YEAR"] = datetime.today().strftime("%Y")'
+  - Processor: URLDownloader
+    Arguments:
+      url: https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-%YEAR%.json.%TYPE%
+  #- Processor: com.github.jgstew.SharedProcessors/ClearFileXattr
+  - Processor: EndOfCheckPhase

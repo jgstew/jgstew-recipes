@@ -13,7 +13,7 @@ __all__ = ["DangerousEvaluate"]
 
 class DangerousEvaluate(Processor):  # pylint: disable=invalid-name
     """Takes a string and evaluates it as python
-        This is a bad idea and kind of dangerous
+        This is a bad idea and dangerous
         This is useful for quick debugging
     """
 
@@ -24,8 +24,7 @@ class DangerousEvaluate(Processor):  # pylint: disable=invalid-name
             "description": "a string to evaluate as python"
         },
     }
-    output_variables = {
-    }
+    output_variables = {}
     __doc__ = description
 
 

@@ -3,9 +3,11 @@ Description: Downloads the latest NVD Data Feeds JSON
 Identifier: com.github.jgstew.download.NVD-Data-Feeds-JSON
 Input:
   NAME: "NVD-Data-Feeds-JSON"
-  #YEAR: "2020"
   # TYPE must be `gz` or `zip`
   TYPE: "zip"
+  # YEAR must be 2002+
+  # if YEAR not specified, then the current year will be used
+  # YEAR: "2020"
 MinimumVersion: '2.3'
 Process:
   # DangerousEvaluate is a bad idea - I kind of love it - I also hate it.

@@ -1,8 +1,8 @@
 ---
 Description: Downloads the latest NVD Data Feeds JSON
-Identifier: com.github.jgstew.download.NVD-Data-Feeds-JSON
+Identifier: com.github.jgstew.download.NVD-Data-Feeds-JSON-CurrentYear
 Input:
-  NAME: "NVD-Data-Feeds-JSON"
+  NAME: "NVD-Data-Feeds-JSON-CurrentYear"
   # TYPE must be `gz` or `zip`
   TYPE: "zip"
   # YEAR must be 2002+

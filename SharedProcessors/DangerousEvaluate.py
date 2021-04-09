@@ -27,7 +27,6 @@ class DangerousEvaluate(Processor):  # pylint: disable=invalid-name
     output_variables = {}
     __doc__ = description
 
-
     def main(self):
         """Execution starts here"""
 

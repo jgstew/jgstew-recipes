@@ -43,7 +43,6 @@ class StopProcessingIfDownloadUnchanged(Processor):  # pylint: disable=invalid-n
     }
     __doc__ = description
 
-
     def main(self):
         """Execution starts here"""
         env_var_value_case_insensitive = self.env.get("env_var_value_case_insensitive")

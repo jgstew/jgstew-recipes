@@ -1,0 +1,26 @@
+---
+Description: Downloads the latest version of Audacity for Windows
+# based upon https://github.com/autopkg/ahousseini-recipes/blob/master/Audacity/Audacity.download.recipe
+Identifier: com.github.jgstew.download.Audacity-Win
+Input:
+  NAME: "Audacity"
+  # TYPE must be `exe` or `zip`
+  TYPE: "exe"
+MinimumVersion: '2.3'
+Process:
+  - Processor: GitHubReleasesInfoProvider
+    Arguments:
+      github_repo: audacity/audacity
+      asset_regex: .*\.%TYPE%$
+  - Processor: URLDownloader
+  - Processor: EndOfCheckPhase
+  # DangerousEvaluate is a bad idea - I kind of love it - I also hate it.
+  - Processor: com.github.jgstew.SharedProcessors/DangerousEvaluate
+    Arguments:
+      # remove `Audacity-` from version string
+      # https://stackoverflow.com/questions/12572362/how-to-get-a-string-after-a-specific-substring
+      # the [-1] is a negative index to an array which always returns the last item in the array.
+      # if `Audacity-` is not found within the version string, then the entire string is returned
+      # this should mean that if Audacity changes their versioning to:
+      #     `3.0.0` instead of `Audacity-3.0.0` then this will still work as expected
+      evaluate_string: 'self.env["version"] = self.env.get("version").split("Audacity-", 1)[-1] ; print(self.env.get("version"))'

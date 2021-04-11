@@ -1,5 +1,6 @@
 ---
 Description: Downloads the latest NVD Data Feeds JSON
+# https://nvd.nist.gov/vuln/data-feeds#JSON_FEED
 Identifier: com.github.jgstew.download.NVD-Data-Feeds-JSON-CurrentYear
 Input:
   NAME: "NVD-Data-Feeds-JSON-CurrentYear"
@@ -22,5 +23,12 @@ Process:
   - Processor: URLDownloader
     Arguments:
       url: https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-%YEAR%.json.%TYPE%
-  #- Processor: com.github.jgstew.SharedProcessors/ClearFileXattr
   - Processor: EndOfCheckPhase
+  #- Processor: com.github.jgstew.SharedProcessors/StopProcessingIfDownloadUnchanged
+  - Processor: URLDownloader
+    Arguments:
+      url: https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-%YEAR%.meta
+  - Processor: com.github.jgstew.SharedProcessors/DangerousEvaluate
+    Arguments:
+      # print current self.env
+      evaluate_string: 'print(self.env)'

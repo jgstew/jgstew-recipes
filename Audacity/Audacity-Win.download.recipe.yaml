@@ -23,4 +23,4 @@ Process:
       # if `Audacity-` is not found within the version string, then the entire string is returned
       # this should mean that if Audacity changes their versioning to:
       #     `3.0.0` instead of `Audacity-3.0.0` then this will still work as expected
-      evaluate_string: 'self.env["version"] = self.env.get("version").split("Audacity-", 1)[-1] ; print(self.env.get("version"))'
+      evaluate_string: 'self.env["version"] = self.env.get("version").split("Audacity-", 1)[-1] ; self.output("version = {version}".format(version=self.env.get("version")), 1)'

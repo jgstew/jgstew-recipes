@@ -111,7 +111,21 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
     def download_changed(self, headers):  # pylint: disable=no-self-use
         """Check if downloaded file changed on server."""
         # need to implement this - always True for now.
-        print(self.env.get("HEADERS_TO_TEST", None))
+
+        self.output("HTTP Headers: \n{headers}".format(
+            headers=headers), 2)
+
+        headers_to_test = self.env.get("HEADERS_TO_TEST", None)
+
+        previous_download_info = self.get_download_info_json()
+
+        self.output("previous_download_info: \n{previous_download_info}\n".format(
+            previous_download_info=previous_download_info), 2)
+
+        self.output("headers_to_test: {headers_to_test}".format(
+            headers_to_test=headers_to_test), 2)
+
+        # not yet implemented, return true:
         return True
 
     def store_download_info_json(self, download_dictionary):
@@ -123,7 +137,6 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             json.dump(download_dictionary, outfile, indent=4)
             # add newline at end of file:
             outfile.write('\n')
-        return None
 
     def get_download_info_json(self):
         """get info from previous download"""
@@ -133,7 +146,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         try:
             with open(pathname_info_json, "r") as infile:
                 info_json = json.load(infile)
-        except Exception as err:
+        except Exception as err:  # pylint: disable=broad-except
             self.output("header error: \n{err}\n".format(
                 err=err)
             )
@@ -156,7 +169,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         # https://stackoverflow.com/questions/24374400/verifying-https-certificates-with-urllib-request
         return ssl.create_default_context(cafile=certifi.where())
 
-    def download_and_hash(self, file_save_path):
+    def download_and_hash(self, file_save_path):  # pylint: disable=too-many-branches
         """stream down file from url and calculate size & hashes"""
         # it is much more efficient to calculate hashes WHILE downloading
         # this allows the file to be read only once and never from disk
@@ -186,9 +199,6 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         # get http headers
         response = urlopen(url, context=self.ssl_context_certifi())
         response_headers = response.info()
-
-        self.output("HTTP Headers: \n{headers}".format(
-            headers=response_headers), 2)
 
         # check if download changed from last run:
         if self.download_changed(response_headers):
@@ -231,7 +241,8 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
                 response.headers['content-length']
             )
             download_dictionary['http_ETag'] = response.headers['ETag']
-            download_dictionary['http_Last-Modified'] = response.headers['Last-Modified']
+            download_dictionary['http_Last-Modified'] = response.headers[
+                'Last-Modified']
         except Exception as err:  # pylint: disable=broad-except
             # probably need to handle a missing header better than this
             self.output("header error: \n{err}\n".format(
@@ -271,11 +282,6 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             self.env["HEADERS_TO_TEST"] = ['Content-Length']
 
         pathname_temporary = self.create_temp_file(download_dir)
-
-        previous_download_info = self.get_download_info_json()
-
-        self.output("previous_download_info: \n{previous_download_info}\n".format(
-            previous_download_info=previous_download_info), 2)
 
         # download file
         download_dictionary = self.download_and_hash(pathname_temporary)

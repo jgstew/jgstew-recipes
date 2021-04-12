@@ -44,8 +44,40 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             "required": False,
             "description": "Filename to override the URL's tail.",
         },
+        "CHECK_FILESIZE_ONLY": {
+            "default": False,
+            "required": False,
+            "description": (
+                "If True, a server's ETag and Last-Modified "
+                "headers will not be checked to verify whether "
+                "a download is newer than a cached item, and only "
+                "Content-Length (filesize) will be used. This "
+                "is useful for cases where a download always "
+                "redirects to different mirrors, which could "
+                "cause items to be needlessly re-downloaded. "
+                "Defaults to False."
+            ),
+        },
         "PKG": {
             "required": False,
+            "description": (
+                "Local path to the pkg/dmg we'd otherwise download. "
+                "If provided, the download is skipped and we just use "
+                "this package or disk image."
+            ),
+        },
+        "COMPUTE_HASHES": {
+            "required": False,
+            "default": True,
+            "description": (
+                "Local path to the pkg/dmg we'd otherwise download. "
+                "If provided, the download is skipped and we just use "
+                "this package or disk image."
+            ),
+        },
+        "HEADERS_TO_TEST": {
+            "required": False,
+            "default": ['ETag', 'Last-Modified', 'Content-Length'],
             "description": (
                 "Local path to the pkg/dmg we'd otherwise download. "
                 "If provided, the download is skipped and we just use "
@@ -65,6 +97,9 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
                 "last time it was downloaded."
             )
         },
+        "url_downloader_summary_result": {
+            "description": "Description of interesting results."
+        },
     }
     __doc__ = description
 
@@ -73,9 +108,10 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         # need to implement this
         return False
 
-    def download_changed(self):  # pylint: disable=no-self-use
+    def download_changed(self, headers):  # pylint: disable=no-self-use
         """Check if downloaded file changed on server."""
         # need to implement this - always True for now.
+        print(self.env.get("HEADERS_TO_TEST", None))
         return True
 
     def store_download_info_json(self, download_dictionary):
@@ -94,8 +130,14 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         pathname = self.env.get("pathname")
         pathname_info_json = pathname + ".info.json"
 
-        with open(pathname_info_json, "r") as infile:
-            info_json = json.load(infile)
+        try:
+            with open(pathname_info_json, "r") as infile:
+                info_json = json.load(infile)
+        except Exception as err:
+            self.output("header error: \n{err}\n".format(
+                err=err)
+            )
+            return None
 
         return info_json
 
@@ -116,14 +158,24 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
 
     def download_and_hash(self, file_save_path):
         """stream down file from url and calculate size & hashes"""
+        # it is much more efficient to calculate hashes WHILE downloading
+        # this allows the file to be read only once and never from disk
         # https://github.com/jgstew/bigfix_prefetch/blob/master/src/bigfix_prefetch/prefetch_from_url.py
         url = self.env.get("url")
         download_dictionary = {}
-        hashes = sha1(), sha256(), md5()
+
+        hashes = None
+        if self.env.get("COMPUTE_HASHES", None):
+            hashes = sha1(), sha256(), md5()
+
         # chunksize seems like it could be anything
         #   it is probably best if it is a multiple of a typical hash block_size
         #   a larger chunksize is probably best for faster downloads
-        chunksize = max(384000, max(a_hash.block_size for a_hash in hashes))
+        #   chunksize should be evenly divisible by 4096 due to 4k blocks of storage
+        chunksize = 4096 * 100
+        if hashes:
+            chunksize = max(chunksize, max(a_hash.block_size for a_hash in hashes))
+
         size = 0
 
         file_save = None
@@ -131,12 +183,22 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         if file_save_path:
             file_save = open(file_save_path, 'wb')
 
-        # start download process:
+        # get http headers
         response = urlopen(url, context=self.ssl_context_certifi())
+        response_headers = response.info()
 
         self.output("HTTP Headers: \n{headers}".format(
-            headers=response.info()), 2)
+            headers=response_headers), 2)
 
+        # check if download changed from last run:
+        if self.download_changed(response_headers):
+            self.env["download_changed"] = True
+        else:
+            # Discard the temp file
+            os.remove(file_save_path)
+            return None
+
+        # download file
         while True:
             chunk = response.read(chunksize)
             if not chunk:
@@ -144,8 +206,9 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             # get size of chunk and add to existing size
             size += len(chunk)
             # add chunk to hash computations
-            for a_hash in hashes:
-                a_hash.update(chunk)
+            if hashes:
+                for a_hash in hashes:
+                    a_hash.update(chunk)
             # save file if handler
             if file_save:
                 file_save.write(chunk)
@@ -156,17 +219,35 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
 
         download_dictionary['file_name'] = self.get_filename()
         download_dictionary['file_size'] = size
-        download_dictionary['file_sha1'] = hashes[0].hexdigest()
-        download_dictionary['file_sha256'] = hashes[1].hexdigest()
-        download_dictionary['file_md5'] = hashes[2].hexdigest()
+        if hashes:
+            download_dictionary['file_sha1'] = hashes[0].hexdigest()
+            download_dictionary['file_sha256'] = hashes[1].hexdigest()
+            download_dictionary['file_md5'] = hashes[2].hexdigest()
         download_dictionary['download_url'] = url
         #download_dictionary['http_headers'] = response.info()
-        download_dictionary['http_Content-Length'] = int(response.headers['content-length'])
-        download_dictionary['http_ETag'] = response.headers['ETag']
-        download_dictionary['http_Last-Modified'] = response.headers['Last-Modified']
+        try:
+            # save http header info to dict
+            download_dictionary['http_Content-Length'] = int(
+                response.headers['content-length']
+            )
+            download_dictionary['http_ETag'] = response.headers['ETag']
+            download_dictionary['http_Last-Modified'] = response.headers['Last-Modified']
+        except Exception as err:  # pylint: disable=broad-except
+            # probably need to handle a missing header better than this
+            self.output("header error: \n{err}\n".format(
+                err=err)
+            )
 
         # Save last-modified and etag headers to files xattr
-        self.store_headers(response.info())
+        # This is for backwards compatibility with URLDownloader
+        try:
+            # this can throw errors on Linux running in WSL
+            # it might also throw errors on Linux containers
+            self.store_headers(response.info())
+        except Exception as err:  # pylint: disable=broad-except
+            self.output("xattr error: \n{err}\n".format(
+                err=err)
+            )
 
         return download_dictionary
 
@@ -181,6 +262,14 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             return
         download_dir = self.get_download_dir()
         self.env["pathname"] = os.path.join(download_dir, filename)
+
+        # clear empty file from previous run
+        self.clear_zero_file(self.env["pathname"])
+
+        # change headers to test if CHECK_FILESIZE_ONLY
+        if self.env.get("CHECK_FILESIZE_ONLY", None):
+            self.env["HEADERS_TO_TEST"] = ['Content-Length']
+
         pathname_temporary = self.create_temp_file(download_dir)
 
         previous_download_info = self.get_download_info_json()
@@ -188,20 +277,17 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         self.output("previous_download_info: \n{previous_download_info}\n".format(
             previous_download_info=previous_download_info), 2)
 
+        # download file
         download_dictionary = self.download_and_hash(pathname_temporary)
 
         self.output("download_dictionary: \n{download_dictionary}\n".format(
             download_dictionary=download_dictionary), 2)
 
-        if self.download_changed():
-            self.env["download_changed"] = True
-        else:
-            # Discard the temp file
-            os.remove(pathname_temporary)
-            return
-
         # New resource was downloaded. Move the temporary download file to the pathname
         self.move_temp_file(pathname_temporary)
+
+        # clear temp file if 0 size
+        self.clear_zero_file(pathname_temporary)
 
         # store download info for checking for existing download
         self.store_download_info_json(download_dictionary)

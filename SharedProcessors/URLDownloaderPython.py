@@ -86,6 +86,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
 
     def ssl_context_certifi(self):
         """ssl context using certifi CAs"""
+        # https://stackoverflow.com/questions/24374400/verifying-https-certificates-with-urllib-request
         return ssl.create_default_context(cafile=certifi.where())
 
     def download_and_hash(self, file_save_path):

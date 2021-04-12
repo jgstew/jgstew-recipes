@@ -32,7 +32,7 @@ class DangerousEvaluate(Processor):  # pylint: disable=invalid-name
 
         evaluate_string = self.env.get("evaluate_string")
 
-        self.output("Running: = \n{evaluate_string}".format(
+        self.output("Running Python: \n    {evaluate_string}".format(
             evaluate_string=evaluate_string), 1)
         # https://stackoverflow.com/questions/2220699/whats-the-difference-between-eval-exec-and-compile
         eval(compile(evaluate_string, '<string>', 'exec'))  # pylint: disable=eval-used

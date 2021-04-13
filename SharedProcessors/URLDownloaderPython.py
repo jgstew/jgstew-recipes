@@ -43,6 +43,21 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             "required": False,
             "description": "Filename to override the URL's tail.",
         },
+        "prefetch_filename": {
+            "default": False,
+            "required": False,
+            "description": (
+                "If True, URLDownloader attempts to determine filename from HTTP "
+                "headers downloaded before the file itself. 'prefetch_filename' "
+                "overrides 'filename' option. Filename is determined from the first "
+                "available source of information in this order:\n"
+                "\t1. Content-Disposition header\n"
+                "\t2. Location header\n"
+                "\t3. 'filename' option (if set)\n"
+                "\t4. last part of 'url'.  \n"
+                "'prefetch_filename' is useful for URLs with redirects."
+            ),
+        },
         "CHECK_FILESIZE_ONLY": {
             "default": False,
             "required": False,
@@ -101,20 +116,6 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         },
     }
     __doc__ = description
-
-    def prefetch_filename(self):
-        """Attempt to find filename in HTTP headers."""
-        # need to implement this
-        self.output("WARNING: prefetch_filename not implemented", 1)
-
-        # https://stackoverflow.com/questions/11783269/python-httplib-urllib-get-filename
-        req = urllib.request.Request(self.env.get("url"), method="HEAD")
-        response = urllib.request.urlopen(req, context=self.ssl_context_certifi())
-
-        print(response.info().get_all("Location"))
-
-        # not yet implemented, return false:
-        return False
 
     def download_changed(self, headers):
         """Check if downloaded file changed on server."""
@@ -271,7 +272,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         if file_save:
             file_save.close()
 
-        download_dictionary['file_name'] = self.get_filename()
+        download_dictionary['file_name'] = self.env.get("filename", "")
         download_dictionary['file_size'] = size
         if hashes:
             download_dictionary['file_sha1'] = hashes[0].hexdigest()
@@ -321,6 +322,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         filename = self.get_filename()
         if filename is None:
             return
+        self.env["filename"] = filename
         download_dir = self.get_download_dir()
         self.env["pathname"] = os.path.join(download_dir, filename)
 

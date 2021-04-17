@@ -166,25 +166,27 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
                 return True
             else:
                 header_matches += 1
-        except Exception as err:  # pylint: disable=broad-except
-            self.output("WARNING: 'Content-Length' header missing. \n{err}\n".format(
-                err=err)
+        except (KeyError,TypeError) as err:
+            self.output("WARNING: 'Content-Length' missing. ({err_type}) {err}".format(
+                err=err, err_type=type(err).__name__),
+                1,
             )
 
-        try:
-            # check other headers:
-            for test in headers_to_test:
-                if test != 'Content-Length':
+        # check other headers:
+        for test in headers_to_test:
+            if test != 'Content-Length':
+                try:
                     if previous_download_info['http_headers'][test] != headers.get(test):  # pylint: disable=line-too-long,no-else-return
                         self.output("{test} is different".format(
                             test=test), 2)
                         return True
                     else:
                         header_matches += 1
-        except Exception as err:  # pylint: disable=broad-except
-            self.output("WARNING: header missing. \n{err}\n".format(
-                err=err)
-            )
+                except (KeyError,TypeError) as err:
+                    self.output("WARNING: header missing. ({err_type}) {err}".format(
+                        err=err, err_type=type(err).__name__),
+                        1,
+                    )
 
         # if no header checks work without throwing exceptions:
         if header_matches == 0:
@@ -210,9 +212,10 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         try:
             with open(pathname_info_json, "r") as infile:
                 info_json = json.load(infile)
-        except Exception as err:  # pylint: disable=broad-except
-            self.output("failed to get previous download info: \n{err}\n".format(
-                err=err)
+        except FileNotFoundError as err:
+            self.output("WARNING: missing download info ({err_type})\n{err}\n".format(
+                err=err, err_type=type(err).__name__),
+                1,
             )
             return None
 
@@ -310,11 +313,12 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             if download_dictionary['http_headers']['Content-Length'] != size:
                 # should this be a halting error?
                 self.output("WARNING: file size != content-length header")
-        except Exception as err:  # pylint: disable=broad-except
+        except (KeyError,TypeError) as err:
             # probably need to handle a missing header better than this
-            self.output("header error: \n{err}\n".format(
-                err=err)
+            self.output("ERROR: header issue ({err_type})\n{err}\n".format(
+                err=err, err_type=type(err).__name__)
             )
+            return None
 
         if self.env.get("download_changed", None):
             # Move the new temporary download file to the pathname
@@ -326,9 +330,10 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             # this can throw errors on Linux running in WSL
             # it might also throw errors on Linux containers
             self.store_headers(response.info())
-        except Exception as err:  # pylint: disable=broad-except
-            self.output("xattr error: \n{err}\n".format(
-                err=err)
+        except OSError as err:
+            self.output("ERROR xattr: ({err_type})\n{err}\n".format(
+                err=err, err_type=type(err).__name__),
+                1,
             )
 
         return download_dictionary

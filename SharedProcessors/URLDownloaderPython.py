@@ -166,7 +166,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
                 return True
             else:
                 header_matches += 1
-        except (KeyError,TypeError) as err:
+        except (KeyError, TypeError) as err:
             self.output("WARNING: 'Content-Length' missing. ({err_type}) {err}".format(
                 err=err, err_type=type(err).__name__),
                 1,
@@ -182,7 +182,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
                         return True
                     else:
                         header_matches += 1
-                except (KeyError,TypeError) as err:
+                except (KeyError, TypeError) as err:
                     self.output("WARNING: header missing. ({err_type}) {err}".format(
                         err=err, err_type=type(err).__name__),
                         1,
@@ -313,7 +313,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             if download_dictionary['http_headers']['Content-Length'] != size:
                 # should this be a halting error?
                 self.output("WARNING: file size != content-length header")
-        except (KeyError,TypeError) as err:
+        except (KeyError, TypeError) as err:
             # probably need to handle a missing header better than this
             self.output("ERROR: header issue ({err_type})\n{err}\n".format(
                 err=err, err_type=type(err).__name__)

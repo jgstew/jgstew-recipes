@@ -9,7 +9,11 @@
 
 import os.path
 
-import chevron  # pylint: disable=import-error
+try:
+    import chevron  # pylint: disable=import-error
+except ImportError:
+    print("ERROR: `chevron` library required.")
+    print("https://github.com/jgstew/jgstew-recipes/blob/main/requirements.txt")
 
 from autopkglib import Processor, ProcessorError  # pylint: disable=import-error,wrong-import-position,unused-import
 

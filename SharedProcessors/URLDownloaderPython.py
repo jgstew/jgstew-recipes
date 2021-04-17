@@ -4,16 +4,18 @@
 #
 """See docstring for URLDownloaderPython class"""
 
-import os
-# import tempfile
-import ssl
 import json
+import os
+import ssl
 # import sys
+# import tempfile
 
 from hashlib import sha1, sha256, md5
 
-# https://stackoverflow.com/questions/3745771/urllib-request-in-python-2-7
-from six.moves import urllib
+try:
+    from urllib.request import urlopen  # Python 3
+except ImportError:
+    from urllib2 import urlopen  # Python 2
 
 import certifi  # pylint: disable=import-error
 
@@ -82,7 +84,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         },
         "COMPUTE_HASHES": {
             "required": False,
-            "default": True,
+            "default": False,
             "description": (
                 "Local path to the pkg/dmg we'd otherwise download. "
                 "If provided, the download is skipped and we just use "
@@ -136,6 +138,12 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             previous_download_info=previous_download_info), 2)
 
         header_matches = 0
+
+        # check that previous download exits:
+        previous_download_path = self.env.get("pathname", None)
+        if not os.path.isfile(previous_download_path):
+            # previous download doesn't exist!
+            return True
 
         try:
             # check Content-Length:
@@ -243,7 +251,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             file_save = open(file_save_path, 'wb')
 
         # get http headers
-        response = urllib.request.urlopen(url, context=self.ssl_context_certifi())
+        response = urlopen(url, context=self.ssl_context_certifi())
         response_headers = response.info()
 
         self.env["download_changed"] = self.download_changed(response_headers)
@@ -298,6 +306,10 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
                 err=err)
             )
 
+        if self.env.get("download_changed", None):
+            # Move the new temporary download file to the pathname
+            self.move_temp_file(file_save_path)
+
         # Save last-modified and etag headers to files xattr
         # This is for backwards compatibility with URLDownloader
         try:
@@ -340,10 +352,6 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
 
         self.output("download_dictionary: \n{download_dictionary}\n".format(
             download_dictionary=download_dictionary), 2)
-
-        if self.env.get("download_changed", None):
-            # Move the new temporary download file to the pathname
-            self.move_temp_file(pathname_temporary)
 
         # clear temp file if 0 size
         self.clear_zero_file(pathname_temporary)

@@ -29,7 +29,10 @@ except ImportError:
 
 import certifi  # pylint: disable=import-error
 
-from autopkglib import Processor, ProcessorError  # pylint: disable=import-error,wrong-import-position,unused-import
+from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
+    Processor,
+    ProcessorError,
+)
 from autopkglib.URLDownloader import URLDownloader  # pylint: disable=import-error
 
 
@@ -103,7 +106,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         },
         "HEADERS_TO_TEST": {
             "required": False,
-            "default": ['ETag', 'Last-Modified', 'Content-Length'],
+            "default": ["ETag", "Last-Modified", "Content-Length"],
             "description": (
                 "Local path to the pkg/dmg we'd otherwise download. "
                 "If provided, the download is skipped and we just use "
@@ -132,20 +135,27 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
     def download_changed(self, headers):
         """Check if downloaded file changed on server."""
 
-        self.output("HTTP Headers: \n{headers}".format(
-            headers=headers), 2)
+        self.output("HTTP Headers: \n{headers}".format(headers=headers), 2)
 
         # get the list of headers to check
         headers_to_test = self.env.get("HEADERS_TO_TEST", None)
 
-        self.output("headers_to_test: {headers_to_test}".format(
-            headers_to_test=headers_to_test), 2)
+        self.output(
+            "headers_to_test: {headers_to_test}".format(
+                headers_to_test=headers_to_test
+            ),
+            2,
+        )
 
         # get previous info to compare
         previous_download_info = self.get_download_info_json()
 
-        self.output("previous_download_info: \n{previous_download_info}\n".format(
-            previous_download_info=previous_download_info), 2)
+        self.output(
+            "previous_download_info: \n{previous_download_info}\n".format(
+                previous_download_info=previous_download_info
+            ),
+            2,
+        )
 
         header_matches = 0
 
@@ -157,34 +167,41 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
 
         try:
             # check Content-Length:
-            if 'Content-Length' in headers_to_test and (  # pylint: disable=no-else-return
-                int(
-                    previous_download_info['http_headers']['Content-Length']
-                ) != int(headers.get('Content-Length'))
+            if (  # pylint: disable=no-else-return
+                "Content-Length" in headers_to_test
+                and (
+                    int(previous_download_info["http_headers"]["Content-Length"])
+                    != int(headers.get("Content-Length"))
+                )
             ):
                 self.output("Content-Length is different", 2)
                 return True
             else:
                 header_matches += 1
         except (KeyError, TypeError) as err:
-            self.output("WARNING: 'Content-Length' missing. ({err_type}) {err}".format(
-                err=err, err_type=type(err).__name__),
+            self.output(
+                "WARNING: 'Content-Length' missing. ({err_type}) {err}".format(
+                    err=err, err_type=type(err).__name__
+                ),
                 1,
             )
 
         # check other headers:
         for test in headers_to_test:
-            if test != 'Content-Length':
+            if test != "Content-Length":
                 try:
-                    if previous_download_info['http_headers'][test] != headers.get(test):  # pylint: disable=line-too-long,no-else-return
-                        self.output("{test} is different".format(
-                            test=test), 2)
+                    if previous_download_info[  # pylint: disable=no-else-return
+                        "http_headers"
+                    ][test] != headers.get(test):
+                        self.output("{test} is different".format(test=test), 2)
                         return True
                     else:
                         header_matches += 1
                 except (KeyError, TypeError) as err:
-                    self.output("WARNING: header missing. ({err_type}) {err}".format(
-                        err=err, err_type=type(err).__name__),
+                    self.output(
+                        "WARNING: header missing. ({err_type}) {err}".format(
+                            err=err, err_type=type(err).__name__
+                        ),
                         1,
                     )
 
@@ -202,7 +219,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         with open(pathname_info_json, "w") as outfile:
             json.dump(download_dictionary, outfile, indent=4)
             # add newline at end of file:
-            outfile.write('\n')
+            outfile.write("\n")
 
     def get_download_info_json(self):
         """get info from previous download"""
@@ -213,8 +230,10 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             with open(pathname_info_json, "r") as infile:
                 info_json = json.load(infile)
         except FileNotFoundError as err:
-            self.output("WARNING: missing download info ({err_type})\n{err}\n".format(
-                err=err, err_type=type(err).__name__),
+            self.output(
+                "WARNING: missing download info ({err_type})\n{err}\n".format(
+                    err=err, err_type=type(err).__name__
+                ),
                 1,
             )
             return None
@@ -261,7 +280,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         file_save = None
 
         if file_save_path:
-            file_save = open(file_save_path, 'wb')
+            file_save = open(file_save_path, "wb")
 
         # get http headers
         response = urlopen(url, context=self.ssl_context_certifi())
@@ -293,30 +312,33 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         if file_save:
             file_save.close()
 
-        download_dictionary['file_name'] = self.env.get("filename", "")
-        download_dictionary['file_size'] = size
+        download_dictionary["file_name"] = self.env.get("filename", "")
+        download_dictionary["file_size"] = size
         if hashes:
-            download_dictionary['file_sha1'] = hashes[0].hexdigest()
-            download_dictionary['file_sha256'] = hashes[1].hexdigest()
-            download_dictionary['file_md5'] = hashes[2].hexdigest()
-        download_dictionary['download_url'] = url
-        #download_dictionary['http_headers'] = response.info()
+            download_dictionary["file_sha1"] = hashes[0].hexdigest()
+            download_dictionary["file_sha256"] = hashes[1].hexdigest()
+            download_dictionary["file_md5"] = hashes[2].hexdigest()
+        download_dictionary["download_url"] = url
+        # download_dictionary['http_headers'] = response.info()
         try:
             # save http header info to dict
-            download_dictionary['http_headers'] = {}
-            download_dictionary['http_headers']['Content-Length'] = int(
-                response.headers['content-length']
+            download_dictionary["http_headers"] = {}
+            download_dictionary["http_headers"]["Content-Length"] = int(
+                response.headers["content-length"]
             )
-            download_dictionary['http_headers']['ETag'] = response.headers['ETag']
-            download_dictionary['http_headers']['Last-Modified'] = response.headers[
-                'Last-Modified']
-            if download_dictionary['http_headers']['Content-Length'] != size:
+            download_dictionary["http_headers"]["ETag"] = response.headers["ETag"]
+            download_dictionary["http_headers"]["Last-Modified"] = response.headers[
+                "Last-Modified"
+            ]
+            if download_dictionary["http_headers"]["Content-Length"] != size:
                 # should this be a halting error?
                 self.output("WARNING: file size != content-length header")
         except (KeyError, TypeError) as err:
             # probably need to handle a missing header better than this
-            self.output("ERROR: header issue ({err_type})\n{err}\n".format(
-                err=err, err_type=type(err).__name__)
+            self.output(
+                "ERROR: header issue ({err_type})\n{err}\n".format(
+                    err=err, err_type=type(err).__name__
+                )
             )
             return None
 
@@ -331,8 +353,10 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             # it might also throw errors on Linux containers
             self.store_headers(response.info())
         except OSError as err:
-            self.output("ERROR xattr: ({err_type})\n{err}\n".format(
-                err=err, err_type=type(err).__name__),
+            self.output(
+                "ERROR xattr: ({err_type})\n{err}\n".format(
+                    err=err, err_type=type(err).__name__
+                ),
                 1,
             )
 
@@ -343,7 +367,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
         # Clear and initiazize data structures
         self.clear_vars()
 
-        #self.prefetch_filename()
+        # self.prefetch_filename()
 
         # Ensure existence of necessary files, directories and paths
         filename = self.get_filename()
@@ -358,15 +382,19 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
 
         # change headers to test if CHECK_FILESIZE_ONLY
         if self.env.get("CHECK_FILESIZE_ONLY", None):
-            self.env["HEADERS_TO_TEST"] = ['Content-Length']
+            self.env["HEADERS_TO_TEST"] = ["Content-Length"]
 
         pathname_temporary = self.create_temp_file(download_dir)
 
         # download file
         download_dictionary = self.download_and_hash(pathname_temporary)
 
-        self.output("download_dictionary: \n{download_dictionary}\n".format(
-            download_dictionary=download_dictionary), 2)
+        self.output(
+            "download_dictionary: \n{download_dictionary}\n".format(
+                download_dictionary=download_dictionary
+            ),
+            2,
+        )
 
         # clear temp file if 0 size
         self.clear_zero_file(pathname_temporary)
@@ -382,8 +410,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
                 "data": {"download_path": self.env["pathname"]},
             }
 
-        self.output("self.env: \n{self_env}\n".format(
-            self_env=self.env), 4)
+        self.output("self.env: \n{self_env}\n".format(self_env=self.env), 4)
 
 
 if __name__ == "__main__":

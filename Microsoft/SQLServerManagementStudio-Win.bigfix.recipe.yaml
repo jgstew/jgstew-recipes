@@ -17,5 +17,5 @@ Process:
       append_value: "%release_version%"
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
-      template_file_path: ./BigFix/FixletDebugger-Win.bes.mustache
+      template_file_path: "Microsoft/SQLServerManagementStudio-Win Install_Update.bes.mustache"
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.bes"

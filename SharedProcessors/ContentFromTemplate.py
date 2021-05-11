@@ -113,7 +113,7 @@ class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
         if content_file_pathname:
             self.write_file_content(content_file_pathname, content_string)
             self.output("Content File = {content_file_pathname}".format(
-                content_file_pathname=content_file_pathname), 1)
+                content_file_pathname=content_file_pathname), 0)
 
 
 if __name__ == "__main__":

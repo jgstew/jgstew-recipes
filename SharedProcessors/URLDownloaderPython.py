@@ -22,10 +22,10 @@ import ssl
 from hashlib import sha1, sha256, md5
 
 try:
-    from urllib.request import urlopen  # Python 3
+    from urllib.request import Request, urlopen  # Python 3
 except ImportError:
     print("ERROR: Not tested with Python 2")
-    from urllib2 import urlopen  # Python 2
+    from urllib2 import Request, urlopen  # Python 2
 
 import certifi  # pylint: disable=import-error
 
@@ -283,7 +283,12 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             file_save = open(file_save_path, "wb")
 
         # get http headers
-        response = urlopen(url, context=self.ssl_context_certifi())
+        req = Request(url)
+        req.add_header('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36')
+        response = urlopen(
+            req,
+            context=self.ssl_context_certifi(),
+        )
         response_headers = response.info()
 
         self.env["download_changed"] = self.download_changed(response_headers)

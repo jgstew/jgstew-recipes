@@ -1,0 +1,13 @@
+---
+Description: Downloads the latest Microsoft Trusted Root Updates
+Identifier: com.github.jgstew.download.MicrosoftTrustedRoot-Win
+Input:
+  NAME: MicrosoftTrustedRoot
+MinimumVersion: '2.3'
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://aka.ms/CTLDownload
+      prefetch_filename: True
+      COMPUTE_HASHES: True
+  - Processor: EndOfCheckPhase  # how do I stop here if nothing changed?

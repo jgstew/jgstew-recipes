@@ -1,0 +1,14 @@
+---
+Description: Downloads the latest Windows Terminal
+Identifier: com.github.jgstew.download.WindowsTerminal
+Input:
+  NAME: WindowsTerminal
+MinimumVersion: '2.3'
+Process:
+  - Processor: GitHubReleasesInfoProvider
+    Arguments:
+      github_repo: microsoft/terminal
+      # example: Microsoft.WindowsTerminal_1.9.1942.0_8wekyb3d8bbwe.msixbundle
+      asset_regex: Microsoft.WindowsTerminal_.*.msixbundle
+  - Processor: URLDownloader
+  - Processor: EndOfCheckPhase

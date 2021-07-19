@@ -1,0 +1,12 @@
+---
+Description: Downloads the latest Chocolatey for Windows
+Identifier: com.github.jgstew.download.Chocolatey-Win
+Input:
+  NAME: ChocolateyWin
+MinimumVersion: '2.3'
+Process:
+  - Processor: URLDownloader
+    Arguments:
+      url: https://chocolatey.org/api/v2/package/chocolatey
+      prefetch_filename: True
+  - Processor: EndOfCheckPhase

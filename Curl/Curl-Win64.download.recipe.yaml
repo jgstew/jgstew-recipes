@@ -1,0 +1,16 @@
+---
+Description: Downloads the latest Curl for Windows x64
+Identifier: com.github.jgstew.download.Curl-Win64
+Input:
+  NAME: CurlWin64
+MinimumVersion: '2.3'
+Process:
+  - Processor: URLTextSearcher
+    Arguments:
+      url: https://curl.se/windows/
+      # Example: https://curl.se/windows/dl-7.77.0_3/curl-7.77.0_3-win64-mingw.zip
+      re_pattern: (?P<url_part>dl-.*\/curl-(?P<version_string>\d+\.\d+\.\d+).*-win64-mingw.zip)
+  - Processor: URLDownloader
+    Arguments:
+      url: https://curl.se/windows/%url_part%
+  - Processor: EndOfCheckPhase

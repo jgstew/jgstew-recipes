@@ -1,0 +1,14 @@
+---
+Description: Downloads the latest Python3 for Windows x64 installer
+Identifier: com.github.jgstew.download.Python3-Win64
+Input:
+  NAME: Python3Win64
+MinimumVersion: '2.3'
+Process:
+  - Processor: URLTextSearcher
+    Arguments:
+      url: https://www.python.org/downloads/windows/
+      # Example: https://www.python.org/ftp/python/3.9.6/python-3.9.6-amd64.exe
+      re_pattern: (?P<url>https://.*/python-(?P<version_string>3\.\d+\.\d+).*\-amd64.exe)
+  - Processor: URLDownloader
+  - Processor: EndOfCheckPhase  # how do I stop here if nothing changed?

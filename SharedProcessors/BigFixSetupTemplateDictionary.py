@@ -15,7 +15,7 @@ from autopkglib import Processor, ProcessorError  # pylint: disable=import-error
 
 # add path this script is in
 site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
-import generate_bes_from_template  # pylint: disable=wrong-import-position
+from generate_bes_from_template import generate_bes_from_template  # pylint: disable=wrong-import-position
 
 
 __all__ = ["BigFixSetupTemplateDictionary"]

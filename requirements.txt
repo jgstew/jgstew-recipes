@@ -2,3 +2,4 @@ chevron
 certifi
 generate_bes_from_template
 bigfix_prefetch
+git+https://github.com/jgstew/besapi.git#egg=besapi

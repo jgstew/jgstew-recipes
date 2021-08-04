@@ -5,7 +5,7 @@ Input:
   NAME: SQLServerManagementStudio
 MinimumVersion: '2.3'
 Process:
-  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+  - Processor: URLDownloaderPython
     Arguments:
       url: https://aka.ms/ssmsfullsetup
       prefetch_filename: True

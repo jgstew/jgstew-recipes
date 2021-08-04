@@ -8,13 +8,13 @@
 """See docstring for BigFixPrefetchItem class"""
 
 import os.path
-import site
+# import site
 
 from autopkglib import Processor, ProcessorError  # pylint: disable=import-error,wrong-import-position,unused-import
 
 # add path this script is in
-site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
-import prefetch_from_dictionary  # pylint: disable=wrong-import-position
+# site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
+from bigfix_prefetch import prefetch_from_dictionary  # pylint: disable=wrong-import-position
 
 
 __all__ = ["BigFixPrefetchItem"]

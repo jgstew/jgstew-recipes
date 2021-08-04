@@ -15,6 +15,8 @@ from autopkglib import Processor, ProcessorError
 
 import requests
 from besapi import besapi
+import lxml
+
 try:
     requests.packages.urllib3.disable_warnings()
 except:
@@ -78,17 +80,23 @@ class BESImport(Processor):
             self.env['BES_USER_NAME'] = CONFPARSER.get("besapi", "BES_USER_NAME")
             self.env['BES_PASSWORD'] = CONFPARSER.get("besapi", "BES_PASSWORD")
 
+    def get_bes_title(self, bes_file):
+        with open(bes_file, 'rb') as file_handle:
+            tree = lxml.etree.parse(file_handle)
+            self.env['bes_title'] = tree.xpath("/BES/Task/Title/text() | /BES/Task/Fixlet/text()")[0]
 
     def main(self):
         """BESImport Main Method"""
         # Assign BES Console Variables
         bes_file = self.env.get("bes_file")
-        # TODO read title from bes file using xpath
-        bes_title = ""
-        bes_customsite = self.env.get("bes_customsite")
-        bes_taskid = self.env.get("bes_taskid", None)
 
         self.get_config()
+        self.get_bes_title(bes_file)
+
+        # TODO read title from bes file using xpath
+        bes_title = self.env.get("bes_title")
+        bes_customsite = self.env.get("bes_customsite")
+        bes_taskid = self.env.get("bes_taskid", None)
 
         BES_USERNAME = self.env.get("BES_USER_NAME")
         BES_PASSWORD = self.env.get("BES_PASSWORD")

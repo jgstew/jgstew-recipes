@@ -8,7 +8,10 @@
 """See docstring for TemplateDictionaryAppend class"""
 
 
-from autopkglib import Processor, ProcessorError  # pylint: disable=import-error,wrong-import-position,unused-import
+from autopkglib import (
+    Processor,
+    ProcessorError,
+)  # pylint: disable=import-error,wrong-import-position,unused-import
 
 
 __all__ = ["TemplateDictionaryAppend"]
@@ -21,23 +24,19 @@ class TemplateDictionaryAppend(Processor):  # pylint: disable=invalid-name
     input_variables = {
         "template_dictionary": {
             "required": True,
-            "description": "python dictionary template with data for template"
+            "description": "python dictionary template with data for template",
         },
         "append_key": {
             "required": True,
-            "description": "the key to add to the python dictionary template"
+            "description": "the key to add to the python dictionary template",
         },
         "append_value": {
             "required": True,
-            "description": "the value to add to the python dictionary template"
+            "description": "the value to add to the python dictionary template",
         },
     }
     output_variables = {
-        "template_dictionary": {
-            "description": (
-                "The appended dictionary"
-            )
-        },
+        "template_dictionary": {"description": ("The appended dictionary")},
     }
     __doc__ = description
 
@@ -52,9 +51,7 @@ class TemplateDictionaryAppend(Processor):  # pylint: disable=invalid-name
         template_dictionary[append_key] = append_value
 
         # write back the dict to itself
-        self.env[
-            'template_dictionary'
-        ] = template_dictionary
+        self.env["template_dictionary"] = template_dictionary
 
 
 if __name__ == "__main__":

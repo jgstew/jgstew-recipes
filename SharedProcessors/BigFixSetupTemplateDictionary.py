@@ -11,11 +11,16 @@ import os.path
 import site
 
 # site.addsitedir("/Library/AutoPkg")
-from autopkglib import Processor, ProcessorError  # pylint: disable=import-error,wrong-import-position,unused-import
+from autopkglib import (
+    Processor,
+    ProcessorError,
+)  # pylint: disable=import-error,wrong-import-position,unused-import
 
 # add path this script is in
 site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
-from generate_bes_from_template import generate_bes_from_template  # pylint: disable=wrong-import-position
+from generate_bes_from_template import (
+    generate_bes_from_template,
+)  # pylint: disable=wrong-import-position
 
 
 __all__ = ["BigFixSetupTemplateDictionary"]
@@ -36,19 +41,19 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
         },
         "template_prefetch": {
             "required": False,
-            "description": "The input file SHA1. Defaults to %bigfix_prefetch_item%"
+            "description": "The input file SHA1. Defaults to %bigfix_prefetch_item%",
         },
         "template_file_size": {
             "required": False,
-            "description": "The input file size. Defaults to %filehasher_size%"
+            "description": "The input file size. Defaults to %filehasher_size%",
         },
         "prefetch_type": {
             "required": False,
-            "description": "Either 'block' or 'statement'. Defaults to 'statement'"
+            "description": "Either 'block' or 'statement'. Defaults to 'statement'",
         },
         "template_version": {
             "required": False,
-            "description": "version to use. Defaults to 'version'"
+            "description": "version to use. Defaults to 'version'",
         },
     }
     output_variables = {
@@ -61,38 +66,22 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
     def main(self):
         """Execution starts here"""
         template_dict = {
-            'file_name':
-                self.env.get(
-                    "file_name",
-                    os.path.basename(self.env.get("pathname"))
-                ),
-            'prefetch':
-                self.env.get(
-                    "template_prefetch",
-                    self.env.get("bigfix_prefetch_item")
-                ),
-            'version':
-                self.env.get(
-                    "template_version",
-                    self.env.get("version")
-                ),
-            'DownloadSize':
-                self.env.get(
-                    "template_file_size",
-                    self.env.get("filehasher_size")
-                ),
-            'prefetch_type':
-                self.env.get(
-                    "prefetch_type",
-                    "statement"
-                ),
+            "file_name": self.env.get(
+                "file_name", os.path.basename(self.env.get("pathname"))
+            ),
+            "prefetch": self.env.get(
+                "template_prefetch", self.env.get("bigfix_prefetch_item")
+            ),
+            "version": self.env.get("template_version", self.env.get("version")),
+            "DownloadSize": self.env.get(
+                "template_file_size", self.env.get("filehasher_size")
+            ),
+            "prefetch_type": self.env.get("prefetch_type", "statement"),
             #'template_file_path': "./BigFix/FixletDebugger-Win.bes.mustache"
         }
         self.env[
-            'template_dictionary'
-        ] = generate_bes_from_template.get_missing_bes_values(
-            template_dict
-        )
+            "template_dictionary"
+        ] = generate_bes_from_template.get_missing_bes_values(template_dict)
 
 
 if __name__ == "__main__":

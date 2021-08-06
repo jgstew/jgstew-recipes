@@ -5,7 +5,10 @@ See docstring for VersionMaximumArray class
 
 import distutils.version
 
-from autopkglib import Processor, ProcessorError  # pylint: disable=import-error,unused-import
+from autopkglib import (
+    Processor,
+    ProcessorError,
+)  # pylint: disable=import-error,unused-import
 
 
 __all__ = ["VersionMaximumArray"]
@@ -18,15 +21,11 @@ class VersionMaximumArray(Processor):  # pylint: disable=too-few-public-methods
     input_variables = {
         "version_array": {
             "required": False,
-            "description": (
-                "Array of Versions. Defaults to %match%."
-            ),
+            "description": ("Array of Versions. Defaults to %match%."),
         }
     }
     output_variables = {
-        "version_maximum": {
-            "description": "The maximum version from the array."
-        },
+        "version_maximum": {"description": "The maximum version from the array."},
     }
 
     def main(self):
@@ -37,7 +36,7 @@ class VersionMaximumArray(Processor):  # pylint: disable=too-few-public-methods
 
         version_maximum = max(version_array, key=distutils.version.LooseVersion)
 
-        #print(version_maximum)
+        # print(version_maximum)
 
         self.env["version_maximum"] = version_maximum
 

@@ -6,6 +6,7 @@ This processor extends the autopkglib.URLTextSearcher processor
 """
 
 import re
+
 # import sys
 
 # sys.path.append("/Library/AutoPkg")
@@ -62,8 +63,7 @@ class URLTextSearcherArray(URLTextSearcher):
         },
         "full_results": {
             "description": (
-                "boolean flag - if true return all results"
-                "Default: False"
+                "boolean flag - if true return all results" "Default: False"
             ),
             "required": False,
         },

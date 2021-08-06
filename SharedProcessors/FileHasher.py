@@ -6,7 +6,10 @@
 """See docstring for FileHasher class"""
 
 from hashlib import sha1, sha256, md5
-from autopkglib import Processor, ProcessorError  # pylint: disable=import-error,unused-import
+from autopkglib import (
+    Processor,
+    ProcessorError,
+)  # pylint: disable=import-error,unused-import
 
 __all__ = ["FileHasher"]
 
@@ -18,24 +21,14 @@ class FileHasher(Processor):  # pylint: disable=invalid-name
     input_variables = {
         "file_path": {
             "required": False,
-            "description": (
-                "Path to hash. Defaults to %pathname%."
-            ),
+            "description": ("Path to hash. Defaults to %pathname%."),
         }
     }
     output_variables = {
-        "filehasher_sha1": {
-            "description": "The input file SHA1"
-        },
-        "filehasher_sha256": {
-            "description": "The input file SHA256"
-        },
-        "filehasher_md5": {
-            "description": "The input file MD5"
-        },
-        "filehasher_size": {
-            "description": "The input file size"
-        }
+        "filehasher_sha1": {"description": "The input file SHA1"},
+        "filehasher_sha256": {"description": "The input file SHA256"},
+        "filehasher_md5": {"description": "The input file MD5"},
+        "filehasher_size": {"description": "The input file size"},
     }
 
     __doc__ = description
@@ -66,19 +59,30 @@ class FileHasher(Processor):  # pylint: disable=invalid-name
             for a_hash in hashes:
                 a_hash.update(chunk)
 
-        self.output("File MD5    = {filehasher_md5}".format(
-            filehasher_md5=hashes[2].hexdigest()), 1)
-        self.output("File SHA1   = {filehasher_sha1}".format(
-            filehasher_sha1=hashes[0].hexdigest()), 1)
-        self.output("File SHA256 = {filehasher_sha256}".format(
-            filehasher_sha256=hashes[1].hexdigest()), 1)
-        self.output("File Size   = {filehasher_size}".format(
-            filehasher_size=size), 1)
+        self.output(
+            "File MD5    = {filehasher_md5}".format(
+                filehasher_md5=hashes[2].hexdigest()
+            ),
+            1,
+        )
+        self.output(
+            "File SHA1   = {filehasher_sha1}".format(
+                filehasher_sha1=hashes[0].hexdigest()
+            ),
+            1,
+        )
+        self.output(
+            "File SHA256 = {filehasher_sha256}".format(
+                filehasher_sha256=hashes[1].hexdigest()
+            ),
+            1,
+        )
+        self.output("File Size   = {filehasher_size}".format(filehasher_size=size), 1)
 
-        self.env['filehasher_sha1'] = hashes[0].hexdigest()
-        self.env['filehasher_sha256'] = hashes[1].hexdigest()
-        self.env['filehasher_md5'] = hashes[2].hexdigest()
-        self.env['filehasher_size'] = size
+        self.env["filehasher_sha1"] = hashes[0].hexdigest()
+        self.env["filehasher_sha256"] = hashes[1].hexdigest()
+        self.env["filehasher_md5"] = hashes[2].hexdigest()
+        self.env["filehasher_size"] = size
 
     def main(self):
         """Execution starts here"""

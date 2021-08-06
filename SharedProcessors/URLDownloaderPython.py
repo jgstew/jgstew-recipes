@@ -284,7 +284,10 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
 
         # get http headers
         req = Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36')
+        req.add_header(
+            "User-Agent",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36",
+        )
         response = urlopen(
             req,
             context=self.ssl_context_certifi(),

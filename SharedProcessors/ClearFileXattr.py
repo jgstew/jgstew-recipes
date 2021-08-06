@@ -6,7 +6,11 @@ Resolves:
 - https://github.com/jgstew/jgstew-recipes/issues/3
 """
 
-from autopkglib import Processor, ProcessorError, xattr  # pylint: disable=import-error,unused-import
+from autopkglib import (
+    Processor,
+    ProcessorError,
+    xattr,
+)  # pylint: disable=import-error,unused-import
 
 __all__ = ["ClearFileXattr"]
 
@@ -18,19 +22,15 @@ class ClearFileXattr(Processor):  # pylint: disable=invalid-name
     input_variables = {
         "file_path": {
             "required": False,
-            "description": (
-                "Path to clear etag xattr. Defaults to %pathname%."
-            ),
+            "description": ("Path to clear etag xattr. Defaults to %pathname%."),
         },
         "file_xattr": {
             "required": False,
             "default": "com.github.autopkg.etag",
             "description": "xattr to clear",
-        }
+        },
     }
-    output_variables = {
-        "None": {}
-    }
+    output_variables = {"None": {}}
 
     __doc__ = description
 

@@ -5,11 +5,10 @@ See docstring for VersionMaximumArray class
 
 import distutils.version
 
-from autopkglib import (
+from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,
     ProcessorError,
-)  # pylint: disable=import-error,unused-import
-
+)
 
 __all__ = ["VersionMaximumArray"]
 

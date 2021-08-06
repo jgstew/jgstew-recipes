@@ -4,10 +4,10 @@
 #
 """See docstring for StopProcessingIfDownloadUnchanged class"""
 
-from autopkglib import (
+from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,
     ProcessorError,
-)  # pylint: disable=import-error,unused-import
+)
 
 __all__ = ["StopProcessingIfDownloadUnchanged"]
 

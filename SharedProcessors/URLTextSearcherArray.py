@@ -7,12 +7,13 @@ This processor extends the autopkglib.URLTextSearcher processor
 
 import re
 
+from autopkglib import ProcessorError  # pylint: disable=import-error,unused-import
+from autopkglib.URLTextSearcher import URLTextSearcher  # pylint: disable=import-error
+
 # import sys
 
 # sys.path.append("/Library/AutoPkg")
 
-from autopkglib import ProcessorError  # pylint: disable=import-error,unused-import
-from autopkglib.URLTextSearcher import URLTextSearcher  # pylint: disable=import-error
 
 MATCH_MESSAGE = "Found matching text"
 NO_MATCH_MESSAGE = "No match found on URL"

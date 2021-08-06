@@ -5,11 +5,10 @@
 """See docstring for DangerousEvaluate class"""
 
 
-from autopkglib import (
+from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
-)  # pylint: disable=import-error,wrong-import-position,unused-import
-
+)
 
 __all__ = ["DangerousEvaluate"]
 

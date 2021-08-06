@@ -9,18 +9,18 @@
 
 import os.path
 
-# import site
-
-from autopkglib import (
+from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
-)  # pylint: disable=import-error,wrong-import-position,unused-import
+)
 
 # add path this script is in
 # site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
-from bigfix_prefetch import (
+from bigfix_prefetch import (  # pylint: disable=wrong-import-position
     prefetch_from_dictionary,
-)  # pylint: disable=wrong-import-position
+)
+
+# import site
 
 
 __all__ = ["BigFixPrefetchItem"]

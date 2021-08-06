@@ -11,17 +11,16 @@ import os.path
 import site
 
 # site.addsitedir("/Library/AutoPkg")
-from autopkglib import (
+from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
-)  # pylint: disable=import-error,wrong-import-position,unused-import
+)
 
 # add path this script is in
 site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
-from generate_bes_from_template import (
+from generate_bes_from_template import (  # pylint: disable=wrong-import-position
     generate_bes_from_template,
-)  # pylint: disable=wrong-import-position
-
+)
 
 __all__ = ["BigFixSetupTemplateDictionary"]
 

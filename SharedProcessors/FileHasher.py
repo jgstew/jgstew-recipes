@@ -5,11 +5,12 @@
 # pylint: disable=C0103
 """See docstring for FileHasher class"""
 
-from hashlib import sha1, sha256, md5
-from autopkglib import (
+from hashlib import md5, sha1, sha256
+
+from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,
     ProcessorError,
-)  # pylint: disable=import-error,unused-import
+)
 
 __all__ = ["FileHasher"]
 

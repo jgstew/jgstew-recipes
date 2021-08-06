@@ -18,8 +18,7 @@
 import json
 import os
 import ssl
-
-from hashlib import sha1, sha256, md5
+from hashlib import md5, sha1, sha256
 
 try:
     from urllib.request import Request, urlopen  # Python 3
@@ -28,13 +27,11 @@ except ImportError:
     from urllib2 import Request, urlopen  # Python 2
 
 import certifi  # pylint: disable=import-error
-
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
 )
 from autopkglib.URLDownloader import URLDownloader  # pylint: disable=import-error
-
 
 __all__ = ["URLDownloaderPython"]
 

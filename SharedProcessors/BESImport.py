@@ -11,11 +11,10 @@ try:
 except (ImportError, ModuleNotFoundError):
     from configparser import SafeConfigParser
 
-from autopkglib import Processor, ProcessorError
-
-import requests
-from besapi import besapi
 import lxml
+import requests
+from autopkglib import Processor, ProcessorError
+from besapi import besapi
 
 try:
     requests.packages.urllib3.disable_warnings()

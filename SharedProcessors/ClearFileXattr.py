@@ -6,11 +6,11 @@ Resolves:
 - https://github.com/jgstew/jgstew-recipes/issues/3
 """
 
-from autopkglib import (
+from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,
     ProcessorError,
     xattr,
-)  # pylint: disable=import-error,unused-import
+)
 
 __all__ = ["ClearFileXattr"]
 

@@ -15,11 +15,10 @@ except ImportError:
     print("ERROR: `chevron` library required.")
     print("https://github.com/jgstew/jgstew-recipes/blob/main/requirements.txt")
 
-from autopkglib import (
+from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
-)  # pylint: disable=import-error,wrong-import-position,unused-import
-
+)
 
 __all__ = ["ContentFromTemplate"]
 

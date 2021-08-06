@@ -1,1 +1,17 @@
 ---
+Description: Downloads the latest Nvidia Broadcast for Windows
+Identifier: com.github.jgstew.download.NvidiaBroadcast-Win
+Input:
+  NAME: NvidiaBroadcast
+MinimumVersion: '2.3'
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLTextSearcher
+    Arguments:
+      url: https://www.nvidia.com/en-us/geforce/broadcasting/broadcast-app/
+      re_pattern: '"https:\/\/international.download.nvidia.com\/Windows\/broadcast\/(?P<version_part>\d+\.\d+\.\d+)\/NVIDIA_Broadcast_v(?P<version_string>\d+\.\d+\.\d+\.\d+).exe"'
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: https://international.download.nvidia.com/Windows/broadcast/%version_part%/NVIDIA_Broadcast_v%version_string%.exe
+      prefetch_filename: True
+      COMPUTE_HASHES: True
+  - Processor: EndOfCheckPhase  # how do I stop here if nothing changed?

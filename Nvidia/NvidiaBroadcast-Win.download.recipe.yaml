@@ -8,6 +8,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/URLTextSearcher
     Arguments:
       url: https://www.nvidia.com/en-us/geforce/broadcasting/broadcast-app/
+      # regexr.com/63a7i
       re_pattern: '"https:\/\/international.download.nvidia.com\/Windows\/broadcast\/(?P<version_part>\d+\.\d+\.\d+)\/NVIDIA_Broadcast_v(?P<version_string>\d+\.\d+\.\d+\.\d+).exe"'
   - Processor: URLDownloaderPython
     Arguments:

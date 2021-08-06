@@ -19,7 +19,7 @@ import lxml
 
 try:
     requests.packages.urllib3.disable_warnings()
-except:
+except Exception:
     pass
 
 __all__ = ["BESImport"]
@@ -73,6 +73,7 @@ class BESImport(Processor):
             self.env["BES_PASSWORD"] = CONFPARSER.get("besapi", "BES_PASSWORD")
 
     def get_bes_title(self, bes_file):
+        """Get title from bes xml file for bigfix content"""
         with open(bes_file, "rb") as file_handle:
             tree = lxml.etree.parse(file_handle)
             self.env["bes_title"] = tree.xpath(
@@ -87,7 +88,6 @@ class BESImport(Processor):
         self.get_config()
         self.get_bes_title(bes_file)
 
-        # TODO read title from bes file using xpath
         bes_title = self.env.get("bes_title")
         bes_customsite = self.env.get("bes_customsite")
         bes_taskid = self.env.get("bes_taskid", None)

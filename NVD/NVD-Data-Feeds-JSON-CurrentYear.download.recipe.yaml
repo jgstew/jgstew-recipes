@@ -24,7 +24,7 @@ Process:
     Arguments:
       url: https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-%YEAR%.json.%TYPE%
   - Processor: EndOfCheckPhase
-  #- Processor: com.github.jgstew.SharedProcessors/StopProcessingIfDownloadUnchanged
+  # - Processor: com.github.jgstew.SharedProcessors/StopProcessingIfDownloadUnchanged
   - Processor: URLDownloader
     Arguments:
       url: https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-%YEAR%.meta

@@ -14,5 +14,5 @@ Process:
       url: "https://bbuilds2.getgocdn.com/builds/g2m/%build%/G2MCoreInstExtractor.exe"
       # NOTE: `getgocdn.com` does not support `If-Modified-Since` headers properly
       CHECK_FILESIZE_ONLY: True
-      #curl_opts: ['--libcurl','/tmp/libcurl.output.c']
+      # curl_opts: ['--libcurl','/tmp/libcurl.output.c']
   - Processor: EndOfCheckPhase

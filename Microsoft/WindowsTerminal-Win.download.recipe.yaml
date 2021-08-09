@@ -10,5 +10,5 @@ Process:
       github_repo: microsoft/terminal
       # example: Microsoft.WindowsTerminal_1.9.1942.0_8wekyb3d8bbwe.msixbundle
       asset_regex: Microsoft.WindowsTerminal_.*.msixbundle
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
   - Processor: EndOfCheckPhase

@@ -285,10 +285,7 @@ class URLDownloaderPython(URLDownloader):  # pylint: disable=invalid-name
             "User-Agent",
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36",
         )
-        response = urlopen(
-            req,
-            context=self.ssl_context_certifi(),
-        )
+        response = urlopen(req, context=self.ssl_context_certifi(),)
         response_headers = response.info()
 
         self.env["download_changed"] = self.download_changed(response_headers)

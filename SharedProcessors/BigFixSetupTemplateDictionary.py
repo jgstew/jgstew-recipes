@@ -8,7 +8,6 @@
 """See docstring for BigFixSetupTemplateDictionary class"""
 
 import os.path
-#import site
 
 # site.addsitedir("/Library/AutoPkg")
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
@@ -17,10 +16,13 @@ from autopkglib import (  # pylint: disable=import-error,wrong-import-position,u
 )
 
 # add path this script is in
-#site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
+# site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
 from generate_bes_from_template import (  # pylint: disable=wrong-import-position
     generate_bes_from_template,
 )
+
+# import site
+
 
 __all__ = ["BigFixSetupTemplateDictionary"]
 

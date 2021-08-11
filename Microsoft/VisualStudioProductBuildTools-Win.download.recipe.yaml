@@ -1,0 +1,15 @@
+---
+Description: Downloads the latest VisualStudio Product BuildTools
+Identifier: com.github.jgstew.download.VisualStudioProductBuildTools-Win
+Input:
+  NAME: VisualStudioProductBuildTools
+MinimumVersion: '2.3'
+Process:
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: https://aka.ms/vs/16/release/vs_buildtools.exe
+      #prefetch_filename: True
+      COMPUTE_HASHES: True
+  - Processor: EndOfCheckPhase  # how do I stop here if nothing changed?
+  #- Processor: com.github.jgstew.SharedProcessors/StopProcessingIfDownloadUnchanged
+# TODO: get version info?

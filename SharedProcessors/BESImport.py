@@ -48,7 +48,9 @@ class BESImport(Processor):
     }
     output_variables = {
         "bes_id": {"description": "The returned ID of the bigfix content imported."},
-        "bes_import_result": {"description": "Description of BigFix import results."},
+        "bes_import_summary_result": {
+            "description": "Description of BigFix import results."
+        },
     }
     __doc__ = description
 
@@ -136,7 +138,7 @@ class BESImport(Processor):
                 )
 
                 # Create summary result data
-                self.env["bes_importer_summary_result"] = {
+                self.env["bes_import_summary_result"] = {
                     "summary_text": "The following tasks were imported into BigFix:",
                     "report_fields": ["Task ID", "Task Name", "Site"],
                     "data": {
@@ -196,7 +198,7 @@ class BESImport(Processor):
                 )
 
                 # Create summary result data
-                self.env["bes_importer_summary_result"] = {
+                self.env["bes_import_summary_result"] = {
                     "summary_text": "The following tasks were imported into BigFix:",
                     "report_fields": ["Task ID", "Task Name", "Site"],
                     "data": {

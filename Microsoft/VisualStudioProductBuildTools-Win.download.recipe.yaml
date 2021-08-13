@@ -2,14 +2,21 @@
 Description: Downloads the latest VisualStudio Product BuildTools
 Identifier: com.github.jgstew.download.VisualStudioProductBuildTools-Win
 Input:
-  NAME: VisualStudioProductBuildTools
+  NAME: VisualStudioProductBuildTools-Win
 MinimumVersion: '2.3'
 Process:
   - Processor: URLDownloaderPython
     Arguments:
+      # https://docs.microsoft.com/en-us/visualstudio/releases/2019/history#installing-an-earlier-release
+      # Direct link for specific version: https://download.visualstudio.microsoft.com/download/pr/45dfa82b-c1f8-4c27-a5a0-1fa7a864ae21/75e7f5779a42dddabc647af82a7eae4bf1417484f0cd1ac9e8fd87cbe7450c39/vs_BuildTools.exe
+      # Dynamic link for most current version: https://aka.ms/vs/16/release/vs_buildtools.exe
       url: https://aka.ms/vs/16/release/vs_buildtools.exe
       #prefetch_filename: True
       COMPUTE_HASHES: True
   - Processor: EndOfCheckPhase  # how do I stop here if nothing changed?
+  - Processor: com.github.jgstew.SharedProcessors/DangerousEvaluate
+    Arguments:
+      # verify TYPE is `gz` or `zip` otherwise HALT
+      evaluate_string: 'from datetime import datetime ; self.env["yyyymmdd"] = datetime.strptime(self.env.get("last_modified", None), "%a, %d %b %Y %H:%M:%S %Z").strftime("%Y-%m-%d")'
   #- Processor: com.github.jgstew.SharedProcessors/StopProcessingIfDownloadUnchanged
 # TODO: get version info?

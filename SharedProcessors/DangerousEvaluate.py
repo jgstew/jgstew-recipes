@@ -40,8 +40,13 @@ class DangerousEvaluate(Processor):  # pylint: disable=invalid-name
             ),
             1,
         )
-        # https://stackoverflow.com/questions/2220699/whats-the-difference-between-eval-exec-and-compile
-        eval(compile(evaluate_string, "<string>", "exec"))  # pylint: disable=eval-used
+        try:
+            # https://stackoverflow.com/questions/2220699/whats-the-difference-between-eval-exec-and-compile
+            eval(compile(evaluate_string, "<string>", "exec"))  # pylint: disable=eval-used
+        except Exception as err:
+            print(err)
+
+        self.output("self.env: \n{self_env}\n".format(self_env=self.env), 4)
 
 
 if __name__ == "__main__":

@@ -30,11 +30,11 @@ class BESImport(Processor):
     description = "Import BigFix content xml"
     input_variables = {
         "bes_file": {
-            "required": True,
+            "required": False,
             "description": "Path to BES XML file for console import.",
         },
         "bes_customsite": {
-            "required": True,
+            "required": False,
             "description": "BES console custom site for generated content.",
         },
         "besapi_conf_file": {
@@ -84,13 +84,13 @@ class BESImport(Processor):
     def main(self):
         """BESImport Main Method"""
         # Assign BES Console Variables
-        bes_file = self.env.get("bes_file")
+        bes_file = self.env.get("bes_file", self.env.get("content_file_pathname"))
 
         self.get_config()
         self.get_bes_title(bes_file)
 
         bes_title = self.env.get("bes_title")
-        bes_customsite = self.env.get("bes_customsite")
+        bes_customsite = self.env.get("bes_customsite", "autopkg")
         bes_taskid = self.env.get("bes_taskid", None)
 
         BES_USERNAME = self.env.get("BES_USER_NAME")

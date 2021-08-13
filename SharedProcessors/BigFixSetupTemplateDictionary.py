@@ -73,7 +73,7 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
             "prefetch": self.env.get(
                 "template_prefetch", self.env.get("bigfix_prefetch_item")
             ),
-            "version": self.env.get("template_version", self.env.get("version")),
+            "version": self.env.get("template_version", self.env.get("version", "")),
             "DownloadSize": self.env.get(
                 "template_file_size", self.env.get("filehasher_size")
             ),

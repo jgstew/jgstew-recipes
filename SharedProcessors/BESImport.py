@@ -156,7 +156,8 @@ class BESImport(Processor):
             self.output("Searching: '%s' for '%s'" % (bes_customsite, bes_title))
             tasks = bes_conn.get("tasks/custom/%s" % bes_customsite)
 
-            print(tasks)
+            # only print tasks if verbose=3
+            self.output(tasks, 3)
 
             duplicate_task = False
             for task in tasks().iterchildren():

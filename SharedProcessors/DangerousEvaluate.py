@@ -48,7 +48,7 @@ class DangerousEvaluate(Processor):  # pylint: disable=invalid-name
         except Exception as err:
             print(err)
 
-        self.output("self.env: \n{self_env}\n".format(self_env=self.env), 4)
+        self.output("self.env: \n{self_env}\n".format(self_env=self.env), 5)
 
 
 if __name__ == "__main__":

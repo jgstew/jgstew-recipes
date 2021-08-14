@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+		<Title>Updated BigFix Client - version {{version}} - Windows</Title>
+		<Description><![CDATA[<div class=FixletMessage> <TABLE><TBODY><TR><TD>  <P><B>Version {{version}} of BigFix is now available!<BR><BR> </B>The latest version of the BigFix Client provides several enhancements and fixes. This Fixlet can upgrade clients on all targeted computers. <BR><BR><FONT color=red><B>You must upgrade your Relays to a 10.0 version before upgrading your Clients.</B></FONT><BR><BR><B>Note: </B>This Fixlet message will only become relevant on computers after the BigFix Server and Relays have been upgraded. It may take several hours for the clients to notice that the BigFix Server and Relays are upgraded.<BR><BR> <B>Note: </B>It is recommended that you run this upgrade targeted to "All Computers" rather than to "Specific Computers" so that all old clients will get upgraded.<BR><BR> <B>Note: </B>This upgrade may take several minutes to run because the client service will be restarted as part of the upgrade process and the clients will not report their action results right away.<BR><BR></P><SPAN id=upgradeLink></SPAN> <SCRIPT type=text/javascript>var isEvansOrLater = '<?relevance if (exists property "datastore inspectors") then (True) else (False)?>' == 'True'?true:false; try {if (isEvansOrLater) {upgradeLink.innerHTML = Relevance('if (exists applicable computers of (fixlet 524 of (bes site whose (name of it = "BES Support")))) then ((format "<?rxlat <b>Important Note: </b>In order to deploy the BigFix Client 10.0.4 upgrade to clients with an older version of the Client Logging Service, you must first upgrade the Client Logging Service to 7.1.0.15 or greater. Please use the Fixlet message: {0} to facilitate the upgrade process.</p>?>" + (link "<?rxlat Upgrade BES Client Logging Service?>" of fixlet 524 of (bes site whose (name of it = "BES Support")) as string) ) as string) else ("")');} else {upgradeLink.innerHTML = EvaluateRelevance('if (exists applicable computers of (fixlet 524 of (bes site whose (name of it = "BES Support")))) then ("<b>Important Note: </b>In order to deploy the BigFix Client 10.0.4 upgrade to clients with an older version of the Client Logging Service, you must first upgrade the Client Logging Service to 7.1.0.15 or greater. Please use the Fixlet message: " & (link "Upgrade BES Client Logging Service" of fixlet 524 of (bes site whose (name of it = "BES Support")) as string) & " to facilitate the upgrade process.</p>") else ""');} } catch (e) {if (isEvansOrLater) {upgradeLink.innerHTML ='<?jxlat <b>Important Note:</b> In order to deploy the BigFix Client 10.0.4 upgrade to clients with an older version of the Client Logging Service, you must first upgrade the Client Logging Service to 7.1.0.15 or greater. Please use the Fixlet message ID 524: "Upgrade BES Client Logging Service" in the BES Support site to facilitate the upgrade process.?>';} else {upgradeLink.innerHTML = '<b>Important Note:</b> In order to deploy the BigFix Client 10.0.4 upgrade to clients with an older version of the Client Logging Service, you must first upgrade the Client Logging Service to 7.1.0.15 or greater. Please use the Fixlet message ID 524: "Upgrade BES Client Logging Service" in the BES Support site to facilitate the upgrade process.';} }</SCRIPT><BR> <STRONG>Note:</STRONG> This client supports Windows Server 2012 R2 / Windows 8.1 and above. </TD></TR></TBODY></TABLE>   </div>   <div class=FixletProperty>     <h4>File Size:</h4> 16.33 MB    </div>]]></Description>
+		<Relevance>(if exists property "in proxy agent context" then ( not in proxy agent context ) else true )</Relevance>
+		<Relevance>windows of operating system</Relevance>
+		<Relevance><![CDATA[version of client < "{{version}}" and version of client >= "7.2"]]></Relevance>
+		<Relevance><![CDATA[version of current relay >= "9.2"]]></Relevance>
+		<Relevance>evaluation of client license = false</Relevance>
+		<Relevance><![CDATA[((name of it starts with "Win") AND (platform id of it != 3) AND (version of it >= "6.3")) of operating system]]></Relevance>
+		<Relevance><![CDATA[exists file "msiexec.exe" whose (version of it >= "2.0") of system folder]]></Relevance>
+		<Relevance><![CDATA[(not exists relay service) OR ("{{version}}" <= (if (version of client >= "8.0") then (version of relay service) else (version of file ((if (character 0 of it = "%22") then (substring between "%22" of it) else it) of image path of relay service))))]]></Relevance>
+		<Relevance><![CDATA[(not exists main gather service) OR ("{{version}}" <= (if (version of client >= "8.0") then (version of main gather service) else (version of file ((if (character 0 of it = "%22") then (substring between "%22" of it) else it) of image path of main gather service))))]]></Relevance>
+		<Relevance><![CDATA[(not exists service "BESClientLoggingService") OR ("7.1.0.15" <= (if (version of client >= "8.0") then (version of service "BESClientLoggingService") else (version of file ((if (character 0 of it = "%22") then (substring between "%22" of it) else it) of image path of service "BESClientLoggingService"))))]]></Relevance>
+		<Relevance>(x64 of it OR ia64 of it) of operating system OR (bit 25 of feature mask of main processor)</Relevance>
+		<Relevance>if exists property "in agent context" then (in agent context) else true</Relevance>
+		<Category>Upgrade</Category>
+		<DownloadSize>{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}</DownloadSize>
+		<Source>https://github.com/jgstew</Source>
+		<SourceID>jgstew</SourceID>
+		<SourceReleaseDate>{{SourceReleaseDate}}</SourceReleaseDate>
+		<SourceSeverity>Critical</SourceSeverity>
+		<MIMEField>
+			<Name>x-fixlet-domain_attributes</Name>
+			<Value>BES Deploy Client Warn Important</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>{{x-fixlet-modification-time}}</Value>
+		</MIMEField>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to deploy the BigFix Client {{version}} upgrade.</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[
+{{{prefetch}}}
+
+if {not exists regapp "BESClient.exe"}
+    regset "[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\App Paths\BESClient.exe]" ""="{escapes of (pathname of client as string)}"
+    regset "[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\App Paths\BESClient.exe]" "Path"="{escapes of (parent folder of client as string)}\\"
+endif
+
+folder delete "{(client folder of current site as string) & "\__Local\Upgrade"}"
+// If the next line fails, there is not enough free space to complete this action
+continue if {((if (exists variable "temp" of it) then (17118728 < free space of drive of folder(value of variable "temp" of it)) else true) of environment) AND (17118728 < free space of drive of client folder of current site)}
+folder create "{(client folder of current site as string) & "\__Local\Upgrade"}"
+move __Download\{{{file_name}}} __Local\Upgrade\{{{file_name}}}
+// The following line may show as Failed if the command executes a restart of the client - This is normal behaviour on success
+wait __Local\Upgrade\{{{file_name}}} /s /v"/l*voicewarmup \"{location of client}\besclientupgrade.log\" REBOOT=ReallySuppress MSIRESTARTMANAGERCONTROL=Disable /qn"]]></ActionScript>
+			<SuccessCriteria Option="CustomRelevance"><![CDATA[version of client < "{{version}}"]]></SuccessCriteria>
+		</DefaultAction>
+		<Action ID="Link2">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> for instructions to manually upgrade BigFix Components.</PostLink>
+			</Description>
+			<ActionScript MIMEType="text/x-uri">https://help.hcltechsw.com/bigfix/10.0/platform/Platform/Installation/c_upgrading1.html</ActionScript>
+		</Action>
+	</{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+</BES>

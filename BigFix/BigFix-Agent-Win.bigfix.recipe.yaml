@@ -1,0 +1,19 @@
+---
+Description: Generates a BigFix Task for the latest BigFix Client
+Identifier: com.github.jgstew.bigfix.BigFixAgent-Win
+Input:
+  NAME: BigFixAgent-Win
+MinimumVersion: '2.3'
+ParentRecipe: com.github.jgstew.download.BigFix-Agent-Win
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/FileHasher
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+    Arguments:
+      template_version: "%version_maximum%"
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: ./BigFix/BigFix-Agent-Windows-Update.bes.mustashe
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.bes"
+  - Processor: com.github.jgstew.SharedProcessors/BESImport
+  - Processor: com.github.jgstew.SharedProcessors/BigFixActioner

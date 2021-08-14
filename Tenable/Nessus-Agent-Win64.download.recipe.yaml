@@ -18,4 +18,5 @@ Process:
       # NOTE: `www.tenable.com/downloads` doesn't seem to provide etag or last modified header info so we can't be smart about this
       CHECK_FILESIZE_ONLY: True
       COMPUTE_HASHES: True
+      User_Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0
   - Processor: EndOfCheckPhase

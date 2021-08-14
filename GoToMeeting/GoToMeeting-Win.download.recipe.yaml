@@ -8,11 +8,12 @@ Process:
   # https://github.com/autopkg/homebysix-recipes/blob/master/GoToMeeting/GoToMeetingURLProvider.py
   - Processor: com.github.homebysix.download.GoToMeeting/GoToMeetingURLProvider
   # URLDownloader seems to redownload the file if only the etag changed: https://github.com/jgstew/jgstew-recipes/issues/3
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       # https://builds.cdn.getgo.com/g2mupdater/live/config.json
       url: "https://bbuilds2.getgocdn.com/builds/g2m/%build%/G2MCoreInstExtractor.exe"
       # NOTE: `getgocdn.com` does not support `If-Modified-Since` headers properly
       CHECK_FILESIZE_ONLY: True
+      download_version: "%build%"
       # curl_opts: ['--libcurl','/tmp/libcurl.output.c']
   - Processor: EndOfCheckPhase

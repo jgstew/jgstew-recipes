@@ -9,10 +9,11 @@ Process:
     Arguments:
       url: https://www.nvidia.com/en-us/geforce/broadcasting/broadcast-app/
       # regexr.com/63a7i
-      re_pattern: '"https:\/\/international.download.nvidia.com\/Windows\/broadcast\/(?P<version_part>\d+\.\d+\.\d+)\/NVIDIA_Broadcast_v(?P<version_string>\d+\.\d+\.\d+\.\d+).exe"'
+      re_pattern: '"https:\/\/international.download.nvidia.com\/Windows\/broadcast\/(?P<version_part>\d+\.\d+\.\d+)\/NVIDIA_Broadcast_v(?P<version>\d+\.\d+\.\d+\.\d+).exe"'
   - Processor: URLDownloaderPython
     Arguments:
-      url: https://international.download.nvidia.com/Windows/broadcast/%version_part%/NVIDIA_Broadcast_v%version_string%.exe
+      url: https://international.download.nvidia.com/Windows/broadcast/%version_part%/NVIDIA_Broadcast_v%version%.exe
       prefetch_filename: True
       COMPUTE_HASHES: True
+      download_version: "%version%"
   - Processor: EndOfCheckPhase  # how do I stop here if nothing changed?

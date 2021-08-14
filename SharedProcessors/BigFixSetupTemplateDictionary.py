@@ -50,6 +50,7 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
         },
         "prefetch_type": {
             "required": False,
+            "default": "statement",
             "description": "Either 'block' or 'statement'. Defaults to 'statement'",
         },
         "template_version": {

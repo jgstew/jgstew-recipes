@@ -16,6 +16,4 @@ Process:
       template_file_path: ./BigFix/FixletDebugger-Win.bes.mustache
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.bes"
   - Processor: com.github.jgstew.SharedProcessors/BESImport
-    Arguments:
-      bes_file: "%content_file_pathname%"
-      bes_customsite: autopkg
+  - Processor: com.github.jgstew.SharedProcessors/BigFixActioner

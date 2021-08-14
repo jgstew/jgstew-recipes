@@ -33,9 +33,9 @@
 override wait
 hidden=true
 completion=job
-Priority=low
 wait __Download\{{{file_name}}} --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
 
+action may require restart
 </ActionScript>
 			<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
 		</DefaultAction>

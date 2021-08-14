@@ -23,3 +23,4 @@ Process:
       template_file_path: "Microsoft/VisualStudioProductBuildTools-Win-Install.bes.mustashe"
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.bes"
   - Processor: com.github.jgstew.SharedProcessors/BESImport
+  - Processor: com.github.jgstew.SharedProcessors/BigFixActioner

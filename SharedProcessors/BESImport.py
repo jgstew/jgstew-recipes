@@ -70,9 +70,14 @@ class BESImport(Processor):
         CONFPARSER.read(config_path)
 
         if CONFPARSER:
-            self.env["BES_ROOT_SERVER"] = CONFPARSER.get("besapi", "BES_ROOT_SERVER")
-            self.env["BES_USER_NAME"] = CONFPARSER.get("besapi", "BES_USER_NAME")
-            self.env["BES_PASSWORD"] = CONFPARSER.get("besapi", "BES_PASSWORD")
+            try:
+                self.env["BES_ROOT_SERVER"] = CONFPARSER.get("besapi","BES_ROOT_SERVER")
+                self.env["BES_USER_NAME"] = CONFPARSER.get("besapi","BES_USER_NAME")
+                self.env["BES_PASSWORD"] = CONFPARSER.get("besapi","BES_PASSWORD")
+            except KeyError as err:
+                self.output(err, 0)
+                self.env["stop_processing_recipe"] = True
+
 
     def get_bes_title(self, bes_file):
         """Get title from bes xml file for bigfix content"""
@@ -176,7 +181,7 @@ class BESImport(Processor):
                     "Import(POST): '%s' to %s/api/tasks/custom/%s"
                     % (bes_file, BES_ROOT_SERVER, bes_customsite)
                 )
-                print(bes_conn.url("tasks/custom/%s" % bes_customsite))
+                self.output(bes_conn.url("tasks/custom/%s" % bes_customsite))
                 upload_result = None
 
                 # Upload task
@@ -185,7 +190,7 @@ class BESImport(Processor):
                         "tasks/custom/%s" % bes_customsite, file_handle
                     )
 
-                print(upload_result)
+                self.output(upload_result)
 
                 # Read and parse console return
                 self.env["bes_id"] = str(upload_result().Task.ID)
@@ -211,7 +216,7 @@ class BESImport(Processor):
                 }
 
             else:
-                self.output("Duplicate task, skipping import.")
+                self.output("Duplicate task, skipping import.", 0)
                 self.env["bes_id"] = 0
 
 

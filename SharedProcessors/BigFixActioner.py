@@ -98,7 +98,7 @@ class BigFixActioner(BESImport):
         template_dict = {}
         template_dict["bes_id"] = self.env.get("bes_id", 0)
         if template_dict["bes_id"] == 0:
-            self.output("Nothing to action.")
+            self.output("Nothing to action.", 0)
         else:
             self.get_config()
             template_dict["bes_customsite"] = self.env.get("bes_customsite", "autopkg")

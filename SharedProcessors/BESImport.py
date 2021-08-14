@@ -27,7 +27,7 @@ __all__ = ["BESImport"]
 class BESImport(Processor):
     """AutoPkg Processor to import content to BigFix REST API using besapi wrapper"""
 
-    description = "Import BigFix content xml"
+    description = __doc__
     input_variables = {
         "bes_file": {
             "required": False,
@@ -35,6 +35,7 @@ class BESImport(Processor):
         },
         "bes_customsite": {
             "required": False,
+            "default": "autopkg",
             "description": "BES console custom site for generated content.",
         },
         "besapi_conf_file": {
@@ -149,7 +150,7 @@ class BESImport(Processor):
                 }
             else:
                 self.output("Task ID:[%s] not found, skipping." % bes_taskid)
-                self.env["bes_id"] = None
+                self.env["bes_id"] = 0
 
         # POST, create task
         else:
@@ -211,7 +212,7 @@ class BESImport(Processor):
 
             else:
                 self.output("Duplicate task, skipping import.")
-                self.env["bes_id"] = None
+                self.env["bes_id"] = 0
 
 
 if __name__ == "__main__":

@@ -19,3 +19,5 @@ Process:
     Arguments:
       template_file_path: "Microsoft/SQLServerManagementStudio-Win Install_Update.bes.mustache"
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.bes"
+  - Processor: com.github.jgstew.SharedProcessors/BESImport
+  - Processor: com.github.jgstew.SharedProcessors/BigFixActioner

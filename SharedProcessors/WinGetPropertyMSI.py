@@ -4,6 +4,7 @@ See docstring for WinGetPropertyMSI class
 """
 
 import msilib
+
 # import distutils.version
 
 from autopkglib import (  # pylint: disable=import-error,unused-import
@@ -15,31 +16,34 @@ from autopkglib import (  # pylint: disable=import-error,unused-import
 
 __all__ = ["WinGetPropertyMSI"]
 
+
 class WinGetPropertyMSI(Processor):  # pylint: disable=too-few-public-methods
     """Gets the property the MSI file."""
 
     description = __doc__
     input_variables = {
-        "pathname": {
-            "required": True,
-            "description": ("MSI Filename to read from"),
-        },
+        "pathname": {"required": True, "description": ("MSI Filename to read from"),},
         "msi_property": {
             "required": False,
             "default": "ProductVersion",
-            "description": ("Name of the property to read from the Property table."
+            "description": (
+                "Name of the property to read from the Property table."
                 " Defaults to 'ProductVersion'"
             ),
         },
     }
     output_variables = {
-        "msi_property_value": {"description": "The value of the property if applicable."},
+        "msi_property_value": {
+            "description": "The value of the property if applicable."
+        },
     }
 
     def get_property_msi(self, path, msi_property):
         """read property from msi file"""
         msi_db = msilib.OpenDatabase(path, msilib.MSIDBOPEN_READONLY)
-        view = msi_db.OpenView("SELECT Value FROM Property WHERE Property='" + msi_property + "'")
+        view = msi_db.OpenView(
+            "SELECT Value FROM Property WHERE Property='" + msi_property + "'"
+        )
         view.Execute(None)
         result = view.Fetch()
         self.output(dir(result), 3)

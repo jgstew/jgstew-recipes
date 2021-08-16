@@ -2,7 +2,8 @@
 #
 # Copyright 2021 James Stewart @JGStew
 #
-# Latest Code is found here: https://github.com/jgstew/autopkg/blob/dev/Code/autopkglib/URLDownloaderPython.py
+# Latest Code is found here:
+#   https://github.com/jgstew/autopkg/blob/dev/Code/autopkglib/URLDownloaderPython.py
 # This is now just a stub that points to that
 """See docstring for URLDownloaderPython class"""
 
@@ -18,7 +19,8 @@ __all__ = ["URLDownloaderPython"]
 class URLDownloaderPython(autopkglib.URLDownloaderPython):
     """This is meant to be a pure python replacement for URLDownloader
     See: https://github.com/autopkg/autopkg/blob/master/Code/autopkglib/URLDownloader.py
-    Latest Code is found here: https://github.com/jgstew/autopkg/blob/dev/Code/autopkglib/URLDownloaderPython.py
+    Latest Code is found here:
+    - https://github.com/jgstew/autopkg/blob/dev/Code/autopkglib/URLDownloaderPython.py
     """
 
     description = __doc__

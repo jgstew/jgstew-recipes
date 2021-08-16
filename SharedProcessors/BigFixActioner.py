@@ -24,6 +24,7 @@ from BESImport import BESImport
 
 __all__ = ["BigFixActioner"]
 
+# noqa: B950
 BES_SourcedFixletAction = """\
 <BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
     <SourcedFixletAction>
@@ -35,34 +36,34 @@ BES_SourcedFixletAction = """\
         <Target>
             <CustomRelevance>exists computer names whose(it as lowercase contains "autopkg")</CustomRelevance>
         </Target>
-		<Settings>
-			<PreActionShowUI>false</PreActionShowUI>
-			<HasRunningMessage>false</HasRunningMessage>
-			<HasTimeRange>false</HasTimeRange>
-			<HasStartTime>false</HasStartTime>
-			<HasEndTime>true</HasEndTime>
-			<EndDateTimeLocalOffset>P5D</EndDateTimeLocalOffset>
-			<HasDayOfWeekConstraint>false</HasDayOfWeekConstraint>
-			<UseUTCTime>false</UseUTCTime>
-			<ActiveUserRequirement>NoRequirement</ActiveUserRequirement>
-			<ActiveUserType>AllUsers</ActiveUserType>
-			<HasWhose>false</HasWhose>
-			<PreActionCacheDownload>true</PreActionCacheDownload>
-			<Reapply>true</Reapply>
-			<HasReapplyLimit>false</HasReapplyLimit>
-			<HasReapplyInterval>true</HasReapplyInterval>
-			<ReapplyInterval>PT15M</ReapplyInterval>
-			<HasRetry>true</HasRetry>
-			<RetryCount>99</RetryCount>
-			<RetryWait Behavior="WaitForReboot">PT1H</RetryWait>
-			<HasTemporalDistribution>false</HasTemporalDistribution>
-			<ContinueOnErrors>true</ContinueOnErrors>
-			<PostActionBehavior Behavior="Nothing"></PostActionBehavior>
-			<IsOffer>true</IsOffer>
-			<AnnounceOffer>true</AnnounceOffer>
-			<OfferCategory>AutoPkgTesting</OfferCategory>
-			<OfferDescriptionHTML><![CDATA[Offer to test AutoPkg created content]]></OfferDescriptionHTML>
-		</Settings>
+        <Settings>
+            <PreActionShowUI>false</PreActionShowUI>
+            <HasRunningMessage>false</HasRunningMessage>
+            <HasTimeRange>false</HasTimeRange>
+            <HasStartTime>false</HasStartTime>
+            <HasEndTime>true</HasEndTime>
+            <EndDateTimeLocalOffset>P5D</EndDateTimeLocalOffset>
+            <HasDayOfWeekConstraint>false</HasDayOfWeekConstraint>
+            <UseUTCTime>false</UseUTCTime>
+            <ActiveUserRequirement>NoRequirement</ActiveUserRequirement>
+            <ActiveUserType>AllUsers</ActiveUserType>
+            <HasWhose>false</HasWhose>
+            <PreActionCacheDownload>true</PreActionCacheDownload>
+            <Reapply>true</Reapply>
+            <HasReapplyLimit>false</HasReapplyLimit>
+            <HasReapplyInterval>true</HasReapplyInterval>
+            <ReapplyInterval>PT15M</ReapplyInterval>
+            <HasRetry>true</HasRetry>
+            <RetryCount>99</RetryCount>
+            <RetryWait Behavior="WaitForReboot">PT1H</RetryWait>
+            <HasTemporalDistribution>false</HasTemporalDistribution>
+            <ContinueOnErrors>true</ContinueOnErrors>
+            <PostActionBehavior Behavior="Nothing"></PostActionBehavior>
+            <IsOffer>true</IsOffer>
+            <AnnounceOffer>true</AnnounceOffer>
+            <OfferCategory>AutoPkgTesting</OfferCategory>
+            <OfferDescriptionHTML><![CDATA[Offer to test AutoPkg created content]]></OfferDescriptionHTML>
+        </Settings>
     </SourcedFixletAction>
 </BES>
 """

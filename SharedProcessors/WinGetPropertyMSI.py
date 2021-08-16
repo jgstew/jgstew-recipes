@@ -24,7 +24,10 @@ class WinGetPropertyMSI(Processor):  # pylint: disable=too-few-public-methods
 
     description = __doc__
     input_variables = {
-        "pathname": {"required": True, "description": ("MSI Filename to read from"),},
+        "pathname": {
+            "required": True,
+            "description": "pathname to MSI file to read msi_property from",
+        },
         "msi_property": {
             "required": False,
             "default": "ProductVersion",

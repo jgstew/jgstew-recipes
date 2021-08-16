@@ -41,7 +41,6 @@ class DangerousEvaluate(Processor):  # pylint: disable=invalid-name
             1,
         )
         try:
-            # https://stackoverflow.com/questions/2220699/whats-the-difference-between-eval-exec-and-compile
             eval(  # pylint: disable=eval-used
                 compile(evaluate_string, "<string>", "exec")
             )

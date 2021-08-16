@@ -3,9 +3,12 @@
 See docstring for WinGetPropertyMSI class
 """
 
-import msilib
+try:
+    import msilib
+except ImportError:
+    print("ImportError: msilib")
+    print("  Note: this is expected on non-windows platforms")
 
-# import distutils.version
 
 from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,
@@ -52,7 +55,7 @@ class WinGetPropertyMSI(Processor):  # pylint: disable=too-few-public-methods
     def main(self):
         """execution starts here"""
 
-        if not msilib and not is_windows():
+        if not msilib:
             self.output("WARNING: This does not work on non-Windows", 0)
             return ""
 
@@ -66,6 +69,8 @@ class WinGetPropertyMSI(Processor):  # pylint: disable=too-few-public-methods
 
         if " " not in msi_property:
             self.env[msi_property] = msi_property_value
+
+        return msi_property_value
 
 
 if __name__ == "__main__":

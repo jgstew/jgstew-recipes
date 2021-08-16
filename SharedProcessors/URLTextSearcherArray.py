@@ -107,6 +107,8 @@ class URLTextSearcherArray(URLTextSearcher):
         content = self.download_with_curl(curl_cmd)
         match_array = self.re_search(content)
 
+        self.output(match_array, 2)
+
         if not full_results:
             match_array = list(set(match_array))
 

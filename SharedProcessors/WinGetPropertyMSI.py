@@ -16,7 +16,6 @@ from autopkglib import (  # pylint: disable=import-error,unused-import
     is_windows,
 )
 
-
 __all__ = ["WinGetPropertyMSI"]
 
 
@@ -43,6 +42,7 @@ class WinGetPropertyMSI(Processor):  # pylint: disable=too-few-public-methods
 
     def get_property_msi(self, path, msi_property):
         """read property from msi file"""
+        # https://stackoverflow.com/a/9768876/861745
         msi_db = msilib.OpenDatabase(path, msilib.MSIDBOPEN_READONLY)
         view = msi_db.OpenView(
             "SELECT Value FROM Property WHERE Property='" + msi_property + "'"

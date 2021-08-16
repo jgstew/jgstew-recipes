@@ -9,15 +9,18 @@ except (ImportError, ModuleNotFoundError):
     from configparser import SafeConfigParser
 
 import chevron
-import requests
+
+# import requests
 from autopkglib import Processor, ProcessorError
 from besapi import besapi
 from BESImport import BESImport
 
-try:
-    requests.packages.urllib3.disable_warnings()
-except Exception:
-    pass
+# try:
+#     requests.packages.urllib3.disable_warnings()
+# except Exception:
+#     pass
+
+# get relevance for test group membership: concatenations " OR " of ("( exists computer names whose(it as lowercase contains %22autopkg%22) )"; it whose(it as trimmed string != "") | "False") of concatenations " OR " of ("( member of groups " & item 0 of it & " of sites %22ActionSite%22 )") of ((it as string) of ids of it, names of sites of it) of bes computer groups whose(name of it as lowercase contains "autopkg" AND name of it as lowercase contains "test")
 
 __all__ = ["BigFixActioner"]
 

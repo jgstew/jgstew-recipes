@@ -71,13 +71,14 @@ class BESImport(Processor):
 
         if CONFPARSER:
             try:
-                self.env["BES_ROOT_SERVER"] = CONFPARSER.get("besapi","BES_ROOT_SERVER")
-                self.env["BES_USER_NAME"] = CONFPARSER.get("besapi","BES_USER_NAME")
-                self.env["BES_PASSWORD"] = CONFPARSER.get("besapi","BES_PASSWORD")
+                self.env["BES_ROOT_SERVER"] = CONFPARSER.get(
+                    "besapi", "BES_ROOT_SERVER"
+                )
+                self.env["BES_USER_NAME"] = CONFPARSER.get("besapi", "BES_USER_NAME")
+                self.env["BES_PASSWORD"] = CONFPARSER.get("besapi", "BES_PASSWORD")
             except KeyError as err:
                 self.output(err, 0)
                 self.env["stop_processing_recipe"] = True
-
 
     def get_bes_title(self, bes_file):
         """Get title from bes xml file for bigfix content"""

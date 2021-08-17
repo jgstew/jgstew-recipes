@@ -9,11 +9,9 @@ except (ImportError, ModuleNotFoundError):
     from configparser import SafeConfigParser
 
 import chevron
-
 from autopkglib import Processor, ProcessorError
 from besapi import besapi
 from BESImport import BESImport
-
 
 __all__ = ["BigFixActioner"]
 

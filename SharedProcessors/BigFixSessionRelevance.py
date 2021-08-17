@@ -7,9 +7,6 @@ from autopkglib import Processor, ProcessorError
 from besapi import besapi
 from BESImport import BESImport
 
-
-# get relevance for test group membership: concatenations " OR " of ("( exists computer names whose(it as lowercase contains %22autopkg%22) )"; it whose(it as trimmed string != "") | "False") of concatenations " OR " of ("( member of groups " & item 0 of it & " of sites %22ActionSite%22 )") of ((it as string) of ids of it, names of sites of it) of bes computer groups whose(name of it as lowercase contains "autopkg" AND name of it as lowercase contains "test")
-
 __all__ = ["BigFixSessionRelevance"]
 
 
@@ -24,9 +21,7 @@ class BigFixSessionRelevance(BESImport):
         },
     }
     output_variables = {
-        "ses_rel_results": {
-            "description": "The results of the session relevance"
-        },
+        "ses_rel_results": {"description": "The results of the session relevance"},
     }
     __doc__ = description
 
@@ -59,7 +54,6 @@ class BigFixSessionRelevance(BESImport):
 
         # store result:
         self.env["ses_rel_results"] = ses_rel_results
-
 
 
 if __name__ == "__main__":

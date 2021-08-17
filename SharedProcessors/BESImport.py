@@ -93,6 +93,10 @@ class BESImport(Processor):
         # Assign BES Console Variables
         bes_file = self.env.get("bes_file", self.env.get("content_file_pathname"))
 
+        if not bes_file:
+            self.output("Nothing to import", 0)
+            return 0
+
         self.get_config()
         self.get_bes_title(bes_file)
 
@@ -103,6 +107,9 @@ class BESImport(Processor):
         BES_USERNAME = self.env.get("BES_USER_NAME")
         BES_PASSWORD = self.env.get("BES_PASSWORD")
         BES_ROOT_SERVER = self.env.get("BES_ROOT_SERVER")
+
+        # clear password from ENV
+        self.env["BES_PASSWORD"] = ""
 
         # BES Console Connection
         bes_conn = besapi.BESConnection(

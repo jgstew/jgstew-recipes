@@ -1,0 +1,15 @@
+---
+Description: Test BigFixSessionRelevance Processor
+Identifier: com.github.jgstew.test.BigFixSessionRelevance
+Input:
+  NAME: BigFixSessionRelevanceTest
+MinimumVersion: '2.3'
+Process:
+  # at the moment BESImport must come first
+  #   even though it isn't used in this case
+  #   otherwise `from BESImport import BESImport` will error
+  - Processor: com.github.jgstew.SharedProcessors/BESImport
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSessionRelevance
+    Arguments:
+      session_relevance: 'number of bes computers'
+# get relevance for test group membership: concatenations " OR " of ("( exists computer names whose(it as lowercase contains %22autopkg%22) )"; it whose(it as trimmed string != "") | "False") of concatenations " OR " of ("( member of groups " & item 0 of it & " of sites %22ActionSite%22 )") of ((it as string) of ids of it, names of sites of it) of bes computer groups whose(name of it as lowercase contains "autopkg" AND name of it as lowercase contains "test")

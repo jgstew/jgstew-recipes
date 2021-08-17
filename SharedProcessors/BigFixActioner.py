@@ -10,17 +10,10 @@ except (ImportError, ModuleNotFoundError):
 
 import chevron
 
-# import requests
 from autopkglib import Processor, ProcessorError
 from besapi import besapi
 from BESImport import BESImport
 
-# try:
-#     requests.packages.urllib3.disable_warnings()
-# except Exception:
-#     pass
-
-# get relevance for test group membership: concatenations " OR " of ("( exists computer names whose(it as lowercase contains %22autopkg%22) )"; it whose(it as trimmed string != "") | "False") of concatenations " OR " of ("( member of groups " & item 0 of it & " of sites %22ActionSite%22 )") of ((it as string) of ids of it, names of sites of it) of bes computer groups whose(name of it as lowercase contains "autopkg" AND name of it as lowercase contains "test")
 
 __all__ = ["BigFixActioner"]
 
@@ -70,7 +63,7 @@ BES_SourcedFixletAction = """\
 
 
 class BigFixActioner(BESImport):
-    """AutoPkg Processor to import content to BigFix REST API using besapi wrapper"""
+    """AutoPkg Processor to create a BigFix action from imported content"""
 
     description = __doc__
     input_variables = {
@@ -112,11 +105,14 @@ class BigFixActioner(BESImport):
             BES_PASSWORD = self.env.get("BES_PASSWORD")
             BES_ROOT_SERVER = self.env.get("BES_ROOT_SERVER")
 
+            # clear password from ENV
+            self.env["BES_PASSWORD"] = ""
+
             bes_action_data = chevron.render(BES_SourcedFixletAction, template_dict)
 
             self.output(bes_action_data, 4)
 
-            # BES Console Connection
+            # BigFix Server Connection
             bes_conn = besapi.BESConnection(
                 BES_USERNAME, BES_PASSWORD, BES_ROOT_SERVER, verify=False
             )

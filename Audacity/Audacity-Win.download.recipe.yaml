@@ -8,6 +8,7 @@ Input:
   TYPE: "exe"
 MinimumVersion: '2.3'
 Process:
+  # see: https://api.github.com/repos/audacity/audacity/releases/latest
   - Processor: GitHubReleasesInfoProvider
     Arguments:
       github_repo: audacity/audacity

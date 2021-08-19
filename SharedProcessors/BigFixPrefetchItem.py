@@ -103,6 +103,9 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
                     if prefetch_url != "download_url":
                         # otherwise assume real URL provided and use that
                         prefetch_dictionary["download_url"] = prefetch_url
+            else:
+                # default behavior if `prefetch_url` unspecified:
+                prefetch_dictionary["download_url"] = prefetch_dictionary["url"]
         else:
             # if no download_info dictionary, then create it:
             prefetch_dictionary = {

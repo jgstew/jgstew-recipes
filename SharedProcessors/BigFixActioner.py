@@ -119,7 +119,9 @@ class BigFixActioner(BESImport):
 
             self.output(action_result, 2)
 
-            self.env["bes_action_id"] = str(action_result().Action.ID)
+            # self.env["bes_action_id"] = ""
+            if action_result:
+                self.env["bes_action_id"] = str(action_result().Action.ID)
 
 
 if __name__ == "__main__":

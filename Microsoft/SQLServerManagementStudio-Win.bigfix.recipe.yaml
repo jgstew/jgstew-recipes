@@ -6,8 +6,10 @@ Input:
 MinimumVersion: '2.3'
 ParentRecipe: com.github.jgstew.download.SQLServerManagementStudio-Win
 Process:
-  - Processor: com.github.jgstew.SharedProcessors/FileHasher
+  #- Processor: com.github.jgstew.SharedProcessors/FileHasher
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+    Arguments:
+      prefetch_url: "%download_url%"
   - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
     Arguments:
       template_version: "%version%"

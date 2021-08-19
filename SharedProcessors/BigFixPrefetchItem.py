@@ -54,6 +54,11 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
             "required": False,
             "description": "Either 'block' or 'statement'. Defaults to 'statement'",
         },
+        "prefetch_url": {
+            "required": False,
+            "description": "Url to use in Prefetch or the dictionary key to use"
+            " defaults to url or download_url",
+        },
     }
     output_variables = {
         "bigfix_prefetch_item": {
@@ -84,19 +89,41 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
 
     def main(self):
         """Execution starts here"""
-        prefetch_dictionary = {
-            "file_name": self.env.get(
-                "file_name", os.path.basename(self.env.get("pathname"))
-            ),
-            "file_size": self.env.get("file_size", self.env.get("filehasher_size")),
-            "file_sha1": self.env.get("file_sha1", self.env.get("filehasher_sha1")),
-            "file_sha256": self.env.get(
-                "file_sha256", self.env.get("filehasher_sha256")
-            ),
-            "download_url": self.env.get("download_url", self.env.get("url")),
-            "prefetch_type": self.env.get("prefetch_type", "statement"),
-        }
+        # use download_info dictionary from URLDownloaderPython if available
+        prefetch_dictionary = self.env.get("download_info", None)
+        prefetch_url = self.env.get("prefetch_url", None)
+
+        if prefetch_dictionary:
+            if prefetch_url:
+                # if `url` then use that key
+                if prefetch_url == "url":
+                    prefetch_dictionary["download_url"] = prefetch_dictionary["url"]
+                else:
+                    # if `download_url` do nothing, default
+                    if prefetch_url != "download_url":
+                        # otherwise assume real URL provided and use that
+                        prefetch_dictionary["download_url"] = prefetch_url
+        else:
+            # if no download_info dictionary, then create it:
+            prefetch_dictionary = {
+                "file_name": self.env.get(
+                    "file_name", os.path.basename(self.env.get("pathname"))
+                ),
+                "file_size": self.env.get("file_size", self.env.get("filehasher_size")),
+                "file_sha1": self.env.get("file_sha1", self.env.get("filehasher_sha1")),
+                "file_sha256": self.env.get(
+                    "file_sha256", self.env.get("filehasher_sha256")
+                ),
+                "download_url": self.env.get(
+                    "prefetch_url", self.env.get("url", self.env.get("download_url"))
+                ),
+            }
+        prefetch_dictionary["prefetch_type"] = self.env.get(
+            "prefetch_type", "statement"
+        )
         self.get_prefetch(prefetch_dictionary)
+
+        self.output("self.env: \n{self_env}\n".format(self_env=self.env), 4)
 
 
 if __name__ == "__main__":

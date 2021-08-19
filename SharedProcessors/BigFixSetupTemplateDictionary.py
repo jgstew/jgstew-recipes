@@ -67,6 +67,13 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
 
     def main(self):
         """Execution starts here"""
+        # get download_info dictionary or empty dictionary
+        download_info = self.env.get("download_info", {})
+
+        # if no file_size then set to 0
+        if "file_size" not in download_info:
+            download_info["file_size"] = 0
+
         template_dict = {
             "file_name": self.env.get(
                 "file_name", os.path.basename(self.env.get("pathname"))
@@ -76,7 +83,8 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
             ),
             "version": self.env.get("template_version", self.env.get("version", "")),
             "DownloadSize": self.env.get(
-                "template_file_size", self.env.get("filehasher_size")
+                "template_file_size",
+                self.env.get("filehasher_size", download_info["file_size"]),
             ),
             "prefetch_type": self.env.get("prefetch_type", "statement"),
             #'template_file_path': "./BigFix/FixletDebugger-Win.bes.mustache"

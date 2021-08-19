@@ -1,0 +1,10 @@
+---
+Description: Test FileGetBase64 Processor
+Identifier: com.github.jgstew.test.FileGetBase64
+Input:
+  NAME: FileGetBase64Test
+MinimumVersion: '2.3'
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/FileGetBase64
+    Arguments:
+      file_pathname: "BigFix/BigFix_logo_DevSiteToOriginal_128px.png"

@@ -18,7 +18,10 @@ class FileGetBase64(Processor):  # pylint: disable=too-few-public-methods
 
     description = __doc__
     input_variables = {
-        "file_pathname": {"required": False, "description": "file to base64 encode",},
+        "file_pathname": {
+            "required": False,
+            "description": "file path to base64 encode",
+        },
     }
     output_variables = {
         "file_base64": {"description": "the base64 encoded string"},
@@ -30,7 +33,7 @@ class FileGetBase64(Processor):  # pylint: disable=too-few-public-methods
         if file_pathname:
             with open(file_pathname, "rb") as file_io:
                 # read file and base64 encode
-                file_base64 = base64.b64encode(file_io.read())
+                file_base64 = base64.b64encode(file_io.read()).decode("utf-8")
             # get size of base64 string
             size_base64 = len(str(file_base64).encode("utf-8"))
             if size_base64 / 1024 > 64:
@@ -40,7 +43,7 @@ class FileGetBase64(Processor):  # pylint: disable=too-few-public-methods
                 )
             else:
                 self.output(f"Size of Base64 String from File: { size_base64 }", 2)
-            self.env["file_base64"] = str(file_base64)
+            self.env["file_base64"] = file_base64
 
 
 if __name__ == "__main__":

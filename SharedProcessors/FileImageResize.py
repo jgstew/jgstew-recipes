@@ -5,13 +5,13 @@ See docstring for FileImageResize class
 
 import os.path
 
-# Requires Pillow: python -m pip install --upgrade Pillow
-from PIL import Image
-
 from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,
     ProcessorError,
 )
+
+# Requires Pillow: python -m pip install --upgrade Pillow
+from PIL import Image
 
 __all__ = ["FileImageResize"]
 
@@ -52,11 +52,18 @@ class FileImageResize(Processor):  # pylint: disable=too-few-public-methods
 
         if file_pathname and os.path.isfile(file_pathname):
             file_name, file_ext = os.path.splitext(file_pathname)
-            file_path_save = self.env.get("file_path_save", f"{file_pathname}_resized{max_pixel_dim}{file_ext}")
+            file_path_save = self.env.get(
+                "file_path_save", f"{file_pathname}_resized{max_pixel_dim}{file_ext}"
+            )
             Image_Object = Image.open(file_pathname)
-            if Image_Object.width > max_pixel_dim or Image_Object.height > max_pixel_dim:
-                Image_Object.thumbnail((max_pixel_dim,max_pixel_dim),resample=Image.LANCZOS)
-                Image_Object.save(file_path_save,optimize=True)
+            if (
+                Image_Object.width > max_pixel_dim
+                or Image_Object.height > max_pixel_dim
+            ):
+                Image_Object.thumbnail(
+                    (max_pixel_dim, max_pixel_dim), resample=Image.LANCZOS
+                )
+                Image_Object.save(file_path_save, optimize=True)
             else:
                 self.output(f"WARNING: Image already smaller than {max_pixel_dim}")
                 file_path_save = file_pathname

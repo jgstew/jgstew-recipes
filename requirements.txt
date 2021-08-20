@@ -3,3 +3,4 @@ certifi
 generate_bes_from_template
 bigfix_prefetch
 besapi
+Pillow

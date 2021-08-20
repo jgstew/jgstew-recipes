@@ -1,0 +1,14 @@
+---
+Description: Test FileImageResize Processor
+Identifier: com.github.jgstew.test.FileImageResize
+Input:
+  NAME: FileImageResizeTest
+MinimumVersion: '2.3'
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/FileImageResize
+    Arguments:
+      file_pathname: "BigFix/BigFix_logo_DevSiteToOriginal_128px.png"
+  - Processor: com.github.jgstew.SharedProcessors/FileImageResize
+    Arguments:
+      file_pathname: "BigFix/BigFix_logo_DevSiteToOriginal_128px.png"
+      max_pixel_dim: 64

@@ -53,6 +53,15 @@ class FileExeVersionExtractor(Processor):
 
     __doc__ = description
 
+    def verify_file_exists(self, file_path):
+        """verify file exists, raise error if not"""
+        if not os.path.isfile(file_path):
+            self.output(f"ERROR: file missing! {file_path}", 0)
+            raise FileNotFoundError(
+                errno.ENOENT, os.strerror(errno.ENOENT), file_path
+            )
+        return file_path
+
     def main(self):
         """Execution starts here"""
         exe_path = self.env.get("exe_path", self.env.get("pathname"))
@@ -62,9 +71,7 @@ class FileExeVersionExtractor(Processor):
         ignore_errors = self.env.get("ignore_errors", True)
         extract_flag = "l"
 
-        if not os.path.isfile(exe_path):
-            self.output(f"ERROR: exe_path file missing! {exe_path}", 0)
-            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), exe_path)
+        self.verify_file_exists(exe_path)
 
         if is_windows():
             sevenzip_path = self.env.get(
@@ -73,11 +80,7 @@ class FileExeVersionExtractor(Processor):
         else:
             sevenzip_path = self.env.get("sevenzip_path", "/usr/local/bin/7z")
 
-        if not os.path.isfile(sevenzip_path):
-            self.output(f"ERROR: sevenzip_path file missing! {sevenzip_path}", 0)
-            raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), sevenzip_path
-            )
+        self.verify_file_exists(sevenzip_path)
 
         self.output("Extracting: %s" % exe_path)
         cmd = [sevenzip_path, extract_flag, "-y", exe_path]

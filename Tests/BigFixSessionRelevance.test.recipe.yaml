@@ -5,10 +5,8 @@ Input:
   NAME: BigFixSessionRelevanceTest
 MinimumVersion: '2.3'
 Process:
-  # at the moment BESImport must come first
-  #   even though it isn't used in this case
-  #   otherwise `from BESImport import BESImport` will error
-  - Processor: com.github.jgstew.SharedProcessors/BESImport
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: com.github.jgstew.SharedProcessors/BigFixSessionRelevance
     Arguments:
       session_relevance: 'number of bes computers'

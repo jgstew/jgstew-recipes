@@ -5,6 +5,7 @@ Input:
   NAME: ExeVersionExtractorTest
 MinimumVersion: '2.3'
 Process:
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: com.github.jgstew.SharedProcessors/FileExeVersionExtractor
     Arguments:
       version_first: True

@@ -5,12 +5,12 @@ BigFixSessionRelevance.py
 
 from autopkglib import Processor, ProcessorError
 from besapi import besapi
-from BESImport import BESImport
+from SharedUtilityMethods import SharedUtilityMethods
 
 __all__ = ["BigFixSessionRelevance"]
 
 
-class BigFixSessionRelevance(BESImport):
+class BigFixSessionRelevance(SharedUtilityMethods):
     """AutoPkg Processor to get BigFix Session Relevance Results"""
 
     description = __doc__

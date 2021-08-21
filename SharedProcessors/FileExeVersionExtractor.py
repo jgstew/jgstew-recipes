@@ -7,16 +7,15 @@ Based on WinInstallerExtractor by Matt Hansen
 Extracts version info from .exe file using the 7z utility.
 """
 
-import errno
-import os
 import subprocess
 
 from autopkglib import Processor, ProcessorError, is_windows
+from SharedUtilityMethods import SharedUtilityMethods
 
 __all__ = ["FileExeVersionExtractor"]
 
 
-class FileExeVersionExtractor(Processor):
+class FileExeVersionExtractor(SharedUtilityMethods):
     """Gets the EXE version from file."""
 
     description = __doc__
@@ -55,18 +54,11 @@ class FileExeVersionExtractor(Processor):
 
     __doc__ = description
 
-    def verify_file_exists(self, file_path):
-        """verify file exists, raise error if not"""
-        if not os.path.isfile(file_path):
-            self.output(f"ERROR: file missing! {file_path}", 0)
-            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), file_path)
-        return file_path
-
     def main(self):
         """Execution starts here"""
         exe_path = self.env.get("exe_path", self.env.get("pathname"))
         version_string = self.env.get("version_string", "ProductVersion:")
-        version_first = self.env.get("version_first", False)
+        version_first = self.verify_value_boolean(self.env.get("version_first", False))
         verbosity = self.env.get("verbose", 0)
         ignore_errors = self.env.get("ignore_errors", True)
         extract_flag = "l"

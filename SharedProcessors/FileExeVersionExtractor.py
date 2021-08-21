@@ -17,7 +17,9 @@ __all__ = ["FileExeVersionExtractor"]
 
 
 class FileExeVersionExtractor(Processor):
-    description = "Extracts the Windows archive meta-data using 7z."
+    """Gets the EXE version from file."""
+
+    description = __doc__
     input_variables = {
         "exe_path": {
             "required": False,
@@ -57,9 +59,7 @@ class FileExeVersionExtractor(Processor):
         """verify file exists, raise error if not"""
         if not os.path.isfile(file_path):
             self.output(f"ERROR: file missing! {file_path}", 0)
-            raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), file_path
-            )
+            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), file_path)
         return file_path
 
     def main(self):

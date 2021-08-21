@@ -14,7 +14,7 @@ __all__ = ["FileGetBase64"]
 
 
 class FileGetBase64(Processor):  # pylint: disable=too-few-public-methods
-    """Gets the property the MSI file."""
+    """Gets the file contents as base64."""
 
     description = __doc__
     input_variables = {

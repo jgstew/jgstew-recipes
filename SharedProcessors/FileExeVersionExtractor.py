@@ -7,6 +7,8 @@ Based on WinInstallerExtractor by Matt Hansen
 Extracts version info from .exe file using the 7z utility.
 """
 
+import errno
+import os
 import subprocess
 
 from autopkglib import Processor, ProcessorError, is_windows
@@ -60,12 +62,22 @@ class FileExeVersionExtractor(Processor):
         ignore_errors = self.env.get("ignore_errors", True)
         extract_flag = "l"
 
+        if not os.path.isfile(exe_path):
+            self.output(f"ERROR: exe_path file missing! {exe_path}", 0)
+            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), exe_path)
+
         if is_windows():
             sevenzip_path = self.env.get(
                 "sevenzip_path", r"C:\Program Files\7-Zip\7z.exe"
             )
         else:
             sevenzip_path = self.env.get("sevenzip_path", "/usr/local/bin/7z")
+
+        if not os.path.isfile(sevenzip_path):
+            self.output(f"ERROR: sevenzip_path file missing! {sevenzip_path}", 0)
+            raise FileNotFoundError(
+                errno.ENOENT, os.strerror(errno.ENOENT), sevenzip_path
+            )
 
         self.output("Extracting: %s" % exe_path)
         cmd = [sevenzip_path, extract_flag, "-y", exe_path]
@@ -95,7 +107,6 @@ class FileExeVersionExtractor(Processor):
 
         self.env["version"] = archiveVersion.encode("ascii", "ignore")
         self.output("Found Version: %s" % (self.env["version"]))
-        # self.output("Extracted Archive Path: %s" % extract_path)
 
 
 if __name__ == "__main__":

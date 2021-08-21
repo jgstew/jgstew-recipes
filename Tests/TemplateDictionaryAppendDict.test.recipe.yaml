@@ -7,5 +7,5 @@ MinimumVersion: '2.3'
 Process:
   - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendDict
     Arguments:
-      template_dictionary: {"key1" : "value1", "key2" : "2"}
-      append_dict: {"key2" : "value2", "key3": "value3"}
+      template_dictionary: {"key1":"value1", "key2":"2"}
+      append_dict: {"key2":"value2", "key3":"value3"}

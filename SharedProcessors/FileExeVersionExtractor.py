@@ -31,8 +31,8 @@ class FileExeVersionExtractor(SharedUtilityMethods):
         },
         "sevenzip_path": {
             "required": False,
-            "description": """
-                Path to 7-Zip binary. 
+            "description": r"""
+                Path to 7-Zip binary.
                 Defaults to C:\Program Files\7-Zip\7z.exe on windows
                 and Defaults to /usr/local/bin/7z on non-windows.
             """,

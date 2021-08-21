@@ -3,11 +3,6 @@
 BigFixActioner.py
 """
 
-try:
-    from ConfigParser import SafeConfigParser
-except (ImportError, ModuleNotFoundError):
-    from configparser import SafeConfigParser
-
 import chevron
 from autopkglib import Processor, ProcessorError
 from besapi import besapi
@@ -85,6 +80,9 @@ class BigFixActioner(BESImport):
         "bes_action_id": {
             "description": "The returned ID of the bigfix action created."
         },
+        "bigfix_actioner_summary_result": {
+            "description": "Description of BigFix Actioner results."
+        },
     }
     __doc__ = description
 
@@ -122,6 +120,16 @@ class BigFixActioner(BESImport):
             # self.env["bes_action_id"] = ""
             if action_result:
                 self.env["bes_action_id"] = str(action_result().Action.ID)
+
+                # Create summary result data
+                self.env["bigfix_actioner_summary_result"] = {
+                    "summary_text": "The following actions were created in BigFix:",
+                    "report_fields": ["Action ID", "Action Name"],
+                    "data": {
+                        "Action ID": str(action_result().Action.ID),
+                        "Action Name": str(action_result().Action.Name),
+                    },
+                }
 
 
 if __name__ == "__main__":

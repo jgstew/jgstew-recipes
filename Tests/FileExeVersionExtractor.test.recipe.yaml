@@ -1,10 +1,11 @@
 ---
-Description: Test ExeVersionExtractor Processor
+Description: Test FileExeVersionExtractor Processor
 Identifier: com.github.jgstew.test.FileExeVersionExtractorTest
 Input:
-  NAME: ExeVersionExtractorTest
+  NAME: FileExeVersionExtractorTest
 MinimumVersion: '2.3'
 Process:
+  # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: com.github.jgstew.SharedProcessors/FileExeVersionExtractor
     Arguments:

@@ -1,0 +1,15 @@
+---
+Description: Test BigFixActioner Processor
+Identifier: com.github.jgstew.test.BigFixActionerTest
+Input:
+  NAME: BigFixActionerTest
+MinimumVersion: '2.3'
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  - Processor: com.github.jgstew.SharedProcessors/BESImport
+  - Processor: com.github.jgstew.SharedProcessors/BigFixActioner
+    Arguments:
+      # bes_id 15 is "BES Clients Have Incorrect Clock Time"
+      bes_id: 15
+      bes_customsite: BES Support

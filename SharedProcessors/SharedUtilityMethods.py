@@ -23,7 +23,11 @@ class SharedUtilityMethods(Processor):
 
     def verify_file_exists(self, file_path, raise_error=True):
         """verify file exists, raise error if not"""
-        if not os.path.isfile(file_path):
+        if not file_path:
+            self.output("ERROR: no file_path provided!", 0)
+            if raise_error:
+                raise ProcessorError("No file_path provided!")
+        elif not os.path.isfile(file_path):
             self.output(f"ERROR: file missing! `{file_path}`", 0)
             if raise_error:
                 raise FileNotFoundError(

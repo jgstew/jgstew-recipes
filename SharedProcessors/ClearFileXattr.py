@@ -11,11 +11,12 @@ from autopkglib import (  # pylint: disable=import-error,unused-import
     ProcessorError,
     xattr,
 )
+from SharedUtilityMethods import SharedUtilityMethods
 
 __all__ = ["ClearFileXattr"]
 
 
-class ClearFileXattr(Processor):  # pylint: disable=invalid-name
+class ClearFileXattr(SharedUtilityMethods):  # pylint: disable=invalid-name
     """Clear the etag xattr from file"""
 
     description = __doc__
@@ -51,6 +52,7 @@ class ClearFileXattr(Processor):  # pylint: disable=invalid-name
 
         # I think this gets the pathname value if `file_path` is not specified?
         file_path = self.env.get("file_path", self.env.get("pathname"))
+        self.verify_file_exists(file_path)
         file_xattr = self.env.get("file_xattr", "com.github.autopkg.etag")
 
         self.clear_etag(file_path, file_xattr)

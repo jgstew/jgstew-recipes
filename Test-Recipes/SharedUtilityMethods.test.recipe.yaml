@@ -1,6 +1,6 @@
 ---
 Description: Test SharedUtilityMethods Processor
-Identifier: com.github.jgstew.test.SharedUtilityMethodsTest
+Identifier: com.github.jgstew.test.SharedUtilityMethods
 Input:
   NAME: SharedUtilityMethodsTest
 MinimumVersion: '2.3'

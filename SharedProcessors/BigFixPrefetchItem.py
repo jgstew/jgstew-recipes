@@ -18,6 +18,7 @@ from autopkglib import (  # pylint: disable=import-error,wrong-import-position,u
 # site.addsitedir(os.path.dirname(os.path.abspath(__file__)))
 from bigfix_prefetch import (  # pylint: disable=wrong-import-position
     prefetch_from_dictionary,
+    prefetch_validate,
 )
 
 # import site
@@ -52,6 +53,7 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
         },
         "prefetch_type": {
             "required": False,
+            "default": "statement",
             "description": "Either 'block' or 'statement'. Defaults to 'statement'",
         },
         "prefetch_url": {
@@ -79,6 +81,12 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
         bigfix_prefetch_item = prefetch_from_dictionary.prefetch_from_dictionary(
             prefetch_dictionary
         )
+
+        if not prefetch_validate.validate_prefetch(bigfix_prefetch_item):
+            self.output("WARNING: Prefetch Not Valid!", 0)
+        else:
+            self.output("Prefetch Is Valid.", 1)
+
         self.env["bigfix_prefetch_item"] = bigfix_prefetch_item
         self.output(
             "Prefetch = {bigfix_prefetch_item}".format(
@@ -92,6 +100,10 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
         # use download_info dictionary from URLDownloaderPython if available
         prefetch_dictionary = self.env.get("download_info", None)
         prefetch_url = self.env.get("prefetch_url", None)
+        pathname = self.env.get("pathname", None)
+        pathname_filename = None
+        if pathname:
+            pathname_filename = os.path.basename(pathname)
 
         if prefetch_dictionary:
             if prefetch_url:
@@ -109,9 +121,7 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
         else:
             # if no download_info dictionary, then create it:
             prefetch_dictionary = {
-                "file_name": self.env.get(
-                    "file_name", os.path.basename(self.env.get("pathname"))
-                ),
+                "file_name": self.env.get("file_name", pathname_filename),
                 "file_size": self.env.get("file_size", self.env.get("filehasher_size")),
                 "file_sha1": self.env.get("file_sha1", self.env.get("filehasher_sha1")),
                 "file_sha256": self.env.get(
@@ -124,6 +134,7 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
         prefetch_dictionary["prefetch_type"] = self.env.get(
             "prefetch_type", "statement"
         )
+
         self.get_prefetch(prefetch_dictionary)
 
         self.output("self.env: \n{self_env}\n".format(self_env=self.env), 4)

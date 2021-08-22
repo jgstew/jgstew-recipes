@@ -1,6 +1,6 @@
 ---
 Description: Test FileExeVersionExtractor Processor
-Identifier: com.github.jgstew.test.FileExeVersionExtractorTest
+Identifier: com.github.jgstew.test.FileExeVersionExtractor
 Input:
   NAME: FileExeVersionExtractorTest
 MinimumVersion: '2.3'

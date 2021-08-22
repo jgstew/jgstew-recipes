@@ -1,6 +1,6 @@
 ---
 Description: Test BigFixActioner Processor
-Identifier: com.github.jgstew.test.BigFixActionerTest
+Identifier: com.github.jgstew.test.BigFixActioner
 Input:
   NAME: BigFixActionerTest
 MinimumVersion: '2.3'

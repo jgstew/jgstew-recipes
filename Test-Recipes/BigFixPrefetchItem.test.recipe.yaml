@@ -1,0 +1,27 @@
+---
+Description: Test BigFixPrefetchItem Processor
+Identifier: com.github.jgstew.test.BigFixPrefetchItem
+Input:
+  NAME: BigFixPrefetchItemTest
+MinimumVersion: '2.3'
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+    Arguments:
+      file_name: file.exe
+      file_sha1: abc_fake
+      file_sha256: abc_fake
+      file_size: 0
+      prefetch_url: http://fake.url
+      # pathname: "folder/whatever.exe"
+      #prefetch_type: block
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+    Arguments:
+      file_name: SuperOrcaSetup.exe
+      file_sha1: c2751e72bd5a8593f4eb4ebd000ace791db0a9c7
+      file_sha256: 68ed565438e206e805f81980374e6439e6f4f60f63a3fcb6f0840c8a8de189da
+      file_size: 2926519
+      prefetch_url: http://www.pantaray.com/SuperOrcaSetup.exe
+      # pathname: "folder/whatever.exe"
+      prefetch_type: block

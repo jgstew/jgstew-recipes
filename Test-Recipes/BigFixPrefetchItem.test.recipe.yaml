@@ -8,6 +8,7 @@ Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+    # test invalid prefetch:
     Arguments:
       file_name: file.exe
       file_sha1: abc_fake
@@ -17,6 +18,7 @@ Process:
       # pathname: "folder/whatever.exe"
       #prefetch_type: block
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+    # test valid prefetch:
     Arguments:
       file_name: SuperOrcaSetup.exe
       file_sha1: c2751e72bd5a8593f4eb4ebd000ace791db0a9c7

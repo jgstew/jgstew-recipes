@@ -100,7 +100,8 @@ class FileExeVersionExtractor(SharedUtilityMethods):
                     break
                 continue
 
-        self.env["version"] = archiveVersion.encode("ascii", "ignore")
+        archive_version_ascii_only = archiveVersion.encode("ascii", "ignore").decode()
+        self.env["version"] = archive_version_ascii_only
         self.output("Found Version: %s" % (self.env["version"]))
 
 

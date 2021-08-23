@@ -15,6 +15,13 @@ except ImportError:
     print("ERROR: `chevron` library required.")
     print("https://github.com/jgstew/jgstew-recipes/blob/main/requirements.txt")
 
+try:
+    import validate_bes_xml  # pylint: disable=import-error
+except ImportError:
+    print("ERROR: `validate_bes_xml` module required for bes validation")
+    print("Install: pip install --upgrade validate_bes_xml")
+    print("See: https://github.com/jgstew/jgstew-recipes/blob/main/requirements.txt")
+
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
@@ -99,6 +106,14 @@ class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
 
         return content_string
 
+    def validate_file(self, file_path):
+        """validate bes xml file"""
+        if validate_bes_xml.validate_bes_xml.validate_xml(file_path):
+            self.output("BES File Valid")
+        else:
+            self.output("ERROR: BES File Invalid!")
+            raise ProcessorError(f"ERROR: BES File Invalid! {file_path}")
+
     def write_file_content(
         self, file_path, content_string
     ):  # pylint: disable=no-self-use
@@ -129,6 +144,8 @@ class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
                 ),
                 0,
             )
+            if validate_bes_xml:
+                self.validate_file(content_file_pathname)
 
 
 if __name__ == "__main__":

@@ -21,21 +21,23 @@ class TemplateDictionaryAppend(Processor):  # pylint: disable=invalid-name
 
     description = __doc__
     input_variables = {
-        "template_dictionary": {
-            "required": True,
-            "description": "python dictionary template with data for template",
+        "dictionary_name": {
+            "required": False,
+            "default": "template_dictionary",
+            "description": "python dictionary to append to",
         },
         "append_key": {
             "required": True,
-            "description": "the key to add to the python dictionary template",
+            "description": "the key to add to the python dictionary",
         },
         "append_value": {
             "required": True,
-            "description": "the value to add to the python dictionary template",
+            "description": "the value to add to the python dictionary",
         },
     }
     output_variables = {
-        "template_dictionary": {"description": ("The appended dictionary")},
+        "dictionary_name": {"description": ("The appended dictionary name")},
+        "dictionary_appended": {"description": ("The appended dictionary")},
     }
     __doc__ = description
 
@@ -43,14 +45,16 @@ class TemplateDictionaryAppend(Processor):  # pylint: disable=invalid-name
         """Execution starts here"""
 
         # get the current dictionary
-        template_dictionary = self.env.get("template_dictionary")
+        dictionary_name = self.env.get("dictionary_name", "template_dictionary")
+        dictionary_to_append = self.env.get(dictionary_name, {})
         append_key = self.env.get("append_key")
         append_value = self.env.get("append_value")
 
-        template_dictionary[append_key] = append_value
+        dictionary_to_append[append_key] = append_value
 
         # write back the dict to itself
-        self.env["template_dictionary"] = template_dictionary
+        self.env[dictionary_name] = dictionary_to_append
+        self.env["dictionary_appended"] = dictionary_to_append
 
 
 if __name__ == "__main__":

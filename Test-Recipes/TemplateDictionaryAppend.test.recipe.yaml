@@ -1,0 +1,26 @@
+---
+Description: Test TemplateDictionaryAppend Processor
+Identifier: com.github.jgstew.test.TemplateDictionaryAppend
+Input:
+  NAME: TemplateDictionaryAppendTest
+MinimumVersion: '2.3'
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: example_key_template
+      append_value: example_value_template
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      dictionary_name: template_dictionary
+      append_key: example_key_template2
+      append_value: example_value_template2
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      dictionary_name: download_info
+      append_key: example_key
+      append_value: example_value
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      # NOTE: even though `dictionary_name` is not specified, this will append to `download_info`
+      append_key: example_key2
+      append_value: example_value2

@@ -78,7 +78,7 @@ class SharedUtilityMethods(Processor):
 
     def main(self):
         """Execution starts here"""
-        self.output("ERROR: main() Does Nothing! Must Override!", 4)
+        self.output("WARNING: main() Does Nothing. Must Override.", 4)
 
 
 if __name__ == "__main__":

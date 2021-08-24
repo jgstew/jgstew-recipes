@@ -1,0 +1,16 @@
+---
+Description: Test FileHasher Processor
+Identifier: com.github.jgstew.test.FileHasher
+Input:
+  NAME: FileHasherTest
+MinimumVersion: '2.3'
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  - Processor: com.github.jgstew.SharedProcessors/FileHasher
+    Arguments:
+      file_path: "BigFix/BigFix_logo_DevSiteToOriginal_128px.png"
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+    Arguments:
+      file_name: "BigFix_Logo.png"
+      url: "https://raw.githubusercontent.com/jgstew/jgstew.github.io/master/images/BigFix/BigFix_logo_DevSiteToOriginal_128px.png"

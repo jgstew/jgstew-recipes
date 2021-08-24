@@ -7,12 +7,6 @@ MinimumVersion: '2.3'
 Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
-  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
-    Arguments:
-      file_name: file.exe
-      template_prefetch: prefetch file.exe
-      #template_file_size: 0
-      #template_version: 1.0.0
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
     Arguments:
       file_name: SuperOrcaSetup.exe
@@ -20,8 +14,9 @@ Process:
       file_sha256: 68ed565438e206e805f81980374e6439e6f4f60f63a3fcb6f0840c8a8de189da
       file_size: 2926519
       prefetch_url: http://www.pantaray.com/SuperOrcaSetup.exe
+      template_prefetch: None
       # pathname: "folder/whatever.exe"
       # prefetch_type: block
   - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
-    Arguments:
-      file_name: SuperOrcaSetup.exe
+    # Arguments:
+    #   file_name: SuperOrcaSetup.exe

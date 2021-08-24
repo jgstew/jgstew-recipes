@@ -76,12 +76,15 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
         if pathname:
             pathname_base = os.path.basename(pathname)
 
+        if "file_name" not in download_info:
+            download_info["file_name"] = pathname_base
+
         # if no file_size then set to 0
         if "file_size" not in download_info:
             download_info["file_size"] = 0
 
         template_dict = {
-            "file_name": self.env.get("file_name", pathname_base),
+            "file_name": self.env.get("file_name", download_info["file_name"]),
             "prefetch": self.env.get(
                 "template_prefetch", self.env.get("bigfix_prefetch_item")
             ),

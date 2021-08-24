@@ -46,7 +46,10 @@ class TemplateDictionaryAppend(Processor):  # pylint: disable=invalid-name
 
         # get the current dictionary
         dictionary_name = self.env.get("dictionary_name", "template_dictionary")
-        dictionary_to_append = self.env.get(dictionary_name, {})
+        dictionary_to_append = dict(self.env.get(dictionary_name, {}))
+
+        self.output(f"dictionary_to_append: {dictionary_to_append}", 2)
+
         append_key = self.env.get("append_key")
         append_value = self.env.get("append_value")
 

@@ -7,5 +7,5 @@
     "python.autoComplete.addBrackets": true,
     "editor.formatOnSave": true,
     "git.autofetch": true,
-    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Enabled": true
 }

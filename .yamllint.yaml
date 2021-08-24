@@ -10,3 +10,5 @@ rules:
   line-length:
     max: 88
     level: warning
+  new-lines:
+    level: warning

@@ -21,9 +21,10 @@ class TemplateDictionaryAppendDict(Processor):  # pylint: disable=invalid-name
 
     description = __doc__
     input_variables = {
-        "template_dictionary": {
-            "required": True,
-            "description": "python dictionary template with data for template",
+        "dictionary_name": {
+            "required": False,
+            "default": "template_dictionary",
+            "description": "python dictionary to append to",
         },
         "append_dict": {
             "required": True,
@@ -31,7 +32,8 @@ class TemplateDictionaryAppendDict(Processor):  # pylint: disable=invalid-name
         },
     }
     output_variables = {
-        "template_dictionary": {"description": "The appended dictionary"}
+        "dictionary_name": {"description": ("The appended dictionary name")},
+        "dictionary_appended": {"description": ("The appended dictionary")},
     }
     __doc__ = description
 
@@ -39,17 +41,20 @@ class TemplateDictionaryAppendDict(Processor):  # pylint: disable=invalid-name
         """Execution starts here"""
 
         # get the current dictionary
-        template_dictionary = self.env.get("template_dictionary")
+        dictionary_name = self.env.get("dictionary_name", "template_dictionary")
+        dictionary_to_append = self.env.get(dictionary_name, {})
+
         append_dict = self.env.get("append_dict")
 
-        self.output(f"type(template_dictionary): {type(template_dictionary)}", 2)
+        self.output(f"type(dictionary_to_append): {type(dictionary_to_append)}", 2)
         self.output(f"type(append_dict): {type(append_dict)}", 2)
 
         # https://stackoverflow.com/a/8930969/861745
-        template_dictionary.update(append_dict)
+        dictionary_to_append.update(append_dict)
 
         # write back the dict to itself
-        self.env["template_dictionary"] = template_dictionary
+        self.env[dictionary_name] = dictionary_to_append
+        self.env["dictionary_appended"] = dictionary_to_append
 
 
 if __name__ == "__main__":

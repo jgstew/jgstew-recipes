@@ -1,0 +1,8 @@
+{
+    "python.linting.pylintEnabled": true,
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingImports": "information"
+    },
+    "python.formatting.provider": "black",
+    "editor.formatOnSave": true,
+}

@@ -1,0 +1,12 @@
+---
+Description: Test URLTextSearcherArray Processor
+Identifier: com.github.jgstew.test.URLTextSearcherArray
+Input:
+  NAME: URLTextSearcherArrayTest
+MinimumVersion: '2.3'
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLTextSearcherArray
+    Arguments:
+      url: https://support.bigfix.com/bes/release/index.html
+      re_pattern: '>(?P<version>\d+\.\d+\.\d+\.\d+)<'
+  - Processor: com.github.jgstew.SharedProcessors/VersionMaximumArray

@@ -98,13 +98,16 @@ class URLTextSearcherArray(URLTextSearcher):
         """execution starts here"""
 
         output_var_name = self.env["result_output_var_name"]
-        full_results = self.env.get("full_results", None)
+        full_results = self.env.get("full_results", False)
 
         # Prepare curl command
         curl_cmd = self.prepare_curl_cmd()
 
         # Execute curl command and search in content
         content = self.download_with_curl(curl_cmd)
+
+        self.output(f"URL Content:\n{content}", 5)
+
         match_array = self.re_search(content)
 
         self.output(match_array, 2)

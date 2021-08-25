@@ -211,6 +211,8 @@ if exist .git (
 ) else (
     echo ERROR: .git folder not found!
     echo Are you running this from the cloned git "recipes" folder?
+    echo NOTE: this error is expected if you are running this script independantly
+    echo         to check intial setup. You should later run this from a cloned repo.
     pause
     exit 99
 )
@@ -294,7 +296,7 @@ echo python ..\autopkg\Code\autopkg repo-add https://github.com/jgstew/jgstew-re
 python ..\autopkg\Code\autopkg repo-add https://github.com/jgstew/jgstew-recipes
 
 REM ToDo: add pre-commit:
-REM pre-commit install --install-hooks --allow-missing-config
+pre-commit install --install-hooks --allow-missing-config
 
 echo.
 echo Check the _setup folder for other items

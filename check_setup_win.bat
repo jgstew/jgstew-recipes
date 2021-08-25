@@ -217,6 +217,9 @@ if exist .git (
     exit 99
 )
 
+echo Update Current Repo:
+echo git pull
+git pull
 
 echo.
 echo check pip install requirements for cloned recipes:
@@ -235,6 +238,7 @@ REM https://stackoverflow.com/a/334890/861745
 
 echo.
 echo besapi python module version:
+echo python -c "import besapi ; print(besapi.__version__)"
 python -c "import besapi ; print(besapi.__version__)"
 
 echo.
@@ -267,7 +271,13 @@ if not exist ..\autopkg (
 
 echo.
 echo check autopkg on dev branch:
+echo CMD /C "cd ..\autopkg && git checkout dev"
 CMD /C "cd ..\autopkg && git checkout dev"
+
+echo.
+echo update autopkg repo:
+echo CMD /C "cd ..\autopkg && git pull"
+CMD /C "cd ..\autopkg && git pull"
 
 echo.
 echo check pip install requirements for AutoPkg:

@@ -1,8 +1,8 @@
-chevron
-certifi
-generate_bes_from_template
-validate_bes_xml
-bigfix_prefetch
 besapi
+bigfix_prefetch
+certifi
+chevron
+generate_bes_from_template
 Pillow
 pre-commit
+validate_bes_xml

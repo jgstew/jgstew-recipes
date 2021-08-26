@@ -1,0 +1,14 @@
+---
+Description: Test DateTimeFromString Processor
+Identifier: com.github.jgstew.test.DateTimeFromString
+Input:
+  NAME: DateTimeFromStringTest
+MinimumVersion: '2.3'
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  - Processor: com.github.jgstew.SharedProcessors/DateTimeFromString
+    Arguments:
+      datetime_string: "2021-08-03"
+      datetime_strptime: "%Y-%m-%d"
+      datetime_strftime: "%m/%d/%Y"

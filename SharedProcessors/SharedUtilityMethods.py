@@ -23,7 +23,7 @@ class SharedUtilityMethods(Processor):
 
     def verify_file_exists(self, file_path, raise_error=True):
         """verify file exists, raise error if not"""
-        verbosity = 2
+        verbosity = 3
         if raise_error:
             verbosity = 0
         if not file_path:

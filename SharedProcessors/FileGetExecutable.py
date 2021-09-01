@@ -9,11 +9,12 @@ from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,
     ProcessorError,
 )
+from SharedUtilityMethods import SharedUtilityMethods
 
 __all__ = ["FileGetExecutable"]
 
 
-class FileGetExecutable(Processor):  # pylint: disable=too-few-public-methods
+class FileGetExecutable(SharedUtilityMethods):  # pylint: disable=too-few-public-methods
     """Gets the first executable in the list."""
 
     description = __doc__
@@ -39,9 +40,8 @@ class FileGetExecutable(Processor):  # pylint: disable=too-few-public-methods
         path_var_name = self.env.get("path_var_name", None)
 
         for path in path_array:
-            print(path)
-            # if self.verify_file_executable(path):
-            if os.path.isfile(path) and os.access(path, os.X_OK):
+            # if os.path.isfile(path) and os.access(path, os.X_OK):
+            if self.verify_file_executable(path):
                 self.env[path_var_name] = path
                 self.env["path_result"] = path
                 break

@@ -31,3 +31,8 @@ Process:
           "/Program Files/BigFix Enterprise/BES Client/qna.exe",
         ]
       path_var_name: qna_path
+  - Processor: com.github.jgstew.SharedProcessors/FileExeVersionExtractor
+    Arguments:
+      version_first: True
+      # extracting the version info from 7z.exe itself
+      exe_path: "%qna_path%"

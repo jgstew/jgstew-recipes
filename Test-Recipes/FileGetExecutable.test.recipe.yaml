@@ -13,7 +13,7 @@ Process:
     Arguments:
       version_first: True
       # extracting the version info from 7z.exe itself
-      exe_path: C:\Program Files\7-Zip\7z.exe
+      exe_path: "%sevenzip_path%"
   # output example: `19.0.0.0`
   - Processor: com.github.jgstew.SharedProcessors/FileGetExecutable
     Arguments:

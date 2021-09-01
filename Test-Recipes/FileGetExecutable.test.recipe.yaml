@@ -1,0 +1,33 @@
+---
+Description: Test FileGetBase64 Processor
+Identifier: com.github.jgstew.test.FileGetExecutable
+Input:
+  NAME: FileGetExecutableTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  - Processor: com.github.jgstew.SharedProcessors/FileGetExecutable
+    Arguments:
+      path_array: ["/Program Files/7-Zip/7z.exe", "/usr/local/bin/7z"]
+  - Processor: com.github.jgstew.SharedProcessors/FileExeVersionExtractor
+    Arguments:
+      version_first: True
+      # extracting the version info from 7z.exe itself
+      exe_path: C:\Program Files\7-Zip\7z.exe
+  # output example: `19.0.0.0`
+  - Processor: com.github.jgstew.SharedProcessors/FileGetExecutable
+    Arguments:
+      # https://github.com/jgstew/EvaluateRelevance.py/blob/master/EvaluateRelevance.py#L17
+      path_array:
+        [
+          "qna",
+          "qna.exe",
+          ".qna",
+          ".qna.exe",
+          "/usr/local/bin/QnA",
+          "/Library/BESAgent/BESAgent.app/Contents/MacOS/QnA",
+          "/opt/BESClient/bin/QnA",
+          "/Program Files (x86)/BigFix Enterprise/BES Client/qna.exe",
+          "/Program Files/BigFix Enterprise/BES Client/qna.exe",
+        ]
+      path_var_name: qna_path

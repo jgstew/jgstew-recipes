@@ -23,17 +23,29 @@ class SharedUtilityMethods(Processor):
 
     def verify_file_exists(self, file_path, raise_error=True):
         """verify file exists, raise error if not"""
+        verbosity = 2
+        if raise_error:
+            verbosity = 0
         if not file_path:
             self.output("ERROR: no file_path provided!", 0)
             if raise_error:
                 raise ProcessorError("No file_path provided!")
         elif not os.path.isfile(file_path):
-            self.output(f"ERROR: file missing! `{file_path}`", 0)
+            self.output(f"ERROR: file missing! `{file_path}`", verbosity)
             if raise_error:
                 raise FileNotFoundError(
                     errno.ENOENT, os.strerror(errno.ENOENT), file_path
                 )
         return file_path
+
+    def verify_file_executable(self, file_path, raise_error=False):
+        """verify file is executable"""
+        file_path_exists = self.verify_file_exists(file_path, raise_error)
+
+        if file_path_exists and os.access(file_path_exists, os.X_OK):
+            return True
+
+        return False
 
     def verify_value_boolean(self, value, raise_error=True):
         """verify value is boolean"""

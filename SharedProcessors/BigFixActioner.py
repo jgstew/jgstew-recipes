@@ -20,7 +20,7 @@ BES_SourcedFixletAction = """\
             <Action>{{bes_action}}</Action>
         </SourceFixlet>
         <Target>
-            <CustomRelevance>exists computer names whose(it as lowercase contains "autopkg")</CustomRelevance>
+            <AllComputers>true</AllComputers>
         </Target>
         <Settings>
             <PreActionShowUI>false</PreActionShowUI>
@@ -28,7 +28,7 @@ BES_SourcedFixletAction = """\
             <HasTimeRange>false</HasTimeRange>
             <HasStartTime>false</HasStartTime>
             <HasEndTime>true</HasEndTime>
-            <EndDateTimeLocalOffset>P5D</EndDateTimeLocalOffset>
+            <EndDateTimeLocalOffset>P365D</EndDateTimeLocalOffset>
             <HasDayOfWeekConstraint>false</HasDayOfWeekConstraint>
             <UseUTCTime>false</UseUTCTime>
             <ActiveUserRequirement>NoRequirement</ActiveUserRequirement>

@@ -6,9 +6,8 @@ Where possible recipes will be in YAML format for better cross platform support 
 
 Currently has a copy of `prefetch_from_dictionary.py` from https://github.com/jgstew/bigfix_prefetch/blob/master/prefetch_from_dictionary.py until it is turned into a proper published module.
 
-
-
 References:
+
 - AutoPkg for Windows Software: https://www.youtube.com/watch?v=w4WM6M89hmg
 - https://github.com/homebysix/recipe-robot/issues/74
 - https://github.com/autopkg/autopkg/pull/698#issuecomment-783522503

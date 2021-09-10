@@ -91,7 +91,10 @@ class FileExeVersionExtractor(SharedUtilityMethods):
         self.output(f"Output: \n{Output}\n", 6)
 
         archiveVersion = ""
-        for line in Output.decode().split("\n"):
+        # it is possible the encoding should only be treated as utf8
+        #   if ascii option throws errors
+        # https://stackoverflow.com/a/50627018/861745
+        for line in Output.decode(encoding="utf8", errors="ignore").split("\n"):
             if verbosity > 2:
                 print(line)
             if version_string in line:
@@ -100,6 +103,8 @@ class FileExeVersionExtractor(SharedUtilityMethods):
                     break
                 continue
 
+        # for version numbers, this ecode as ascii makes sense
+        # for text, this might not make sense
         archive_version_ascii_only = archiveVersion.encode("ascii", "ignore").decode()
         self.env["version"] = archive_version_ascii_only
         self.output("Found Version: %s" % (self.env["version"]))

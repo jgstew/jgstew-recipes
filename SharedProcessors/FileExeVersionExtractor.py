@@ -103,7 +103,7 @@ class FileExeVersionExtractor(SharedUtilityMethods):
                     break
                 continue
 
-        # for version numbers, this ecode as ascii makes sense
+        # for version numbers, this encode as ascii makes sense
         # for text, this might not make sense
         archive_version_ascii_only = archiveVersion.encode("ascii", "ignore").decode()
         self.env["version"] = archive_version_ascii_only

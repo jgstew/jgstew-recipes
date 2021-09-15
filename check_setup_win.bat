@@ -22,11 +22,13 @@ echo GIT Version:  (GIT for Windows)
 git --version
 
 REM check ssh-keygen.exe exists:
-if exist "%ProgramFiles%\Git\usr\bin\ssh-keygen.exe" (
+REM if exist "%ProgramFiles%\Git\usr\bin\ssh-keygen.exe" (
+FOR /F "tokens=2,*" %%I IN ('reg query HKEY_LOCAL_MACHINE\SOFTWARE\GitForWindows /v InstallPath') DO SET GITPATH=%%J
+if exist "%GITPATH%\usr\bin\ssh-keygen.exe" (
     REM file exists
 ) else (
     REM file doesn't exist
-    echo ERROR: "C:\Program Files\Git\usr\bin\ssh-keygen.exe" is missing
+    echo ERROR: "%GITPATH%\usr\bin\ssh-keygen.exe" is missing
     echo.
     echo  - Did you install GIT for Windows? -
     echo.
@@ -45,7 +47,7 @@ if exist %UserProfile%\.ssh\id_rsa.pub (
 ) else (
     REM file doesn't exist
     echo ERROR: ~\.ssh\id_rsa.pub missing!
-    echo RUN: cmd /C "C:\Program Files\Git\usr\bin\ssh-keygen.exe"
+    echo RUN: cmd /C "%GITPATH%\usr\bin\ssh-keygen.exe"
     echo          to generate ~\.ssh\id_rsa.pub
     echo          NOTE: just hit enter at "Enter file in which to save the key (/c/Users/_USER_/.ssh/id_rsa):" prompt
     echo      then copy the contents of ~\.ssh\id_rsa.pub to your GitHub account SSH keys at https://github.com/settings/keys
@@ -120,77 +122,72 @@ REM     Microsoft.VisualStudio.PackageGroup.VC.Tools*
 REM     Microsoft.VisualStudio.Workload.MSBuildTools*
 REM     Microsoft.VisualStudio.Workload.VCTools*
 REM     Win10SDK*
-if not exist %ProgramData%\Microsoft\VisualStudio\Packages\Microsoft.VisualCpp.Redist.14* (
+
+FOR /F "tokens=2,*" %%I IN ('reg query HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\Setup /v CachePath') DO SET VSToolsPATH=%%J
+
+REM set default path if query above doesn't work
+IF "%VSToolsPATH%"=="" SET VSToolsPATH=%ProgramData%\Microsoft\VisualStudio\Packages
+
+if not exist %VSToolsPATH%\Microsoft.Build* (
     REM folder missing
     echo.
     echo ERROR: missing required Visual Studio Build Tools - Required for Python Pip installs
-    echo ERROR: missing folder %ProgramData%\Microsoft\VisualStudio\Packages\Microsoft.VisualCpp.Redist.14*
+    echo ERROR: missing folder %VSToolsPATH%\Microsoft.Build*
     echo Install Command:
     echo   vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
     echo.
     pause
     exit 9
 )
-if not exist %ProgramData%\Microsoft\VisualStudio\Packages\Microsoft.Build* (
+if not exist %VSToolsPATH%\Microsoft.PythonTools.BuildCore* (
     REM folder missing
     echo.
     echo ERROR: missing required Visual Studio Build Tools - Required for Python Pip installs
-    echo ERROR: missing folder %ProgramData%\Microsoft\VisualStudio\Packages\Microsoft.Build*
+    echo ERROR: missing folder %VSToolsPATH%\Microsoft.PythonTools.BuildCore*
     echo Install Command:
     echo   vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
     echo.
     pause
     exit 9
 )
-if not exist %ProgramData%\Microsoft\VisualStudio\Packages\Microsoft.PythonTools.BuildCore* (
+if not exist %VSToolsPATH%\Microsoft.VisualStudio.PackageGroup.VC.Tools* (
     REM folder missing
     echo.
     echo ERROR: missing required Visual Studio Build Tools - Required for Python Pip installs
-    echo ERROR: missing folder %ProgramData%\Microsoft\VisualStudio\Packages\Microsoft.PythonTools.BuildCore*
+    echo ERROR: missing folder %VSToolsPATH%\Microsoft.VisualStudio.PackageGroup.VC.Tools*
     echo Install Command:
     echo   vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
     echo.
     pause
     exit 9
 )
-if not exist %ProgramData%\Microsoft\VisualStudio\Packages\Microsoft.VisualStudio.PackageGroup.VC.Tools* (
+if not exist %VSToolsPATH%\Microsoft.VisualStudio.Workload.MSBuildTools* (
     REM folder missing
     echo.
     echo ERROR: missing required Visual Studio Build Tools - Required for Python Pip installs
-    echo ERROR: missing folder %ProgramData%\Microsoft\VisualStudio\Packages\Microsoft.VisualStudio.PackageGroup.VC.Tools*
+    echo ERROR: missing folder %VSToolsPATH%\Microsoft.VisualStudio.Workload.MSBuildTools*
     echo Install Command:
     echo   vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
     echo.
     pause
     exit 9
 )
-if not exist %ProgramData%\Microsoft\VisualStudio\Packages\Microsoft.VisualStudio.Workload.MSBuildTools* (
+if not exist %VSToolsPATH%\Microsoft.VisualStudio.Workload.VCTools* (
     REM folder missing
     echo.
     echo ERROR: missing required Visual Studio Build Tools - Required for Python Pip installs
-    echo ERROR: missing folder %ProgramData%\Microsoft\VisualStudio\Packages\Microsoft.VisualStudio.Workload.MSBuildTools*
+    echo ERROR: missing folder %VSToolsPATH%\Microsoft.VisualStudio.Workload.VCTools*
     echo Install Command:
     echo   vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
     echo.
     pause
     exit 9
 )
-if not exist %ProgramData%\Microsoft\VisualStudio\Packages\Microsoft.VisualStudio.Workload.VCTools* (
+if not exist %VSToolsPATH%\Win10SDK* (
     REM folder missing
     echo.
     echo ERROR: missing required Visual Studio Build Tools - Required for Python Pip installs
-    echo ERROR: missing folder %ProgramData%\Microsoft\VisualStudio\Packages\Microsoft.VisualStudio.Workload.VCTools*
-    echo Install Command:
-    echo   vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
-    echo.
-    pause
-    exit 9
-)
-if not exist %ProgramData%\Microsoft\VisualStudio\Packages\Win10SDK* (
-    REM folder missing
-    echo.
-    echo ERROR: missing required Visual Studio Build Tools - Required for Python Pip installs
-    echo ERROR: missing folder %ProgramData%\Microsoft\VisualStudio\Packages\Win10SDK*
+    echo ERROR: missing folder %VSToolsPATH%\Win10SDK*
     echo Install Command:
     echo   vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
     echo.
@@ -217,6 +214,12 @@ if exist .git (
     exit 99
 )
 
+echo.
+echo include repo .gitconfig:
+echo git config --local include.path ../.gitconfig
+git config --local include.path ../.gitconfig
+
+echo.
 echo Update Current Repo:
 echo git pull
 git pull
@@ -301,12 +304,27 @@ python ..\autopkg\Code\autopkg version
 echo      --- AutoPkg version (expected 2.3 or later)
 
 echo.
-echo Add/Update jgstew-recipes to AutoPkg
+echo Add/Update jgstew-recipes in AutoPkg
 echo python ..\autopkg\Code\autopkg repo-add https://github.com/jgstew/jgstew-recipes
 python ..\autopkg\Code\autopkg repo-add https://github.com/jgstew/jgstew-recipes
 
+REM hansen-m-recipes
+echo.
+echo Add/Update hansen-m-recipes in AutoPkg
+echo python ..\autopkg\Code\autopkg repo-add hansen-m-recipes
+python ..\autopkg\Code\autopkg repo-add hansen-m-recipes
+
 REM add pre-commit:
+echo.
+echo Add pre-commit hooks:
+echo pre-commit install --install-hooks --allow-missing-config
 pre-commit install --install-hooks --allow-missing-config
+
+echo.
+echo Run test recipe for 7zip:
+echo python ..\autopkg\Code\autopkg run -v com.github.jgstew.test.FileExeVersionExtractor-Win
+python ..\autopkg\Code\autopkg run -v com.github.jgstew.test.FileExeVersionExtractor-Win
+echo Expected output `Found Version: 19.0.0.0`
 
 echo.
 echo Check the _setup folder for other items

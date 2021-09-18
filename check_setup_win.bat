@@ -78,7 +78,10 @@ if errorlevel 1 (
 
 
 REM check if autopkg config file exists
-REM %UserProfile%\AppData\Local\AutoPkg\config.json
+REM On Windows:
+REM   %UserProfile%\AppData\Local\AutoPkg\config.json
+REM On Linux:
+REM   ~/.config/Autopkg/config.json
 echo.
 if exist %UserProfile%\AppData\Local\Autopkg\config.json (
     REM file exists

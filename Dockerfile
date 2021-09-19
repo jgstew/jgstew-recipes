@@ -9,7 +9,7 @@ LABEL maintainer="james@jgstew.com"
 
 # https://medium.com/@chamilad/lets-make-your-docker-image-better-than-90-of-existing-ones-8b1e5de950d
 LABEL org.label-schema.schema-version="1.0"
-LABEL org.label-schema.name="jgstew/jgstew-recipes"
+LABEL org.label-schema.name="jgstewrecipes"
 LABEL org.label-schema.description="Run jgstew-recipes using AutoPkg on Ubuntu:latest"
 LABEL org.label-schema.url="https://github.com/jgstew/jgstew-recipes"
 LABEL org.label-schema.vcs-url="https://github.com/jgstew/jgstew-recipes"
@@ -37,6 +37,7 @@ RUN echo {} > ~/.config/Autopkg/config.json
 COPY .autopkg_repos.txt /tmp/.autopkg_repos.txt
 WORKDIR /tmp/autopkg
 # add AutoPkg recipe repos:
+#   https://stackoverflow.com/a/19182518/861745
 RUN for line in $(cat /tmp/.autopkg_repos.txt); do python3 ../autopkg/Code/autopkg repo-add $line; done
 #RUN python3 ../autopkg/Code/autopkg repo-add hansen-m-recipes
 

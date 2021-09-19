@@ -19,12 +19,14 @@ LABEL org.label-schema.docker.cmd="docker run --rm jgstewrecipes run -vv com.git
 RUN apt-get update && apt-get install -y curl git python3 python3-pip && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
+# currently using my fork due to improvements made to URLDownloaderPython
 RUN git clone https://github.com/jgstew/autopkg.git
 WORKDIR /tmp/autopkg
 RUN git checkout dev
 RUN pip3 install --requirement requirements.txt --quiet
 
 WORKDIR /
+# this assumes that the repo contains a `requirements.txt` file:
 COPY requirements.txt /tmp/
 RUN pip3 install --requirement /tmp/requirements.txt --quiet
 RUN rm -f /tmp/requirements.txt
@@ -34,6 +36,7 @@ RUN mkdir -p ~/.config/Autopkg
 # create config if it does not exist
 RUN echo {} > ~/.config/Autopkg/config.json
 
+# this assumes that the repo contains an `.autopkg_repos.txt` file:
 COPY .autopkg_repos.txt /tmp/.autopkg_repos.txt
 WORKDIR /tmp/autopkg
 # add AutoPkg recipe repos:

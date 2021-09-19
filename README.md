@@ -4,9 +4,27 @@ AutoPkg recipes which anyone can use from [JGStew](https://github.com/jgstew).
 
 Where possible recipes will be in YAML format for better cross platform support at the expense of requiring AutoPkg 2.3+
 
-Currently has a copy of `prefetch_from_dictionary.py` from https://github.com/jgstew/bigfix_prefetch/blob/master/prefetch_from_dictionary.py until it is turned into a proper published module.
+## Python Requirements:
 
-References:
+`requirements.txt` contains the python modules required for the AutoPkg processors used by this repo
+
+Example pip command:
+
+- `pip3 install --requirement requirements.txt`
+
+## AutoPkg Recipe Repo Requirements:
+
+`.autopkg_repos.txt` contains a list of recipe repos required for the recipes within this repo
+
+Example bash command to add all listed repos:
+
+- `for line in $(cat /tmp/.autopkg_repos.txt); do python3 ../autopkg/Code/autopkg repo-add $line; done`
+
+## Docker:
+
+The example `Dockerfile` in this repo sets up a working AutoPkg dev channel Docker container running on Ubuntu.
+
+## References:
 
 - AutoPkg for Windows Software: https://www.youtube.com/watch?v=w4WM6M89hmg
 - https://github.com/homebysix/recipe-robot/issues/74

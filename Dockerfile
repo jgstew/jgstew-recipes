@@ -34,9 +34,11 @@ RUN mkdir -p ~/.config/Autopkg
 # create config if it does not exist
 RUN echo {} > ~/.config/Autopkg/config.json
 
+COPY .autopkg_repos.txt /tmp/.autopkg_repos.txt
 WORKDIR /tmp/autopkg
 # add AutoPkg recipe repos:
-RUN python3 ../autopkg/Code/autopkg repo-add hansen-m-recipes
+RUN for line in $(cat /tmp/.autopkg_repos.txt); do python3 ../autopkg/Code/autopkg repo-add $line; done
+#RUN python3 ../autopkg/Code/autopkg repo-add hansen-m-recipes
 
 COPY . /tmp/recipes
 WORKDIR /tmp/recipes
@@ -45,6 +47,8 @@ CMD ["help"]
 
 # Interactive:
 #   docker run --rm -it --entrypoint bash jgstewrecipes
+# Run recipe from within Interactive shell
+#   python3 ../autopkg/Code/autopkg run -vv com.github.jgstew.test.DateTimeFromString
 
 # Run a specific recipe:
 #   docker run --rm jgstewrecipes run -vv com.github.jgstew.test.DateTimeFromString

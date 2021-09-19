@@ -1,0 +1,18 @@
+---
+Description: Test HachoirMetaDataProvider3 Processor
+Identifier: com.github.jgstew.test.HachoirMetaDataProvider3
+Input:
+  NAME: HachoirMetaDataProvider3Test
+MinimumVersion: "2.3"
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: http://software.bigfix.com/download/redist/unzip-5.52.exe
+      COMPUTE_HASHES: False
+  # https://github.com/jgstew/file_meta_data/blob/master/file_metadata3.py
+  # https://github.com/autopkg/hansen-m-recipes/blob/master/SharedProcessors/HachoirMetaDataProvider3.py
+  - Processor: com.github.hansen-m.SharedProcessors/HachoirMetaDataProvider3
+    Arguments:
+      metadata_key: mime_type

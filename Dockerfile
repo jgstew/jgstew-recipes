@@ -18,23 +18,33 @@ LABEL org.label-schema.docker.cmd="docker run --rm jgstewrecipes run -vv com.git
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 RUN apt-get update && apt-get install -y curl git python3 python3-pip && rm -rf /var/lib/apt/lists/*
 
-# create empty autopkg config
-RUN mkdir -p ~/.config/Autopkg
-RUN echo {} > ~/.config/Autopkg/config.json
-
+WORKDIR /tmp
 RUN git clone https://github.com/jgstew/autopkg.git
-WORKDIR /autopkg
+WORKDIR /tmp/autopkg
 RUN git checkout dev
 RUN pip3 install --requirement requirements.txt --quiet
-WORKDIR /
 
+WORKDIR /
 COPY requirements.txt /tmp/
 RUN pip3 install --requirement /tmp/requirements.txt --quiet
+RUN rm -f /tmp/requirements.txt
 
+# create empty autopkg config
+RUN mkdir -p ~/.config/Autopkg
+# create config if it does not exist
+RUN echo {} > ~/.config/Autopkg/config.json
+
+WORKDIR /tmp/autopkg
+# add AutoPkg recipe repos:
 RUN python3 ../autopkg/Code/autopkg repo-add hansen-m-recipes
-RUN python3 ../autopkg/Code/autopkg repo-add https://github.com/jgstew/jgstew-recipes
 
-COPY . /recipes
-WORKDIR /recipes
+COPY . /tmp/recipes
+WORKDIR /tmp/recipes
 ENTRYPOINT ["python3", "../autopkg/Code/autopkg"]
 CMD ["help"]
+
+# Interactive:
+#   docker run --rm -it --entrypoint bash jgstewrecipes
+
+# Run a specific recipe:
+#   docker run --rm jgstewrecipes run -vv com.github.jgstew.test.DateTimeFromString

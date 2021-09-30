@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run AutoPkg Recipe",
+      "type": "python",
+      "request": "launch",
+      "program": "../autopkg/Code/autopkg",
+      "args": ["run", "-v", "${file}"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    }
+  ]
+}

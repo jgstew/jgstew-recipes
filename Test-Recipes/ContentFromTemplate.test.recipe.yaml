@@ -1,0 +1,22 @@
+---
+Description: Test ContentFromTemplate Processor
+Identifier: com.github.jgstew.test.ContentFromTemplate
+Input:
+  NAME: ContentFromTemplateTest
+  version: "10.0.4.32"
+MinimumVersion: "2.3"
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: "./BigFix/BigFix-Agent-Windows-Update.bes.mustashe"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%-BigFix-Win.bes"
+      template_dictionary:
+        {
+          "SourceReleaseDate": "2021-08-14",
+          "x-fixlet-modification-time": "Sat, 14 Aug 2021 04:21:20 +0000",
+          "version": "%version%",
+          "file_name": "BigFix-BES-Client-%version%.exe",
+          "prefetch": "prefetch BigFix-BES-Client-%version%.exe sha1:9041151ab5da81648e917883e29482530f81ee35 size:17118728 https://software.bigfix.com/download/bes/100/BigFix-BES-Client-10.0.4.32.exe sha256:7045796750d363e4abc44483841b0ebe3bf1d525ea8e251cf6ce88025d0b545a",
+        }

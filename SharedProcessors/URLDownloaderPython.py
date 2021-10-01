@@ -25,8 +25,7 @@ __all__ = ["URLDownloaderPython"]
 
 
 class URLDownloaderPython(URLDownloader):
-    """This is meant to be a pure python replacement for URLDownloader
-    """
+    """This is meant to be a pure python replacement for URLDownloader"""
 
     description = __doc__
     input_variables = {
@@ -318,7 +317,7 @@ class URLDownloaderPython(URLDownloader):
         user_agent_value = self.env.get("User_Agent", None)
         if user_agent_value:
             req.add_header("User-Agent", user_agent_value)
-        response = urlopen(req, context=self.ssl_context_certifi(),)
+        response = urlopen(req, context=self.ssl_context_certifi())
         response_headers = response.info()
 
         self.env["download_changed"] = self.download_changed(response_headers)

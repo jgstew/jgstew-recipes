@@ -6,7 +6,7 @@
       "type": "python",
       "request": "launch",
       "program": "../autopkg/Code/autopkg",
-      "args": ["run", "-v", "${file}"],
+      "args": ["run", "-vv", "${file}"],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal"
     }

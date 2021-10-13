@@ -51,6 +51,11 @@ class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
             "default": None,
             "description": "file path to save the XML. Defaults to 'None'",
         },
+        "template_partials_path": {
+            "required": False,
+            "default": ".templates/.partials",
+            "description": "folder path to reference Mustache Template Partials",
+        },
     }
     output_variables = {
         "content_string": {
@@ -87,6 +92,10 @@ class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
             1,
         )
 
+        template_partials_path = self.env.get(
+            "template_partials_path", ".templates/.partials"
+        )
+
         # template_file_path still missing, but required
         if not template_file_path:
             raise ValueError(
@@ -97,7 +106,7 @@ class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
             template_file_path, os.R_OK
         ):
             content_string = chevron.render(
-                open(template_file_path, "r"), template_dict
+                open(template_file_path, "r"), template_dict, template_partials_path
             )
         else:
             raise ProcessorError("ERROR: No Template File Found!")
@@ -145,7 +154,8 @@ class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
                 0,
             )
             if validate_bes_xml:
-                self.validate_file(content_file_pathname)
+                if content_file_pathname.endswith(".bes"):
+                    self.validate_file(content_file_pathname)
 
 
 if __name__ == "__main__":

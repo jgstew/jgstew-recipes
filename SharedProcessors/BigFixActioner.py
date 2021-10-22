@@ -34,7 +34,7 @@ BES_SourcedFixletAction = """\
             <ActiveUserRequirement>NoRequirement</ActiveUserRequirement>
             <ActiveUserType>AllUsers</ActiveUserType>
             <HasWhose>false</HasWhose>
-            <PreActionCacheDownload>true</PreActionCacheDownload>
+            <PreActionCacheDownload>false</PreActionCacheDownload>
             <Reapply>true</Reapply>
             <HasReapplyLimit>false</HasReapplyLimit>
             <HasReapplyInterval>true</HasReapplyInterval>

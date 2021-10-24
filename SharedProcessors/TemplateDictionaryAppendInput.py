@@ -28,7 +28,15 @@ class TemplateDictionaryAppendInput(Processor):  # pylint: disable=invalid-name
         },
         "input_keys_array": {
             "required": False,
-            "default": ["DisplayName", "64BitOnly", "32BitOnly", "VendorFolder"],
+            "default": [
+                "DisplayName",
+                "64BitOnly",
+                "32BitOnly",
+                "VendorFolder",
+                "cmd_args",
+                "exe_file",
+                "PublicDesktopShortcutFile",
+            ],
             "description": "the input env keys to append",
         },
         "input_keys_prefix": {

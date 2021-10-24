@@ -1,0 +1,11 @@
+---
+Description: Test DangerousEvaluate Processor
+Identifier: com.github.jgstew.test.DangerousEvaluate
+Input:
+  NAME: DangerousEvaluateTest
+  Test_ENV_VAR: "test value %NAME%"
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/DangerousEvaluate
+    Arguments:
+      evaluate_string: "for item in self.env: print(f'{item} = {str(self.env[item])[0:60]}...')"

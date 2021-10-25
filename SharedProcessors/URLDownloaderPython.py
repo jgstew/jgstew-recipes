@@ -330,6 +330,8 @@ class URLDownloaderPython(URLDownloader):
             self.clear_zero_file(file_save_path)
             return None
 
+        self.output("INFO: Downloading New File")
+
         # download file
         while True:
             chunk = response.read(chunksize)

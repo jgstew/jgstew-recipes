@@ -1,0 +1,11 @@
+---
+Description: Test AssertInputContainsString Processor
+Identifier: com.github.jgstew.test.AssertInputContainsString
+Input:
+  NAME: AssertInputContainsStringTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "1_2_3"
+      assert_string: "_"

@@ -1,0 +1,12 @@
+---
+Description: Test GetRecipeParentFolderName Processor
+Identifier: com.github.jgstew.test.GetRecipeParentFolderName
+Input:
+  NAME: GetRecipeParentFolderNameTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/GetRecipeParentFolderName
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%parent_folder_result%"
+      assert_string: "Test-Recipes"

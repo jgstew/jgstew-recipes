@@ -5,7 +5,8 @@ Input:
   NAME: GetCommonPlatformEnumerationTest
   DisplayName: AutoPkg
   latest_version: "2.3.9"
-  cpe_target_sw: "windows"
+  # cpe_target_sw: "windows"
+  template_file_path: "whatever-Win.bes.mustache"
   32BitOnly: True
 MinimumVersion: "2.3"
 Process:

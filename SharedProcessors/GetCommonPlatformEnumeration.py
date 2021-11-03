@@ -55,7 +55,7 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
 
         return parent_folder_name
 
-    def sanitize_text_cpe(self, input_string):
+    def sanitize_text_cpe_part(self, input_string):
         """sanitize input_string to be cpe compliant"""
         # lower case:
         input_string = str(input_string).lower()
@@ -75,7 +75,7 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
             if "version" in str(item).lower():
                 # exclude known other version vars:
                 if str(item) not in exclude_vars:
-                    return self.sanitize_text_cpe(self.env[item])
+                    return self.sanitize_text_cpe_part(self.env[item])
         return "0.0.0"
 
     def get_env_product_name(self):
@@ -86,9 +86,25 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
         for item_check in env_var_check_order:
             for item in self.env:
                 if str(item) == item_check:
-                    return self.sanitize_text_cpe(self.env[item])
+                    return self.sanitize_text_cpe_part(self.env[item])
 
         return "unknown_product"
+
+    def get_env_target_sw(self):
+        """infer target_sw from env"""
+
+        target_sw = "*"
+        # template_file_path is best
+        # tail of RECIPE_PATH is recipe file name
+        # tail of RECIPE_CACHE_DIR is identifier by default
+
+        template_file_path = self.env.get("template_file_path", "")
+
+        if template_file_path != "":
+            if "win" in str(template_file_path).lower():
+                target_sw = "windows"
+
+        return self.sanitize_text_cpe_part(target_sw)
 
     def get_env_target_hw(self):
         """infer target_hw from metadata"""
@@ -100,7 +116,7 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
         if "32BitOnly" in self.env:
             target_hw = "x32"
 
-        return self.sanitize_text_cpe(target_hw)
+        return self.sanitize_text_cpe_part(target_hw)
 
     def main(self):
         """Execution starts here"""
@@ -115,7 +131,7 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
         version = self.env.get("version", "")
 
         if cpe_vendor == "":
-            cpe_vendor = self.sanitize_text_cpe(self.get_parent_folder_name())
+            cpe_vendor = self.sanitize_text_cpe_part(self.get_parent_folder_name())
 
         if cpe_product == "":
             # infer cpe_product from TitleName or DisplayName or Name
@@ -126,7 +142,7 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
             version = self.get_env_version()
 
         if cpe_target_sw == "":
-            cpe_target_sw = "*"
+            cpe_target_sw = self.get_env_target_sw()
 
         if cpe_target_hw == "":
             cpe_target_hw = self.get_env_target_hw()

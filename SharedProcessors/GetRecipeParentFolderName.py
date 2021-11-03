@@ -16,7 +16,7 @@ __all__ = ["GetRecipeParentFolderName"]
 
 
 class GetRecipeParentFolderName(Processor):  # pylint: disable=invalid-name
-    """Takes a datetime string and converts it"""
+    """get parent folder name of current recipe"""
 
     description = __doc__
     input_variables = {
@@ -32,11 +32,21 @@ class GetRecipeParentFolderName(Processor):  # pylint: disable=invalid-name
     }
     __doc__ = description
 
+    def get_parent_folder_name(self):
+        """Gets the recipe parent folder name"""
+        print("get_parent_folder_name()")
+
+        recipe_dir = self.env.get("RECIPE_DIR", "")
+
+        parent_folder_name = os.path.basename(recipe_dir)
+
+        return parent_folder_name
+
     def main(self):
         """Execution starts here"""
 
         ouput_variable_name = self.env.get("ouput_variable_name", "VendorFolder")
-        recipe_dir = self.env.get("RECIPE_DIR", "")
+        # recipe_dir = self.env.get("RECIPE_DIR", "")
         current_variable_value = self.env.get(ouput_variable_name, "")
 
         # print(f"current_variable_value = `{current_variable_value}`")
@@ -47,7 +57,7 @@ class GetRecipeParentFolderName(Processor):  # pylint: disable=invalid-name
 
         parent_folder_name = current_variable_value
         if current_variable_value == "":
-            parent_folder_name = os.path.basename(recipe_dir)
+            parent_folder_name = self.get_parent_folder_name()
 
         self.env["ouput_variable_name"] = ouput_variable_name
         self.env[ouput_variable_name] = parent_folder_name

@@ -1,0 +1,16 @@
+---
+Description: Test GetCommonPlatformEnumeration Processor
+Identifier: com.github.jgstew.test.GetCommonPlatformEnumeration
+Input:
+  NAME: GetCommonPlatformEnumerationTest
+  DisplayName: AutoPkg
+  latest_version: "2.3.9"
+  cpe_target_sw: "windows"
+  32BitOnly: True
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/GetCommonPlatformEnumeration
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%Template_cpe%"
+      assert_string: "test_recipes"

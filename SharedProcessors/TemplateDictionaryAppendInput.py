@@ -36,6 +36,8 @@ class TemplateDictionaryAppendInput(Processor):  # pylint: disable=invalid-name
                 "cmd_args",
                 "exe_file",
                 "PublicDesktopShortcutFile",
+                "cpe_product",
+                "cpe_vendor",
             ],
             "description": "the input env keys to append",
         },
@@ -65,7 +67,7 @@ class TemplateDictionaryAppendInput(Processor):  # pylint: disable=invalid-name
         # ensure it is a dict
         dictionary_to_append = dict(dictionary_to_append)
 
-        # TODO: append matching ENV items to dictionary
+        # append matching ENV items to dictionary
         for item in self.env:
             if input_keys_prefix in str(item):
                 # print(f"{item} starts with {input_keys_prefix}")

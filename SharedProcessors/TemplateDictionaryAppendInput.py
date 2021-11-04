@@ -38,6 +38,7 @@ class TemplateDictionaryAppendInput(Processor):  # pylint: disable=invalid-name
                 "PublicDesktopShortcutFile",
                 "cpe_product",
                 "cpe_vendor",
+                "cpe",
             ],
             "description": "the input env keys to append",
         },

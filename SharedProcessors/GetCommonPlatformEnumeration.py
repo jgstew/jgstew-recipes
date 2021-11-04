@@ -42,7 +42,7 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
         },
     }
     output_variables = {
-        "Template_cpe": {"description": ("the env var to store the result")},
+        "cpe": {"description": ("the env var to store the result")},
     }
     __doc__ = description
 
@@ -94,13 +94,17 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
         """infer target_sw from env"""
 
         target_sw = "*"
-        # template_file_path is best
+        # template_file_path is best (should work even in overrides / children)
         # tail of RECIPE_PATH is recipe file name
         # tail of RECIPE_CACHE_DIR is identifier by default
 
         template_file_path = self.env.get("template_file_path", "")
 
         if template_file_path != "":
+            if "linux" in str(template_file_path).lower():
+                target_sw = "linux"
+            if "mac" in str(template_file_path).lower():
+                target_sw = "macos"
             if "win" in str(template_file_path).lower():
                 target_sw = "windows"
 
@@ -118,11 +122,8 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
 
         return self.sanitize_text_cpe_part(target_hw)
 
-    def main(self):
-        """Execution starts here"""
-        # References:
-        # - https://cpe.mitre.org/specification/
-        # - https://en.wikipedia.org/wiki/Common_Platform_Enumeration
+    def get_cpe(self):
+        """primary function"""
 
         cpe_product = self.env.get("cpe_product", "")
         cpe_vendor = self.env.get("cpe_vendor", "")
@@ -147,9 +148,29 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
         if cpe_target_hw == "":
             cpe_target_hw = self.get_env_target_hw()
 
-        self.env[
-            "Template_cpe"
-        ] = f"cpe:2.3:a:{cpe_vendor}:{cpe_product}:{version}:*:*:*:*:{cpe_target_sw}:{cpe_target_hw}:*"
+        cpe = (
+            "cpe:2.3:a"
+            + f":{cpe_vendor}:{cpe_product}:{version}:"
+            + "*:*:*:*"
+            + f":{cpe_target_sw}:{cpe_target_hw}:*"
+        )
+
+        return cpe
+
+    def main(self):
+        """Execution starts here"""
+        # References:
+        # - https://cpe.mitre.org/specification/
+        # - https://en.wikipedia.org/wiki/Common_Platform_Enumeration
+
+        cpe = self.env.get("cpe", "")
+
+        # only get and define CPE if it doesn't already exist
+        if cpe == "":
+            cpe = self.get_cpe()
+            self.env["cpe"] = cpe
+        else:
+            self.output("INFO: cpe already defined.")
 
 
 if __name__ == "__main__":

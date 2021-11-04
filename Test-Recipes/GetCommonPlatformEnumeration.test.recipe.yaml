@@ -13,5 +13,5 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/GetCommonPlatformEnumeration
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
-      input_string: "%Template_cpe%"
-      assert_string: "test_recipes"
+      input_string: "%cpe%"
+      assert_string: "cpe:2.3:a:test_recipes:"

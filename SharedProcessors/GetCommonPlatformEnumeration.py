@@ -155,7 +155,8 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
             + f":{cpe_target_sw}:{cpe_target_hw}:*"
         )
 
-        return cpe
+        # CPEs are always lowercase
+        return cpe.lower()
 
     def main(self):
         """Execution starts here"""

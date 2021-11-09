@@ -27,7 +27,7 @@ class SharedUtilityMethods(Processor):
         if raise_error:
             verbosity = 0
         if not file_path:
-            self.output("ERROR: no file_path provided!", 0)
+            self.output("ERROR: no file_path provided!", verbosity)
             if raise_error:
                 raise ProcessorError("No file_path provided!")
         elif not os.path.isfile(file_path):
@@ -36,7 +36,26 @@ class SharedUtilityMethods(Processor):
                 raise FileNotFoundError(
                     errno.ENOENT, os.strerror(errno.ENOENT), file_path
                 )
+            return None
         return file_path
+
+    def verify_folder_exists(self, folder_path, raise_error=True):
+        """verify file exists, raise error if not"""
+        verbosity = 3
+        if raise_error:
+            verbosity = 0
+        if not folder_path:
+            self.output("ERROR: no folder_path provided!", verbosity)
+            if raise_error:
+                raise ProcessorError("No file_path provided!")
+        elif not os.path.isdir(folder_path):
+            self.output(f"ERROR: folder missing! `{folder_path}`", verbosity)
+            if raise_error:
+                raise FileNotFoundError(
+                    errno.ENOENT, os.strerror(errno.ENOENT), folder_path
+                )
+            return None
+        return folder_path
 
     def verify_file_executable(self, file_path, raise_error=False):
         """verify file is executable"""
@@ -90,8 +109,8 @@ class SharedUtilityMethods(Processor):
 
     def main(self):
         """Execution starts here"""
-        self.output("WARNING: main() Does Nothing. Must Override.", 4)
+        self.output("WARNING: main() Does Nothing.", 4)
 
 
 if __name__ == "__main__":
-    print("SharedUtilityMethods: Does Nothing! Must Override!")
+    print("SharedUtilityMethods: Does Nothing!")

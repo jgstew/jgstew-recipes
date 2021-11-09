@@ -1,0 +1,22 @@
+---
+Description: Expand and transform the latest NVD CPE Dictionary XML
+Identifier: com.github.jgstew.process.NVD-CPE-Dictionary-XML
+Input:
+  NAME: NVD-CPE-Dictionary-XML
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.download.NVD-CPE-Dictionary-XML
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  - Processor: com.github.jgstew.SharedProcessors/FileGetExecutable
+    Arguments:
+      path_array: ["/Program Files/7-Zip/7z.exe", "/usr/local/bin/7z"]
+  - Processor: com.github.hansen-m.SharedProcessors/WinInstallerExtractor
+    Arguments:
+      preserve_paths: False
+      extract_dir: "downloads"
+  - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
+    Arguments:
+      search_pattern: "\"cpe:2.3:a:(\\w+:\\w+):"
+      search_path: "%RECIPE_CACHE_DIR%/downloads"
+      search_extension: ".xml"
+      output_file_path: "/tmp/cpe-vendor-product.txt"

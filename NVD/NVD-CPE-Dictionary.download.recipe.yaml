@@ -1,0 +1,16 @@
+---
+Description: Downloads the latest NVD CPE Dictionary XML
+Identifier: com.github.jgstew.download.NVD-CPE-Dictionary-XML
+Input:
+  NAME: "NVD-CPE-Dictionary-XML"
+  # TYPE must be `gz` or `zip`
+  TYPE: "zip"
+  # cpe_version must be "2.3" or "2.2"
+  cpe_version: "2.3"
+MinimumVersion: "2.3"
+Process:
+  - Processor: URLDownloaderPython
+    Arguments:
+      # https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v2.3.xml.zip
+      url: https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v%cpe_version%.xml.%TYPE%
+  - Processor: EndOfCheckPhase

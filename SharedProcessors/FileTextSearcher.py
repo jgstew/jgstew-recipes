@@ -3,10 +3,10 @@
 See docstring for FileTextSearcher class
 """
 
+import contextlib
+import mmap
 import os
 import re
-import mmap
-import contextlib
 
 from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,
@@ -63,12 +63,10 @@ class FileTextSearcher(SharedUtilityMethods):  # pylint: disable=too-few-public-
 
     def search_in_file(self, file_path, search_pattern):
         """search for regex results in file"""
-        # print(file_path)
-        # https://stackoverflow.com/a/454589/861745
-        # https://stackoverflow.com/a/54702939/861745
 
         re_pattern = re.compile(search_pattern.encode())
 
+        # https://stackoverflow.com/a/54702939/861745
         with open(file_path, "r+") as f:
             # the following allows searching through a large file
             #   without loading it all into memory first

@@ -6,6 +6,7 @@ See docstring for FileTextSearcher class
 import os
 import re
 import mmap
+import contextlib
 
 from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,
@@ -69,8 +70,13 @@ class FileTextSearcher(SharedUtilityMethods):  # pylint: disable=too-few-public-
         re_pattern = re.compile(search_pattern.encode())
 
         with open(file_path, "r+") as f:
-            data = mmap.mmap(f.fileno(), 0)
-            return re.findall(re_pattern, data)
+            # the following allows searching through a large file
+            #   without loading it all into memory first
+            #   original use case was 300MB+ XML file
+            with contextlib.closing(
+                mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
+            ) as data:
+                return re.findall(re_pattern, data)
 
     def main(self):
         """execution starts here"""

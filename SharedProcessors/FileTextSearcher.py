@@ -109,12 +109,13 @@ class FileTextSearcher(SharedUtilityMethods):  # pylint: disable=too-few-public-
             else:
                 results = list(set(results))
 
+        self.output(f"number of regex matches: { len(results) }")
+
         if file_search_results_var != "":
             self.env[file_search_results_var] = results
 
         if output_file_path != "":
-            print(f" write output to file {output_file_path}")
-            print(f" number of results: { len(results) }")
+            self.output(f" write output to file {output_file_path}")
             # https://stackoverflow.com/a/899149/861745
             with open(output_file_path, "w") as f:
                 for item in results:

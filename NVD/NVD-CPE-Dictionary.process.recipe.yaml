@@ -16,7 +16,15 @@ Process:
       extract_dir: "downloads"
   - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
     Arguments:
-      search_pattern: "\"cpe:2.3:a:(\\w+:\\w+):"
+      # get the unique sorted set of vendor:product parts of CPEs, put in file
+      search_pattern: '(?i)"cpe:2.3:a:(\w+:\w+):'
       search_path: "%RECIPE_CACHE_DIR%/downloads"
       search_extension: ".xml"
       output_file_path: "/tmp/cpe-vendor-product.txt"
+  # - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
+  #   Arguments:
+  #     # get total number of CPEs for apps (about 725627 or more in the future)
+  #     search_pattern: '(?i)"cpe:2.3:a:'
+  #     output_file_path: ""
+  #     sort_results: False
+  #     unique_results_only: False

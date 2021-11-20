@@ -39,6 +39,8 @@ class TemplateDictionaryAppendInput(Processor):  # pylint: disable=invalid-name
                 "cpe_product",
                 "cpe_vendor",
                 "cpe",
+                "content_id_vendor",
+                "content_id_product",
             ],
             "description": "the input env keys to append",
         },

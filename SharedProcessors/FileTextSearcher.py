@@ -55,6 +55,11 @@ class FileTextSearcher(SharedUtilityMethods):  # pylint: disable=too-few-public-
             "default": True,
             "description": "if true, sort the results",
         },
+        "first_result_only": {
+            "required": False,
+            "default": False,
+            "description": "if true, sort the results",
+        },
     }
     output_variables = {
         "file_search_results_var": {"description": "the variable name to store output"},
@@ -85,6 +90,7 @@ class FileTextSearcher(SharedUtilityMethods):  # pylint: disable=too-few-public-
         output_file_path = self.env.get("output_file_path", "")
         unique_results_only = self.env.get("unique_results_only", True)
         sort_results = self.env.get("sort_results", True)
+        first_result_only = self.env.get("first_result_only", False)
 
         results = []
 
@@ -110,6 +116,12 @@ class FileTextSearcher(SharedUtilityMethods):  # pylint: disable=too-few-public-
                 results = list(set(results))
 
         self.output(f"number of regex matches: { len(results) }")
+
+        if first_result_only:
+            if len(results) > 0:
+                results = results[0]
+            else:
+                results = ""
 
         if file_search_results_var != "":
             self.env[file_search_results_var] = results

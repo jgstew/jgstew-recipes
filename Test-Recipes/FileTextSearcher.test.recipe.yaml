@@ -17,3 +17,19 @@ Process:
     Arguments:
       search_path: "Test-Recipes"
       file_search_results_var: "file_search_results_var"
+  - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
+    Arguments:
+      first_result_only: True
+      file_search_results_var: "file_search_results_var"
+  - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
+    Arguments:
+      first_result_only: True
+      search_path: "BigFix"
+      search_pattern: "Test-ThisShouldNotMatchAnything"
+      file_search_results_var: "file_search_results_var"
+  - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
+    Arguments:
+      first_result_only: False
+      search_path: "BigFix"
+      search_pattern: "Test-ThisShouldNotMatchAnything"
+      file_search_results_var: "file_search_results_var"

@@ -1,0 +1,12 @@
+---
+Description: Test DangerousRunProcessors Processor
+Identifier: com.github.jgstew.test.DangerousRunProcessors
+Input:
+  NAME: DangerousRunProcessorsTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/DangerousRunProcessors
+    Arguments:
+      dangerous_processor_array: ["FileFinder"]
+      pattern: "*/*.recipe*"
+      find_method: glob

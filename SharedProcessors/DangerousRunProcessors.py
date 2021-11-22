@@ -40,10 +40,11 @@ class DangerousRunProcessors(Processor):  # pylint: disable=invalid-name
         # NOTE: because of how this is invoked, it doesn't seem to setup default vars missing from env
 
         processor_array = self.env.get("dangerous_processor_array", [])
-        RECIPE_PATH = self.env.get("RECIPE_PATH")
-        recipe_inst = autopkglib.recipe_from_file(RECIPE_PATH)
-        if recipe_inst:
-            self.output(f"valid recipe found at {RECIPE_PATH}")
+
+        # RECIPE_PATH = self.env.get("RECIPE_PATH")
+        # recipe_inst = autopkglib.recipe_from_file(RECIPE_PATH)
+        # if recipe_inst:
+        #     self.output(f"valid recipe found at {RECIPE_PATH}")
 
         for processor_item in processor_array:
             (

@@ -1,0 +1,15 @@
+---
+Description: Test VersionGetMajorMinor Processor
+Identifier: com.github.jgstew.test.VersionGetMajorMinor
+Input:
+  NAME: VersionGetMajorMinorTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/VersionGetMajorMinor
+    Arguments:
+      version_string: 1.2.3
+      separator_string: _
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_major_minor%"
+      assert_string: "1_2"

@@ -3,8 +3,7 @@ Description: Downloads the latest BigFix Fixlet Debugger
 Identifier: com.github.jgstew.download.FixletDebugger
 Input:
   NAME: FixletDebugger
-  #version_maximum: "9.2.22.23"
-  #version_maximum: "9.5.18.74"
+  # version_major_minor_match: "9.5"
 MinimumVersion: "2.3"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/URLTextSearcherArray
@@ -20,4 +19,7 @@ Process:
       url: https://software.bigfix.com/download/bes/%version_major_minor%/util/QNA%version_maximum%.zip
       download_version: "%version_maximum%"
       COMPUTE_HASHES: True
+  - Processor: com.github.jgstew.SharedProcessors/VersionGetMajorMinor
+    Arguments:
+      separator_string: "."
   - Processor: EndOfCheckPhase

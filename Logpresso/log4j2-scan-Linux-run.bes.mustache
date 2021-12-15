@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+		<Title>Run: {{DisplayName}} v{{version}} - Linux{{#64BitOnly}} (x64){{/64BitOnly}}</Title>
+		<Description><![CDATA[
+This task will run {{DisplayName}} v{{version}} scanner.
+		]]></Description>
+		<Relevance>unix of operating system</Relevance>
+		{{#64BitOnly}}
+		<Relevance><![CDATA["x86_64" = architecture of operating system]]></Relevance>
+		{{/64BitOnly}}
+		<Relevance><![CDATA[not exists modification times whose(now - it < 1*day) of files "results-log4j2-scan.txt" of folders "BPS-Scans" of parent folders of parent folders of client folders of sites "actionsite"]]></Relevance>
+		<Category></Category>
+		<DownloadSize>{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}</DownloadSize>
+		<Source>{{DisplayName}}</Source>
+		<SourceID></SourceID>
+		<SourceReleaseDate>{{SourceReleaseDate}}</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>action-ui-metadata</Name>
+			<Value>{ {{#version}}"version":"{{version}}",{{/version}}"size":{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}{{^patch}}{{#icon_base64}},"icon":"data:{{icon_type}}{{^icon_type}}image/png{{/icon_type}};base64,{{icon_base64}}"{{/icon_base64}}{{/patch}} }</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>{{x-fixlet-modification-time}}</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to deploy {{DisplayName}} v{{version}}.</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[
+// Download {{DisplayName}}:
+{{{prefetch}}}
+
+// TODO: is deleting the destination required first? or will the tar command overwrite?
+//       Does this command work on Linux and Unix? Does this binary work on Unix?
+wait tar -zxf __Download/{{file_name}} -C /tmp
+
+// BES Client Folder Determination
+if {name of operating system as lowercase starts with "win"}
+    parameter "BPSFolder" = "{pathname of parent folder of client}\BPS-Scans\"
+else
+    parameter "BPSFolder" = "{(if (version of client >= "9" as version) then (pathname of parent folder of data folder of client) else (pathname of parent folder of parent folder of client folder of site "actionsite"))}/BPS-Scans/"
+endif
+
+if {not exists folder (parameter "BPSFolder")}
+    folder create "{parameter "BPSFolder"}"
+endif
+
+parameter "ListFile"="{parameter "BPSFolder"}results-{{DisplayName}}.txt"
+
+// Housekeeping, clear any previous scan output
+delete __createfile
+delete "{parameter "ListFile"}"
+
+
+// TODO: is chmod needed?
+// Run:
+// runhidden sh -c /tmp/log4j2-scan ???? > "{parameter "ListFile"}"
+
+// End]]></ActionScript>
+      		<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
+		</DefaultAction>
+	</{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+</BES>

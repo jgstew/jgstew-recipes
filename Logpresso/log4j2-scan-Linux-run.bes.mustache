@@ -58,8 +58,6 @@ parameter "ListFile"="{parameter "BPSFolder"}results-{{DisplayName}}.txt"
 delete __createfile
 delete "{parameter "ListFile"}"
 
-
-// TODO: is chmod needed?
 // Run:
 // WARNING: this may scan network drives unintentionally!!!
 run sh -c 'cd /tmp && ./log4j2-scan --exclude /mnt --exclude /cdrom --exclude /dev / > "{parameter "ListFile"}"'

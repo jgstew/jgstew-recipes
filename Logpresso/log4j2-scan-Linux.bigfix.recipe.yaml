@@ -33,6 +33,3 @@ Process:
   # `BESImport` imports the generated BES content into a BigFix Server
   #   Which server and credentials are used is dictated by `~/.besapi.conf`
   - Processor: com.github.jgstew.SharedProcessors/BESImport
-
-  # `BigFixActioner` creates an offer action from the imported BigFix Content
-  - Processor: com.github.jgstew.SharedProcessors/BigFixActioner

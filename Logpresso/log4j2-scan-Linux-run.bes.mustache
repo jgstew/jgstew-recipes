@@ -37,8 +37,13 @@ This task will run {{DisplayName}} v{{version}} scanner.
 // Download {{DisplayName}}:
 {{{prefetch}}}
 
-// TODO: is deleting the destination required first? or will the tar command overwrite?
-//       Does this command work on Linux and Unix? Does this binary work on Unix?
+// Get shell binary, should return /bin/sh in most cases:
+parameter "shell_bin" = "{ tuple string items 0 of concatenations ", " of ( it ; pathnames of files whose(name of it as lowercase = "sh" OR name of it as lowercase = "sh.exe") of (folders it) of unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it; (if (windows of operating system) then (x64 variables "PATH" of it) else NOTHINGS) ) of environments ) of "/bin/sh" }"
+
+// Delete destination of next command if applicable
+delete /tmp/log4j2-scan
+
+// TODO: Does this command work on Linux and Unix? Does this binary work on Unix?
 wait tar -zxf __Download/{{file_name}} -C /tmp
 
 // BES Client Folder Determination
@@ -58,9 +63,13 @@ parameter "ListFile"="{parameter "BPSFolder"}results-{{DisplayName}}.txt"
 delete __createfile
 delete "{parameter "ListFile"}"
 
-// Run:
+// set to executable
+run {parameter "shell_bin"} -c "chmod +x /tmp/log4j2-scan"
+
+// Run {{DisplayName}}:
 // WARNING: this may scan network drives unintentionally!!!
-run sh -c 'cd /tmp && ./log4j2-scan {("--exclude " & it) of concatenations " --exclude " of unique values whose(it does not contain " ") of (it;"/mnt";"/dev";"/cdrom") of items 0 of (mount points of it, filesystem types of it, types of it) whose(item 2 of it != "DRIVE_FIXED" OR item 1 of it is contained by set of ("cgroup";"cifs";"nfs";"cgroup2";"sysfs";"proc";"cpuset")) of filesystems} / > "{parameter "ListFile"}"'
+//   the following command attempts to exclude network drives, specifically nfs and cifs
+run {parameter "shell_bin"} -c "cd /tmp && ./log4j2-scan {("--exclude " & it) of concatenations " --exclude " of unique values whose(it does not contain " ") of (it;"/mnt";"/dev";"/cdrom") of items 0 of (mount points of it, filesystem types of it, types of it) whose(item 2 of it != "DRIVE_FIXED" OR item 1 of it is contained by set of ("cgroup";"cifs";"nfs";"cgroup2";"sysfs";"proc";"cpuset")) of filesystems} / > '{parameter "ListFile"}'"
 
 // End]]></ActionScript>
       		<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>

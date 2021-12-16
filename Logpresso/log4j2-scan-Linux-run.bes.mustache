@@ -69,7 +69,7 @@ run {parameter "shell_bin"} -c "chmod +x /tmp/log4j2-scan"
 // Run {{DisplayName}}:
 // WARNING: this may scan network drives unintentionally!!!
 //   the following command attempts to exclude network drives, specifically nfs and cifs
-run {parameter "shell_bin"} -c "cd /tmp && ./log4j2-scan {("--exclude " & it) of concatenations " --exclude " of unique values whose(it does not contain " ") of (it;"/mnt";"/dev";"/cdrom") of items 0 of (mount points of it, filesystem types of it, types of it) whose(item 2 of it != "DRIVE_FIXED" OR item 1 of it is contained by set of ("cgroup";"cifs";"nfs";"cgroup2";"sysfs";"proc";"cpuset")) of filesystems} / > '{parameter "ListFile"}'"
+run {parameter "shell_bin"} -c "cd /tmp && ./log4j2-scan {("--exclude " & it) of concatenations " --exclude " of unique values whose(it does not contain " ") of (it;"/mnt";"/dev";"/cdrom") of items 0 of (mount points of it, filesystem types of it, types of it) whose(item 2 of it != "DRIVE_FIXED" OR item 1 of it is contained by set of ("cgroup";"cifs";"nfs";"nfs3";"nfs4";"cgroup2";"sysfs";"proc";"cpuset")) of filesystems} / > '{parameter "ListFile"}'"
 
 // End]]></ActionScript>
       		<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>

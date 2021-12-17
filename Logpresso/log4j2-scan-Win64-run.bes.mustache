@@ -62,7 +62,7 @@ delete "{parameter "ListFile"}"
 
 
 // Run:
-runhidden CMD /C {windows folder}\Temp\log4j2-scan.exe --drives {concatenations "," of unique values of (it as lowercase) of preceding texts of firsts ":" of names of drives whose (type of it = "DRIVE_FIXED")} > "{parameter "ListFile"}"
+runhidden CMD /C {windows folder}\Temp\log4j2-scan.exe --scan-log4j1 --no-empty-report --drives {concatenations "," of unique values of (it as lowercase) of preceding texts of firsts ":" of names of drives whose (type of it = "DRIVE_FIXED")} > "{parameter "ListFile"}"
 
 // End]]></ActionScript>
       		<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>

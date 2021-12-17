@@ -1,0 +1,32 @@
+This task will run {{ DisplayName }} v{{ version }} scanner.<br />
+<TABLE>
+  <TBODY>
+    <TR>
+      <TD
+        ><LABEL for="exclusionlist"
+          >List additional directories to be excluded from the scan, one per
+          line:</LABEL
+        >
+      </TD>
+      <TD
+        ><TEXTAREA
+          id="exclusionlist"
+          rows="10"
+          cols="40"
+          name="exclusionlist"
+        ></TEXTAREA></TD
+    ></TR>
+  </TBODY>
+</TABLE>
+<script>
+  document.body.ontakeaction = function () {
+    TakeFixletAction(
+      Relevance("id of current fixlet"),
+      Relevance("id of current bes site"),
+      "Action1",
+      { exclusionlist: document.getElementById("exclusionlist").value },
+      {}
+    );
+    return false;
+  };
+</script>

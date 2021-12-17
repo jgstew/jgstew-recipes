@@ -12,7 +12,12 @@ endif
 parameter "ListFile"="{parameter "BPSFolder"}results-{{DisplayName}}.txt"
 parameter "ExclusionFile"="{parameter "BPSFolder"}log4j2-path-exclusions.txt"
 
-// Housekeeping, clear any previous scan output
+// Delete previous items
 delete "{parameter "ListFile"}"
 delete __appendfile
 delete "{parameter "ExclusionFile"}"
+
+// Create Exclusions list file:
+appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of unique values whose(it does not contain " ") of (it;"/mnt";"/dev";"/cdrom"; (unique values of (it as trimmed string) whose(it != "") of substrings separated by "%0a" of (parameter "exclusionlist" | "")) ) of items 0 of (mount points of it, filesystem types of it, types of it) whose(item 2 of it != "DRIVE_FIXED" OR item 1 of it is contained by set of ("cgroup";"cifs";"nfs";"nfs3";"nfs4";"cgroup2";"sysfs";"proc";"cpuset")) of filesystems}
+
+copy __appendfile "{parameter "ExclusionFile"}"

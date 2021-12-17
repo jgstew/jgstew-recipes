@@ -50,7 +50,7 @@ run {parameter "shell_bin"} -c "chmod +x /tmp/log4j2-scan"
 
 // Run {{DisplayName}}:
 // WARNING: this attempts to exclude network shares, but might not be perfect.
-run {parameter "shell_bin"} -c "cd /tmp && ./log4j2-scan --scan-log4j1 --no-empty-report --exclude-config '{parameter "ExclusionFile"}' / > '{parameter "ListFile"}'"
+run {parameter "shell_bin"} -c "cd /tmp && ./log4j2-scan --scan-log4j1 --no-symlink --no-empty-report --exclude-config '{parameter "ExclusionFile"}' / > '{parameter "ListFile"}'"
 
 // End]]></ActionScript>
 			<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>

@@ -6,6 +6,7 @@ Input:
   # TYPE must be `zip` or `7z` or `tar.gz`
   TYPE: "zip"
   OS: win64
+  log4j2scan-common-parameters: "--scan-log4j1 --no-symlink --no-empty-report"
 MinimumVersion: "2.3"
 ParentRecipe: com.github.jgstew.shared.parent-recipe
 Process:

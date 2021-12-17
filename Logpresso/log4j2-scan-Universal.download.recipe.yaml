@@ -1,6 +1,6 @@
 ---
 Description: Downloads the latest version of log4j2-scan
-Identifier: com.github.jgstew.download.log4j2-scan-Linux
+Identifier: com.github.jgstew.download.log4j2-scan-Universal
 Input:
   NAME: "log4j2-scan"
   # TYPE must be `zip` or `7z` or `tar.gz`

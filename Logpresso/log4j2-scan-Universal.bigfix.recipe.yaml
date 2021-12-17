@@ -1,0 +1,34 @@
+---
+Description: Generates a BigFix Task for running the latest log4j2-scan
+Identifier: com.github.jgstew.bigfix.log4j2-scan-Universal
+Input:
+  # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"
+  NAME: log4j2-scan
+  DisplayName: log4j2-scan
+# MinimumVersion of AutoPkg - Should always be 2.3 (or higher once a new version is released)
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.download.log4j2-scan-Universal
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  # `BigFixPrefetchItem` takes the hashes from `URLDownloaderPython`
+  #   Then it assembles them into a BigFix Prefetch Statement or Block
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+
+  # `BigFixSetupTemplateDictionary` creates a dictionary to fill out a bigix content template
+  #   If `SourceReleaseDate` is not provided, it will be set to today
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput
+
+  # `ContentFromTemplate` generates bigfix content from a mustache template file
+  #   The file is filled out with variables from the Template Dictionary
+  #   If variables are missing from the Template Dictionary, then that area will be blank
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: "./%VendorFolder%/%NAME%-Universal-run.bes.mustache"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.bes"
+
+  # `BESImport` imports the generated BES content into a BigFix Server
+  #   Which server and credentials are used is dictated by `~/.besapi.conf`
+  - Processor: com.github.jgstew.SharedProcessors/BESImport

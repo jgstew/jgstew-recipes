@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+		<Title>Run: {{DisplayName}} v{{version}} - Universal JAR - WORK IN PROGESS</Title>
+		<Description><![CDATA[{{>Log4J2Scan-Description}}]]></Description>
+		<Relevance>TRUE</Relevance>
+		<Relevance><![CDATA[not exists modification times whose(now - it < 1*day) of files "results-log4j2-scan.txt" of folders "BPS-Scans" of parent folders of parent folders of client folders of sites "actionsite"]]></Relevance>
+		<Category></Category>
+		<DownloadSize>{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}</DownloadSize>
+		<Source>{{DisplayName}}</Source>
+		<SourceID></SourceID>
+		<SourceReleaseDate>{{SourceReleaseDate}}</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>action-ui-metadata</Name>
+			<Value>{ {{#version}}"version":"{{version}}",{{/version}}"size":{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}{{^patch}}{{#icon_base64}},"icon":"data:{{icon_type}}{{^icon_type}}image/png{{/icon_type}};base64,{{icon_base64}}"{{/icon_base64}}{{/patch}} }</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>{{x-fixlet-modification-time}}</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-relevance-evaluation-period</Name>
+			<Value>01:00:00</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to run {{DisplayName}} v{{version}}.</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[
+//parameter "exclusionlist" is provided in the Description tab
+// Download {{DisplayName}}:
+{{{prefetch}}}
+
+// TODO: run using existing JAR or download portable JRE and run with that.
+
+// End]]></ActionScript>
+			<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
+		</DefaultAction>
+	</{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+</BES>

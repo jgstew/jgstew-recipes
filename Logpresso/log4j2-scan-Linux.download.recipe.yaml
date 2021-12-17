@@ -5,7 +5,7 @@ Input:
   NAME: "log4j2-scan"
   # TYPE must be `zip` or `7z` or `tar.gz`
   TYPE: tar.gz
-  OS: linux
+  OS: -linux
 MinimumVersion: "2.3"
 ParentRecipe: com.github.jgstew.download.log4j2-scan-Win64
 Process:

@@ -5,7 +5,7 @@ Input:
   NAME: "log4j2-scan"
   # TYPE must be `zip` or `7z` or `tar.gz`
   TYPE: "zip"
-  OS: win64
+  OS: -win64
   log4j2scan-common-parameters: "--scan-log4j1 --no-symlink --no-empty-report"
 MinimumVersion: "2.3"
 ParentRecipe: com.github.jgstew.shared.parent-recipe
@@ -19,7 +19,7 @@ Process:
       # curl_opts: ["--raw"]
   - Processor: URLDownloaderPython
     Arguments:
-      filename: logpresso-log4j2-scan-%OS%.%TYPE%
+      filename: logpresso-log4j2-scan%OS%.%TYPE%
       download_version: "%version%"
       COMPUTE_HASHES: True
   - Processor: EndOfCheckPhase

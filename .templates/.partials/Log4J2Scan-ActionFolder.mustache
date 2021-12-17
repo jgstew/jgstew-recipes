@@ -1,0 +1,18 @@
+// BES Client Folder Determination
+if {name of operating system as lowercase starts with "win"}
+    parameter "BPSFolder" = "{pathname of parent folder of client}\BPS-Scans\"
+else
+    parameter "BPSFolder" = "{(if (version of client >= "9" as version) then (pathname of parent folder of data folder of client) else (pathname of parent folder of parent folder of client folder of site "actionsite"))}/BPS-Scans/"
+endif
+
+if {not exists folder (parameter "BPSFolder")}
+    folder create "{parameter "BPSFolder"}"
+endif
+
+parameter "ListFile"="{parameter "BPSFolder"}results-{{DisplayName}}.txt"
+parameter "ExclusionFile"="{parameter "BPSFolder"}log4j2-path-exclusions.txt"
+
+// Housekeeping, clear any previous scan output
+delete "{parameter "ListFile"}"
+delete __appendfile
+delete "{parameter "ExclusionFile"}"

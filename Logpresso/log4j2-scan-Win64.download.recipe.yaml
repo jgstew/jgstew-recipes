@@ -13,7 +13,7 @@ Process:
   - Processor: GitHubReleasesInfoProvider
     Arguments:
       github_repo: logpresso/CVE-2021-44228-Scanner
-      asset_regex: "logpresso-log4j2-scan-.*-%OS%\\.%TYPE%$"
+      asset_regex: "logpresso-log4j2-scan-.*%OS%\\.%TYPE%$"
       include_prereleases: False
       # curl_opts: ["--raw"]
   - Processor: URLDownloaderPython

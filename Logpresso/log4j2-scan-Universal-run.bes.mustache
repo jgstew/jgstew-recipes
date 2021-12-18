@@ -34,8 +34,11 @@
 			</Description>
 			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[
 //parameter "exclusionlist" is provided in the Description tab
-// Download {{DisplayName}}:
-{{{prefetch}}}
+begin prefetch block
+	// Download {{DisplayName}}:
+	{{{prefetch}}}
+	collect prefetch items
+end prefetch block
 
 // TODO: run using existing JAR or download portable JRE and run with that.
 

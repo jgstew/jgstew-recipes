@@ -2,7 +2,7 @@
 Description: Downloads the latest version of Apache log4j2
 Identifier: com.github.jgstew.download.log4j2-bin
 Input:
-  NAME: "log4j2-scan"
+  NAME: "log4j2-bin"
   # TYPE must be `zip` or `7z` or `tar.gz`
   TYPE: "zip"
 MinimumVersion: "2.3"

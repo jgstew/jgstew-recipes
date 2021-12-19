@@ -92,8 +92,13 @@ parameter "shell_bin" = "{  tuple string items 0 of concatenations ", " of ( pat
 run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' && java -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config '{parameter "ExclusionFile"}' / > '{parameter "ListFile"}'"
 endif
 
+// Give 30 seconds for startup before checking
+parameter "StartTime"="{now}"
+pause while {not exists file (parameter "ListFile") and now - (parameter "StartTime" as time) < 30 * second }
+// Check that an output log file has been created as an indicator that the scan has launched successfully
+continue if {exists file (parameter "ListFile") whose (modification time of it >= active start time of action)}
+
 // End]]></ActionScript>
-			<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
 		</DefaultAction>
 	</{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
 </BES>

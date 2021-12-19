@@ -35,7 +35,7 @@
 {{{prefetch}}}
 
 // Get shell binary, should return /bin/sh in most cases:
-parameter "shell_bin" = "{ tuple string items 0 of concatenations ", " of ( it ; pathnames of files whose(name of it as lowercase = "sh" OR name of it as lowercase = "sh.exe") of (folders it) of unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it; (if (windows of operating system) then (x64 variables "PATH" of it) else NOTHINGS) ) of environments ) of "/bin/sh" }"
+parameter "shell_bin" = "{ tuple string items 0 of concatenations ", " of ( pathnames of files whose(name of it as lowercase = "sh" OR name of it as lowercase = "sh.exe") of (folders it) of unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it; (if (windows of operating system) then (x64 variables "PATH" of it) else NOTHINGS) ) of environments ; it) of "/bin/sh" }"
 
 // Delete destination of next command if applicable
 delete /tmp/log4j2-scan

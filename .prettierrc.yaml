@@ -1,0 +1,9 @@
+---
+# Prettier Config
+printWidth: 88
+bracketSpacing: false
+overrides:
+  - files: ".templates/.partials/*.mustache"
+    options:
+      parser: markdown
+      htmlWhitespaceSensitivity: strict

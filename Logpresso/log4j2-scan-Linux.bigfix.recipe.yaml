@@ -7,6 +7,7 @@ Input:
   DisplayName: log4j2-scan
   64BitOnly: True
   RelevanceOS: unix of operating system
+  TitleOS: Linux
 # MinimumVersion of AutoPkg - Should always be 2.3 (or higher once a new version is released)
 MinimumVersion: "2.3"
 ParentRecipe: com.github.jgstew.download.log4j2-scan-Linux
@@ -27,6 +28,11 @@ Process:
     Arguments:
       append_key: "RelevanceOS"
       append_value: "%RelevanceOS%"
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "TitleOS"
+      append_value: "%TitleOS%"
 
   # `ContentFromTemplate` generates bigfix content from a mustache template file
   #   The file is filled out with variables from the Template Dictionary

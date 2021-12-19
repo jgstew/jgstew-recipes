@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+		<Title>CVE-2021-44228 Log4j - Replace log4j-core-2.x.jar with log4j-core-{{version}}.jar - Windows</Title>
+		<Description><![CDATA[
+This task will run replace log4j-core-2.x.jar with log4j-core-{{version}}.jar
+		]]></Description>
+		<Relevance>windows of operating system</Relevance>
+		<Relevance><![CDATA[exists files "BPS-Scans/CVE-2021-44228.txt" of parent folders of parent folders of client folders of sites "actionsite"]]></Relevance>
+		<Category></Category>
+		<DownloadSize>{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}</DownloadSize>
+		<Source>{{DisplayName}}</Source>
+		<SourceID></SourceID>
+		<SourceReleaseDate>{{SourceReleaseDate}}</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames>CVE-2021-44228</CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>action-ui-metadata</Name>
+			<Value>{ {{#version}}"version":"{{version}}",{{/version}}"size":{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}{{^patch}}{{#icon_base64}},"icon":"data:{{icon_type}}{{^icon_type}}image/png{{/icon_type}};base64,{{icon_base64}}"{{/icon_base64}}{{/patch}} }</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>{{x-fixlet-modification-time}}</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to replace log4j-core-2.x.jar with log4j-core-{{version}}.jar</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[
+// Download:
+{{{prefetch}}}
+{{>ActionPrefetchUnzipExe}}
+
+// BES Client Folder Determination
+if {name of operating system as lowercase starts with "win"}
+    parameter "BPSFolder" = "{pathname of parent folder of client}\BPS-Scans\"
+else
+    parameter "BPSFolder" = "{(if (version of client >= "9" as version) then (pathname of parent folder of data folder of client) else (pathname of parent folder of parent folder of client folder of site "actionsite"))}/BPS-Scans/"
+endif
+
+//Check scan results to see whether any vulnerable log4j-core-2.x.jar files are found, before asking to download the new version
+if {exists files( lines of files "CVE-2021-44228.txt" of folders "BPS-Scans" of parent folder of client) whose (name of it as lowercase starts with "log4j-core-2." and name of it as lowercase does not end with "-javadoc.jar" and name of it as lowercase does not end with "-sources.jar" and name of it as lowercase does not end with "-tests.jar" and name of it as version < version "{{version}}" and size of it != {{DownloadSize}} and sha1 of it != "{{file_sha1}}") }
+
+waithidden __Download\unzip.exe -o __Download\{{file_name}} -d __Download
+
+delete __createfile
+createfile until EOF_EOF_EOF
+REM Preserve existing JAR files
+{concatenation "%0d%0a" of ("COPY /Y %22" & it & "%22 %22" & it & "-disabled%22") of (pathname of it) of files( lines of files "CVE-2021-44228.txt" of folders "BPS-Scans" of parent folder of client) whose (name of it as lowercase starts with "log4j-core-2." and name of it as lowercase does not end with "-javadoc.jar" and name of it as lowercase does not end with "-sources.jar" and name of it as lowercase does not end with "-tests.jar" and name of it as version < version "2.16.0" and size of it != 1789565 and sha1 of it != "539a445388aee52108700f26d9644989e7916e7c")}
+
+REM Overwrite with log4j-core-2.16.0.jar
+{concatenation "%0d%0a" of ("COPY /Y %22__Download\apache-log4j-2.16.0-bin\log4j-core-2.16.0.jar%22 %22" & it & "%22") of (pathname of it) of files( lines of files "CVE-2021-44228.txt" of folders "BPS-Scans" of parent folder of client) whose (name of it as lowercase starts with "log4j-core-2." and name of it as lowercase does not end with "-javadoc.jar" and name of it as lowercase does not end with "-sources.jar" and name of it as lowercase does not end with "-tests.jar" and name of it as version < version "2.16.0" and size of it != 1789565 and sha1 of it != "539a445388aee52108700f26d9644989e7916e7c")}
+
+EOF_EOF_EOF
+
+delete replace_log4j.cmd
+move __createfile replace_log4j.cmd
+
+action uses wow64 redirection {not x64 of operating system}
+waithidden cmd.exe /c replace_log4j.cmd
+
+// Check success - no un-fixed log4j-core-2.x.jar files remain.  Their sha hashes should be updated to reflect the 2.16.0 version
+continue if {exists lines of files "CVE-2021-44228.txt" of folders "BPS-Scans" of parent folder of client AND not exists files( lines of files "CVE-2021-44228.txt" of folders "BPS-Scans" of parent folder of client) whose (name of it as lowercase starts with "log4j-core-2." and name of it as lowercase does not end with "-javadoc.jar" and name of it as lowercase does not end with "-sources.jar" and name of it as lowercase does not end with "-tests.jar" and name of it as version < version "2.16.0" and size of it != 1789565 and sha1 of it != "539a445388aee52108700f26d9644989e7916e7c") }
+action requires restart "log4j_file_replacement"
+
+endif
+
+// End]]></ActionScript>
+      		<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
+		</DefaultAction>
+	</{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+</BES>

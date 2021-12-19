@@ -1,0 +1,24 @@
+---
+Description: Downloads the latest version of Apache log4j2
+Identifier: com.github.jgstew.download.log4j2-bin
+Input:
+  NAME: "log4j2-scan"
+  # TYPE must be `zip` or `7z` or `tar.gz`
+  TYPE: "zip"
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.shared.parent-recipe
+Process:
+  # see: #
+  - Processor: URLTextSearcher
+    Arguments:
+      url: https://logging.apache.org/log4j/2.x/download.html
+      # example match `https://www.apache.org/dyn/closer.lua/logging/log4j/2.17.0/apache-log4j-2.17.0-bin.zip`
+      re_pattern: '(logging/log4j/.+/apache-log4j-.+-bin.%TYPE%)"'
+  - Processor: URLDownloaderPython
+    Arguments:
+      # Example URL https://dlcdn.apache.org/logging/log4j/2.17.0/apache-log4j-2.17.0-bin.zip
+      url: "https://dlcdn.apache.org/%match%"
+      filename: apache-log4j-bin.%TYPE%
+      download_version: "%version%"
+      COMPUTE_HASHES: True
+  - Processor: EndOfCheckPhase

@@ -103,7 +103,7 @@ elseif {name of operating system as lowercase starts with "linux"}
   //endif
 
   // extract tar file to JRE folder
-  wait {parameter "tar"} -xzvf "__Download/jre.tar" -C "{parameter "JREFolder"}"
+  wait {parameter "tar"} -xzvf "__Download/jre.tar.gz" -C "{parameter "JREFolder"}"
 
 // - Handle extracting JRE for other operating systems here
 
@@ -146,7 +146,7 @@ parameter "shell_bin" = "{  tuple string items 0 of concatenations ", " of ( pat
 
 // Run log4j2-scan:
 // WARNING: this attempts to exclude network shares, but might not be perfect.
-run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' && '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config '{parameter "ExclusionFile"}' / > '{parameter "ListFile"}' && rm -rf '{parameter "JREFolder"}'"
+run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config '{parameter "ExclusionFile"}' / > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
 endif
 
 // Give 30 seconds for startup before checking

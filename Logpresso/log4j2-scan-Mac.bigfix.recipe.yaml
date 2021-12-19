@@ -1,15 +1,15 @@
 ---
 Description: Generates a BigFix Task for running the latest log4j2-scan
-Identifier: com.github.jgstew.bigfix.log4j2-scan-Linux
+Identifier: com.github.jgstew.bigfix.log4j2-scan-Mac
 Input:
   # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"
-  NAME: log4j2-scan
+  NAME: log4j2-scan-Mac
   DisplayName: log4j2-scan
   64BitOnly: True
-  RelevanceOS: unix of operating system
+  RelevanceOS: mac of operating system
 # MinimumVersion of AutoPkg - Should always be 2.3 (or higher once a new version is released)
 MinimumVersion: "2.3"
-ParentRecipe: com.github.jgstew.download.log4j2-scan-Linux
+ParentRecipe: com.github.jgstew.download.log4j2-scan-Mac
 Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
@@ -33,7 +33,7 @@ Process:
   #   If variables are missing from the Template Dictionary, then that area will be blank
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
-      template_file_path: "./%VendorFolder%/%NAME%-Linux-run.bes.mustache"
+      template_file_path: "./%VendorFolder%/%DisplayName%-Linux-run.bes.mustache"
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.bes"
 
   # `BESImport` imports the generated BES content into a BigFix Server

@@ -1,6 +1,6 @@
 ---
 Description: Generates a BigFix Task for running the latest log4j2-scan
-Identifier: com.github.jgstew.bigfix.log4j2-scan-Win64
+Identifier: com.github.jgstew.bigfix.log4j2-bin-Win64
 Input:
   # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"
   NAME: log4j2-scan
@@ -20,6 +20,31 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
 
   - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput
+
+  # TODO: expand the download and get sha1 of contained JAR
+  - Processor: com.github.jgstew.SharedProcessors/FileGetExecutable
+    Arguments:
+      path_array: ["/Program Files/7-Zip/7z.exe", "/usr/local/bin/7z"]
+  - Processor: com.github.hansen-m.SharedProcessors/WinInstallerExtractor
+    Arguments:
+      extract_dir: "ExtractedArchive"
+      preserve_paths: False
+  - Processor: com.github.jgstew.SharedProcessors/FileHasher
+    Arguments:
+      file_path: "%RECIPE_CACHE_DIR%/ExtractedArchive/log4j-core-%version%.jar"
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "log4j-core-sha1"
+      append_value: "%filehasher_sha1%"
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "log4j-core-sha256"
+      append_value: "%filehasher_sha256%"
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "log4j-core-size"
+      append_value: "%filehasher_size%"
 
   # `ContentFromTemplate` generates bigfix content from a mustache template file
   #   The file is filled out with variables from the Template Dictionary

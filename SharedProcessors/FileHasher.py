@@ -83,7 +83,7 @@ class FileHasher(Processor):  # pylint: disable=invalid-name
         self.env["filehasher_sha1"] = hashes[0].hexdigest()
         self.env["filehasher_sha256"] = hashes[1].hexdigest()
         self.env["filehasher_md5"] = hashes[2].hexdigest()
-        self.env["filehasher_size"] = size
+        self.env["filehasher_size"] = str(size)
 
     def main(self):
         """Execution starts here"""

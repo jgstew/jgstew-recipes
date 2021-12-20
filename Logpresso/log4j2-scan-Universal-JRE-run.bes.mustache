@@ -4,7 +4,7 @@
 		<Title>Run: {{DisplayName}} v{{version}} - Universal JAR - Download JRE</Title>
 		<Description><![CDATA[{{>Log4J2Scan-Description}}
 		<P><H3>NOTE:</H3> This version of the scan fixlet downloads the JAR version of {{DisplayName}} as well as a temporary Java Runtime from Adoptium/AdoptOpenJDK to execute the scanner.</P>
-		]]>		</Description>
+		]]></Description>
 		<Relevance>if exists property "in proxy agent context" then not in proxy agent context else true</Relevance>
 		<Relevance>windows of operating system or name of operating system as lowercase starts with "linux" or (if exists property "mac" of type "operating system" then mac of operating system else name of operating system as lowercase as lowercase starts with "mac")</Relevance>
 		<Category></Category>
@@ -39,7 +39,7 @@
 begin prefetch block
 	// Download {{DisplayName}}:
 	{{{prefetch}}}
-	
+
 	// trap for 'x64 of operating system' property existing only on Windows
 	if {if windows of operating system then x64 of operating system else false}
  	  add prefetch item name=jre.zip sha1=359ef250b3e78716cee4669b0182f0c1c28261c3 size=39046089 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_x64_windows_hotspot_8u312b07.zip sha256=a4623365d70e7bc969e84b7f29b6b2eecb6c0686863ed67651506e2b5adf43b0
@@ -49,7 +49,7 @@ begin prefetch block
 	  add prefetch item name=jre.zip sha1=bf419f8c9231c34f0ffb9564b5f7f6690f596fd9 size=37494360 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_x86-32_windows_hotspot_8u312b07.zip sha256=789cfa21858156084020ee885ade643556dc57ddec2b44745b5489edb7945b64
 	  add prefetch item name=unzip.exe sha1=84debf12767785cd9b43811022407de7413beb6f size=204800 url=http://software.bigfix.com/download/redist/unzip-6.0.exe sha256=2122557d350fd1c59fb0ef32125330bde673e9331eb9371b454c2ad2d82091ac
 	endif
-	
+
 	if {if name of operating system as lowercase starts with "linux" then architecture of operating system = "x86_64" else false}
         add prefetch item name=jre.tar.gz sha1=8b835bfff7f67d2a097344e95b7221d2d3c048ef size=41286015 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_x64_linux_hotspot_8u312b07.tar.gz sha256=18fd13e77621f712326bfcf79c3e3cc08c880e3e4b8f63a1e5da619f3054b063
 	endif
@@ -99,7 +99,7 @@ elseif {(name of operating system as lowercase starts with "linux") or (if exist
 
   // extract temporary JRE
   wait {parameter "tar"} -xzvf "__Download/jre.tar.gz" -C "{parameter "JREFolder"}"
-  
+
 else
   // Operating system was not recognized.
   continue if {false}
@@ -125,18 +125,18 @@ delete "{parameter "ExclusionFile"}"
 
 //build exclusions list
 appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of (unique values of (it as trimmed string) whose(it != "") of substrings separated by "%0a" of (parameter "exclusionlist" | ""))}
- 
+
 appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of ("/mnt";"/dev";"/cdrom")}
-  
+
 if {exists properties "type" of types "filesystem"}
  appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of mount points of filesystems whose (type of it != "DRIVE_FIXED" ) }
 endif
- 
+
 //mac-specific
 if {exists properties "type" of types "volume"}
  appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of (it as string) of volumes whose (type of it != "DRIVE_FIXED" ) }
 endif
- 
+
 if {exists properties "filesystem type" of types "filesystem"}
  appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of mount points of filesystems whose (filesystem type of it is contained by set of ("cgroup";"cifs";"nfs";"nfs3";"nfs4";"cgroup2";"sysfs";"proc";"cpuset") ) }
 endif
@@ -150,12 +150,12 @@ if {windows of operating system}
 elseif {(name of operating system as lowercase starts with "linux") or (if exists property "mac" of type "operating system" then mac of operating system else name of operating system as lowercase as lowercase starts with "mac")}
   // Get shell binary, should return /bin/sh in most cases:
   parameter "shell_bin" = "{  tuple string items 0 of concatenations ", " of ( pathnames of files "/bin/sh"; pathnames of files whose(name of it as lowercase = "sh" OR name of it as lowercase = "sh.exe") of (folders it) of unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it ) of environments) }"
-  
+
   // Run log4j2-scan:
   // WARNING: this attempts to exclude network shares, but might not be perfect.
   run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config '{parameter "ExclusionFile"}' / > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
 
-else 
+else
   // Did not recognize the OS.  Adding more is on the roadmap.
   continue if {false}
 endif

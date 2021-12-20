@@ -89,7 +89,7 @@ parameter "JREFolder"="{pathname of parent folder of parent folder of client fol
 if {windows of operating system}
   waithidden __Download/unzip.exe "__Download/jre.zip" -d "{parameter "JREFolder"}"
 
-// TODO - verify mac works here
+
 elseif {(name of operating system as lowercase starts with "linux") or (if exists property "mac" of type "operating system" then mac of operating system else name of operating system as lowercase as lowercase starts with "mac")}
 
   parameter "tar"="{tuple string items 0 of concatenation ", " of pathnames of files "tar" of folders ("/bin";"/sbin";"/usr/sbin"; unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it ) of environments)}"
@@ -109,9 +109,8 @@ endif
 // --- End JRE extraction
 
 //locate Java binary
-parameter "Java_bin"="{tuple string item 0 of (concatenation ", " of pathnames of files ("java";"java.exe") of folders "bin" of folders of folders (parameter "JREFolder"))}"
-
 // If script fails here, the JRE extraction may have failed.
+parameter "Java_bin"="{tuple string item 0 of (concatenation ", " of pathnames of files ("java";"java.exe") of folders ("bin";"Contents/Home/bin") of folders of folders (parameter "JREFolder"))}"
 continue if {exists file (parameter "Java_bin")}
 
 // Setup logpresso-log4j2-scan.jar

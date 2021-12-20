@@ -107,11 +107,9 @@ endif
 
 
 // --- End JRE extraction
-
 //locate Java binary
-parameter "Java_bin"="{tuple string item 0 of (concatenation ", " of pathnames of files ("java";"java.exe") of folders "bin" of folders of folders (parameter "JREFolder"))}"
-
 // If script fails here, the JRE extraction may have failed.
+parameter "Java_bin"="{tuple string item 0 of (concatenation ", " of pathnames of files ("java";"java.exe") of folders ("bin";"Contents/Home/bin") of folders of folders (parameter "JREFolder"))}"
 continue if {exists file (parameter "Java_bin")}
 
 // Setup logpresso-log4j2-scan.jar

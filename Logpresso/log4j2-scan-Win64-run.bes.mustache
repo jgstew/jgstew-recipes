@@ -4,7 +4,7 @@
 		<Title>Run: {{DisplayName}} v{{version}} - Windows{{#64BitOnly}} (x64){{/64BitOnly}}</Title>
 		<Description><![CDATA[
 This task will run {{DisplayName}} v{{version}} scanner.
-		]]></Description>
+		]]>		</Description>
 		<Relevance>windows of operating system</Relevance>
 		{{#64BitOnly}}
 		<Relevance><![CDATA[x64 of operating system]]></Relevance>
@@ -65,7 +65,7 @@ delete "{parameter "ListFile"}"
 runhidden CMD /C {windows folder}\Temp\log4j2-scan.exe --scan-log4j1 --no-symlink --no-empty-report --drives {concatenations "," of unique values of (it as lowercase) of preceding texts of firsts ":" of names of drives whose (type of it = "DRIVE_FIXED")} > "{parameter "ListFile"}"
 
 // End]]></ActionScript>
-      		<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
+			<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
 		</DefaultAction>
 	</{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
 </BES>

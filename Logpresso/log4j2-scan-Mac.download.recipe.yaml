@@ -4,7 +4,7 @@ Identifier: com.github.jgstew.download.log4j2-scan-Mac
 Input:
   NAME: log4j2-scan-mac
   # TYPE must be `zip` or `7z` or `tar.gz`
-  TYPE: tar.gz
+  TYPE: zip
   OS: -darwin
 MinimumVersion: "2.3"
 ParentRecipe: com.github.jgstew.download.log4j2-scan-Win64

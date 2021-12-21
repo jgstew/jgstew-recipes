@@ -39,25 +39,29 @@
 			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[
 //parameter "exclusionlist" is provided in the Description tab
 // Download {{DisplayName}}:
+begin prefetch block
 {{{prefetch}}}
+end prefetch block
+
+{{>Log4J2Scan-ActionFolder}}
 
 // Get shell binary, should return /bin/sh in most cases:
 parameter "shell_bin" = "{ tuple string items 0 of concatenations ", " of ( pathnames of files whose(name of it as lowercase = "sh" OR name of it as lowercase = "sh.exe") of (folders it) of unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it; (if (windows of operating system) then (x64 variables "PATH" of it) else NOTHINGS) ) of environments ; it) of "/bin/sh" }"
 
 // Delete destination of next command if applicable
-delete /tmp/log4j2-scan
+delete "{parameter "BPSFolder"}log4j2-scan"
 
 // TODO: Does this command work on Linux and Unix? Does this binary work on Unix?
-wait tar -zxf __Download/{{file_name}} -C /tmp
+wait tar -zxf __Download/{{file_name}} -C "{parameter "BPSFolder"}"
 
-{{>Log4J2Scan-ActionFolder}}
+
 
 // Set to log4j2-scan executable
-run {parameter "shell_bin"} -c "chmod +x /tmp/log4j2-scan"
+run {parameter "shell_bin"} -c "chmod +x '{parameter "BPSFolder"}log4j2-scan'"
 
 // Run {{DisplayName}}:
 // WARNING: this attempts to exclude network shares, but might not be perfect.
-run {parameter "shell_bin"} -c "cd /tmp && ./log4j2-scan --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config '{parameter "ExclusionFile"}'  {{remediate}} / > '{parameter "ListFile"}'"
+run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' && ./log4j2-scan --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config '{parameter "ExclusionFile"}'  {{remediate}} / > '{parameter "ListFile"}'"
 
 // Wait up to 30 seconds for the logfile to be created to check successful starupt
 parameter "StartTime"="{now}"

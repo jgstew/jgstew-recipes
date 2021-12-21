@@ -29,8 +29,22 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
       template_file_path: "./%VendorFolder%/%NAME%-Universal-run.bes.mustache"
-      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.bes"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/Logpresso log4j2-scan - Universal.bes"
 
   # `BESImport` imports the generated BES content into a BigFix Server
   #   Which server and credentials are used is dictated by `~/.besapi.conf`
   - Processor: com.github.jgstew.SharedProcessors/BESImport
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "remediate"
+      append_value: "--force-fix"
+
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      # template_file_path: "%template_file_path%"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/Logpresso log4j2-scan - Universal - Remediate.bes"
+  
+  - Processor: com.github.jgstew.SharedProcessors/BESImport
+
+

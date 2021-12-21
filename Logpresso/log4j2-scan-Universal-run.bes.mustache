@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
 	<{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
-		<Title>Run: {{DisplayName}} v{{version}} - Universal JAR - System JRE</Title>
-		<Description><![CDATA[{{>Log4J2Scan-Description}}
+		<Title>Run: {{DisplayName}} v{{version}} - Universal JAR - System JRE{{#remediate}} - WITH REMEDIATION{{/remediate}}</Title>
+		<Description><![CDATA[
+		{{>Description-CommunityTestStatement}}
+		</P>
+		{{>Log4J2Scan-Description-Links}}
+		</P>
+		{{>Log4J2Scan-Description}}
+		</P>
+		{{#remediate}}{{>Log4JScan-Description-Remediation}}{{/remediate}}
+
 		<P><H3>NOTE:</H3> This version of the scan fixlet downloads the JAR version of {{DisplayName}}.  The system-default Java Runtime will be used.&nbsp; This requires the Java command to be present in the default system PATH variable.</P>
 		]]>		</Description>
 		<Relevance>if exists property "in proxy agent context" then not in proxy agent context else true</Relevance>
@@ -81,14 +89,14 @@ copy __appendfile "{parameter "ExclusionFile"}"
 
 
 if {windows of operating system}
-  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & java -jar .\logpresso-log4j2-scan.jar --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config "{parameter "ExclusionFile"}"> "{parameter "ListFile"}""
+  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & java -jar .\logpresso-log4j2-scan.jar --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config "{parameter "ExclusionFile"}" {{remediate}} > "{parameter "ListFile"}""
 else // non-Windows operating system:
   // Get shell binary, should return /bin/sh in most cases:
   parameter "shell_bin" = "{  tuple string items 0 of concatenations ", " of ( pathnames of files "/bin/sh"; pathnames of files whose(name of it as lowercase = "sh" OR name of it as lowercase = "sh.exe") of (folders it) of unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it ) of environments) }"
 
   // Run log4j2-scan:
   // WARNING: this attempts to exclude network shares, but might not be perfect.
-  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' && java -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config '{parameter "ExclusionFile"}' / > '{parameter "ListFile"}'"
+  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' && java -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config '{parameter "ExclusionFile"}'  {{remediate}} / > '{parameter "ListFile"}'"
 endif
 
 // Give 30 seconds for startup before checking

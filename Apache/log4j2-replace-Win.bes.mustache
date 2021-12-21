@@ -66,7 +66,7 @@ parameter "LogMessage"="No vulnerable fixable files found, skipping action"
 else
   if {windows of operating system}
     utility __Download\unzip.exe
-    waithidden __Download\unzip.exe __Download\apache-log4j-bin.zip -d __Download
+    waithidden __Download\unzip.exe __Download\{{file_name}} -d __Download
     delete __appendfile
     appendfile REM log4j-core-2.x.jar replacement script {now as string}
 	appendfile REM Preserve existing JAR files
@@ -83,7 +83,7 @@ else
   else
     parameter "shell_bin" = "{ tuple string items 0 of concatenations ", " of pathnames of files "sh" of folders ("/bin";"/sbin";"/usr/sbin"; unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it ) of environments)}"
     parameter "unzip"="{tuple string items 0 of concatenation ", " of pathnames of files "unzip" of folders ("/bin";"/sbin";"/usr/sbin"; unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it ) of environments)}"
-    wait {parameter "unzip"} __Download/apache-log4j-bin.zip -d __Download
+    wait {parameter "unzip"} __Download/{{file_name}} -d __Download
     delete __appendfile
     appendfile #!/bin/sh
 	appendfile # log4j-core-2.x.jar replacement script {now as string}

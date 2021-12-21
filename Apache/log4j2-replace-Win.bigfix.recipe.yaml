@@ -5,6 +5,7 @@ Input:
   # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"
   NAME: log4j2-scan
   DisplayName: log4j2-scan
+  BESFileName: Log4j2 Remediation - Replace log4j-core-2.x.jar with log4j-core-2.17.0.jar - Universal
 # MinimumVersion of AutoPkg - Should always be 2.3 (or higher once a new version is released)
 MinimumVersion: "2.3"
 ParentRecipe: com.github.jgstew.download.log4j2-bin
@@ -16,7 +17,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
     Arguments:
       prefetch_type: block
-      
+
   # `BigFixSetupTemplateDictionary` creates a dictionary to fill out a bigix content template
   #   If `SourceReleaseDate` is not provided, it will be set to today
   - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
@@ -54,7 +55,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
       template_file_path: "./%VendorFolder%/log4j2-replace-Win.bes.mustache"
-      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.bes"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%BESFileName%.bes"
 
   # `BESImport` imports the generated BES content into a BigFix Server
   #   Which server and credentials are used is dictated by `~/.besapi.conf`

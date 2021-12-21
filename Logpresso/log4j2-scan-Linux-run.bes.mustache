@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
 	<{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
-		<Title>Run: {{DisplayName}} v{{version}} - {{TitleOS}}{{#64BitOnly}} (x64){{/64BitOnly}}</Title>
-		<Description><![CDATA[{{>Log4J2Scan-Description}}]]></Description>
+		<Title>Run: {{DisplayName}} v{{version}} - {{TitleOS}}{{#64BitOnly}} (x64){{/64BitOnly}}{{#remediate}} - WITH REMEDIATION{{/remediate}}</Title>
+		<Description><![CDATA[
+		{{>Description-CommunityTestStatement}}
+		</P>
+		{{>Log4J2Scan-Description-Links}}
+		</P>
+		{{>Log4J2Scan-Description}}
+		</P>
+		{{#remediate}}{{>Log4JScan-Description-Remediation}}{{/remediate}}
+		]]>		</Description>
 		<Relevance><![CDATA[{{{RelevanceOS}}}]]></Relevance>
 		{{#64BitOnly}}<Relevance><![CDATA["x86_64" = architecture of operating system]]></Relevance>{{/64BitOnly}}
-		<Relevance><![CDATA[not exists modification times whose(now - it < 1*day) of files "results-log4j2-scan.txt" of folders "BPS-Scans" of parent folders of parent folders of client folders of sites "actionsite"]]></Relevance>
 		<Category></Category>
 		<DownloadSize>{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}</DownloadSize>
 		<Source>{{DisplayName}}</Source>
@@ -50,10 +57,16 @@ run {parameter "shell_bin"} -c "chmod +x /tmp/log4j2-scan"
 
 // Run {{DisplayName}}:
 // WARNING: this attempts to exclude network shares, but might not be perfect.
-run {parameter "shell_bin"} -c "cd /tmp && ./log4j2-scan --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config '{parameter "ExclusionFile"}' / > '{parameter "ListFile"}'"
+run {parameter "shell_bin"} -c "cd /tmp && ./log4j2-scan --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config '{parameter "ExclusionFile"}'  {{remediate}} / > '{parameter "ListFile"}'"
+
+// Wait up to 30 seconds for the logfile to be created to check successful starupt
+parameter "StartTime"="{now}"
+pause while {not exists file (parameter "ListFile") and now - (parameter "StartTime" as time) < 30 * second }
+// Check that an output log file has been created as an indicator that the scan has launched successfully
+continue if {exists file (parameter "ListFile") whose (modification time of it >= active start time of action)}
 
 // End]]></ActionScript>
-			<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
+
 		</DefaultAction>
 	</{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
 </BES>

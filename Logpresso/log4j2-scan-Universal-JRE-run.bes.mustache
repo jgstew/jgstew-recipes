@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
 	<{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
-		<Title>Run: {{DisplayName}} v{{version}} - Universal JAR - Download JRE</Title>
-		<Description><![CDATA[{{>Log4J2Scan-Description}}
-		<P><H3>NOTE:</H3> This version of the scan fixlet downloads the JAR version of {{DisplayName}} as well as a temporary Java Runtime from Adoptium/AdoptOpenJDK to execute the scanner.</P>
-		]]></Description>
+		<Title>Run: {{DisplayName}} v{{version}} - Universal JAR - Download JRE{{#remediate}} - WITH REMEDIATION{{/remediate}}</Title>
+		<Description><![CDATA[
+		{{>Description-CommunityTestStatement}}
+		</P>
+		{{>Log4J2Scan-Description-Links}}
+		</P>
+		{{>Log4J2Scan-Description}}
+		</P>
+		{{#remediate}}{{>Log4JScan-Description-Remediation}}{{/remediate}}
+		<P>
+		<H3>NOTE:</H3> This version of the scan fixlet downloads the JAR version of {{DisplayName}} as well as a temporary Java Runtime from Adoptium/AdoptOpenJDK to execute the scanner.</P>
+		]]>		</Description>
 		<Relevance>if exists property "in proxy agent context" then not in proxy agent context else true</Relevance>
 		<Relevance>windows of operating system or name of operating system as lowercase starts with "linux" or (if exists property "mac" of type "operating system" then mac of operating system else name of operating system as lowercase as lowercase starts with "mac")</Relevance>
 		<Category></Category>
@@ -145,7 +153,7 @@ copy __appendfile "{parameter "ExclusionFile"}"
 
 if {windows of operating system}
   // Execute scan
-  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & "{parameter "Java_bin"}" -jar .\logpresso-log4j2-scan.jar --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config "{parameter "ExclusionFile"}"> "{parameter "ListFile"}" & rd /s /q "{parameter "JREFolder"}""
+  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & "{parameter "Java_bin"}" -jar .\logpresso-log4j2-scan.jar --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config "{parameter "ExclusionFile"}" {{remediate}} > "{parameter "ListFile"}" & rd /s /q "{parameter "JREFolder"}""
 
 elseif {(name of operating system as lowercase starts with "linux") or (if exists property "mac" of type "operating system" then mac of operating system else name of operating system as lowercase as lowercase starts with "mac")}
   // Get shell binary, should return /bin/sh in most cases:
@@ -153,14 +161,14 @@ elseif {(name of operating system as lowercase starts with "linux") or (if exist
 
   // Run log4j2-scan:
   // WARNING: this attempts to exclude network shares, but might not be perfect.
-  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config '{parameter "ExclusionFile"}' / > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
+  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config '{parameter "ExclusionFile"}'  {{remediate}} /  > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
 
 else
   // Did not recognize the OS.  Adding more is on the roadmap.
   continue if {false}
 endif
 
-// Give 30 seconds for startup before checking
+// Wait up to 30 seconds for the logfile to be created to check successful starupt
 parameter "StartTime"="{now}"
 pause while {not exists file (parameter "ListFile") and now - (parameter "StartTime" as time) < 30 * second }
 // Check that an output log file has been created as an indicator that the scan has launched successfully

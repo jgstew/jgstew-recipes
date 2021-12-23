@@ -105,6 +105,8 @@ pause while {not exists file (parameter "ListFile") and now - (parameter "StartT
 // Check that an output log file has been created as an indicator that the scan has launched successfully
 continue if {exists file (parameter "ListFile") whose (modification time of it >= active start time of action)}
 
+{{#remediate}}action requires restart{{/remediate}}
+
 // End]]></ActionScript>
 		</DefaultAction>
 	</{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>

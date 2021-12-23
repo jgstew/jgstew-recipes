@@ -96,7 +96,7 @@ else
 	continue if {parameter "unzip" as trimmed string != ""}
 
     wait {parameter "unzip"} "__Download/jre.tar.gz"
-	wait {parameter "tar" } -xf "__Download/jre.tar" -C "{parameter "JREFolder"}
+	wait {parameter "tar" } -xf "__Download/jre.tar" -C "{parameter "JREFolder"}"
 
   elseif {((exists match (regex "SunOS") of it ) of name of operating system) AND (if exists properties whose(it as string contains "type of <processor>") then (type of main processor as string contains "i386") else false)}
     // SunOS extraction

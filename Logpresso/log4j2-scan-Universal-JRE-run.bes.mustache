@@ -122,7 +122,9 @@ parameter "Java_bin"="{tuple string item 0 of (concatenation ", " of pathnames o
 continue if {exists file (parameter "Java_bin")}
 
 // Setup logpresso-log4j2-scan.jar
-delete "{pathname of file "logpresso-log4j2-scan.jar" of folder (parameter "BPSFolder")}"
+if { exists file "logpresso-log4j2-scan.jar" of folder (parameter "BPSFolder")}
+  delete "{pathname of file "logpresso-log4j2-scan.jar" of folder (parameter "BPSFolder")}"
+endif
 
 // Copy the scanner JAR file to client folder
 copy __Download/logpresso-log4j2-scan.jar "{parameter "BPSFolder"}/logpresso-log4j2-scan.jar"

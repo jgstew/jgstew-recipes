@@ -12,9 +12,9 @@
 		{{#remediate}}{{>Log4JScan-Description-Remediation}}{{/remediate}}
 		<P>
 		<H3>NOTE:</H3> This version of the scan fixlet downloads the JAR version of {{DisplayName}} as well as a temporary Java Runtime from Adoptium/AdoptOpenJDK to execute the scanner.</P>
-		]]></Description>
+		]]>		</Description>
 		<Relevance>if exists property "in proxy agent context" then not in proxy agent context else true</Relevance>
-		<Relevance><![CDATA[( if (name of operating system as lowercase contains "win") then (version of operating system >= "6.3") else TRUE ) AND ( if (name of operating system as lowercase contains "linux") AND ((architecture of it = "s390x") of operating system OR (architecture of it = "ppc64") of operating system) then FALSE else TRUE )]]></Relevance>
+		<Relevance><![CDATA[( if (name of operating system as lowercase contains "win") then (version of operating system >= "6.3") else TRUE ) AND ( if (name of operating system as lowercase contains "linux") AND ((architecture of it = "s390x") of operating system OR (architecture of it = "ppc64") of operating system) then FALSE else TRUE ) AND (name of operating system does not start with "HP-UX")]]></Relevance>
 		<Category></Category>
 		<DownloadSize>{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}</DownloadSize>
 		<Source>{{DisplayName}}</Source>
@@ -74,14 +74,44 @@ if {windows of operating system}
 
 
 else
-
+  // Some UNIX versions require use of the shell to extract JRE, so shell must be known early
+  // Get shell binary, should return /bin/sh in most cases:
+  parameter "shell_bin" = "{  tuple string items 0 of concatenations ", " of ( pathnames of files "/bin/sh"; pathnames of files whose(name of it as lowercase = "sh" OR name of it as lowercase = "sh.exe") of (folders it) of unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it ) of environments) }"
+  
+  // If script stops here, we did not find a shell
+  continue if {parameter "shell_bin" as trimmed string != ""}
+  
   parameter "tar"="{tuple string items 0 of concatenation ", " of pathnames of files "tar" of folders ("/bin";"/sbin";"/usr/sbin"; unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it ) of environments)}"
-
-  //If action stops here, tar may not be available
+  // If script stops here, we did not find a tar command
   continue if {parameter "tar" as trimmed string != ""}
 
-  // extract temporary JRE
-  wait {parameter "tar"} -xzvf "__Download/jre.tar.gz" -C "{parameter "JREFolder"}"
+  // Some UNIX flavors cannot decompress directly via tar, and need a gunzip or unzip command
+  parameter "unzip"="{tuple string items 0 of concatenations ", " of pathnames of files ("gunzip"; "unzip") of folders ("/bin";"/usr/bin";unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it ) of environments)}"
+   
+
+  if {exists match (regex "(AIX|AIX VIOS)") of name of operating system and (if exists property "current technology level" then current technology level of operating system >= "7100-04" else false)}
+    // AIX extraction
+	// If action stops here we may not have gunzip / unzip available
+	
+	continue if {parameter "unzip" as trimmed string != ""}
+
+    wait {parameter "unzip"} "__Download/jre.tar.gz"
+	wait {parameter "tar" } -xf "__Download/jre.tar" -C "{parameter "JREFolder"}
+
+  elseif {((exists match (regex "SunOS") of it ) of name of operating system) AND (if exists properties whose(it as string contains "type of <processor>") then (type of main processor as string contains "i386") else false)}
+    // SunOS extraction
+	// If action stops here we may not have gunzip / unzip available 
+	continue if {parameter "unzip" as trimmed string != ""}
+	
+	// SunOS version of tar does not support specifying output folder, so unzip in-place and then use shell redirection to relocate the untar
+	wait {parameter "unzip"} "__Download/jre.tar.gz"
+	wait {parameter "shell_bin"} -c "( cd '{parameter "BPSFolder"}jre' && tar xf - ) < __Download/jre.tar"
+
+  else
+    // Unless otherwise specified, our UNIX/Linux variant version of 'tar' should support both decompress and output folder spec    
+    // extract temporary JRE
+    wait {parameter "tar"} -xzvf "__Download/jre.tar.gz" -C "{parameter "JREFolder"}"
+  endif
 endif
 
 
@@ -127,8 +157,6 @@ if {windows of operating system}
   runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & "{parameter "Java_bin"}" -jar .\logpresso-log4j2-scan.jar --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config "{parameter "ExclusionFile"}" {{remediate}} > "{parameter "ListFile"}" & rd /s /q "{parameter "JREFolder"}""
 
 else
-  // Get shell binary, should return /bin/sh in most cases:
-  parameter "shell_bin" = "{  tuple string items 0 of concatenations ", " of ( pathnames of files "/bin/sh"; pathnames of files whose(name of it as lowercase = "sh" OR name of it as lowercase = "sh.exe") of (folders it) of unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it ) of environments) }"
 
   // Run log4j2-scan:
   // WARNING: this attempts to exclude network shares, but might not be perfect.

@@ -18,7 +18,7 @@
 	endif
 
     if {(name of operating system as lowercase starts with "linux") AND (exists match (regex "^i[3-9]86$") of architecture of operating system)}
-        // TODO: find Linux 32bit intel JRE
+        add prefetch item name=jre.tar.gz sha1=ec336b1ae9027966da050c6678123baf6e7bc581 size=45651626 url=https://cdn.azul.com/zulu/bin/zulu8.58.0.13-ca-jre8.0.312-linux_i686.tar.gz sha256=d76850b3a7cfd9930b26879ef89b89dc1f1f2de063504fdbce212c7facca7735
 	endif
 
     if {(name of operating system as lowercase starts with "linux") AND ((it = "armv7l") of architecture of operating system)}
@@ -26,6 +26,9 @@
         add prefetch item name=jre.tar.gz sha1=daedd7d5c60df6a6035d28ec94d2a293d195c516 size=40312760 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_aarch64_linux_hotspot_8u312b07.tar.gz sha256=961df2d520987c2252496fbee024f84c8c8c4d0be80e9fe043d221191666899e
 		// add prefetch item name=jre.tar.gz sha1=fb502032c1c6d29da361a6032469a787aae59d58 size=38706993 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_arm_linux_hotspot_8u312b07.tar.gz sha256=5f37cbf311a5c2928aff8e83a82aebcf37b5911b193b5ab8538108381dcd6276
     endif
+
+    // Linux PowerPC64LittleEndian:
+    // add prefetch item name=OpenJDK8U-jdk_ppc64le_linux_hotspot_8u312b07.tar.gz sha1=05996686e35c8891955a7ac09414b9097ee80653 size=100571080 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jdk_ppc64le_linux_hotspot_8u312b07.tar.gz sha256=ddce3f067eab6fd98bb2a8ea3d18de6b09ea41d10382c76ad22bd3e7895951cf
 
     if {exists match (regex "(AIX|AIX VIOS)") of name of operating system and (if exists property "current technology level" then current technology level of operating system >= "7100-04" else false)}
 		add prefetch item name=jre.tar.gz sha1=e42ea144018ce547a13e85e4a2692b2fc0f45eeb size=42806130 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_ppc64_aix_hotspot_8u312b07.tar.gz sha256=735c2afd5fc4573a2cd3f1629f1fbc6607849f95230a494560037fa40bdc9e03

@@ -154,13 +154,13 @@ copy __appendfile "{parameter "ExclusionFile"}"
 
 if {windows of operating system}
   // Execute scan
-  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & "{parameter "Java_bin"}" -jar .\logpresso-log4j2-scan.jar --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config "{parameter "ExclusionFile"}" {{remediate}} > "{parameter "ListFile"}" & rd /s /q "{parameter "JREFolder"}""
+  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & "{parameter "Java_bin"}" -jar .\logpresso-log4j2-scan.jar --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config "{parameter "ExclusionFile"}" {{remediate}} > "{parameter "ListFile"}" & rd /s /q "{parameter "JREFolder"}""
 
 else
 
   // Run log4j2-scan:
   // WARNING: this attempts to exclude network shares, but might not be perfect.
-  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config '{parameter "ExclusionFile"}'  {{remediate}} /  > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
+  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config '{parameter "ExclusionFile"}'  {{remediate}} /  > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
 
 endif
 

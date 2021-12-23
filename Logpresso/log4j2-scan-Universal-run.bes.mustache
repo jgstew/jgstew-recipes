@@ -57,7 +57,10 @@ parameter "BPSFolder"="{pathname of folder "BPS-Scans" of parent folder of paren
 parameter "ListFile"="{parameter "BPSFolder"}results-log4j2-scan.txt"
 parameter "ExclusionFile"="{parameter "BPSFolder"}log4j2-path-exclusions.txt"
 
-delete "{pathname of file "logpresso-log4j2-scan.jar" of folder (parameter "BPSFolder")}"
+// Setup logpresso-log4j2-scan.jar
+if { exists file "logpresso-log4j2-scan.jar" of folder (parameter "BPSFolder")}
+  delete "{pathname of file "logpresso-log4j2-scan.jar" of folder (parameter "BPSFolder")}"
+endif
 
 // Copy the scanner JAR file to client folder
 copy __Download/logpresso-log4j2-scan.jar "{parameter "BPSFolder"}/logpresso-log4j2-scan.jar"

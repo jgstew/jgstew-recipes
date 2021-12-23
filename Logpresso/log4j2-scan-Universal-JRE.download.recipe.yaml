@@ -6,6 +6,7 @@ Input:
   # TYPE must be `zip` or `7z` or `tar.gz`
   TYPE: jar
   OS: ""
+  version: "2.6.1"
 MinimumVersion: "2.3"
 ParentRecipe: com.github.jgstew.download.log4j2-scan-Win64
 Process:

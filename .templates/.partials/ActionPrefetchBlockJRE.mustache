@@ -22,8 +22,7 @@
 
 	if {(name of operating system as lowercase starts with "linux") AND ((it = "armv7l") of architecture of operating system)}
 		// Download for Raspberry Pi
-		add prefetch item name=jre.tar.gz sha1=daedd7d5c60df6a6035d28ec94d2a293d195c516 size=40312760 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_aarch64_linux_hotspot_8u312b07.tar.gz sha256=961df2d520987c2252496fbee024f84c8c8c4d0be80e9fe043d221191666899e
-		// add prefetch item name=jre.tar.gz sha1=fb502032c1c6d29da361a6032469a787aae59d58 size=38706993 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_arm_linux_hotspot_8u312b07.tar.gz sha256=5f37cbf311a5c2928aff8e83a82aebcf37b5911b193b5ab8538108381dcd6276
+		add prefetch item name=jre.tar.gz sha1=fb502032c1c6d29da361a6032469a787aae59d58 size=38706993 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_arm_linux_hotspot_8u312b07.tar.gz sha256=5f37cbf311a5c2928aff8e83a82aebcf37b5911b193b5ab8538108381dcd6276
 	endif
 
 	if {(name of operating system as lowercase contains "linux") AND (architecture of it = "ppc64") of operating system}

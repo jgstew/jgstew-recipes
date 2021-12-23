@@ -98,8 +98,8 @@ else
     wait {parameter "unzip"} "__Download/jre.tar.gz"
 	wait {parameter "tar" } -xf "__Download/jre.tar" -C "{parameter "JREFolder"}"
 
-  elseif {((exists match (regex "SunOS") of it ) of name of operating system) AND (if exists properties whose(it as string contains "type of <processor>") then (type of main processor as string contains "i386") else false)}
-    // SunOS extraction
+  elseif {exists match (regex "SunOS") of name of operating system}
+    // SunOS extraction for i386 or Sparc
 	// If action stops here we may not have gunzip / unzip available 
 	continue if {parameter "unzip" as trimmed string != ""}
 	
@@ -122,7 +122,9 @@ parameter "Java_bin"="{tuple string item 0 of (concatenation ", " of pathnames o
 continue if {exists file (parameter "Java_bin")}
 
 // Setup logpresso-log4j2-scan.jar
-delete "{pathname of file "logpresso-log4j2-scan.jar" of folder (parameter "BPSFolder")}"
+if { exists file "logpresso-log4j2-scan.jar" of folder (parameter "BPSFolder")}
+  delete "{pathname of file "logpresso-log4j2-scan.jar" of folder (parameter "BPSFolder")}"
+endif
 
 // Copy the scanner JAR file to client folder
 copy __Download/logpresso-log4j2-scan.jar "{parameter "BPSFolder"}/logpresso-log4j2-scan.jar"

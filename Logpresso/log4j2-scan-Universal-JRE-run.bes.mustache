@@ -14,7 +14,7 @@
 		<H3>NOTE:</H3> This version of the scan fixlet downloads the JAR version of {{DisplayName}} as well as a temporary Java Runtime from Adoptium/AdoptOpenJDK to execute the scanner.</P>
 		]]></Description>
 		<Relevance>if exists property "in proxy agent context" then not in proxy agent context else true</Relevance>
-		<Relevance>/* TODO: exclude known unsupported operating systems */ TRUE</Relevance>
+		<Relevance><![CDATA[( if (name of operating system as lowercase contains "win") then (version of operating system >= "6.3") else TRUE ) AND ( if (name of operating system as lowercase contains "linux") AND ((architecture of it = "s390x") of operating system OR (architecture of it = "ppc64") of operating system) then FALSE else TRUE )]]></Relevance>
 		<Category></Category>
 		<DownloadSize>{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}</DownloadSize>
 		<Source>{{DisplayName}}</Source>

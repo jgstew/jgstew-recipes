@@ -27,6 +27,7 @@
 
 	if {(name of operating system as lowercase contains "linux") AND (architecture of it = "ppc64") of operating system}
 		// Linux PowerPC [RHEL, SuSe]
+		// this is not actually a tar.gz file, not sure how to expand it
 		add prefetch item name=jre.tar.gz sha1=051e7311474ce67a9d4c6d318617c85f878386d2 size=143521020 url=http://public.dhe.ibm.com/ibmdl/export/pub/systems/cloud/runtimes/java/8.0.7.0/linux/ppc64/ibm-java-jre-8.0-7.0-ppc64-archive.bin sha256=79909bb46012b3df5ba5979fb831aa6f57a5d0533cb13531a8003b85866b1420
 	endif
 
@@ -37,6 +38,7 @@
 
 	if {(name of operating system as lowercase contains "linux") AND ((architecture of it = "s390x") of operating system)}
 		// Linux System Z (s390x) [RHEL, SuSe]
+		// this is not actually a tar.gz file, not sure how to expand it
 		add prefetch item name=jre.tar.gz sha1=8add84ee86d5addebac5058cdc244756638b14c3 size=130839417 url=http://public.dhe.ibm.com/ibmdl/export/pub/systems/cloud/runtimes/java/8.0.7.0/linux/s390x/ibm-java-jre-8.0-7.0-s390x-archive.bin sha256=73f941590d60287d9d480884698120149bf2f9b8da04d2501b450f320a5be181
 	endif
 

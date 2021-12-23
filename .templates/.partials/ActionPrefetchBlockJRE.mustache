@@ -32,8 +32,13 @@
 	endif
 
 	if {(name of operating system as lowercase contains "linux") AND ((architecture of it = "ppc64le") of operating system)}
-		// Linux PowerPC [RHEL, Ubuntu, Suse]
+		// Linux PowerPC [RHEL, Ubuntu, SuSe]
 		add prefetch item name=jre.tar.gz sha1=05996686e35c8891955a7ac09414b9097ee80653 size=100571080 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jdk_ppc64le_linux_hotspot_8u312b07.tar.gz sha256=ddce3f067eab6fd98bb2a8ea3d18de6b09ea41d10382c76ad22bd3e7895951cf
+	endif
+
+	if {(name of operating system as lowercase contains "linux") AND ((architecture of it = "s390x") of operating system)}
+		// Linux System Z (s390x) [RHEL, SuSe]
+		add prefetch item name=jre.tar.gz sha1=8add84ee86d5addebac5058cdc244756638b14c3 size=130839417 url=http://public.dhe.ibm.com/ibmdl/export/pub/systems/cloud/runtimes/java/8.0.7.0/linux/s390x/ibm-java-jre-8.0-7.0-s390x-archive.bin sha256=73f941590d60287d9d480884698120149bf2f9b8da04d2501b450f320a5be181
 	endif
 
 	if {exists match (regex "(AIX|AIX VIOS)") of name of operating system and (if exists property "current technology level" then current technology level of operating system >= "7100-04" else false)}
@@ -47,9 +52,5 @@
 		add prefetch item name=jre.tar.gz sha1=513d89893df13f14e9b5e76a2f3134dd895fd1ef size=53232710 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_sparcv9_solaris_hotspot_8u312b07.tar.gz sha256=62db15678d4212307c3ccb6743cf44636d81cf08cbf150517a86f65f17f8900d
 	endif
 
-	// -- TODO: handle JRE downloads for other operating systems here
-		// System Z or s390x CPU:
-		// add prefetch item name=ibm-java-jre-8.0-7.0-s390x-archive.bin sha1=8add84ee86d5addebac5058cdc244756638b14c3 size=130839417 url=http://public.dhe.ibm.com/ibmdl/export/pub/systems/cloud/runtimes/java/8.0.7.0/linux/s390x/ibm-java-jre-8.0-7.0-s390x-archive.bin sha256=73f941590d60287d9d480884698120149bf2f9b8da04d2501b450f320a5be181
-
-		// HP-UX: (MANUAL_CACHING_REQUIRED)
-		// prefetch 2106_Java80_1.8.0.22.00_HP-UX_B.11.31_IA.depot sha1:b87d2dd25794360238a38fda132cb799a65b6d18 size:144097280 http://MANUAL_CACHING_REQUIRED/2106_Java80_1.8.0.22.00_HP-UX_B.11.31_IA.depot sha256:fa48555266f5ca0223f03a86485ae0908177133e1d5bd993632c23678833e9ae
+	// HP-UX: (MANUAL_CACHING_REQUIRED)
+	// prefetch 2106_Java80_1.8.0.22.00_HP-UX_B.11.31_IA.depot sha1:b87d2dd25794360238a38fda132cb799a65b6d18 size:144097280 http://MANUAL_CACHING_REQUIRED/2106_Java80_1.8.0.22.00_HP-UX_B.11.31_IA.depot sha256:fa48555266f5ca0223f03a86485ae0908177133e1d5bd993632c23678833e9ae

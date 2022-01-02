@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+		<Title>Install: Fixlet Debugger - {{version}} - Windows</Title>
+		<Description><![CDATA[
+            {{{Description}}}
+        ]]></Description>
+		<Relevance>/* Windows Only */ windows of operating system</Relevance>
+		<Relevance><![CDATA[/* Windows XP or Higher */ version of operating system >= "5.1"]]></Relevance>
+		<Relevance>not exists keys whose(value "DisplayName" of it as string contains "Fixlet Debugger" AND value "DisplayVersion" of it as string as version = "{{version}}") of keys "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" of registry</Relevance>
+		<Category></Category>
+		<DownloadSize>{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}</DownloadSize>
+		<Source>Internal</Source>
+		<SourceID>jgstew</SourceID>
+		<SourceReleaseDate>{{SourceReleaseDate}}</SourceReleaseDate>
+        <SourceSeverity><![CDATA[{{{SourceSeverity}}}]]></SourceSeverity>
+		<CVENames><![CDATA[{{{CVENames}}}]]></CVENames>
+		<SANSID><![CDATA[{{{SANSID}}}]]></SANSID>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>{{x-fixlet-modification-time}}</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to deploy this action.</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell">
+// Download Fixlet Debugger
+{{{prefetch}}}
+
+{{>ActionPrefetchZipinst}}
+
+// This should be an unnessisary sanity check, but it is a good idea due to the relevance substitution below.
+continue if{ 1 = number of files whose(name of it as lowercase ends with ".zip") of folder "__Download" of client folder of current site }
+
+// Create zipinst config file
+//   http://www.nirsoft.net/utils/zipinst.html
+delete __createfile
+delete __Download\zipinst.zic
+
+createfile until END_OF_FILE
+[install]
+Description=FanControl
+ZipFile={ pathname of files whose(name of it as lowercase ends with ".zip") of folder "__Download" of client folder of current site }
+AddUninstall=1
+AddUninstallShortcut=0
+DesktopShortcut=0
+InstallTo=1
+StartMenuShortcut=1
+NoUserInteraction=1
+NoExtraUninstallInfo=0
+NoSuccessMessage=1
+UninstallInDestFolder=1
+END_OF_FILE
+
+copy __createfile "{pathname of client folder of current site}\__Download\zipinst.zic"
+
+// Install
+waithidden __Download\zipinst.exe /cfg "{pathname of client folder of current site}\__Download\zipinst.zic"
+
+</ActionScript>
+			<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
+		</DefaultAction>
+    </{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+</BES>

@@ -1,0 +1,12 @@
+---
+Description: Downloads the latest FanControl
+Identifier: com.github.jgstew.download.FanControl-Win
+Input:
+  NAME: FanControl
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.shared.parent-recipe
+Process:
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: https://github.com/Rem0o/FanControl.Releases/blob/master/FanControl.zip?raw=true
+      COMPUTE_HASHES: True

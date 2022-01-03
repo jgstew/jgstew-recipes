@@ -82,10 +82,12 @@ parameter "JREFolder"="{pathname of parent folder of parent folder of client fol
 {{#scan}}
 parameter "ListFile"="{parameter "BPSFolder"}results-log4j2-scan.txt"
 parameter "ExclusionFile"="{parameter "BPSFolder"}log4j2-path-exclusions.txt"
+parameter "ReportJSONFile"="{parameter "BPSFolder"}log4j2-report.json"
 {{/scan}}
 {{#remediate}}
 parameter "ListFile"="{parameter "BPSFolder"}results-log4j2-scan.txt"
 parameter "ExclusionFile"="{parameter "BPSFolder"}log4j2-path-exclusions.txt"
+parameter "ReportJSONFile"="{parameter "BPSFolder"}log4j2-report.json"
 {{/remediate}}
 {{#undo-remediate}}
 parameter "RestoreListFile"="{parameter "BPSFolder"}restore-log4j2-scan.txt"
@@ -156,6 +158,7 @@ continue if {exists file (parameter "Java_bin")}
 // Setup logpresso-log4j2-scan.jar
 if { exists files "logpresso-log4j2-scan.jar" of folders (parameter "BPSFolder")}
   delete "{pathname of file "logpresso-log4j2-scan.jar" of folder (parameter "BPSFolder")}"
+  
 endif
 
 // Copy the scanner JAR file to client folder
@@ -167,10 +170,12 @@ copy __Download/logpresso-log4j2-scan.jar "{parameter "BPSFolder"}/logpresso-log
 if {windows of operating system}
   // Execute scan
   {{#scan}}
-  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & "{parameter "Java_bin"}" -jar .\logpresso-log4j2-scan.jar --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config "{parameter "ExclusionFile"}" {{remediate}} > "{parameter "ListFile"}" & rd /s /q "{parameter "JREFolder"}""
+  delete "{parameter "ReportJSONFile"}"
+  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & "{parameter "Java_bin"}" -jar .\logpresso-log4j2-scan.jar --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config "{parameter "ExclusionFile"}" --report-json --report-path "{parameter "ReportJSONFile"}" {{remediate}} > "{parameter "ListFile"}" & rd /s /q "{parameter "JREFolder"}""
   {{/scan}}
   {{#remediate}}
-  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & "{parameter "Java_bin"}" -jar .\logpresso-log4j2-scan.jar --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config "{parameter "ExclusionFile"}" {{remediate}} > "{parameter "ListFile"}" & rd /s /q "{parameter "JREFolder"}""
+  delete "{parameter "ReportJSONFile"}"
+  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & "{parameter "Java_bin"}" -jar .\logpresso-log4j2-scan.jar --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config "{parameter "ExclusionFile"}" --report-json --report-path "{parameter "ReportJSONFile"}" {{remediate}} > "{parameter "ListFile"}" & rd /s /q "{parameter "JREFolder"}""
   {{/remediate}}
   {{#undo-remediate}}
   delete __appendfile
@@ -188,12 +193,14 @@ else
   {{#scan}}
   // Run log4j2-scan scan-only:
   // WARNING: this attempts to exclude network shares, but might not be perfect.
-  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config '{parameter "ExclusionFile"}'  {{remediate}} /  > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
+  delete "{parameter "ReportJSONFile"}"
+  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config '{parameter "ExclusionFile"}' --report-json --report-path "{parameter "ReportJSONFile"}" {{remediate}} /  > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
   {{/scan}}
   {{#remediate}}
   // Run log4j2-scan with remediation:
   // WARNING: this attempts to exclude network shares, but might not be perfect.
-  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config '{parameter "ExclusionFile"}'  {{remediate}} /  > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
+  delete "{parameter "ReportJSONFile"}"
+  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config '{parameter "ExclusionFile"}' --report-json --report-path "{parameter "ReportJSONFile"}"  {{remediate}} /  > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
   {{/remediate}}
   {{#undo-remediate}}
   delete __appendfile

@@ -43,7 +43,7 @@
 			<Value>01:00:00</Value>
 		</MIMEField>
 		<Domain>BESC</Domain>
-		<DefaultAction ID="Action1">
+		<{{#scan}}DefaultAction{{/scan}}{{^scan}}Action{{/scan}} ID="Action1">
 			<Description>
 				<PreLink>Click </PreLink>
 				<Link>here</Link>
@@ -240,6 +240,6 @@ action requires restart
 {{/undo-remediate}}
 
 // End]]></ActionScript>
-		</DefaultAction>
+		</{{#scan}}DefaultAction{{/scan}}{{^scan}}Action{{/scan}} >
 	</{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
 </BES>

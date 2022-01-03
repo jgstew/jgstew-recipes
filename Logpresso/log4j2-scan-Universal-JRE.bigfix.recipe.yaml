@@ -26,6 +26,11 @@ Process:
   # `ContentFromTemplate` generates bigfix content from a mustache template file
   #   The file is filled out with variables from the Template Dictionary
   #   If variables are missing from the Template Dictionary, then that area will be blank
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "scan"
+      append_value: "scan"
+
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
       template_file_path: "./%VendorFolder%/%NAME%-Universal-JRE-run.bes.mustache"
@@ -36,6 +41,15 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/BESImport
   
   # Build "Remediation" version of fixlet
+  # Build "Remediation" version of fixlet by removing the 'scan' key and adding 'remediate' key
+  # - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryRemove
+  #   Arguments:
+  #     remove_key: "scan"
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "scan"
+      append_value: ""
+
   - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
     Arguments:
       append_key: "remediate"
@@ -45,5 +59,29 @@ Process:
     Arguments:
       # template_file_path: "%template_file_path%"
       content_file_pathname: "%RECIPE_CACHE_DIR%/Logpresso Log4j2-scan - Universal - JRE - Remediate.bes"
+
+  - Processor: com.github.jgstew.SharedProcessors/BESImport
+
+
+  # Build "Undo-Remediation" version of fixlet by removing the 'remediate' key and adding 'undo-remediate' key
+  # - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryRemove
+  #   Arguments:
+  #     remove_key: "remediate"
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "remediate"
+      append_value: ""
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "undo-remediate"
+      append_value: "undo-remediate"
+  
+
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      # template_file_path: "%template_file_path%"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/Logpresso Log4j2-scan - Universal - JRE - UNDO Remediation.bes"
   
   - Processor: com.github.jgstew.SharedProcessors/BESImport

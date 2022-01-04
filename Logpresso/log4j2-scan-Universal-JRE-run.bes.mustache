@@ -1,55 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
-	<{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
-		<Title>Run: {{DisplayName}} v{{version}} - Universal JAR - Download JRE{{#scan}} - SCAN only{{/scan}}{{#remediate}} - WITH REMEDIATION{{/remediate}}{{#undo-remediate}} - UNDO REMEDIATION{{/undo-remediate}}</Title>
-		<Description><![CDATA[
+  <{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+    <Title>Run: {{DisplayName}} v{{version}} - Universal JAR - Download JRE{{#scan}} - SCAN only{{/scan}}{{#remediate}} - WITH REMEDIATION{{/remediate}}{{#undo-remediate}} - UNDO REMEDIATION{{/undo-remediate}}{{#communityversion}} - Community Version{{/communityversion}}</Title>
+    <Description><![CDATA[
+    {{#communityversion}}
 		{{>Description-CommunityTestStatement}}
 		</P>
 		{{>Log4J2Scan-Description-Links}}
 		</P>
-		{{#scan}}
-		{{>Log4J2Scan-Description}}
-		{{/scan}}
-		{{#remediate}}
-		{{>Log4J2Scan-Description}}
-		{{/remediate}}
+    {{/communityversion}}
+    {{^communityversion}}
+    {{>Log4j2Scan-Description-OfficialVersion}}
+    {{/communityversion}}
+		{{#scan_or_remediate}}
+		{{>Log4J2Scan-Description-ExclusionTable}}
+		{{/scan_or_remediate}}
 		</P>
 		{{#remediate}}{{>Log4JScan-Description-Remediation}}{{/remediate}}
 		{{#undo-remediate}}{{>Log4JScan-Description-Undo-Remediation}}{{/undo-remediate}}
 		<P>
 		<H3>NOTE:</H3> This version of the scan fixlet downloads the JAR version of {{DisplayName}} as well as a temporary Java Runtime from Adoptium/AdoptOpenJDK to execute the scanner.</P>
-		]]>		</Description>
-		<Relevance>if exists property "in proxy agent context" then not in proxy agent context else true</Relevance>
-		<Relevance><![CDATA[( if (name of operating system as lowercase contains "win") then (version of operating system >= "6.3") else TRUE ) AND ( if (name of operating system as lowercase contains "linux") AND ((architecture of it = "s390x") of operating system OR (architecture of it = "ppc64") of operating system) then FALSE else TRUE ) AND (name of operating system does not start with "HP-UX")]]></Relevance>
+		]]>    </Description>
+    <Relevance>if exists property "in proxy agent context" then not in proxy agent context else true</Relevance>
+    <Relevance><![CDATA[( if (name of operating system as lowercase contains "win") then (version of operating system >= "6.3") else TRUE ) AND ( if (name of operating system as lowercase contains "linux") AND ((architecture of it = "s390x") of operating system OR (architecture of it = "ppc64") of operating system) then FALSE else TRUE ) AND (name of operating system does not start with "HP-UX")]]></Relevance>
 		{{#undo-remediate}}<Relevance><![CDATA[exists find files "log4j2_scan_backup_*.zip" of folders "BPS-Scans" of parent folder of parent folder of client folder of site "actionsite"]]></Relevance> {{/undo-remediate}}
-		<Category></Category>
-		<DownloadSize>{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}</DownloadSize>
-		<Source>{{DisplayName}}</Source>
-		<SourceID></SourceID>
-		<SourceReleaseDate>{{SourceReleaseDate}}</SourceReleaseDate>
-		<SourceSeverity></SourceSeverity>
-		<CVENames></CVENames>
-		<SANSID></SANSID>
-		<MIMEField>
-			<Name>action-ui-metadata</Name>
-			<Value>{ {{#version}}"version":"{{version}}",{{/version}}"size":{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}{{^patch}}{{#icon_base64}},"icon":"data:{{icon_type}}{{^icon_type}}image/png{{/icon_type}};base64,{{icon_base64}}"{{/icon_base64}}{{/patch}} }</Value>
-		</MIMEField>
-		<MIMEField>
-			<Name>x-fixlet-modification-time</Name>
-			<Value>{{x-fixlet-modification-time}}</Value>
-		</MIMEField>
-		<MIMEField>
-			<Name>x-relevance-evaluation-period</Name>
-			<Value>01:00:00</Value>
-		</MIMEField>
-		<Domain>BESC</Domain>
-		<{{#scan}}DefaultAction{{/scan}}{{^scan}}Action{{/scan}} ID="Action1">
-			<Description>
-				<PreLink>Click </PreLink>
-				<Link>here</Link>
-				<PostLink> to run {{DisplayName}} v{{version}}.</PostLink>
-			</Description>
-			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[
+    <Category></Category>
+    <DownloadSize>{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}</DownloadSize>
+    <Source>{{DisplayName}}</Source>
+    <SourceID></SourceID>
+    <SourceReleaseDate>{{SourceReleaseDate}}</SourceReleaseDate>
+    <SourceSeverity></SourceSeverity>
+    <CVENames></CVENames>
+    <SANSID></SANSID>
+    <MIMEField>
+      <Name>action-ui-metadata</Name>
+      <Value>{ {{#version}}"version":"{{version}}",{{/version}}"size":{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}{{^patch}}{{#icon_base64}},"icon":"data:{{icon_type}}{{^icon_type}}image/png{{/icon_type}};base64,{{icon_base64}}"{{/icon_base64}}{{/patch}} }</Value>
+    </MIMEField>
+    <MIMEField>
+      <Name>x-fixlet-modification-time</Name>
+      <Value>{{x-fixlet-modification-time}}</Value>
+    </MIMEField>
+    <MIMEField>
+      <Name>x-relevance-evaluation-period</Name>
+      <Value>01:00:00</Value>
+    </MIMEField>
+    <Domain>BESC</Domain>
+    <{{#scan}}DefaultAction{{/scan}}{{^scan}}Action{{/scan}} ID="Action1">
+      <Description>
+        <PreLink>Click </PreLink>
+        <Link>here</Link>
+        <PostLink> to run {{DisplayName}} v{{version}}.</PostLink>
+      </Description>
+      <ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[
 //parameter "exclusionlist" is provided in the Description tab
 begin prefetch block
 	// Download {{DisplayName}}:
@@ -78,17 +80,12 @@ folder create "{pathname of parent folder of parent folder of client folder of s
 folder create "{pathname of parent folder of parent folder of client folder of site "actionsite"}/BPS-Scans/jre"
 
 parameter "BPSFolder"="{pathname of folder "BPS-Scans" of parent folder of parent folder of client folder of site "actionsite"}{if windows of operating system then "\" else "/"}"
-parameter "JREFolder"="{pathname of parent folder of parent folder of client folder of site "actionsite"}/BPS-Scans/jre"
-{{#scan}}
+parameter "JREFolder"="{pathname of folder "jre" of folder "BPS-Scans" of parent folder of parent folder of client folder of site "actionsite"}"
+{{#scan_or_remediate}}
 parameter "ListFile"="{parameter "BPSFolder"}results-log4j2-scan.txt"
 parameter "ExclusionFile"="{parameter "BPSFolder"}log4j2-path-exclusions.txt"
 parameter "ReportJSONFile"="{parameter "BPSFolder"}log4j2-report.json"
-{{/scan}}
-{{#remediate}}
-parameter "ListFile"="{parameter "BPSFolder"}results-log4j2-scan.txt"
-parameter "ExclusionFile"="{parameter "BPSFolder"}log4j2-path-exclusions.txt"
-parameter "ReportJSONFile"="{parameter "BPSFolder"}log4j2-report.json"
-{{/remediate}}
+{{/scan_or_remediate}}
 {{#undo-remediate}}
 parameter "RestoreListFile"="{parameter "BPSFolder"}restore-log4j2-scan.txt"
 {{/undo-remediate}}
@@ -164,19 +161,14 @@ endif
 // Copy the scanner JAR file to client folder
 copy __Download/logpresso-log4j2-scan.jar "{parameter "BPSFolder"}/logpresso-log4j2-scan.jar"
 
-{{#scan}}{{>Log4J2Scan-Action-ExcludeList}}{{/scan}}
-{{#remediate}}{{>Log4J2Scan-Action-ExcludeList}}{{/remediate}}
+{{#scan_or_remediate}}{{>Log4J2Scan-Action-ExcludeList}}{{/scan_or_remediate}}
 
 if {windows of operating system}
   // Execute scan
-  {{#scan}}
+  {{#scan_or_remediate}}
   delete "{parameter "ReportJSONFile"}"
-  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & "{parameter "Java_bin"}" -jar .\logpresso-log4j2-scan.jar --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config "{parameter "ExclusionFile"}" --report-json --report-path "{parameter "ReportJSONFile"}" {{remediate}} > "{parameter "ListFile"}" & rd /s /q "{parameter "JREFolder"}""
-  {{/scan}}
-  {{#remediate}}
-  delete "{parameter "ReportJSONFile"}"
-  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & "{parameter "Java_bin"}" -jar .\logpresso-log4j2-scan.jar --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config "{parameter "ExclusionFile"}" --report-json --report-path "{parameter "ReportJSONFile"}" {{remediate}} > "{parameter "ListFile"}" & rd /s /q "{parameter "JREFolder"}""
-  {{/remediate}}
+  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & "{parameter "Java_bin"}" -jar .\logpresso-log4j2-scan.jar --silent --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config "{parameter "ExclusionFile"}" --report-json --report-path "{parameter "ReportJSONFile"}" {{remediate}} > "{parameter "ListFile"}" & rd /s /q "{parameter "JREFolder"}""
+  {{/scan_or_remediate}}
   {{#undo-remediate}}
   delete __appendfile
   appendfile cd "{parameter "BPSFolder"}"
@@ -190,18 +182,12 @@ if {windows of operating system}
 
   {{/undo-remediate}}
 else
-  {{#scan}}
-  // Run log4j2-scan scan-only:
+  {{#scan_or_remediate}}
+  // Run log4j2-scan scan or remediation:
   // WARNING: this attempts to exclude network shares, but might not be perfect.
   delete "{parameter "ReportJSONFile"}"
-  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config '{parameter "ExclusionFile"}' --report-json --report-path "{parameter "ReportJSONFile"}" {{remediate}} /  > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
-  {{/scan}}
-  {{#remediate}}
-  // Run log4j2-scan with remediation:
-  // WARNING: this attempts to exclude network shares, but might not be perfect.
-  delete "{parameter "ReportJSONFile"}"
-  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config '{parameter "ExclusionFile"}' --report-json --report-path "{parameter "ReportJSONFile"}"  {{remediate}} /  > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
-  {{/remediate}}
+  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --silent --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config '{parameter "ExclusionFile"}' --report-json --report-path "{parameter "ReportJSONFile"}" {{remediate}} /  > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
+  {{/scan_or_remediate}}
   {{#undo-remediate}}
   delete __appendfile
   appendfile #!/bin/sh
@@ -217,29 +203,22 @@ else
 endif
 
 
- {{#scan}}
+{{#scan_or_remediate}}
 // Wait up to 30 seconds for the logfile to be created to check successful startup
 parameter "StartTime"="{now}"
 pause while {not exists file (parameter "ListFile") and now - (parameter "StartTime" as time) < 30 * second }
 // Check that an output log file has been created as an indicator that the scan has launched successfully
 continue if {exists file (parameter "ListFile") whose (modification time of it >= active start time of action)}
- {{/scan}}
-
- {{#remediate}}
-// Wait up to 30 seconds for the logfile to be created to check successful startup
-parameter "StartTime"="{now}"
-pause while {not exists file (parameter "ListFile") and now - (parameter "StartTime" as time) < 30 * second }
-// Check that an output log file has been created as an indicator that the scan has launched successfully
-continue if {exists file (parameter "ListFile") whose (modification time of it >= active start time of action)}
+{{#remediate}}
 action requires restart
- {{/remediate}}
-
+{{/remediate}}
+{{/scan_or_remediate}}
 {{#undo-remediate}}
 continue if {exists file (parameter "RestoreListFile") whose (modification time of it >= active start time of action)}
 action requires restart
 {{/undo-remediate}}
 
 // End]]></ActionScript>
-		</{{#scan}}DefaultAction{{/scan}}{{^scan}}Action{{/scan}} >
-	</{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+    </{{#scan}}DefaultAction{{/scan}}{{^scan}}Action{{/scan}}>
+  </{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
 </BES>

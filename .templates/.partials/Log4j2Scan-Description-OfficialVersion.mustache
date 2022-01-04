@@ -1,0 +1,18 @@
+<P>This task will: </P>
+<UL>
+	<LI>Download a platform specific JRE or JDK </LI>
+	<LI>Download a log4j-scan utility JAR file from Logpresso </LI>
+	<LI>Run the log4j-scan utility JAR with the platform specific JRE or JDK </LI>
+	<LI>Save results to a file. Results available in an analysis </LI>
+	<LI>Delete the platform specific JRE or JDK when the scan is completed. </LI>
+</UL>
+<P>The following platforms are currently excluded: </P>
+<UL>
+	<LI>Windows 2012 or older, Windows 8 or older </LI>
+	<LI>Linux Z and Linux PowerPC Big Endian </LI>
+	<LI>HP-UX </LI>
+</UL>
+<P>The scan should not be deployed all at once on all systems due to potential impact to shared network and disk resources. </P>
+<P>The scanner will try to avoid common network file shares and will not follow symlinks to help prevent common potential problems, but this is not a guarantee that all cases are covered. If you know you need to exclude specific paths, those can be added in the field below. </P>
+<P>A BigFix task that can also do mitigation of Log4j vulnerabilities using the same technology is available if you contact us or unofficially through the BigFix community.</P>
+<br />

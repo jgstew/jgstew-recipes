@@ -186,7 +186,7 @@ else
   // Run log4j2-scan scan or remediation:
   // WARNING: this attempts to exclude network shares, but might not be perfect.
   delete "{parameter "ReportJSONFile"}"
-  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --silent --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config '{parameter "ExclusionFile"}' --report-json --report-path "{parameter "ReportJSONFile"}" {{remediate}} /  > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
+  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./logpresso-log4j2-scan.jar --silent --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config '{parameter "ExclusionFile"}' --report-json --report-path '{parameter "ReportJSONFile"}' {{remediate}} /  > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
   {{/scan_or_remediate}}
   {{#undo-remediate}}
   delete __appendfile

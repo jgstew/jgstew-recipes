@@ -43,7 +43,7 @@ Process:
     Arguments:
       append_key: "scan"
       append_value: "scan"
-  
+
   # `ContentFromTemplate` generates bigfix content from a mustache template file
   #   The file is filled out with variables from the Template Dictionary
   #   If variables are missing from the Template Dictionary, then that area will be blank
@@ -71,7 +71,7 @@ Process:
     Arguments:
       # template_file_path: "%template_file_path%"
       content_file_pathname: "%RECIPE_CACHE_DIR%/Logpresso Log4j2-scan - Universal - Remediate.bes"
-  
+
   - Processor: com.github.jgstew.SharedProcessors/BESImport
 
   # Build "Undo-Remediation" version of fixlet by removing the common "scan_or_remediate" key and the 'remediate' key and adding 'undo-remediate' key
@@ -92,11 +92,10 @@ Process:
     Arguments:
       append_key: "undo-remediate"
       append_value: "undo-remediate"
-  
+
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
       # template_file_path: "%template_file_path%"
       content_file_pathname: "%RECIPE_CACHE_DIR%/Logpresso Log4j2-scan - Universal - UNDO Remediation.bes"
-  
-  - Processor: com.github.jgstew.SharedProcessors/BESImport
 
+  - Processor: com.github.jgstew.SharedProcessors/BESImport

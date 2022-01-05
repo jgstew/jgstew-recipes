@@ -56,5 +56,5 @@ Process:
     Arguments:
       # template_file_path: "%template_file_path%"
       content_file_pathname: "%RECIPE_CACHE_DIR%/Logpresso log4j2-scan - Linux x64 - Remediate.bes"
-  
+
   - Processor: com.github.jgstew.SharedProcessors/BESImport

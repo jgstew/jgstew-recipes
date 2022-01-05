@@ -47,7 +47,7 @@ Process:
   # `BESImport` imports the generated BES content into a BigFix Server
   #   Which server and credentials are used is dictated by `~/.besapi.conf`
   - Processor: com.github.jgstew.SharedProcessors/BESImport
-  
+
   # Build "Remediation" version of fixlet
   # Build "Remediation" version of fixlet by removing the 'scan' key and adding 'remediate' key
   # - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryRemove
@@ -88,12 +88,12 @@ Process:
     Arguments:
       append_key: "undo-remediate"
       append_value: "undo-remediate"
-  
+
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
       # template_file_path: "%template_file_path%"
       content_file_pathname: "%RECIPE_CACHE_DIR%/Logpresso Log4j2-scan - Universal - JRE - UNDO Remediation - Official.bes"
-  
+
   - Processor: com.github.jgstew.SharedProcessors/BESImport
 
 # Remove the "undo-remediate" key to start fresh band build Community versions of each
@@ -167,10 +167,10 @@ Process:
     Arguments:
       append_key: "undo-remediate"
       append_value: "undo-remediate"
-  
+
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
       # template_file_path: "%template_file_path%"
       content_file_pathname: "%RECIPE_CACHE_DIR%/Logpresso Log4j2-scan - Universal - JRE - UNDO Remediation.bes"
-  
+
   - Processor: com.github.jgstew.SharedProcessors/BESImport

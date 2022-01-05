@@ -17,7 +17,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
     Arguments:
       prefetch_type: block
-      
+
   # `BigFixSetupTemplateDictionary` creates a dictionary to fill out a bigix content template
   #   If `SourceReleaseDate` is not provided, it will be set to today
   - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
@@ -38,7 +38,7 @@ Process:
 
   # `BigFixActioner` creates an offer action from the imported BigFix Content
   - Processor: com.github.jgstew.SharedProcessors/BigFixActioner
-  
+
   # Build "Remediation" version of fixlet
   - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
     Arguments:
@@ -49,5 +49,5 @@ Process:
     Arguments:
       # template_file_path: "%template_file_path%"
       content_file_pathname: "%RECIPE_CACHE_DIR%/Logpresso log4j2-scan - Windows x64 - Remediate.bes"
-  
+
   - Processor: com.github.jgstew.SharedProcessors/BESImport

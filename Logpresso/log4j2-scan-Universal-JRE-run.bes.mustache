@@ -155,7 +155,7 @@ continue if {exists file (parameter "Java_bin")}
 // Setup logpresso-log4j2-scan.jar
 if { exists files "logpresso-log4j2-scan.jar" of folders (parameter "BPSFolder")}
   delete "{pathname of file "logpresso-log4j2-scan.jar" of folder (parameter "BPSFolder")}"
-  
+
 endif
 
 // Copy the scanner JAR file to client folder
@@ -175,7 +175,7 @@ if {windows of operating system}
   appendfile del /q "{parameter "RestoreListFile"}"
   appendfile {concatenation "%0d%0a" of ("%22" & parameter "Java_bin" & "%22 -jar %22" & parameter "BPSFolder" & "logpresso-log4j2-scan.jar%22  --restore %22" & it & "%22 >> %22" & parameter "RestoreListFile" & "%22 2>&1"; "echo move /Y %22" & it & "%22 %22" & it & ".restored%22") of pathnames of find files "log4j2_scan_backup_*.zip" of folders (parameter "BPSFolder")}
   appendfile rd /s /q "{parameter "JREFolder"}"
- 
+
   delete log4j-restore.cmd
   move __appendfile log4j-restore.cmd
   waithidden cmd.exe /c log4j-restore.cmd
@@ -191,7 +191,7 @@ else
   {{#undo-remediate}}
   delete __appendfile
   appendfile #!/bin/sh
-  appendfile cd '{parameter "BPSFolder"}' 
+  appendfile cd '{parameter "BPSFolder"}'
   appendfile rm -f "{parameter "RestoreListFile"}"
   appendfile {concatenation "%0a" of ("%22" & parameter "Java_bin" & "%22 -jar %22" & parameter "BPSFolder" & "logpresso-log4j2-scan.jar%22  --restore %22" & it & "%22 >> %22" & parameter "RestoreListFile" & "%22 2>&1 "; "echo mv -f %22" & it & "%22 %22" & it & ".restored%22") of pathnames of find files "log4j2_scan_backup_*.zip" of folders (parameter "BPSFolder")}
   appendfile rm -rf '{parameter "JREFolder"}'

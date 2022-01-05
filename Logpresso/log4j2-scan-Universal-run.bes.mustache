@@ -93,12 +93,12 @@ if {windows of operating system}
   appendfile cd "{parameter "BPSFolder"}"
   appendfile del /q "{parameter "RestoreListFile"}"
   appendfile {concatenation "%0d%0a" of ("java -jar %22" & parameter "BPSFolder" & "logpresso-log4j2-scan.jar%22  --restore %22" & it & "%22 >> %22" & parameter "RestoreListFile" & "%22 2>&1"; "echo move /Y %22" & it & "%22 %22" & it & ".restored%22") of pathnames of find files "log4j2_scan_backup_*.zip" of folders (parameter "BPSFolder")}
-   
+
   delete log4j-restore.cmd
   move __appendfile log4j-restore.cmd
   waithidden cmd.exe /c log4j-restore.cmd
 
-  {{/undo-remediate}}  
+  {{/undo-remediate}}
 else // non-Windows operating system:
   // Get shell binary, should return /bin/sh in most cases:
   parameter "shell_bin" = "{  tuple string items 0 of concatenations ", " of ( pathnames of files "/bin/sh"; pathnames of files whose(name of it as lowercase = "sh" OR name of it as lowercase = "sh.exe") of (folders it) of unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it ) of environments) }"
@@ -112,7 +112,7 @@ else // non-Windows operating system:
   {{#undo-remediate}}
   delete __appendfile
   appendfile #!/bin/sh
-  appendfile cd '{parameter "BPSFolder"}' 
+  appendfile cd '{parameter "BPSFolder"}'
   appendfile rm -f "{parameter "RestoreListFile"}"
   appendfile {concatenation "%0a" of ("%22" & parameter "Java_bin" & "%22 -jar %22" & parameter "BPSFolder" & "logpresso-log4j2-scan.jar%22  --restore %22" & it & "%22 >> %22" & parameter "RestoreListFile" & "%22 2>&1 "; "echo mv -f %22" & it & "%22 %22" & it & ".restored%22") of pathnames of find files "log4j2_scan_backup_*.zip" of folders (parameter "BPSFolder")}
   appendfile rm -rf '{parameter "JREFolder"}'

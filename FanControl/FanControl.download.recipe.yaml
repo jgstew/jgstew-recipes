@@ -10,3 +10,10 @@ Process:
     Arguments:
       url: https://github.com/Rem0o/FanControl.Releases/blob/master/FanControl.zip?raw=true
       COMPUTE_HASHES: True
+  - Processor: EndOfCheckPhase
+  - Processor: URLTextSearcher
+    Arguments:
+      # https://api.github.com/repos/Rem0o/FanControl.Releases/releases
+      url: https://api.github.com/repos/Rem0o/FanControl.Releases/releases
+      # example match `Build number: 15.0.18369.0`
+      re_pattern: 'https://github.com/Rem0o/FanControl.Releases/releases/tag/V(?P<version>\d+)'

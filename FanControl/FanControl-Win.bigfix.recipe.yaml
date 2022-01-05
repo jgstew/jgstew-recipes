@@ -3,14 +3,16 @@ Description: Generates a BigFix Task for the latest FanControl
 Identifier: com.github.jgstew.bigfix.FanControl-Win
 Input:
   NAME: FanControl
+  DisplayName: FanControl
 MinimumVersion: "2.3"
 ParentRecipe: com.github.jgstew.download.FanControl-Win
 Process:
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
   - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
-      template_file_path: ./BigFix/FanControl-Win.bes.mustache
+      template_file_path: ./%VendorFolder%/FanControl-Win.bes.mustache
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.bes"
   - Processor: com.github.jgstew.SharedProcessors/BESImport
   #- Processor: com.github.jgstew.SharedProcessors/BigFixActioner

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
 	<{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
-		<Title>Install: Fixlet Debugger - {{version}} - Windows</Title>
+		<Title>Install: {{DisplayName}} - {{version}} - Windows</Title>
 		<Description><![CDATA[
             {{{Description}}}
         ]]></Description>
 		<Relevance>/* Windows Only */ windows of operating system</Relevance>
 		<Relevance><![CDATA[/* Windows XP or Higher */ version of operating system >= "5.1"]]></Relevance>
-		<Relevance>not exists keys whose(value "DisplayName" of it as string contains "Fixlet Debugger" AND value "DisplayVersion" of it as string as version = "{{version}}") of keys "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" of registry</Relevance>
+		<Relevance>not exists keys whose(value "DisplayName" of it as string contains "{{DisplayName}}" AND value "DisplayVersion" of it as string as version >= "{{version}}") of keys "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" of registry</Relevance>
 		<Category></Category>
 		<DownloadSize>{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}</DownloadSize>
 		<Source>Internal</Source>
@@ -44,6 +44,7 @@ delete __Download\zipinst.zic
 createfile until END_OF_FILE
 [install]
 Description=FanControl
+ProductVersion={{version}}
 ZipFile={ pathname of files whose(name of it as lowercase ends with ".zip") of folder "__Download" of client folder of current site }
 AddUninstall=1
 AddUninstallShortcut=0

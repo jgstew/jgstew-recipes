@@ -1,0 +1,24 @@
+// Delete previous items
+delete "{parameter "ListFile"}"
+delete __appendfile
+delete "{parameter "ExclusionFile"}"
+
+//build exclusions list
+appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of (unique values of (it as trimmed string) whose(it != "") of substrings separated by "%0a" of (parameter "exclusionlist" | ""))}
+
+appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of ("/mnt";"/dev";"/cdrom")}
+
+if {exists properties "type" of types "filesystem"}
+ appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of mount points of filesystems whose (type of it != "DRIVE_FIXED" ) }
+endif
+
+//mac-specific
+if {exists properties "type" of types "volume"}
+ appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of (it as string) of volumes whose (type of it != "DRIVE_FIXED" ) }
+endif
+
+if {exists properties "filesystem type" of types "filesystem"}
+ appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of mount points of filesystems whose (filesystem type of it is contained by set of ("cgroup";"cifs";"nfs";"nfs3";"nfs4";"cgroup2";"sysfs";"proc";"cpuset") ) }
+endif
+
+copy __appendfile "{parameter "ExclusionFile"}"

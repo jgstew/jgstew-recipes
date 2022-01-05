@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
 	<{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
-		<Title>Run: {{DisplayName}} v{{version}} - Universal JAR - System JRE{{#remediate}} - WITH REMEDIATION{{/remediate}}</Title>
+		<Title>Run: {{DisplayName}} v{{version}} - Universal JAR - System JRE{{#scan}} - SCAN only{{/scan}}{{#remediate}} - WITH REMEDIATION{{/remediate}}{{#undo-remediate}} - UNDO REMEDIATION{{/undo-remediate}}{{#communityversion}} - Community Version{{/communityversion}}</Title>
 		<Description><![CDATA[
+		{{#communityversion}}
 		{{>Description-CommunityTestStatement}}
 		</P>
 		{{>Log4J2Scan-Description-Links}}
 		</P>
-		{{>Log4J2Scan-Description}}
+		{{/communityversion}}
+	    {{^communityversion}}
+	    {{>Log4j2Scan-Description-OfficialVersion}}
+    	{{/communityversion}}
+		{{#scan_or_remediate}}
+		{{>Log4J2Scan-Description-ExclusionTable}}
+		{{/scan_or_remediate}}
 		</P>
 		{{#remediate}}{{>Log4JScan-Description-Remediation}}{{/remediate}}
-
+        {{#undo-remediate}}{{>Log4JScan-Description-Undo-Remediation}}{{/undo-remediate}}
 		<P><H3>NOTE:</H3> This version of the scan fixlet downloads the JAR version of {{DisplayName}}.  The system-default Java Runtime will be used.&nbsp; This requires the Java command to be present in the default system PATH variable.</P>
 		]]>		</Description>
 		<Relevance>if exists property "in proxy agent context" then not in proxy agent context else true</Relevance>
 		<Relevance>exists files whose(name of it as lowercase = "java" OR name of it as lowercase = "java.exe") of ( ( (folders it) of unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it; (if (windows of operating system) then (x64 variables "PATH" of it) else NOTHINGS) ) of environments ) ; ( (folders "bin" of folders of folders of (folders "\Program Files"; folder "\Program Files (x86)")) ) )</Relevance>
+		{{#undo-remediate}}<Relevance><![CDATA[exists find files "log4j2_scan_backup_*.zip" of folders "BPS-Scans" of parent folder of parent folder of client folder of site "actionsite"]]></Relevance> {{/undo-remediate}}
 		<Category></Category>
 		<DownloadSize>{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}</DownloadSize>
 		<Source>{{DisplayName}}</Source>
@@ -36,7 +44,7 @@
 			<Value>01:00:00</Value>
 		</MIMEField>
 		<Domain>BESC</Domain>
-		<DefaultAction ID="Action1">
+		<{{#scan}}DefaultAction{{/scan}}{{^scan}}Action{{/scan}} ID="Action1">
 			<Description>
 				<PreLink>Click </PreLink>
 				<Link>here</Link>
@@ -54,63 +62,83 @@ utility __Download/logpresso-log4j2-scan.jar
 
 folder create {pathname of parent folder of parent folder of client folder of site "actionsite"}/BPS-Scans
 parameter "BPSFolder"="{pathname of folder "BPS-Scans" of parent folder of parent folder of client folder of site "actionsite"}{if windows of operating system then "\" else "/"}"
+{{#scan_or_remediate}}
 parameter "ListFile"="{parameter "BPSFolder"}results-log4j2-scan.txt"
 parameter "ExclusionFile"="{parameter "BPSFolder"}log4j2-path-exclusions.txt"
+parameter "ReportJSONFile"="{parameter "BPSFolder"}log4j2-report.json"
+{{/scan_or_remediate}}
+{{#undo-remediate}}
+parameter "RestoreListFile"="{parameter "BPSFolder"}restore-log4j2-scan.txt"
+{{/undo-remediate}}
+
 
 // Setup logpresso-log4j2-scan.jar
-if { exists file "logpresso-log4j2-scan.jar" of folder (parameter "BPSFolder")}
+if { exists files "logpresso-log4j2-scan.jar" of folders (parameter "BPSFolder")}
   delete "{pathname of file "logpresso-log4j2-scan.jar" of folder (parameter "BPSFolder")}"
 endif
 
 // Copy the scanner JAR file to client folder
 copy __Download/logpresso-log4j2-scan.jar "{parameter "BPSFolder"}/logpresso-log4j2-scan.jar"
 
-// Delete previous items
-delete "{parameter "ListFile"}"
-delete __appendfile
-delete "{parameter "ExclusionFile"}"
-
-//build exclusions list
-appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of (unique values of (it as trimmed string) whose(it != "") of substrings separated by "%0a" of (parameter "exclusionlist" | ""))}
-
-appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of ("/mnt";"/dev";"/cdrom")}
-
-if {exists properties "type" of types "filesystem"}
- appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of mount points of filesystems whose (type of it != "DRIVE_FIXED" ) }
-endif
-
-//mac-specific
-if {exists properties "type" of types "volume"}
- appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of (it as string) of volumes whose (type of it != "DRIVE_FIXED" ) }
-endif
-
-if {exists properties "filesystem type" of types "filesystem"}
- appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of mount points of filesystems whose (filesystem type of it is contained by set of ("cgroup";"cifs";"nfs";"nfs3";"nfs4";"cgroup2";"sysfs";"proc";"cpuset") ) }
-endif
-
-copy __appendfile "{parameter "ExclusionFile"}"
+{{#scan_or_remediate}}{{>Log4J2Scan-Action-ExcludeList}}{{/scan_or_remediate}}
 
 
 if {windows of operating system}
-  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & java -jar .\logpresso-log4j2-scan.jar --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config "{parameter "ExclusionFile"}" {{remediate}} > "{parameter "ListFile"}""
+  {{#scan_or_remediate}}
+  delete "{parameter "ReportJSONFile"}"
+  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & java -jar .\logpresso-log4j2-scan.jar --silent --all-drives --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config "{parameter "ExclusionFile"}" --report-json --report-path "{parameter "ReportJSONFile"}" {{remediate}} > "{parameter "ListFile"}""
+  {{/scan_or_remediate}}
+  {{#undo-remediate}}
+  delete __appendfile
+  appendfile cd "{parameter "BPSFolder"}"
+  appendfile del /q "{parameter "RestoreListFile"}"
+  appendfile {concatenation "%0d%0a" of ("java -jar %22" & parameter "BPSFolder" & "logpresso-log4j2-scan.jar%22  --restore %22" & it & "%22 >> %22" & parameter "RestoreListFile" & "%22 2>&1"; "echo move /Y %22" & it & "%22 %22" & it & ".restored%22") of pathnames of find files "log4j2_scan_backup_*.zip" of folders (parameter "BPSFolder")}
+   
+  delete log4j-restore.cmd
+  move __appendfile log4j-restore.cmd
+  waithidden cmd.exe /c log4j-restore.cmd
+
+  {{/undo-remediate}}  
 else // non-Windows operating system:
   // Get shell binary, should return /bin/sh in most cases:
   parameter "shell_bin" = "{  tuple string items 0 of concatenations ", " of ( pathnames of files "/bin/sh"; pathnames of files whose(name of it as lowercase = "sh" OR name of it as lowercase = "sh.exe") of (folders it) of unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it ) of environments) }"
 
-  // Run log4j2-scan:
+  {{#scan_or_remediate}}
+  // Run log4j2-scan scan or remediation:
   // WARNING: this attempts to exclude network shares, but might not be perfect.
-  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' && java -jar ./logpresso-log4j2-scan.jar --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660 --exclude-config '{parameter "ExclusionFile"}'  {{remediate}} / > '{parameter "ListFile"}'"
+  delete "{parameter "ReportJSONFile"}"
+  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; java -jar ./logpresso-log4j2-scan.jar --silent --scan-log4j1 --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config '{parameter "ExclusionFile"}'  --report-json --report-path '{parameter "ReportJSONFile"}' {{remediate}} / > '{parameter "ListFile"}'"
+  {{/scan_or_remediate}}
+  {{#undo-remediate}}
+  delete __appendfile
+  appendfile #!/bin/sh
+  appendfile cd '{parameter "BPSFolder"}' 
+  appendfile rm -f "{parameter "RestoreListFile"}"
+  appendfile {concatenation "%0a" of ("%22" & parameter "Java_bin" & "%22 -jar %22" & parameter "BPSFolder" & "logpresso-log4j2-scan.jar%22  --restore %22" & it & "%22 >> %22" & parameter "RestoreListFile" & "%22 2>&1 "; "echo mv -f %22" & it & "%22 %22" & it & ".restored%22") of pathnames of find files "log4j2_scan_backup_*.zip" of folders (parameter "BPSFolder")}
+  appendfile rm -rf '{parameter "JREFolder"}'
+  delete log4j-restore.sh
+  move __appendfile log4j-restore.sh
+  wait chmod +x log4j-restore.sh
+  wait {parameter "shell_bin"} ./log4j-restore.sh
+  {{/undo-remediate}}
 endif
 
-// Give 30 seconds for startup before checking
+
+{{#scan_or_remediate}}
+// Wait up to 30 seconds for the logfile to be created to check successful startup
 parameter "StartTime"="{now}"
 pause while {not exists file (parameter "ListFile") and now - (parameter "StartTime" as time) < 30 * second }
 // Check that an output log file has been created as an indicator that the scan has launched successfully
 continue if {exists file (parameter "ListFile") whose (modification time of it >= active start time of action)}
-
-{{#remediate}}action requires restart{{/remediate}}
-
+{{#remediate}}
+action requires restart
+{{/remediate}}
+{{/scan_or_remediate}}
+{{#undo-remediate}}
+continue if {exists file (parameter "RestoreListFile") whose (modification time of it >= active start time of action)}
+action requires restart
+{{/undo-remediate}}
 // End]]></ActionScript>
-		</DefaultAction>
+		</{{#scan}}DefaultAction{{/scan}}{{^scan}}Action{{/scan}}>
 	</{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
 </BES>

@@ -1,0 +1,10 @@
+---
+Description: Test BESImport Processor
+Identifier: com.github.jgstew.test.BESImport
+Input:
+  NAME: BESImportTest
+MinimumVersion: "2.3"
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  - Processor: com.github.jgstew.SharedProcessors/BESImport

@@ -97,7 +97,12 @@ class BESImport(Processor):
             self.output("Nothing to import", 0)
             return 0
 
-        self.get_config()
+        try:
+            self.get_config()
+        except BaseException:
+            self.output("ERROR: No besapi config loaded, use bescli to create one", 0)
+            return None
+
         self.get_bes_title(bes_file)
 
         bes_title = self.env.get("bes_title")

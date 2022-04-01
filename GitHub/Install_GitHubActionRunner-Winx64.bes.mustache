@@ -52,6 +52,13 @@ override wait
 hidden=true
 completion=job
 wait CMD /C "cd {parameter "folder_path"} && config.cmd --unattended --url {parameter "github_url"} --token {parameter "github_runner_token"} --runasservice"
+
+// WSL required for `bash`: (only possible if bare metal or nested virtualization)
+// wsl --install -d Ubuntu
+
+// Powershell is required for default shell commands:
+// Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+
 ]]></ActionScript>
 		</DefaultAction>
 	</Task>

@@ -15,7 +15,8 @@ repos:
     rev: v4.0.1
     hooks:
       - id: check-yaml
-      - id: check-json
+      # check-json doesn't work with json with comments
+      # - id: check-json
       - id: check-added-large-files
         args: ["--maxkb=500"]
       - id: check-ast
@@ -46,3 +47,8 @@ repos:
     rev: 3.9.2
     hooks:
       - id: flake8
+  # this works with json with comments, but gave me an error
+  # - repo: https://gitlab.com/bmares/check-json5
+  #   rev: v1.0.0
+  #   hooks:
+  #     - id: check-json5

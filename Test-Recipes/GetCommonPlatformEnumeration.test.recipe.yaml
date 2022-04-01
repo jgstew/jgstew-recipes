@@ -14,4 +14,4 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%cpe%"
-      assert_string: "cpe:2.3:a:test_recipes:"
+      assert_string: "cpe:2.3:a:test_recipes:autopkg:2.3.9:*:*:*:*:windows:x32:*"

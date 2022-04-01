@@ -3,10 +3,15 @@ Description: Test URLTextSearcherArray Processor
 Identifier: com.github.jgstew.test.URLTextSearcherArray
 Input:
   NAME: URLTextSearcherArrayTest
-MinimumVersion: '2.3'
+MinimumVersion: "2.3"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/URLTextSearcherArray
     Arguments:
       url: https://support.bigfix.com/bes/release/index.html
       re_pattern: '>(?P<version>\d+\.\d+\.\d+\.\d+)<'
   - Processor: com.github.jgstew.SharedProcessors/VersionMaximumArray
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_maximum%"
+      # this may need changed in the future:
+      assert_string: "10.0."

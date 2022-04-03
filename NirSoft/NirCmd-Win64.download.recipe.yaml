@@ -1,0 +1,16 @@
+---
+Description: Downloads the latest version of NirCmd
+Identifier: com.github.jgstew.download.NirCmd-Win64
+Input:
+  NAME: NirCmd
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.shared.parent-recipe
+Process:
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: https://www.nirsoft.net/utils/nircmd-x64.zip
+      # filename: actions-runner-%OS%.%TYPE%
+      #download_version: "%version%"
+      COMPUTE_HASHES: True
+  - Processor: EndOfCheckPhase
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem

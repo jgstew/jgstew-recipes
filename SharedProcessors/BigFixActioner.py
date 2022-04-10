@@ -28,7 +28,7 @@ BES_SourcedFixletAction = """\
             <HasTimeRange>false</HasTimeRange>
             <HasStartTime>false</HasStartTime>
             <HasEndTime>true</HasEndTime>
-            <EndDateTimeLocalOffset>P365D</EndDateTimeLocalOffset>
+            <EndDateTimeLocalOffset>P45D</EndDateTimeLocalOffset>
             <HasDayOfWeekConstraint>false</HasDayOfWeekConstraint>
             <UseUTCTime>false</UseUTCTime>
             <ActiveUserRequirement>NoRequirement</ActiveUserRequirement>
@@ -46,7 +46,7 @@ BES_SourcedFixletAction = """\
             <ContinueOnErrors>true</ContinueOnErrors>
             <PostActionBehavior Behavior="Nothing"></PostActionBehavior>
             <IsOffer>true</IsOffer>
-            <AnnounceOffer>true</AnnounceOffer>
+            <AnnounceOffer>false</AnnounceOffer>
             <OfferCategory>AutoPkgTesting</OfferCategory>
             <OfferDescriptionHTML><![CDATA[Offer to test AutoPkg created content]]></OfferDescriptionHTML>
         </Settings>

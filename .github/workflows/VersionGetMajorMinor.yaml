@@ -12,6 +12,9 @@ on:
       - "SharedProcessors/VersionGetMajorMinor.py"
       - "Test-Recipes/VersionGetMajorMinor.test.recipe.yaml"
       - ".github/workflows/VersionGetMajorMinor.yaml"
+  schedule:
+    # run first day of every month:
+    - cron: "* * 1 * *"
 
 jobs:
   VersionGetMajorMinor:

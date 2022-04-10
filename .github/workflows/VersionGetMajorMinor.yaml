@@ -42,4 +42,8 @@ jobs:
         run: if not exist "%USERPROFILE%/AppData/Local/Autopkg/config.json" echo {} > "%USERPROFILE%/AppData/Local/Autopkg/config.json"
       - name: create default autopkg config file Linux
         if: runner.os == 'Linux'
-        run: cd ~ && echo {} > .config/Autopkg/config.json
+        run: |
+          cd ~ && mkdir -p .config/Autopkg
+          cd ~ && echo {} > .config/Autopkg/config.json
+      - name: test autopkg info
+        run: python autopkg/Code/autopkg info

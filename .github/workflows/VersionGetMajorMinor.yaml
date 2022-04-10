@@ -17,6 +17,7 @@ jobs:
   VersionGetMajorMinor:
     strategy:
       matrix:
+        # https://ncorti.com/blog/howto-github-actions-build-matrix
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -35,8 +36,11 @@ jobs:
 
       - name: Install requirements
         run: pip install --requirement requirements.txt
-      - name: git clone autopkg
-        run: git clone https://github.com/jgstew/autopkg.git
+      - name: git clone autopkg, checkout dev
+        run: |
+          git clone https://github.com/autopkg/autopkg.git
+          cd autopkg
+          git checkout dev
       - name: Install AutoPkg Reqirements
         run: pip install --requirement autopkg/requirements.txt
       - name: create empty config windows

@@ -15,7 +15,10 @@ on:
 
 jobs:
   VersionGetMajorMinor:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: set powershell execution policy CurrentUser
         if: runner.os == 'Windows'

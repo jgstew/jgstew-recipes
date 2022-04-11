@@ -32,7 +32,6 @@ jobs:
         shell: bash
         run: |
           cat <<'EOFEOF' > AutopkgCore.test.recipe.yaml
-          ---
           Description: Test AutoPkg Core Cross Platform Processors
           Identifier: com.github.autopkg.test.AutoPkgCore
           Input:

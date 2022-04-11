@@ -26,8 +26,14 @@ jobs:
         shell: cmd
         run: powershell -command "Set-ExecutionPolicy -Force -ExecutionPolicy RemoteSigned -Scope CurrentUser"
 
-      - uses: actions/checkout@v3
+      - name: Set token
+        # required for githubreleaseinfoprovider in github actions
+        # without this, API limits will be hit
+        run: |
+          cd ~
+          echo ${{ secrets.GITHUB_TOKEN }} > ".autopkg_gh_token"
 
+      - uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
@@ -58,5 +64,7 @@ jobs:
         run: python autopkg/Code/autopkg run -vv Test-Recipes/AutopkgCore.test.recipe.yaml
       - name: run nupkg recipe
         run: python autopkg/Code/autopkg run -vv AutoPkgRecipe/AutoPkgRelease.nupkg.recipe.yaml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 # Related:
 # - https://github.com/jgstew/bigfix-content/blob/master/.github/workflows/autopkg.yaml

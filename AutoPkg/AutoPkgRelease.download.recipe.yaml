@@ -15,5 +15,6 @@ Process:
   - Processor: URLDownloaderPython
     Arguments:
       url: "https://github.com/autopkg/autopkg/archive/refs/tags/v%version%.zip"
+      filename: autopkg.zip
       COMPUTE_HASHES: True
   - Processor: EndOfCheckPhase

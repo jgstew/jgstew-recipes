@@ -44,9 +44,9 @@ jobs:
               Arguments:
                 warning_message: "This is just a test, not a real Deprecation Warning"
           EOFEOF
-        - name: get file contents
-          shell: bash
-          run: cat AutopkgCore.test.recipe.yaml
+      - name: get file contents
+        shell: bash
+        run: cat AutopkgCore.test.recipe.yaml
 
       - uses: actions/checkout@v3
 
@@ -78,6 +78,5 @@ jobs:
           cd ~ && echo {} > .config/Autopkg/config.json
       - name: run recipe autopkg
         run: python autopkg/Code/autopkg run -vv Test-Recipes/AutopkgCore.test.recipe.yaml
-
 # Related:
 # - https://github.com/jgstew/bigfix-content/blob/master/.github/workflows/autopkg.yaml

@@ -22,7 +22,6 @@ Process:
       dependencies:
         - {"id": "%PYTHON_PACKAGE_ID%", "version": "%PYTHON_VERSION%"}
       additional_install_actions: |
-        Update-SessionEnvironment
         $AutoPkgDir = Resolve-Path $env:ChocolateyPackageFolder\tools\autopkg-*
         & python -m venv $AutoPkgDir\.python-env
         Write-Output 'Running "pip install ..." to generate self-contained environment.'

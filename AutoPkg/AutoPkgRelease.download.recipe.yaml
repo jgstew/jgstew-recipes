@@ -1,0 +1,19 @@
+---
+# https://github.com/autopkg/recipes/blob/master/AutoPkg/AutoPkgGitMaster.nupkg.recipe
+Description: download zip for released AutoPkg
+Identifier: com.github.jgstew.download.AutoPkgRelease
+Input:
+  NAME: autopkg
+MinimumVersion: "2.3"
+Process:
+  - Processor: GitHubReleasesInfoProvider
+    Arguments:
+      # https://github.com/autopkg/autopkg/releases/tag/v2.4.1
+      # https://github.com/autopkg/autopkg/archive/refs/tags/v2.4.1.zip
+      github_repo: autopkg/autopkg
+      #asset_regex: ".*.zip"
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: "https://github.com/autopkg/autopkg/archive/refs/tags/v%version%.zip"
+      COMPUTE_HASHES: True
+  - Processor: EndOfCheckPhase

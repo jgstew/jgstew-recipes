@@ -1,5 +1,5 @@
 ---
-name: Test VersionGetMajorMinor
+name: Test AutoPkg Core Processors
 
 on:
   push:
@@ -15,7 +15,7 @@ on:
     - cron: "* * 1 * *"
 
 jobs:
-  VersionGetMajorMinor:
+  AutoPkgCoreTest:
     strategy:
       matrix:
         # https://ncorti.com/blog/howto-github-actions-build-matrix

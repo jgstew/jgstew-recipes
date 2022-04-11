@@ -1,5 +1,5 @@
 ---
-# https://github.com/autopkg/recipes/blob/master/AutoPkg/AutoPkgGitMaster.nupkg.recipe
+# Based upon: https://github.com/autopkg/recipes/blob/master/AutoPkg/AutoPkgGitMaster.nupkg.recipe
 Description: Build Chocolatey package for released AutoPkg
 Identifier: com.github.jgstew.nupkg.AutoPkg
 Input:

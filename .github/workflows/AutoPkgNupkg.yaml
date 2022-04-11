@@ -5,13 +5,13 @@ on:
   push:
     paths:
       - ".github/workflows/AutoPkgNupkg.yaml"
-      - "AutoPkg/AutoPkgRelease.download.recipe.yaml"
-      - "AutoPkg/AutoPkgRelease.nupkg.recipe.yaml"
+      - "AutoPkgRecipe/AutoPkgRelease.download.recipe.yaml"
+      - "AutoPkgRecipe/AutoPkgRelease.nupkg.recipe.yaml"
   pull_request:
     paths:
       - ".github/workflows/AutoPkgNupkg.yaml"
-      - "AutoPkg/AutoPkgRelease.download.recipe.yaml"
-      - "AutoPkg/AutoPkgRelease.nupkg.recipe.yaml"
+      - "AutoPkgRecipe/AutoPkgRelease.download.recipe.yaml"
+      - "AutoPkgRecipe/AutoPkgRelease.nupkg.recipe.yaml"
   schedule:
     # run first day of every month:
     - cron: "* * 1 * *"
@@ -57,6 +57,6 @@ jobs:
       - name: run test recipe autopkg
         run: python autopkg/Code/autopkg run -vv Test-Recipes/AutopkgCore.test.recipe.yaml
       - name: run nupkg recipe
-        run: python autopkg/Code/autopkg run -vv AutoPkg/AutoPkgRelease.nupkg.recipe.yaml
+        run: python autopkg/Code/autopkg run -vv AutoPkgRecipe/AutoPkgRelease.nupkg.recipe.yaml
 # Related:
 # - https://github.com/jgstew/bigfix-content/blob/master/.github/workflows/autopkg.yaml

@@ -67,7 +67,9 @@ jobs:
         run: python autopkg/Code/autopkg run -vv AutoPkgRecipe/AutoPkgRelease.nupkg.recipe.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: test chocolately install
+      - name: chocolately install python
+        run: choco install python3 --no-progress --yes --debug --force --force-dependencies
+      - name: test chocolately install autopkg.nupkg
         run: choco install autopkg -s "C:\Users\runneradmin\Library\AutoPkg\Cache\com.github.jgstew.nupkg.AutoPkg\nupkgs\" --no-progress --yes --debug --force --force-dependencies
 # Related:
 # - https://github.com/jgstew/bigfix-content/blob/master/.github/workflows/autopkg.yaml

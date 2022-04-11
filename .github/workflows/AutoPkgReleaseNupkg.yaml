@@ -1,16 +1,16 @@
 ---
-name: Test AutoPkg Nupkg
+name: Test AutoPkg Release Nupkg
 # based upon: https://github.com/autopkg/recipes/blob/master/AutoPkg/AutoPkgGitMaster.nupkg.recipe
 
 on:
   push:
     paths:
-      - ".github/workflows/AutoPkgNupkg.yaml"
+      - ".github/workflows/AutoPkgReleaseNupkg.yaml"
       - "AutoPkgRecipe/AutoPkgRelease.download.recipe.yaml"
       - "AutoPkgRecipe/AutoPkgRelease.nupkg.recipe.yaml"
   pull_request:
     paths:
-      - ".github/workflows/AutoPkgNupkg.yaml"
+      - ".github/workflows/AutoPkgReleaseNupkg.yaml"
       - "AutoPkgRecipe/AutoPkgRelease.download.recipe.yaml"
       - "AutoPkgRecipe/AutoPkgRelease.nupkg.recipe.yaml"
 

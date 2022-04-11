@@ -29,3 +29,5 @@ Process:
         Get-ChildItem -Recurse $AutoPkgDir\.python-env -Include *.exe, *.dll |
             foreach { New-Item -ItemType File "$($_.FullName).ignore" } | Write-Verbose
         Install-ChocolateyPowershellCommand -PackageName $packageArgs.packageName -PsFileFullPath $AutoPkgDir\Scripts\autopkg.ps1
+
+# TODO: set output var `nuget_package_path` to ENV for further github action use

@@ -39,4 +39,3 @@ Process:
     # https://github.com/autopkg/autopkg/blob/master/Code/autopkglib/PathDeleter.py
     Arguments:
       path_list: ["test_file.txt", "test_file_moved.txt"]
-  - Processor: EndOfCheckPhase

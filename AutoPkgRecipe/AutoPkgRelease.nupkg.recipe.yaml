@@ -25,7 +25,7 @@ Process:
         $AutoPkgDir = Resolve-Path $env:ChocolateyPackageFolder\tools\autopkg-*
         & python -m venv $AutoPkgDir\.python-env
         Write-Output 'Running "pip install ..." to generate self-contained environment.'
-        & $AutoPkgDir\.python-env\Scripts\pip --disable-pip-version-check install -r $AutoPkgDir\requirements.txt | Write-Verbose
+        & $AutoPkgDir\.python-env\Scripts\pip --disable-pip-version-check install -r $AutoPkgDir\requirements.txt --quiet
         Get-ChildItem -Recurse $AutoPkgDir\.python-env -Include *.exe, *.dll |
             foreach { New-Item -ItemType File "$($_.FullName).ignore" } | Write-Verbose
         Install-ChocolateyPowershellCommand -PackageName $packageArgs.packageName -PsFileFullPath $AutoPkgDir\Scripts\autopkg.ps1

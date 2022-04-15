@@ -25,12 +25,17 @@ jobs:
         shell: cmd
         run: powershell -command "Set-ExecutionPolicy -Force -ExecutionPolicy RemoteSigned -Scope CurrentUser"
 
-      - name: Set token
+      - name: Set github token autopkg
         # required for githubreleaseinfoprovider in github actions
         # without this, API limits will be hit
         run: |
           cd ~
           echo ${{ secrets.GITHUB_TOKEN }} > ".autopkg_gh_token"
+      - name: Set github token homebrew
+        # echo 'export HOMEBREW_GITHUB_API_TOKEN=your_token_here' >> /Users/runner/.bash_profile
+        run: |
+          cd ~
+          echo 'export HOMEBREW_GITHUB_API_TOKEN=${{ secrets.GITHUB_TOKEN }}' >> .bash_profile
 
       - uses: actions/checkout@v3
       - name: Set up Python
@@ -73,9 +78,10 @@ jobs:
         run: python autopkg/Code/autopkg run -vv AutoPkgRecipe/AutoPkgRelease.brew.recipe.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: run brew audit
+        run: brew audit --verbose --strict --online /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb
       - name: run brew install
         run: brew install --verbose /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb
       - name: run brew uninstall
         run: brew uninstall autopkg
-      - name: run brew audit
-        run: brew audit --verbose --strict --online /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb

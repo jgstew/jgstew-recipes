@@ -1,5 +1,6 @@
 ---
 # Related:
+# - https://github.com/jgstew/jgstew-recipes/blob/main/.github/workflows/AutoPkgReleaseBrew.yaml
 # - https://github.com/Homebrew/homebrew-cask/blob/master/Casks/autopkgr.rb
 Description: Build homebrew cask for released AutoPkg
 Identifier: com.github.jgstew.brew.AutoPkgRelease

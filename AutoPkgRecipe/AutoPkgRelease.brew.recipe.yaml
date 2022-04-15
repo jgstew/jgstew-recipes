@@ -1,0 +1,17 @@
+---
+# Related:
+# - https://github.com/Homebrew/homebrew-cask/blob/master/Casks/autopkgr.rb
+Description: Build homebrew cask for released AutoPkg
+Identifier: com.github.jgstew.brew.AutoPkgRelease
+Input:
+  NAME: autopkg
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.download.AutoPkgReleasePkg
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/FileHasher
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: AutoPkgRecipe/autopkg.rb.mustache
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.rb"
+      template_dictionary:
+        {"version": "%version%", "file_sha256": "%filehasher_sha256%"}

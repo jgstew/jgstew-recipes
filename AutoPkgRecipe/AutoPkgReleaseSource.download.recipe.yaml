@@ -1,6 +1,6 @@
 ---
 Description: download zip for released AutoPkg
-Identifier: com.github.jgstew.download.AutoPkgRelease
+Identifier: com.github.jgstew.download.AutoPkgReleaseSource
 Input:
   NAME: autopkg
 MinimumVersion: "2.3"

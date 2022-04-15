@@ -9,7 +9,7 @@ Input:
 MinimumVersion: "2.3"
 SupportedPlatforms:
   - Windows
-ParentRecipe: com.github.jgstew.download.AutoPkgRelease
+ParentRecipe: com.github.jgstew.download.AutoPkgReleaseSource
 Process:
   - Processor: ChocolateyPackager
     Arguments:

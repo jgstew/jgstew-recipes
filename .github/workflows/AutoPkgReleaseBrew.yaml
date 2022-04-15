@@ -1,22 +1,23 @@
 ---
-name: Test AutoPkg Release Nupkg
-# based upon: https://github.com/autopkg/recipes/blob/master/AutoPkg/AutoPkgGitMaster.nupkg.recipe
+name: Test AutoPkg Release Brew
 
 on:
   push:
     paths:
-      - ".github/workflows/AutoPkgReleaseNupkg.yaml"
-      - "AutoPkgRecipe/AutoPkgReleaseSource.download.recipe.yaml"
-      - "AutoPkgRecipe/AutoPkgRelease.nupkg.recipe.yaml"
+      - ".github/workflows/AutoPkgReleaseBrew.yaml"
+      - "AutoPkgRecipe/autopkg.rb.mustache"
+      - "AutoPkgRecipe/AutoPkgRelease.brew.recipe.yaml"
+      - "AutoPkgRecipe/AutoPkgReleasePkg.download.recipe.yaml"
   pull_request:
     paths:
-      - ".github/workflows/AutoPkgReleaseNupkg.yaml"
-      - "AutoPkgRecipe/AutoPkgReleaseSource.download.recipe.yaml"
-      - "AutoPkgRecipe/AutoPkgRelease.nupkg.recipe.yaml"
+      - ".github/workflows/AutoPkgReleaseBrew.yaml"
+      - "AutoPkgRecipe/autopkg.rb.mustache"
+      - "AutoPkgRecipe/AutoPkgRelease.brew.recipe.yaml"
+      - "AutoPkgRecipe/AutoPkgReleasePkg.download.recipe.yaml"
 
 jobs:
-  AutoPkgNupkg:
-    runs-on: windows-latest
+  AutoPkgBrew:
+    runs-on: macos-latest
     steps:
       # only needed on self hosted windows runners:
       - name: set powershell execution policy CurrentUser
@@ -39,11 +40,17 @@ jobs:
 
       # - name: Install requirements
       #   run: pip install --requirement requirements.txt
-      - name: git clone autopkg, checkout dev
-        run: |
-          git clone https://github.com/autopkg/autopkg.git
-          cd autopkg
-          git checkout dev
+      # - name: git clone autopkg, checkout dev
+      #   run: |
+      #     git clone https://github.com/autopkg/autopkg.git
+      #     cd autopkg
+      #     git checkout dev
+      - name: checkout autopkg dev
+        uses: actions/checkout@v3
+        with:
+          repository: autopkg/autopkg
+          path: autopkg
+          ref: dev
       - name: Install AutoPkg Reqirements
         run: pip install --requirement autopkg/requirements.txt
       - name: create empty config windows
@@ -60,16 +67,9 @@ jobs:
           cd ~ && echo {} > .config/Autopkg/config.json
       - name: run test recipe autopkg
         run: python autopkg/Code/autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
-      - name: run nupkg recipe
-        run: python autopkg/Code/autopkg run -v AutoPkgRecipe/AutoPkgRelease.nupkg.recipe.yaml
+      - name: run brew recipe
+        run: python autopkg/Code/autopkg run -v AutoPkgRecipe/AutoPkgRelease.brew.recipe.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: chocolately install python
-        # python versions: 3.8.10, 3.9.12, 3.10.4
-        run: choco install python3 --version 3.9.12 --no-progress --yes --force --force-dependencies
-      - name: test chocolately install autopkg.nupkg
-        run: choco install autopkg -s "C:\Users\runneradmin\Library\AutoPkg\Cache\com.github.jgstew.nupkg.AutoPkg\nupkgs\" --no-progress --yes --force --force-dependencies
-      - name: test autopkg chocolately install
-        run: autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
-# Related:
-# - https://github.com/jgstew/bigfix-content/blob/master/.github/workflows/autopkg.yaml
+      - name: run brew
+        run: brew install python3

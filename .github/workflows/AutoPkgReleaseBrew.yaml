@@ -53,6 +53,8 @@ jobs:
           ref: dev
       - name: Install AutoPkg Reqirements
         run: pip install --requirement autopkg/requirements.txt
+      - name: pip install python dependancy
+        run: pip install chevron
       - name: create empty config windows
         # https://stackoverflow.com/questions/57946173/github-actions-run-step-on-specific-os
         if: runner.os == 'Windows'
@@ -68,7 +70,7 @@ jobs:
       - name: run test recipe autopkg
         run: python autopkg/Code/autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
       - name: run brew recipe
-        run: python autopkg/Code/autopkg run -v AutoPkgRecipe/AutoPkgRelease.brew.recipe.yaml
+        run: python autopkg/Code/autopkg run -vv AutoPkgRecipe/AutoPkgRelease.brew.recipe.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: run brew

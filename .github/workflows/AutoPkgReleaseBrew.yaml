@@ -85,8 +85,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: run brew install
-        run: brew install --verbose /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb
+        run: brew install --cask --verbose /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb
+      - name: test brew installed autopkg
+        run: autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
+
       - name: run brew uninstall
         run: brew uninstall autopkg
       - name: run brew audit
-        run: brew audit --verbose --strict --online /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb
+        run: brew audit --cask --new-cask --verbose --strict --git --online /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb

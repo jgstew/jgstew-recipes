@@ -10,4 +10,9 @@ cask "autopkg" do
   pkg "autopkg-#{version}.pkg"
 
   uninstall pkgutil: "autopkg.autopkg"
+
+  livecheck do
+    url :homepage
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
+  end
 end

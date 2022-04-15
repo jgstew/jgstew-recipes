@@ -10,6 +10,8 @@ ParentRecipe: com.github.jgstew.download.AutoPkgReleasePkg
 Process:
   - Processor: com.github.jgstew.SharedProcessors/FileHasher
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    # NOTE: this processor currently requires: chevron validate_bes_xml
+    # - pip install chevron validate_bes_xml
     Arguments:
       template_file_path: AutoPkgRecipe/autopkg.rb.mustache
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.rb"

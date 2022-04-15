@@ -74,7 +74,12 @@ jobs:
           cd ~ && echo {} > .config/Autopkg/config.json
       - name: run test recipe autopkg
         run: python autopkg/Code/autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
+
       - name: run brew recipe
+        # See the following files used:
+        # - https://github.com/jgstew/jgstew-recipes/blob/main/AutoPkgRecipe/autopkg.rb.mustache
+        # - https://github.com/jgstew/jgstew-recipes/blob/main/AutoPkgRecipe/AutoPkgReleasePkg.download.recipe.yaml
+        # - https://github.com/jgstew/jgstew-recipes/blob/main/AutoPkgRecipe/AutoPkgRelease.brew.recipe.yaml
         run: python autopkg/Code/autopkg run -vv AutoPkgRecipe/AutoPkgRelease.brew.recipe.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

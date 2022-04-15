@@ -14,6 +14,9 @@ on:
       - "AutoPkgRecipe/autopkg.rb.mustache"
       - "AutoPkgRecipe/AutoPkgRelease.brew.recipe.yaml"
       - "AutoPkgRecipe/AutoPkgReleasePkg.download.recipe.yaml"
+  schedule:
+    # run first day of every month:
+    - cron: "* * 1 * *"
 
 jobs:
   AutoPkgBrew:
@@ -92,4 +95,4 @@ jobs:
       - name: run brew uninstall
         run: brew uninstall autopkg
       - name: run brew audit
-        run: brew audit --cask --new-cask --verbose --strict --git --online /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb
+        run: brew audit --cask --new-cask --verbose --strict --online /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb

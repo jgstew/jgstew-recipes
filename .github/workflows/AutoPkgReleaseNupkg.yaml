@@ -13,6 +13,9 @@ on:
       - ".github/workflows/AutoPkgReleaseNupkg.yaml"
       - "AutoPkgRecipe/AutoPkgReleaseSource.download.recipe.yaml"
       - "AutoPkgRecipe/AutoPkgRelease.nupkg.recipe.yaml"
+  schedule:
+    # run first day of every month:
+    - cron: "* * 1 * *"
 
 jobs:
   AutoPkgNupkg:

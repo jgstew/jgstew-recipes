@@ -21,6 +21,7 @@ except ImportError:
     print("ERROR: `validate_bes_xml` module required for bes validation")
     print("Install: pip install --upgrade validate_bes_xml")
     print("See: https://github.com/jgstew/jgstew-recipes/blob/main/requirements.txt")
+    validate_bes_xml = None
 
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
@@ -59,12 +60,10 @@ class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
     }
     output_variables = {
         "content_string": {
-            "description": ("The content output " "from mustache template")
+            "description": ("The content output from mustache template")
         },
         "content_file_pathname": {
-            "description": (
-                "The path of the file saved " "containing the content_string"
-            )
+            "description": ("The path of the file saved containing the content_string")
         },
     }
     __doc__ = description

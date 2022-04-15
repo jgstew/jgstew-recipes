@@ -13,6 +13,8 @@ cask "autopkg" do
 
   livecheck do
     url :homepage
+    # regex to exclude pre-releases
+    # example: v2.4.1 but NOT 2.5.0BETA1
     regex(/^v?(\d+(?:\.\d+)+)$/i)
   end
 end

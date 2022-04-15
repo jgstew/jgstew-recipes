@@ -59,7 +59,7 @@ jobs:
       - name: Install AutoPkg Reqirements
         run: pip install --requirement autopkg/requirements.txt
       - name: pip install recipe python dependancies
-        run: pip install chevron validate_bes_xml
+        run: pip install chevron
       - name: create empty config windows
         # https://stackoverflow.com/questions/57946173/github-actions-run-step-on-specific-os
         if: runner.os == 'Windows'
@@ -84,9 +84,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: run brew audit
-        run: brew audit --verbose --strict --online /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb
       - name: run brew install
         run: brew install --verbose /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb
       - name: run brew uninstall
         run: brew uninstall autopkg
+      - name: run brew audit
+        run: brew audit --verbose --strict --online /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb

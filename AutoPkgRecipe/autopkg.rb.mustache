@@ -7,7 +7,7 @@ cask "autopkg" do
   desc "Install AutoPkg"
   homepage "https://github.com/autopkg/autopkg"
 
-  pkg "autopkg-{version}.pkg"
+  pkg "autopkg-#{version}.pkg"
 
   uninstall pkgutil: "autopkg.autopkg"
 end

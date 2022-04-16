@@ -86,7 +86,7 @@ jobs:
           MSBUILD_PATH: ${{ steps.setupmsbuild.outputs.msbuildPath }}
         # TODO: get version from tag
         run: |
-          cd C:\Users\runneradmin\Library\AutoPkg\Cache\com.github.jgstew.msibuild.AutoPkg
+          cd /Users/runneradmin/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg
           name="$(basename "$ZIP_FILE" ".zip")"
           version="2.4.1"
           "${MSBUILD_PATH}\MSBuild.exe" autopkg.wixproj -p:SourceDir="$PWD" -p:OutputPath="$PWD" -p:OutputName="$name" -p:ProductVersion="$version"

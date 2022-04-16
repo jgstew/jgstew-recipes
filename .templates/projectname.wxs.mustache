@@ -46,6 +46,7 @@
         <Feature Id="DefaultFeature" ConfigurableDirectory="INSTALLDIR">
             <!-- @Guid will be automatically and durably assigned based on key path -->
             <Component Directory="INSTALLDIR">
+                <!-- example: gh.exe -->
                 <File Name="{{EXEPATH}}"/>
                 <Environment Id="Path" Action="set" Name="PATH" Part="last" System="yes" Value="[INSTALLDIR]"/>
             </Component>

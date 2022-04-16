@@ -15,11 +15,17 @@ on:
       - ".github/workflows/AutoPkgReleaseMSI.yaml"
       - "AutoPkgRecipe/AutoPkgReleaseSource.download.recipe.yaml"
       - "AutoPkgRecipe/AutoPkgRelease.msbuild.recipe.yaml"
+      - "_Shared/ui.wxs"
+      - ".templates/projectname.wxs.mustache"
+      - ".templates/projectname.wixproj.mustache"
   pull_request:
     paths:
       - ".github/workflows/AutoPkgReleaseMSI.yaml"
       - "AutoPkgRecipe/AutoPkgReleaseSource.download.recipe.yaml"
       - "AutoPkgRecipe/AutoPkgRelease.msbuild.recipe.yaml"
+      - "_Shared/ui.wxs"
+      - ".templates/projectname.wxs.mustache"
+      - ".templates/projectname.wixproj.mustache"
   schedule:
     # run first day of every month:
     - cron: "* * 1 * *"
@@ -96,6 +102,8 @@ jobs:
           pwd
           cd Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg
           pwd
+          cd "/c/Program Files/Microsoft Visual Studio/2022/Enterprise"
+          pwd
           name="$(basename "$ZIP_FILE" ".zip")"
           version="2.4.1"
-          "/c/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild.exe" autopkg.wixproj -p:SourceDir="$PWD" -p:OutputPath="$PWD" -p:OutputName="$name" -p:ProductVersion="$version"
+          "MSBuild.exe" ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj -p:SourceDir="$GITHUB_WORKSPACE/autopkg/Code" -p:OutputPath="~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg" -p:OutputName="$name" -p:ProductVersion="$version"

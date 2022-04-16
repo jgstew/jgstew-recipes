@@ -28,6 +28,11 @@ jobs:
         shell: cmd
         run: powershell -command "Set-ExecutionPolicy -Force -ExecutionPolicy RemoteSigned -Scope CurrentUser"
 
+      - name: Add msbuild to PATH
+        # https://github.com/microsoft/setup-msbuild
+        if: runner.os == 'Windows'
+        uses: microsoft/setup-msbuild@v1.1.1
+
       - name: Set token
         # required for githubreleaseinfoprovider in github actions
         # without this, API limits will be hit

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <!-- based upon: https://github.com/cli/cli/blob/trunk/build/windows/ui.wxs -->
     <Fragment>
         <UI Id="WIXUI_CUSTOM_InstallDir">
             <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />

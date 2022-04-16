@@ -57,6 +57,9 @@ jobs:
 
       - name: Install AutoPkg Reqirements
         run: pip install --requirement autopkg/requirements.txt
+      - name: pip install recipe python dependancies
+        run: pip install chevron
+
       - name: create empty config windows
         # https://stackoverflow.com/questions/57946173/github-actions-run-step-on-specific-os
         if: runner.os == 'Windows'

@@ -108,4 +108,4 @@ jobs:
           cat ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj
           name="$(basename "$ZIP_FILE" ".zip")"
           version="2.4.1"
-          "MSBuild.exe" ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj -p:SourceDir="$GITHUB_WORKSPACE/autopkg/Code" -p:OutputPath="~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg" -p:OutputName="$name" -p:ProductVersion="$version"
+          "MSBuild.exe" ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj -p:SourceDir="$GITHUB_WORKSPACE/autopkg/Code" -p:OutputPath="." -p:OutputName="$name" -p:ProductVersion="$version"

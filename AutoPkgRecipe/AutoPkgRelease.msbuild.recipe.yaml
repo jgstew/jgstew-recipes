@@ -32,6 +32,7 @@ Process:
           "version": "%version%",
           "NAME": "%NAME%",
           "Manufacturer": "%NAME%",
+          "EXEPATH": "autopkg/Code/autopkg",
           # example: 8CFB9531-B959-4E1B-AA2E-4AF0FFCC4AF4
           "GUID_x64": "3864F27C-F258-4195-8B6F-F93C5AA41A79",
           "GUID_x86": "44AF44FF-7531-4951-9657-53BB7A4B5D04",

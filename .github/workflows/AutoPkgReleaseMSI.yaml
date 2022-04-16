@@ -98,6 +98,7 @@ jobs:
           MSBUILD_PATH: ${{ steps.setupmsbuild.outputs.msbuildPath }}
         # TODO: get version from tag
         # TODO: get MSBuild path from above step
+        # yamllint disable rule:indentation
         run: |
           cd ~
           pwd
@@ -111,6 +112,7 @@ jobs:
           "MSBuild.exe" ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj -p:SourceDir="$GITHUB_WORKSPACE/autopkg/Code" -p:OutputPath="." -p:OutputName="$name" -p:ProductVersion="$version"
       - name: upload built MSI
         # https://github.com/actions/upload-artifact
+        # TODO: get artifact path dynamically
         uses: actions/upload-artifact@v3
         with:
           name: autopkg.msi

@@ -1,0 +1,72 @@
+---
+name: Test AutoPkg Release MSI
+# based upon: https://github.com/cli/cli/blob/c4455297198031b8701544f5fff1b2621e57c454/.github/workflows/releases.yml#L130-L157
+# https://github.com/microsoft/setup-msbuild
+
+on:
+  push:
+    paths:
+      - ".github/workflows/AutoPkgReleaseMSI.yaml"
+      - "AutoPkgRecipe/AutoPkgReleaseSource.download.recipe.yaml"
+      - "AutoPkgRecipe/AutoPkgRelease.msbuild.recipe.yaml"
+  pull_request:
+    paths:
+      - ".github/workflows/AutoPkgReleaseMSI.yaml"
+      - "AutoPkgRecipe/AutoPkgReleaseSource.download.recipe.yaml"
+      - "AutoPkgRecipe/AutoPkgRelease.msbuild.recipe.yaml"
+  schedule:
+    # run first day of every month:
+    - cron: "* * 1 * *"
+
+jobs:
+  AutoPkgMSI:
+    runs-on: windows-latest
+    steps:
+      # only needed on self hosted windows runners:
+      - name: set powershell execution policy CurrentUser
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: powershell -command "Set-ExecutionPolicy -Force -ExecutionPolicy RemoteSigned -Scope CurrentUser"
+
+      - name: Set token
+        # required for githubreleaseinfoprovider in github actions
+        # without this, API limits will be hit
+        run: |
+          cd ~
+          echo ${{ secrets.GITHUB_TOKEN }} > ".autopkg_gh_token"
+
+      - name: checkout this repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.8
+
+      - name: checkout autopkg dev
+        uses: actions/checkout@v3
+        with:
+          repository: autopkg/autopkg
+          path: autopkg
+          ref: dev
+
+      - name: Install AutoPkg Reqirements
+        run: pip install --requirement autopkg/requirements.txt
+      - name: create empty config windows
+        # https://stackoverflow.com/questions/57946173/github-actions-run-step-on-specific-os
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: |
+          if not exist "%USERPROFILE%/AppData/Local/Autopkg" mkdir "%USERPROFILE%/AppData/Local/Autopkg"
+          if not exist "%USERPROFILE%/AppData/Local/Autopkg/config.json" echo {} > "%USERPROFILE%/AppData/Local/Autopkg/config.json"
+      - name: create default autopkg config file Linux
+        if: runner.os == 'Linux'
+        run: |
+          cd ~ && mkdir -p .config/Autopkg
+          cd ~ && echo {} > .config/Autopkg/config.json
+      - name: run test recipe autopkg
+        run: python autopkg/Code/autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
+      - name: run msibuild recipe
+        run: python autopkg/Code/autopkg run -vv AutoPkgRecipe/AutoPkgRelease.msbuild.recipe.yaml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

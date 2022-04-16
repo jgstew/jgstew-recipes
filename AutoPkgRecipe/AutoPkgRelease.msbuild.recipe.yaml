@@ -1,0 +1,39 @@
+---
+# Based upon: https://github.com/cli/cli/blob/c4455297198031b8701544f5fff1b2621e57c454/.github/workflows/releases.yml#L130-L157
+Description: Build Chocolatey package for released AutoPkg
+Identifier: com.github.jgstew.msibuild.AutoPkg
+Input:
+  NAME: autopkg
+MinimumVersion: "2.3"
+# SupportedPlatforms:
+#   - Windows
+ParentRecipe: com.github.jgstew.download.AutoPkgReleaseSource
+Process:
+  #- Processor: com.github.jgstew.SharedProcessors/FileHasher
+  - Processor: Copier
+    Arguments:
+      source_path: _Shared/ui.wxs
+      destination_path: "%RECIPE_CACHE_DIR%/ui.wxs"
+      overwrite: True
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    # NOTE: this processor `ContentFromTemplate` requires: chevron
+    # - pip install chevron
+    Arguments:
+      template_file_path: .templates/projectname.wixproj.mustache
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.wixproj"
+      template_dictionary: {"version": "%version%", "NAME": "%NAME%"}
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    # NOTE: this processor `ContentFromTemplate` requires: chevron
+    # - pip install chevron
+    Arguments:
+      template_file_path: .templates/projectname.wxs.mustache
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.wxs"
+      template_dictionary:
+        {
+          "version": "%version%",
+          "NAME": "%NAME%",
+          "GUID_x64": "TODO_GUID_x64",
+          "GUID_x86": "TODO_GUID_x86",
+          "GUID_arm64": "TODO_GUID_arm64",
+          "GUID_arm": "TODO_GUID_arm",
+        }

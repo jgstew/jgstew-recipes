@@ -3,6 +3,12 @@ name: Test AutoPkg Release MSI
 # based upon: https://github.com/cli/cli/blob/c4455297198031b8701544f5fff1b2621e57c454/.github/workflows/releases.yml#L130-L157
 # https://github.com/microsoft/setup-msbuild
 
+# Uses the following:
+# - https://github.com/jgstew/jgstew-recipes/blob/main/.templates/projectname.wixproj.mustache
+# - https://github.com/jgstew/jgstew-recipes/blob/main/.templates/projectname.wxs.mustache
+# - https://github.com/jgstew/jgstew-recipes/blob/main/_Shared/ui.wxs
+# - https://github.com/jgstew/jgstew-recipes/blob/main/AutoPkgRecipe/AutoPkgRelease.msbuild.recipe.yaml
+
 on:
   push:
     paths:
@@ -89,6 +95,7 @@ jobs:
           cd ~
           pwd
           cd Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg
+          pwd
           name="$(basename "$ZIP_FILE" ".zip")"
           version="2.4.1"
-          "${MSBUILD_PATH}\MSBuild.exe" autopkg.wixproj -p:SourceDir="$PWD" -p:OutputPath="$PWD" -p:OutputName="$name" -p:ProductVersion="$version"
+          "/c/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild.exe" autopkg.wixproj -p:SourceDir="$PWD" -p:OutputPath="$PWD" -p:OutputName="$name" -p:ProductVersion="$version"

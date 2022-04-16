@@ -78,3 +78,15 @@ jobs:
         run: python autopkg/Code/autopkg run -vv AutoPkgRecipe/AutoPkgRelease.msbuild.recipe.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: run msbuild
+        if: runner.os == 'Windows'
+        shell: bash
+        env:
+          ZIP_FILE: C:\Users\runneradmin\Library\AutoPkg\Cache\com.github.jgstew.msibuild.AutoPkg\downloads\autopkg.zip
+          MSBUILD_PATH: ${{ steps.setupmsbuild.outputs.msbuildPath }}
+        # TODO: get version from tag
+        run: |
+          cd C:\Users\runneradmin\Library\AutoPkg\Cache\com.github.jgstew.msibuild.AutoPkg
+          name="$(basename "$ZIP_FILE" ".zip")"
+          version="2.4.1"
+          "${MSBUILD_PATH}\MSBuild.exe" autopkg.wixproj -p:SourceDir="$PWD" -p:OutputPath="$PWD" -p:OutputName="$name" -p:ProductVersion="$version"

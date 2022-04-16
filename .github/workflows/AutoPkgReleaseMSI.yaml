@@ -97,6 +97,7 @@ jobs:
           ZIP_FILE: C:\Users\runneradmin\Library\AutoPkg\Cache\com.github.jgstew.msibuild.AutoPkg\downloads\autopkg.zip
           MSBUILD_PATH: ${{ steps.setupmsbuild.outputs.msbuildPath }}
         # TODO: get version from tag
+        # TODO: get MSBuild path from above step
         run: |
           cd ~
           pwd
@@ -104,6 +105,7 @@ jobs:
           pwd
           cd "/c/Program Files/Microsoft Visual Studio/2022/Enterprise"
           pwd
+          cat ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj
           name="$(basename "$ZIP_FILE" ".zip")"
           version="2.4.1"
           "MSBuild.exe" ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj -p:SourceDir="$GITHUB_WORKSPACE/autopkg/Code" -p:OutputPath="~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg" -p:OutputName="$name" -p:ProductVersion="$version"

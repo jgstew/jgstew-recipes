@@ -28,12 +28,13 @@ Process:
     Arguments:
       template_file_path: .templates/projectname.wxs.mustache
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.wxs"
-      template_dictionary:
-        {
+      template_dictionary: {
           "version": "%version%",
           "NAME": "%NAME%",
-          "GUID_x64": "TODO_GUID_x64",
-          "GUID_x86": "TODO_GUID_x86",
-          "GUID_arm64": "TODO_GUID_arm64",
-          "GUID_arm": "TODO_GUID_arm",
+          "Manufacturer": "%NAME%",
+          # example: 8CFB9531-B959-4E1B-AA2E-4AF0FFCC4AF4
+          "GUID_x64": "3864F27C-F258-4195-8B6F-F93C5AA41A79",
+          "GUID_x86": "44AF44FF-7531-4951-9657-53BB7A4B5D04",
+          "GUID_arm64": "E78A87C5-E4CC-44FD-8A67-9ED5CDAE5C9F",
+          "GUID_arm": "E0EABEC5-0F7A-4163-8500-D05E8A34DAB9",
         }

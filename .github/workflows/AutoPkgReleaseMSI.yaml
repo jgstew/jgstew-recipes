@@ -98,7 +98,6 @@ jobs:
           MSBUILD_PATH: ${{ steps.setupmsbuild.outputs.msbuildPath }}
         # TODO: get version from tag
         # TODO: get MSBuild path from above step
-        # yamllint disable rule:indentation
         run: |
           cd ~
           pwd

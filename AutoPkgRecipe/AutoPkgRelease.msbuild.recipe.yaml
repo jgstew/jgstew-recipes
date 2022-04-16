@@ -28,6 +28,7 @@ Process:
     Arguments:
       template_file_path: .templates/projectname.wxs.mustache
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.wxs"
+      # yamllint disable rule:indentation
       template_dictionary: {
           "version": "%version%",
           "NAME": "%NAME%",

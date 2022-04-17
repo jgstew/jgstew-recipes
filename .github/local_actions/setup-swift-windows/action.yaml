@@ -17,19 +17,19 @@ runs:
       uses: actions/cache@v3
       id: cached-swift-installer
       with:
-        path: "${{ env.RUNNER_TEMP }}/swift-installer.exe"
+        path: "${{ github.RUNNER_TEMP }}/swift-installer.exe"
         key: "swift-installer-${{ runner.os }}-https://swift.org/builds/swift-${{ inputs.version }}-release/windows10/swift-${{ inputs.version }}-RELEASE/swift-${{ inputs.version }}-RELEASE-windows10.exe"
     - name: Download Swift
       if: steps.cached-swift-installer.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
-        If (test-path "${{ env.RUNNER_TEMP }}\swift-installer.exe") {
+        If (test-path "${{ github.RUNNER_TEMP }}\swift-installer.exe") {
         } else {
-          curl -o "swift-installer.exe" https://swift.org/builds/swift-${{ inputs.version }}-release/windows10/swift-${{ inputs.version }}-RELEASE/swift-${{ inputs.version }}-RELEASE-windows10.exe
+          curl -o "${{ github.RUNNER_TEMP }}\swift-installer.exe" https://swift.org/builds/swift-${{ inputs.version }}-release/windows10/swift-${{ inputs.version }}-RELEASE/swift-${{ inputs.version }}-RELEASE-windows10.exe
         }
     - name: Install Swift
       shell: pwsh
-      run: Start-Process -Wait -FilePath "${{ env.RUNNER_TEMP }}\swift-installer.exe" -ArgumentList ("/quiet", "/norestart")
+      run: Start-Process -Wait -FilePath "${{ github.RUNNER_TEMP }}\swift-installer.exe" -ArgumentList ("/quiet", "/norestart")
     - name: Set Environment Variables
       shell: pwsh
       run: |

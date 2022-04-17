@@ -3,7 +3,7 @@ description: Setup Swift environment in Windows Runner.
 
 inputs:
   version:
-    description: Version of Swift (e.g. `5.4.2`)
+    description: Version of Swift (e.g. `5.6.1`)
     required: true
 
 branding:
@@ -16,16 +16,17 @@ runs:
     - name: Download Cached Installer
       uses: actions/cache@v3
       id: cached-swift-installer
+      # https://download.swift.org/swift-${{ inputs.version }}-release/windows10/swift-${{ inputs.version }}-RELEASE/swift-${{ inputs.version }}-RELEASE-windows10.exe
       with:
         path: "${{ runner.temp }}/swift-installer.exe"
-        key: "swift-installer-${{ runner.os }}-https://swift.org/builds/swift-${{ inputs.version }}-release/windows10/swift-${{ inputs.version }}-RELEASE/swift-${{ inputs.version }}-RELEASE-windows10.exe"
+        key: "swift-installer-${{ runner.os }}-https://download.swift.org/swift-${{ inputs.version }}-release/windows10/swift-${{ inputs.version }}-RELEASE/swift-${{ inputs.version }}-RELEASE-windows10.exe"
     - name: Download Swift
       if: steps.cached-swift-installer.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
         If (test-path "${{ runner.temp }}\swift-installer.exe") {
         } else {
-          curl -o "${{ runner.temp }}\swift-installer.exe" https://swift.org/builds/swift-${{ inputs.version }}-release/windows10/swift-${{ inputs.version }}-RELEASE/swift-${{ inputs.version }}-RELEASE-windows10.exe
+          curl -o "${{ runner.temp }}\swift-installer.exe" https://download.swift.org/swift-${{ inputs.version }}-release/windows10/swift-${{ inputs.version }}-RELEASE/swift-${{ inputs.version }}-RELEASE-windows10.exe
         }
     - name: Install Swift
       shell: pwsh

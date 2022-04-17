@@ -42,8 +42,8 @@ jobs:
         uses: seanmiddleditch/gha-setup-vsdevenv@v4
 
       - name: Install Swift
-        # https://github.com/marketplace/actions/setup-swift-in-windows
-        uses: rinsuki/setup-swift-windows@0.1.1
+        # based upon https://github.com/marketplace/actions/setup-swift-in-windows
+        uses: .github/local_actions/setup-swift-windows.yaml
         with:
           version: "5.4.2"
 

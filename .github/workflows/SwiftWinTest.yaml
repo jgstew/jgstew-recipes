@@ -1,0 +1,38 @@
+---
+name: Test Swift on Windows
+
+on:
+  push:
+    paths:
+      - ".github/workflows/AutoPkgReleaseMSI.yaml"
+  pull_request:
+    paths:
+      - ".github/workflows/AutoPkgReleaseMSI.yaml"
+
+jobs:
+  SwiftWinTest:
+    runs-on: windows-latest
+    steps:
+      # only needed on self hosted windows runners:
+      - name: set powershell execution policy CurrentUser
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: powershell -command "Set-ExecutionPolicy -Force -ExecutionPolicy RemoteSigned -Scope CurrentUser"
+
+      - name: Add msbuild to PATH
+        # https://github.com/microsoft/setup-msbuild
+        if: runner.os == 'Windows'
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: create file
+        shell: bash
+        run: |
+          cat <<'EOFEOF' > Predicate.swift
+          #!/usr/bin/env swift
+          print("hello, world!")
+          EOFEOF
+
+      - uses: MaxDesiatov/swift-windows-action@v1
+        with:
+          swift-version: "5.6.1"
+          shell-action: swift build

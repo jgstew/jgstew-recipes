@@ -25,13 +25,10 @@ jobs:
         shell: cmd
         run: powershell -command "Set-ExecutionPolicy -Force -ExecutionPolicy RemoteSigned -Scope CurrentUser"
 
-      - name: Add msbuild to PATH
-        # https://github.com/microsoft/setup-msbuild
-        if: runner.os == 'Windows'
-        uses: microsoft/setup-msbuild@v1.1
-
-      - name: Set VS Dev Env Vars
-        uses: seanmiddleditch/gha-setup-vsdevenv@v4
+      # - name: Add msbuild to PATH
+      #   # https://github.com/microsoft/setup-msbuild
+      #   if: runner.os == 'Windows'
+      #   uses: microsoft/setup-msbuild@v1.1
 
       - name: create file
         shell: bash
@@ -41,7 +38,13 @@ jobs:
           print("hello, world!")
           EOFEOF
 
-      - uses: MaxDesiatov/swift-windows-action@v1
+      - name: Set VS Dev Env Vars
+        uses: seanmiddleditch/gha-setup-vsdevenv@v4
+
+      - name: Install Swift
+        uses: rinsuki/setup-swift-windows
         with:
-          swift-version: "5.6.1"
-          shell-action: swift build
+          version: "5.6.1"
+
+      - name: test script
+        run: swift Predicate.swift

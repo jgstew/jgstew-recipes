@@ -11,9 +11,11 @@ on:
   push:
     paths:
       - ".github/workflows/SwiftWinTest.yaml"
+      - ".github/local_actions/setup-swift-windows/action.yaml"
   pull_request:
     paths:
       - ".github/workflows/SwiftWinTest.yaml"
+      - ".github/local_actions/setup-swift-windows/action.yaml"
 
 jobs:
   SwiftWinTest:

@@ -54,12 +54,6 @@ jobs:
 
       - name: checkout this repo
         uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.8
-
       - name: checkout autopkg dev
         uses: actions/checkout@v3
         with:
@@ -67,10 +61,19 @@ jobs:
           path: autopkg
           ref: dev
 
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.8
+          cache: "pip"
+          cache-dependency-path: |
+            autopkg/requirements.txt
+            requirements.txt
+
       - name: Install AutoPkg Reqirements
         run: pip install --requirement autopkg/requirements.txt
-      - name: pip install recipe python dependancies
-        run: pip install chevron
+      - name: Install requirements
+        run: pip install --requirement requirements.txt
 
       - name: create empty config windows
         # https://stackoverflow.com/questions/57946173/github-actions-run-step-on-specific-os

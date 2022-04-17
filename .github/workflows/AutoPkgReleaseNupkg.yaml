@@ -35,20 +35,27 @@ jobs:
           echo ${{ secrets.GITHUB_TOKEN }} > ".autopkg_gh_token"
 
       - uses: actions/checkout@v3
+
+      - name: checkout autopkg dev
+        uses: actions/checkout@v3
+        with:
+          repository: autopkg/autopkg
+          path: autopkg
+          ref: dev
+
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: 3.8
+          cache-dependency-path: |
+            autopkg/requirements.txt
+            requirements.txt
 
-      # - name: Install requirements
-      #   run: pip install --requirement requirements.txt
-      - name: git clone autopkg, checkout dev
-        run: |
-          git clone https://github.com/autopkg/autopkg.git
-          cd autopkg
-          git checkout dev
       - name: Install AutoPkg Reqirements
         run: pip install --requirement autopkg/requirements.txt
+      - name: Install requirements
+        run: pip install --requirement requirements.txt
+
       - name: create empty config windows
         # https://stackoverflow.com/questions/57946173/github-actions-run-step-on-specific-os
         if: runner.os == 'Windows'

@@ -1,5 +1,11 @@
 ---
 name: Test Swift on Windows
+# Related:
+# - MaxDesiatov/swift-windows-action
+# - https://github.com/rinsuki/setup-swift-windows
+# - https://github.com/Didstopia/SwiftAction
+# - https://github.com/marketplace/actions/install-swift
+# - https://github.com/marketplace/actions/setup-swift-environment
 
 on:
   push:
@@ -23,6 +29,9 @@ jobs:
         # https://github.com/microsoft/setup-msbuild
         if: runner.os == 'Windows'
         uses: microsoft/setup-msbuild@v1.1
+
+      - name: Set VS Dev Env Vars
+        uses: seanmiddleditch/gha-setup-vsdevenv@v4
 
       - name: create file
         shell: bash

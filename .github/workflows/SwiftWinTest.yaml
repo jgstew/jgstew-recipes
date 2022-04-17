@@ -4,10 +4,10 @@ name: Test Swift on Windows
 on:
   push:
     paths:
-      - ".github/workflows/AutoPkgReleaseMSI.yaml"
+      - ".github/workflows/SwiftWinTest.yaml"
   pull_request:
     paths:
-      - ".github/workflows/AutoPkgReleaseMSI.yaml"
+      - ".github/workflows/SwiftWinTest.yaml"
 
 jobs:
   SwiftWinTest:

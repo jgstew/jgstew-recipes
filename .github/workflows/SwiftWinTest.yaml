@@ -43,7 +43,7 @@ jobs:
 
       - name: Install Swift
         # based upon https://github.com/marketplace/actions/setup-swift-in-windows
-        uses: .github/local_actions/setup-swift-windows
+        uses: ./.github/local_actions/setup-swift-windows
         with:
           version: "5.4.2"
 

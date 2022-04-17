@@ -40,6 +40,7 @@ jobs:
         run: |
           cat <<'EOFEOF' > Predicate.swift
           #!/usr/bin/env swift
+          import Foundation
           print("hello, world!")
           EOFEOF
 
@@ -53,4 +54,5 @@ jobs:
           version: "5.6.1"
 
       - name: test script
-        run: swift Predicate.swift
+        shell: cmd
+        run: swift Predicate.swift -sdk %SDKROOT% -I %SDKROOT%/usr/lib/swift -L %SDKROOT%/usr/lib/swift/windows

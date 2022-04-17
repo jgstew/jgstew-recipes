@@ -32,6 +32,8 @@ runs:
       shell: pwsh
       run: Start-Process -Wait -FilePath "${{ runner.temp }}\swift-installer.exe" -ArgumentList ("/quiet", "/norestart")
     - name: Set Environment Variables
+      # https://forums.swift.org/t/cannot-load-underlying-module-for-winsdk/40123
+      # https://forums.swift.org/t/missing-swift-standard-library-foundation/40538
       shell: pwsh
       run: |
         echo "SDKROOT=C:\Library\Developer\Platforms\Windows.platform\Developer\SDKs\Windows.sdk" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append

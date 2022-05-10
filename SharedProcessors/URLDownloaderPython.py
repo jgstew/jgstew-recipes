@@ -104,6 +104,11 @@ class URLDownloaderPython(URLDownloader):
             "required": False,
             "description": ("version of download"),
         },
+        "disable_ssl_validation": {
+            "required": False,
+            "default": False,
+            "description": "Disables SSL Validation. WARNING: dangerous!",
+        },
     }
     output_variables = {
         "pathname": {"description": "Path to the downloaded file."},
@@ -317,7 +322,13 @@ class URLDownloaderPython(URLDownloader):
         user_agent_value = self.env.get("User_Agent", None)
         if user_agent_value:
             req.add_header("User-Agent", user_agent_value)
-        response = urlopen(req, context=self.ssl_context_certifi())
+
+        ssl_context = self.ssl_context_certifi()
+        disable_ssl_validation = self.env.get("disable_ssl_validation", False)
+        if disable_ssl_validation:
+            ssl_context = self.ssl_context_ignore()
+
+        response = urlopen(req, context=ssl_context)
         response_headers = response.info()
 
         self.env["download_changed"] = self.download_changed(response_headers)

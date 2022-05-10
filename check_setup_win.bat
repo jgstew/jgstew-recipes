@@ -243,6 +243,10 @@ if errorlevel 0 (
 REM https://stackoverflow.com/a/334890/861745
 
 echo.
+echo update python ssl CA certs:
+pip install -U python-certifi-win32 certifi
+
+echo.
 echo besapi python module version:
 echo python -c "import besapi ; print(besapi.__version__)"
 python -c "import besapi ; print(besapi.__version__)"

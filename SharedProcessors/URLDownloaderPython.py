@@ -324,11 +324,13 @@ class URLDownloaderPython(URLDownloader):
             req.add_header("User-Agent", user_agent_value)
 
         ssl_context = self.ssl_context_certifi()
+        # ssl_context = ssl.create_default_context()
         disable_ssl_validation = self.env.get("disable_ssl_validation", False)
         if disable_ssl_validation:
             ssl_context = self.ssl_context_ignore()
 
-        response = urlopen(req, context=ssl_context)
+        # timeout of 2 hours
+        response = urlopen(req, context=ssl_context, timeout=7200)
         response_headers = response.info()
 
         self.env["download_changed"] = self.download_changed(response_headers)

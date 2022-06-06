@@ -6,4 +6,5 @@ generate_bes_from_template
 hachoir
 Pillow
 pre-commit
+signify
 validate_bes_xml

@@ -10,9 +10,6 @@ on:
     paths:
       - "Test-Recipes/AutopkgCore.test.recipe.yaml"
       - ".github/workflows/AutoPkgCoreProcessors.yaml"
-  schedule:
-    # run first day of every month:
-    - cron: "* * 1 * *"
 
 jobs:
   AutoPkgCoreTest:

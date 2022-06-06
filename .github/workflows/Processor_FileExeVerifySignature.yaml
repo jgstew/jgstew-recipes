@@ -12,9 +12,6 @@ on:
       - "SharedProcessors/FileExeVerifySignature.py"
       - "Test-Recipes/FileExeVerifySignature.test.recipe.yaml"
       - ".github/workflows/Processor_FileExeVerifySignature.yaml"
-  schedule:
-    # run first day of every month:
-    - cron: "* * 1 * *"
 
 jobs:
   ProcessorFileExeVerifySignature:

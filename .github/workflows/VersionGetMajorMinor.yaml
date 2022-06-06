@@ -12,9 +12,6 @@ on:
       - "SharedProcessors/VersionGetMajorMinor.py"
       - "Test-Recipes/VersionGetMajorMinor.test.recipe.yaml"
       - ".github/workflows/VersionGetMajorMinor.yaml"
-  schedule:
-    # run first day of every month:
-    - cron: "* * 1 * *"
 
 jobs:
   VersionGetMajorMinor:
@@ -61,4 +58,4 @@ jobs:
       - name: run recipe autopkg
         run: python autopkg/Code/autopkg run -vv Test-Recipes/VersionGetMajorMinor.test.recipe.yaml
 # Related:
-# - https://github.com/jgstew/bigfix-content/blob/master/.github/workflows/autopkg.yaml
+# - https://github.com/jgstew/bigfix-content/blob/master/.github/workflows/AutoPkgCoreProcessors.yaml

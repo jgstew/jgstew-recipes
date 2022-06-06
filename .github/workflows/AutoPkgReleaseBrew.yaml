@@ -14,9 +14,6 @@ on:
       - "AutoPkgRecipe/autopkg.rb.mustache"
       - "AutoPkgRecipe/AutoPkgRelease.brew.recipe.yaml"
       - "AutoPkgRecipe/AutoPkgReleasePkg.download.recipe.yaml"
-  schedule:
-    # run first day of every month:
-    - cron: "* * 1 * *"
 
 jobs:
   AutoPkgBrew:

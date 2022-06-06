@@ -26,9 +26,6 @@ on:
       - "_Shared/ui.wxs"
       - ".templates/projectname.wxs.mustache"
       - ".templates/projectname.wixproj.mustache"
-  schedule:
-    # run first day of every month:
-    - cron: "* * 1 * *"
 
 jobs:
   AutoPkgMSI:

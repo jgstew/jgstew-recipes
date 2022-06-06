@@ -17,7 +17,10 @@ class FileExeVerifySignature(Processor):  # pylint: disable=too-few-public-metho
     """
     validates windows binary signature and gets the signature date if available
 
+    This is a cross platform alternative to `autopkglib/SignToolVerifier`
+
     See example:
+    - https://github.com/autopkg/autopkg/blob/master/Code/autopkglib/SignToolVerifier.py
     - https://github.com/jgstew/tools/blob/master/Python/get_pefile_signify.py
     - https://stackoverflow.com/a/72520692/861745
     """

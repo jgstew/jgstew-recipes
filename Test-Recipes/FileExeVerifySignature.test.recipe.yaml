@@ -5,6 +5,7 @@ Input:
   NAME: FileExeVerifySignatureTest
 MinimumVersion: "2.3"
 # Related:
+# - https://github.com/autopkg/autopkg/blob/master/Code/autopkglib/SignToolVerifier.py
 # - https://github.com/jgstew/tools/blob/master/Python/get_pefile_signify.py
 # - https://stackoverflow.com/a/72520692/861745
 Process:

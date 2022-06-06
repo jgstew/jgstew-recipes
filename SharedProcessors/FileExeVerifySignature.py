@@ -28,14 +28,14 @@ class FileExeVerifySignature(Processor):  # pylint: disable=too-few-public-metho
     }
     output_variables = {
         "file_signature_date": {"description": "the base64 encoded string"},
-        "file_signature_valid": {"description": "the base64 encoded string"},
+        "file_signature_result": {"description": "the base64 encoded string"},
     }
 
     def main(self):
         """execution starts here"""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
         self.env["file_signature_date"] = ""
-        self.env["file_signature_valid"] = "UnknownError"
+        self.env["file_signature_result"] = "UnknownError"
         if file_pathname:
             with open(file_pathname, "rb") as file_io:
                 pefile = SignedPEFile(file_io)
@@ -54,16 +54,16 @@ class FileExeVerifySignature(Processor):  # pylint: disable=too-few-public-metho
                     # print(sig_result)
                     # print(sig_explain)
                     if str(sig_result) == "AuthenticodeVerificationResult.OK":
-                        self.env["file_signature_valid"] = True
+                        self.env["file_signature_result"] = "VALID"
                     elif str(sig_result) == "AuthenticodeVerificationResult.NOT_SIGNED":
-                        self.env["file_signature_valid"] = "NOT_SIGNED"
+                        self.env["file_signature_result"] = "NOT_SIGNED"
                     else:
-                        self.env["file_signature_valid"] = (
+                        self.env["file_signature_result"] = (
                             str(sig_result) + ":" + str(sig_explain)
                         )
                 except Exception as err:
                     print(err)
-                    self.env["file_signature_valid"] = "ERROR_NOT_VALID"
+                    self.env["file_signature_result"] = "ERROR_NOT_VALID"
 
 
 if __name__ == "__main__":

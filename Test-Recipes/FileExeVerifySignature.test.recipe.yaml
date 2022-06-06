@@ -4,16 +4,36 @@ Identifier: com.github.jgstew.test.FileExeVerifySignature
 Input:
   NAME: FileExeVerifySignatureTest
 MinimumVersion: "2.3"
+# Related:
+# - https://github.com/jgstew/tools/blob/master/Python/get_pefile_signify.py
+# - https://stackoverflow.com/a/72520692/861745
 Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
-  - Processor: com.github.jgstew.SharedProcessors/FileExeVerifySignature
-    Arguments:
-      file_pathname: 'C:\Windows\Explorer.exe'
   - Processor: URLDownloaderPython
     Arguments:
-      url: http://software.bigfix.com/download/redist/unzip-5.52.exe
+      # good signature example
+      url: https://raw.githubusercontent.com/ralphje/signify/master/tests/test_data/SoftwareUpdate.exe
       COMPUTE_HASHES: False
   - Processor: com.github.jgstew.SharedProcessors/FileExeVerifySignature
     Arguments:
       file_pathname: "%pathname%"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_signature_result%"
+      # assert `VALID` result
+      assert_string: "VALID"
+  - Processor: URLDownloaderPython
+    Arguments:
+      # bad / unsigned example
+      url: http://software.bigfix.com/download/redist/unzip-5.52.exe
+      filename: unzip.exe
+      COMPUTE_HASHES: False
+  - Processor: com.github.jgstew.SharedProcessors/FileExeVerifySignature
+    Arguments:
+      file_pathname: "%pathname%"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_signature_result%"
+      # assert `NOT_SIGNED` result
+      assert_string: "NOT_SIGNED"

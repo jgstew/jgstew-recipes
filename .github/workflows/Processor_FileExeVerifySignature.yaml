@@ -17,7 +17,7 @@ on:
     - cron: "* * 1 * *"
 
 jobs:
-  VersionGetMajorMinor:
+  ProcessorFileExeVerifySignature:
     strategy:
       matrix:
         # https://ncorti.com/blog/howto-github-actions-build-matrix

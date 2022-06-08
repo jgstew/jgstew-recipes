@@ -78,5 +78,8 @@ jobs:
         run: choco install autopkg -s "C:\Users\runneradmin\Library\AutoPkg\Cache\com.github.jgstew.nupkg.AutoPkg\nupkgs\" --no-progress --yes --force --force-dependencies
       - name: test autopkg chocolately install
         run: autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
+      - name: Get Choco log contents if failure occurs
+        if: ${{ failure() }}
+        run: cat C:\ProgramData\chocolatey\logs\chocolatey.log
 # Related:
 # - https://github.com/jgstew/bigfix-content/blob/master/.github/workflows/autopkg.yaml

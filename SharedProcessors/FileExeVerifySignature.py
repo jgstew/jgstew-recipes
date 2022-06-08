@@ -19,6 +19,8 @@ class FileExeVerifySignature(Processor):  # pylint: disable=too-few-public-metho
 
     This is a cross platform alternative to `autopkglib/SignToolVerifier`
 
+    Limitation - This should only work for EXE and DLL files (PE Files)
+
     Related:
 
     - https://github.com/jgstew/tools/blob/master/Python/get_pefile_signify.py

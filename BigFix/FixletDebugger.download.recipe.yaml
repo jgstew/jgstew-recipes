@@ -14,10 +14,13 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/VersionGetMajorMinor
     Arguments:
       separator_string: ""
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: https://software.bigfix.com/download/bes/%version_major_minor%/util/QNA%version_maximum%.zip
       download_version: "%version_maximum%"
+      download_missing_file: False
+      download_save_file: False
+      filename: "FixletDebugger.zip"
       COMPUTE_HASHES: True
   - Processor: com.github.jgstew.SharedProcessors/VersionGetMajorMinor
     Arguments:

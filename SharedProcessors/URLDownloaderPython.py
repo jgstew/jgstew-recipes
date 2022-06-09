@@ -109,6 +109,31 @@ class URLDownloaderPython(URLDownloader):
             "default": False,
             "description": "Disables SSL Validation. WARNING: dangerous!",
         },
+        "download_missing_file": {
+            "required": False,
+            "default": True,
+            "description": """
+            If the file is missing,
+             but the metadata is present that shows it is the same file,
+             skip download?
+            """,
+        },
+        "download_save_file": {
+            "required": False,
+            "default": True,
+            "description": """
+            Save download file?
+            If False, then only metadata will be saved, not the download file.
+            This will cause problems if the download file is required for future steps.
+            This is treated as True if `download_missing_file` is True
+             regardless of value supplied.
+            This is designed to be used in AWS Lambda or similar Docker use cases.
+            Only as much RAM as consumed by `chunksize`
+             within `download_and_hash()` plus overhead is requried
+             because the file is never fully read into memory and never written to disk
+             if this setting is used.
+            """,
+        },
     }
     output_variables = {
         "pathname": {"description": "Path to the downloaded file."},
@@ -149,10 +174,20 @@ class URLDownloaderPython(URLDownloader):
 
         if not previous_download_info:
             # no previous download info to check against
+            # could check against xattr values if supported?
             return True
 
         # store previous download info in case we don't download again
         self.env["download_info"] = previous_download_info
+
+        # always store last modified in case we don't download again
+        # this wouldn't get set if `download_version` is used for download detection
+        try:
+            self.env["last_modified"] = previous_download_info["http_headers"][
+                "Last-Modified"
+            ]
+        except KeyError:
+            pass
 
         self.output(
             "previous_download_info: \n{previous_download_info}\n".format(
@@ -167,9 +202,11 @@ class URLDownloaderPython(URLDownloader):
 
         # check that previous download exits:
         previous_download_path = self.env.get("pathname", None)
+        download_missing_file = self.env.get("download_missing_file", True)
         if not os.path.isfile(previous_download_path):
             # previous download doesn't exist!
-            return True
+            if download_missing_file:
+                return True
 
         download_version = self.env.get("download_version", None)
         # compare versions:
@@ -241,6 +278,8 @@ class URLDownloaderPython(URLDownloader):
         if header_matches == 0:
             return True
         # if all above pass, then return False:
+        # NOTE: this could think the download is unchanged when 1 header matches
+        #  but not all headers match
         return False
 
     def store_download_info_json(self, download_dictionary):
@@ -340,7 +379,8 @@ class URLDownloaderPython(URLDownloader):
             if file_save:
                 file_save.close()
             # Discard the temp file
-            self.clear_zero_file(file_save_path)
+            if file_save_path:
+                self.clear_zero_file(file_save_path)
             return None
 
         self.output("INFO: Downloading New File")
@@ -366,7 +406,8 @@ class URLDownloaderPython(URLDownloader):
 
         if self.env.get("download_changed", None):
             # Move the new temporary download file to the pathname
-            self.move_temp_file(file_save_path)
+            if file_save_path:
+                self.move_temp_file(file_save_path)
 
         download_dictionary["file_name"] = self.env.get("filename", "")
         download_dictionary["file_size"] = size
@@ -434,7 +475,10 @@ class URLDownloaderPython(URLDownloader):
         # Clear and initiazize data structures
         self.clear_vars()
 
-        # self.prefetch_filename()
+        # if download_missing_file is True, then download_save_file must be true
+        download_missing_file = self.env.get("download_missing_file", True)
+        if download_missing_file:
+            self.env["download_save_file"] = True
 
         # Ensure existence of necessary files, directories and paths
         filename = self.get_filename()
@@ -458,7 +502,11 @@ class URLDownloaderPython(URLDownloader):
         if self.env.get("CHECK_FILESIZE_ONLY", None):
             self.env["HEADERS_TO_TEST"] = ["Content-Length"]
 
-        pathname_temporary = self.create_temp_file(download_dir)
+        download_save_file = self.env.get("download_save_file", True)
+        pathname_temporary = None
+        # if download_save_file is false, then do not store the file being "downloaded"
+        if download_save_file:
+            pathname_temporary = self.create_temp_file(download_dir)
 
         # download file
         download_dictionary = self.download_and_hash(pathname_temporary)
@@ -470,7 +518,8 @@ class URLDownloaderPython(URLDownloader):
         )
 
         # clear temp file if 0 size
-        self.clear_zero_file(pathname_temporary)
+        if pathname_temporary:
+            self.clear_zero_file(pathname_temporary)
 
         if self.env.get("download_changed", None):
             # store download info for checking for existing download

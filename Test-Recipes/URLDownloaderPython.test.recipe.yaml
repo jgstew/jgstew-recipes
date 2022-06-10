@@ -5,19 +5,21 @@ Input:
   NAME: URLDownloaderPythonTest
 MinimumVersion: "2.3"
 Process:
-  # - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
-  #   Arguments:
-  #     url: https://software.bigfix.com/download/redist/unzip-6.0.exe
-  #     COMPUTE_HASHES: True
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       # https://letsencrypt.org/certificates/
       url: https://valid-isrgrootx1.letsencrypt.org/
       filename: test-lets1.html
       COMPUTE_HASHES: False
-  # - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
-  #   Arguments:
-  #     # https://letsencrypt.org/certificates/
-  #     url: https://valid-isrgrootx2.letsencrypt.org/
-  #     filename: test-lets2.html
-  #     COMPUTE_HASHES: False
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      # https://letsencrypt.org/certificates/
+      url: https://valid-isrgrootx2.letsencrypt.org/
+      filename: test-lets2.html
+      COMPUTE_HASHES: False
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://software.bigfix.com/download/redist/unzip-6.0.exe
+      filename: unzip.exe
+      download_missing_file: False
+      download_save_file: False

@@ -9,4 +9,4 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: com.github.jgstew.SharedProcessors/BESImport
     Arguments:
-      bes_file: "Test-Recipes/BESImportExampleFixlet.bes"
+      bes_file: "%RECIPE_DIR%/BESImportExampleFixlet.bes"

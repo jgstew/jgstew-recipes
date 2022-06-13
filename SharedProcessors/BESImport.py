@@ -80,12 +80,20 @@ class BESImport(Processor):
                 self.output(err, 0)
                 self.env["stop_processing_recipe"] = True
 
+    def get_bes_type(self, bes_file):
+        """Get type from bes xml file for bigfix content"""
+        with open(bes_file, "rb") as file_handle:
+            tree = lxml.etree.parse(file_handle)
+            # https://stackoverflow.com/a/3601919/861745
+            # get name of first child of BES
+            return str(tree.xpath("name(/BES/*[1])"))
+
     def get_bes_title(self, bes_file):
         """Get title from bes xml file for bigfix content"""
         with open(bes_file, "rb") as file_handle:
             tree = lxml.etree.parse(file_handle)
             self.env["bes_title"] = tree.xpath(
-                "/BES/Task/Title/text() | /BES/Task/Fixlet/text()"
+                "/BES/Task/Title/text() | /BES/Fixlet/Title/text()"
             )[0]
 
     def main(self):
@@ -103,6 +111,10 @@ class BESImport(Processor):
             self.output("ERROR: No besapi config loaded, use bescli to create one", 0)
             return None
 
+        bes_file_type = self.get_bes_type(bes_file)
+        bes_type_api = bes_file_type.lower()
+        bes_type_api_plural = bes_type_api + "s"
+        self.output(f"bes_type_api_plural: {bes_type_api_plural}", 3)
         self.get_bes_title(bes_file)
 
         bes_title = self.env.get("bes_title")
@@ -123,6 +135,7 @@ class BESImport(Processor):
 
         # print( bes_conn.get() )
 
+        # PUT is NOT tested, not fully working, and only handles Tasks, not Fixlets
         # PUT, update task
         if bes_taskid:
             self.output("Searching: '%s' for ID '%s'" % (bes_customsite, bes_taskid))
@@ -173,10 +186,10 @@ class BESImport(Processor):
         # POST, create task
         else:
             self.output("Searching: '%s' for '%s'" % (bes_customsite, bes_title))
-            tasks = bes_conn.get("tasks/custom/%s" % bes_customsite)
+            tasks = bes_conn.get("%s/custom/%s" % (bes_type_api_plural, bes_customsite))
 
-            # only print tasks if verbose=3
-            self.output(tasks, 3)
+            # only print tasks if verbose=4
+            self.output(tasks, 4)
 
             duplicate_task = False
             for task in tasks().iterchildren():
@@ -191,45 +204,75 @@ class BESImport(Processor):
 
             if not duplicate_task:
                 self.output(
-                    "Import(POST): '%s' to %s/api/tasks/custom/%s"
-                    % (bes_file, BES_ROOT_SERVER, bes_customsite)
+                    "Import(POST): '%s' to %s/api/%s/custom/%s"
+                    % (bes_file, BES_ROOT_SERVER, bes_type_api_plural, bes_customsite)
                 )
-                self.output(bes_conn.url("tasks/custom/%s" % bes_customsite))
+                self.output(
+                    bes_conn.url("%s/custom/%s" % (bes_type_api_plural, bes_customsite))
+                )
                 upload_result = None
 
-                # Upload task
+                # Upload task or fixlet
                 with open(bes_file, "rb") as file_handle:
                     upload_result = bes_conn.post(
-                        "tasks/custom/%s" % bes_customsite, file_handle
+                        "%s/custom/%s" % (bes_type_api_plural, bes_customsite),
+                        file_handle,
                     )
 
                 self.output(upload_result)
 
-                # Read and parse console return
-                self.env["bes_id"] = str(upload_result().Task.ID)
-                self.output(
-                    "Result (%s): [%s] %s - %s    "
-                    % (
-                        upload_result.request.status_code,
-                        upload_result().Task.ID,
-                        upload_result().Task.Name,
-                        upload_result().Task.get("LastModified"),
+                try:
+                    # for tasks:
+                    # Read and parse console return
+                    self.env["bes_id"] = str(upload_result().Task.ID)
+                    self.output(
+                        "Result (%s): [%s] %s - %s    "
+                        % (
+                            upload_result.request.status_code,
+                            upload_result().Task.ID,
+                            upload_result().Task.Name,
+                            upload_result().Task.get("LastModified"),
+                        )
                     )
-                )
 
-                # Create summary result data
-                self.env["bes_import_summary_result"] = {
-                    "summary_text": "The following tasks were imported into BigFix:",
-                    "report_fields": ["Task ID", "Task Name", "Site"],
-                    "data": {
-                        "Task ID": str(upload_result().Task.ID),
-                        "Task Name": str(upload_result().Task.Name),
-                        "Site": str(bes_customsite),
-                    },
-                }
+                    # Create summary result data
+                    self.env["bes_import_summary_result"] = {
+                        "summary_text": "The following tasks were imported into BigFix:",
+                        "report_fields": ["Task ID", "Task Name", "Site"],
+                        "data": {
+                            "Task ID": str(upload_result().Task.ID),
+                            "Task Name": str(upload_result().Task.Name),
+                            "Site": str(bes_customsite),
+                        },
+                    }
+                except AttributeError:
+                    # for fixlets:
+                    # Read and parse console return
+                    self.env["bes_id"] = str(upload_result().Fixlet.ID)
+                    self.output(
+                        "Result (%s): [%s] %s - %s    "
+                        % (
+                            upload_result.request.status_code,
+                            upload_result().Fixlet.ID,
+                            upload_result().Fixlet.Name,
+                            upload_result().Fixlet.get("LastModified"),
+                        )
+                    )
+
+                    # Create summary result data
+                    self.env["bes_import_summary_result"] = {
+                        "summary_text": "The following fixlets were imported into BigFix:",
+                        "report_fields": ["Fixlet ID", "Fixlet Name", "Site"],
+                        "data": {
+                            "Fixlet ID": str(upload_result().Fixlet.ID),
+                            "Fixlet Name": str(upload_result().Fixlet.Name),
+                            "Site": str(bes_customsite),
+                        },
+                    }
 
             else:
-                self.output("Duplicate task, skipping import.", 0)
+                # if nothing to import:
+                self.output(f"Duplicate {bes_type_api}, skipping import.", 0)
                 self.env["bes_id"] = 0
 
 

@@ -8,3 +8,5 @@ Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: com.github.jgstew.SharedProcessors/BESImport
+    Arguments:
+      bes_file: "Test-Recipes/BESImportExampleFixlet.bes"

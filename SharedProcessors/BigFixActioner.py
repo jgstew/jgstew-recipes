@@ -47,8 +47,8 @@ BES_SourcedFixletAction = """\
             <PostActionBehavior Behavior="Nothing"></PostActionBehavior>
             <IsOffer>true</IsOffer>
             <AnnounceOffer>false</AnnounceOffer>
-            <OfferCategory>AutoPkgTesting</OfferCategory>
-            <OfferDescriptionHTML><![CDATA[Offer to test AutoPkg created content]]></OfferDescriptionHTML>
+            <OfferCategory>Testing</OfferCategory>
+            <OfferDescriptionHTML><![CDATA[Offer to test automatically created content]]></OfferDescriptionHTML>
         </Settings>
     </SourcedFixletAction>
 </BES>

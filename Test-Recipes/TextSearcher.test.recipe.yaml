@@ -1,0 +1,16 @@
+---
+Description: Test FileTextSearcher Processor
+Identifier: com.github.jgstew.test.FileTextSearcher
+Input:
+  NAME: FileTextSearcherTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "Version 1.2.3 Product: ExampleName"
+      re_pattern: '(?i)version\s*(?P<version>\d+(\.\d+)+)\s*Product:\s*(?P<name>\w+)'
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version%"
+      assert_string: "1.2.3"

@@ -87,7 +87,7 @@ class TextSearcher(Processor):
         match = re_pattern.search(content)
 
         if not match:
-            raise ProcessorError(f"{NO_MATCH_MESSAGE}: {self.env['url']}")
+            raise ProcessorError(f"{NO_MATCH_MESSAGE}: {self.env['input_string']}")
 
         # return the last matched group with the dict of named groups
         return (match.group(match.lastindex or 0), match.groupdict())
@@ -95,7 +95,6 @@ class TextSearcher(Processor):
     def main(self):
         output_var_name = self.env["result_output_var_name"]
 
-        # Execute curl command and search in content
         content = self.env["input_string"]
         groupmatch, groupdict = self.re_search(content)
 

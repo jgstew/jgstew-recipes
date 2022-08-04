@@ -16,3 +16,15 @@ Process:
     Arguments:
       input_string: "%file_mime_type%"
       assert_string: "image/x-icon"
+  # - Processor: com.github.jgstew.SharedProcessors/FileImageResize
+  #   Arguments:
+  #     file_pathname: "%icon_file_output%"
+  #     file_path_save: "%RECIPE_CACHE_DIR%/%NAME%.png"
+  #     max_pixel_dim: 32
+  # - Processor: com.github.jgstew.SharedProcessors/FileGetMagicType
+  #   Arguments:
+  #     file_pathname: "%file_path_resized%"
+  # - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+  #   Arguments:
+  #     input_string: "%file_mime_type%"
+  #     assert_string: "image/png"

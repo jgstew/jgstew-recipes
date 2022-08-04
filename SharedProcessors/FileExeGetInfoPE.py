@@ -42,6 +42,16 @@ class FileExeGetInfoPE(Processor):  # pylint: disable=too-few-public-methods
             "required": False,
             "description": "Windows PE File to get the info from.",
         },
+        "custom_peinfo_index": {
+            "required": False,
+            "default": "FileVersion",
+            "description": "Windows PE File to get the info from.",
+        },
+        "custom_peinfo_output": {
+            "required": False,
+            "default": "version",
+            "description": "Windows PE File to get the info from.",
+        },
     }
     output_variables = {
         "file_peinfo_FileVersion": {"description": "FileVersion"},
@@ -57,8 +67,15 @@ class FileExeGetInfoPE(Processor):  # pylint: disable=too-few-public-methods
     def main(self):
         """execution starts here"""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
+        custom_peinfo_index = self.env.get("custom_peinfo_index", "FileVersion")
+        custom_peinfo_output = self.env.get("custom_peinfo_output", "version")
 
         pe_info_dict = dump_info_pefile(file_pathname)
+
+        try:
+            self.env[custom_peinfo_output] = pe_info_dict[custom_peinfo_index]
+        except KeyError:
+            self.output("Info: Missing " + custom_peinfo_index)
 
         try:
             self.env["file_peinfo_FileVersion"] = pe_info_dict["FileVersion"]

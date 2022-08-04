@@ -25,7 +25,7 @@ class FileExeGetIcon(Processor):  # pylint: disable=too-few-public-methods
             "description": "Windows PE File to get the icon from.",
         },
         "icon_file_output": {
-            "required": True,
+            "required": False,
             "description": "File to save the icon to.",
         },
         "icon_file_number": {
@@ -41,7 +41,17 @@ class FileExeGetIcon(Processor):  # pylint: disable=too-few-public-methods
     def main(self):
         """execution starts here"""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
+
+        # default to "%RECIPE_CACHE_DIR%/%NAME%.ico"
         icon_file_output = self.env.get("icon_file_output", None)
+        if not icon_file_output:
+            icon_file_output = (
+                self.env.get("RECIPE_CACHE_DIR", "")
+                + "/"
+                + self.env.get("NAME", "file")
+                + ".ico"
+            )
+            self.env["icon_file_output"] = icon_file_output
         icon_file_number = int(self.env.get("icon_file_number", 0))
 
         icoExtInst = icoextract.IconExtractor(file_pathname)

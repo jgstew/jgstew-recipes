@@ -8,7 +8,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/FileExeGetIcon
     Arguments:
       file_pathname: 'C:\Program Files\Microsoft VS Code\Code.exe'
-      icon_file_output: "%RECIPE_CACHE_DIR%/%NAME%.ico"
+      # icon_file_output: "%RECIPE_CACHE_DIR%/%NAME%.ico"
   - Processor: com.github.jgstew.SharedProcessors/FileGetMagicType
     Arguments:
       file_pathname: "%icon_file_output%"

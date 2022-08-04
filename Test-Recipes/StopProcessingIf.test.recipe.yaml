@@ -1,0 +1,16 @@
+---
+Description: Test StopProcessingIfDownloadUnchanged Processor
+Identifier: com.github.jgstew.test.StopProcessingIfDownloadUnchanged
+Input:
+  NAME: StopProcessingIfDownloadUnchangedTest
+  DisableRecipe: True
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/StopProcessingIfDownloadUnchanged
+    Arguments:
+      env_var_name: "DisableRecipe"
+      env_var_value_test: "True"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "This Should Never Run!"
+      assert_string: "This would fail if if it did run!"

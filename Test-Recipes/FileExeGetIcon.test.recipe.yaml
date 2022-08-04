@@ -1,0 +1,18 @@
+---
+Description: Test FileExeGetIcon Processor
+Identifier: com.github.jgstew.test.FileExeGetIcon
+Input:
+  NAME: FileExeGetIconTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/FileExeGetIcon
+    Arguments:
+      file_pathname: 'C:\Program Files\Microsoft VS Code\Code.exe'
+      icon_file_output: "%RECIPE_CACHE_DIR%/%NAME%.ico"
+  - Processor: com.github.jgstew.SharedProcessors/FileGetMagicType
+    Arguments:
+      file_pathname: "%icon_file_output%"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_mime_type%"
+      assert_string: "image/x-icon"

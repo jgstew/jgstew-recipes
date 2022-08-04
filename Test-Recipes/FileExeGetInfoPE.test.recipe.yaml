@@ -17,13 +17,17 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE
     Arguments:
       file_pathname: "%sevenzip_path%"
-# Example Output:
-#  'file_peinfo_CompanyName': 'Igor Pavlov',
-#  'file_peinfo_FileDescription': '7-Zip Console',
-#  'file_peinfo_FileVersion': '21.06',
-#  'file_peinfo_InternalName': '7z',
-#  'file_peinfo_LegalCopyright': 'Copyright (c) 1999-2021 Igor Pavlov',
-#  'file_peinfo_OriginalFilename': '7z.exe',
-#  'file_peinfo_ProductName': '7-Zip',
-#  'file_peinfo_ProductVersion': '21.06',
-#  'version': '21.06'
+  # Example Output:
+  #  'file_peinfo_CompanyName': 'Igor Pavlov',
+  #  'file_peinfo_FileDescription': '7-Zip Console',
+  #  'file_peinfo_FileVersion': '21.06',
+  #  'file_peinfo_InternalName': '7z',
+  #  'file_peinfo_LegalCopyright': 'Copyright (c) 1999-2021 Igor Pavlov',
+  #  'file_peinfo_OriginalFilename': '7z.exe',
+  #  'file_peinfo_ProductName': '7-Zip',
+  #  'file_peinfo_ProductVersion': '21.06',
+  #  'version': '21.06'
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_peinfo_ProductName%"
+      assert_string: "7-Zip"

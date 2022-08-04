@@ -42,8 +42,8 @@ class FileExeGetIcon(Processor):  # pylint: disable=too-few-public-methods
         """execution starts here"""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
 
-        # default to "%RECIPE_CACHE_DIR%/%NAME%.ico"
         icon_file_output = self.env.get("icon_file_output", None)
+        # default output to "%RECIPE_CACHE_DIR%/%NAME%.ico" if unset
         if not icon_file_output:
             icon_file_output = (
                 self.env.get("RECIPE_CACHE_DIR", "")

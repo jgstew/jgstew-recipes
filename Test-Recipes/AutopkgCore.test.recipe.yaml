@@ -39,3 +39,8 @@ Process:
     # https://github.com/autopkg/autopkg/blob/master/Code/autopkglib/PathDeleter.py
     Arguments:
       path_list: ["test_file.txt", "test_file_moved.txt"]
+  - Processor: GitHubReleasesInfoProvider
+    Arguments:
+      github_repo: audacity/audacity
+      asset_regex: .*64bit\.exe$
+      include_prereleases: False

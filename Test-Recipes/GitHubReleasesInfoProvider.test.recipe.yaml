@@ -1,0 +1,19 @@
+---
+Description: Test GitHubReleasesInfoProvider Processor
+# based upon https://github.com/autopkg/ahousseini-recipes/blob/master/Audacity/Audacity.download.recipe
+Identifier: com.github.jgstew.test.GitHubReleasesInfoProvider
+Input:
+  NAME: "Audacity"
+MinimumVersion: "2.3"
+Process:
+  # see: https://api.github.com/repos/audacity/audacity/releases/latest
+  - Processor: GitHubReleasesInfoProvider
+    Arguments:
+      github_repo: audacity/audacity
+      asset_regex: .*64bit\.exe$
+      include_prereleases: False
+  # - Processor: URLDownloaderPython
+  #   Arguments:
+  #     filename: audacity-win-64bit.exe
+  #     download_version: ""
+  - Processor: EndOfCheckPhase

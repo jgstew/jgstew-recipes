@@ -85,6 +85,6 @@ jobs:
         shell: bash
         run: cat AutopkgCore.test.recipe.yaml
       - name: run integration recipe created in action
-        run: python autopkg/Code/autopkg run -vv AutopkgCore.test.recipe.yaml
+        run: python autopkg/Code/autopkg run -vvvv AutopkgCore.test.recipe.yaml
 # Related:
 # - https://github.com/jgstew/bigfix-content/blob/master/.github/workflows/autopkg.yaml

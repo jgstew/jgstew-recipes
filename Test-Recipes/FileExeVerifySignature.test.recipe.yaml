@@ -19,6 +19,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/FileExeVerifySignature
     Arguments:
       file_pathname: "%pathname%"
+      file_signature_expected_serial_number: "12451790217711796967571790799059482938"
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_signature_result%"
@@ -34,6 +35,7 @@ Process:
     Arguments:
       file_pathname: "%pathname%"
       file_signature_throw_error: False
+      file_signature_expected_serial_number: ""
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_signature_result%"

@@ -51,7 +51,12 @@ class FileExeVerifySignature(Processor):  # pylint: disable=too-few-public-metho
         "file_signature_throw_error": {
             "required": False,
             "default": True,
-            "description": "file path to verify",
+            "description": "Throw error on failed verification?",
+        },
+        "file_signature_expected_serial_number": {
+            "required": False,
+            "default": "",
+            "description": "Expected serial number for the signature",
         },
     }
     output_variables = {
@@ -71,6 +76,9 @@ class FileExeVerifySignature(Processor):  # pylint: disable=too-few-public-metho
         """execution starts here"""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
         file_signature_throw_error = self.env.get("file_signature_throw_error", True)
+        file_signature_expected_serial_number = str(
+            self.env.get("file_signature_expected_serial_number", "")
+        ).strip()
         self.env["file_signature_date"] = ""
         self.env["file_signature_datetime"] = ""
         self.env["file_signature_more_info"] = ""
@@ -79,15 +87,19 @@ class FileExeVerifySignature(Processor):  # pylint: disable=too-few-public-metho
         self.env["file_signature_valid"] = False
         self.env["file_signature_program_name"] = ""
         self.env["file_signature_serial_number"] = ""
+        file_signature_serial_number = ""
         # https://github.com/jgstew/tools/blob/master/Python/get_pefile_signify_time.py
         if file_pathname:
             with open(file_pathname, "rb") as file_io:
                 pefile = SignedPEFile(file_io)
 
                 try:
-                    self.env["file_signature_serial_number"] = str(
+                    file_signature_serial_number = str(
                         list(pefile.signed_datas)[0].signer_infos[0].serial_number
-                    )
+                    ).strip()
+                    self.env[
+                        "file_signature_serial_number"
+                    ] = file_signature_serial_number
                 except Exception:
                     # print(err)
                     pass
@@ -142,9 +154,22 @@ class FileExeVerifySignature(Processor):  # pylint: disable=too-few-public-metho
                     and self.env["file_signature_valid"] is False
                 ):
                     self.env["stop_processing_recipe"] = True
-                    raise ProcessorError(
-                        f"ERROR: Signature Invalid! for `{file_pathname}`"
-                    )
+                    raise ProcessorError(f"Signature Invalid! for `{file_pathname}`")
+
+                # check for matching serial
+                if file_signature_expected_serial_number != "":
+                    if file_signature_serial_number == "":
+                        raise ProcessorError(
+                            f"Expected Serial `{file_signature_expected_serial_number}` provided, but no serial number found!"
+                        )
+                    else:
+                        if (
+                            file_signature_expected_serial_number
+                            != file_signature_serial_number
+                        ):
+                            raise ProcessorError(
+                                f"Expected Serial `{file_signature_expected_serial_number}` but does not match found serial `{file_signature_serial_number}`"
+                            )
 
 
 if __name__ == "__main__":

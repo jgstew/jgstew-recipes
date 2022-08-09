@@ -1,0 +1,16 @@
+---
+Description: Test FileMsiGetProperty Processor
+Identifier: com.github.jgstew.test.FileMsiGetProperty
+Input:
+  NAME: FileMsiGetPropertyTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://github.com/PowerShell/PowerShell/releases/download/v7.2.5/PowerShell-7.2.5-win-x64.msi
+      filename: test.msi
+      COMPUTE_HASHES: False
+      verbose: 1
+  - Processor: com.github.jgstew.SharedProcessors/FileMsiGetInfoOLE
+    Arguments:
+      verbose: 3

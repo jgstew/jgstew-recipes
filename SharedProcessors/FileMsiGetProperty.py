@@ -49,22 +49,42 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
         "custom_msi_property": {
             "required": False,
             "default": "ProductVersion",
-            "description": "Custom index to retrieve, defaults to `author`",
+            "description": "Custom index to retrieve, defaults to `ProductVersion`",
         },
         "custom_msi_output": {
             "required": False,
             "default": "version",
-            "description": "Variable to store the output to, defaults to `file_ole_author`",
+            "description": "Variable to store the output to, defaults to `version`",
+        },
+        "custom_msi_property2": {
+            "required": False,
+            "description": "Custom index to retrieve.",
+        },
+        "custom_msi_output2": {
+            "required": False,
+            "description": "Variable to store the output to.",
         },
     }
     output_variables = {
-        "file_msiinfo_ProductVersion": {
-            "description": "ProductVersion",
+        "file_msi_ProductVersion": {
+            "description": "The MSI version, should match DisplayVersion in windows registry",
             "msi_property": "ProductVersion",
         },
-        "file_msiinfo_Manufacturer": {
-            "description": "Manufacturer",
+        "file_msi_Manufacturer": {
+            "description": "The MSI vendor or Manufacturer",
             "msi_property": "Manufacturer",
+        },
+        "file_msi_ProductName": {
+            "description": "The MSI ProductName, should match DisplayName in windows registry",
+            "msi_property": "ProductName",
+        },
+        "file_msi_ProductCode": {
+            "description": "The MSI ProductCode, should be a GUID.",
+            "msi_property": "ProductCode",
+        },
+        "file_msi_UpgradeCode": {
+            "description": "The MSI UpgradeCode, should be a GUID.",
+            "msi_property": "UpgradeCode",
         },
     }
 
@@ -78,7 +98,11 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
         view.Execute(None)
         result = view.Fetch()
         # self.output(dir(result), 3)
-        return result.GetString(1)
+        try:
+            return result.GetString(1)
+        except AttributeError:
+            self.output(f"ERROR: {msi_property} not found!")
+            return ""
 
     def get_properties_msilib(self):
         """for windows"""
@@ -200,11 +224,20 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
         msi_path = self.env.get("msi_path", self.env.get("pathname", None))
         custom_msi_property = self.env.get("custom_msi_property", None)
         custom_msi_output = self.env.get("custom_msi_output", None)
+        custom_msi_property2 = self.env.get("custom_msi_property2", None)
+        custom_msi_output2 = self.env.get("custom_msi_output2", None)
 
-        self.output_variables[custom_msi_output] = {
-            "description": "custom msi property",
-            "msi_property": custom_msi_property,
-        }
+        if custom_msi_output and custom_msi_property:
+            self.output_variables[custom_msi_output] = {
+                "description": "custom msi property",
+                "msi_property": custom_msi_property,
+            }
+
+        if custom_msi_output2 and custom_msi_property2:
+            self.output_variables[custom_msi_output2] = {
+                "description": "custom msi property",
+                "msi_property": custom_msi_property2,
+            }
 
         self.verify_file_exists(msi_path)
         self.output(f"getting properties from MSI file: {msi_path}")

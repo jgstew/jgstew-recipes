@@ -7,7 +7,7 @@ MinimumVersion: "2.3"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
-      url: https://github.com/PowerShell/PowerShell/releases/download/v7.2.5/PowerShell-7.2.5-win-x64.msi
+      url: https://download.microsoft.com/download/A/2/7/A271EFFF-6C9E-4E9B-9259-0F72FDEDD153/ProjectMyScreenApp.msi
       filename: test.msi
       COMPUTE_HASHES: False
       verbose: 1

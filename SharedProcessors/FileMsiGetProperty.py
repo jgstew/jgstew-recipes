@@ -11,7 +11,7 @@ try:
     import msilib
 except ImportError:
     # this is expected on non-windows!
-    pass
+    msilib = None
 
 from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,

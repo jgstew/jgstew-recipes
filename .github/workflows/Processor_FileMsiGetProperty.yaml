@@ -71,6 +71,8 @@ jobs:
           sudo apt-get install msitools -y
       - name: install msiinfo MacOS
         if: runner.os == 'macOS'
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: 1
         run: |
           brew install msitools
       - name: run recipe autopkg

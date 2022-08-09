@@ -89,8 +89,8 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
                 self.env[key] = self.get_property_msi_msilib(
                     msi_path, value["msi_property"]
                 )
-            except Exception as err:
-                self.output(err, 0)
+            except KeyError as err:
+                self.output(f"dictionary key missing {err} for entry `{key}`", 4)
 
     def verify_file_exists(self, file_path, raise_error=True):
         """verify file exists, raise error if not"""
@@ -158,8 +158,8 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
         - https://github.com/autopkg/hansen-m-recipes/blob/master/SharedProcessors/MSIInfoVersionProvider.py
         """
         msi_path = self.env.get("msi_path", self.env.get("pathname", None))
-        custom_msi_property = self.env.get("custom_msi_property", None)
-        custom_msi_output = self.env.get("custom_msi_output", None)
+        # custom_msi_property = self.env.get("custom_msi_property", None)
+        # custom_msi_output = self.env.get("custom_msi_output", None)
 
         msiinfo_path = self.get_msiinfo_path()
 
@@ -180,12 +180,20 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
 
         self.output(f"Raw msiinfo output:\n{msiinfo_output}", 5)
 
-        self.get_property_msiinfo_output(
-            msiinfo_output, custom_msi_property, custom_msi_output
-        )
-        self.get_property_msiinfo_output(
-            msiinfo_output, "ProductVersion", "file_msiinfo_ProductVersion"
-        )
+        # self.get_property_msiinfo_output(
+        #     msiinfo_output, custom_msi_property, custom_msi_output
+        # )
+        # self.get_property_msiinfo_output(
+        #     msiinfo_output, "ProductVersion", "file_msiinfo_ProductVersion"
+        # )
+
+        for key, value in self.output_variables.items():
+            try:
+                self.get_property_msiinfo_output(
+                    msiinfo_output, value["msi_property"], key
+                )
+            except KeyError as err:
+                self.output(f"dictionary key missing {err} for entry `{key}`", 4)
 
     def main(self):
         """execution starts here"""
@@ -210,8 +218,6 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
                 3,
             )
             self.get_properties_msiinfo()
-
-        self.output("TODO: implement on non-windows!", 0)
 
 
 if __name__ == "__main__":

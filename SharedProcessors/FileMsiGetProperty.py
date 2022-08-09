@@ -256,6 +256,8 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
             )
             self.get_properties_msiinfo()
 
+        # consider adding LaunchCondition and CheckBox and CustomAction table queries
+
 
 if __name__ == "__main__":
     PROCESSOR = FileMsiGetProperty()

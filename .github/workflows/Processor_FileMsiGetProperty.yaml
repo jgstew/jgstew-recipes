@@ -72,8 +72,8 @@ jobs:
       - name: install msiinfo MacOS
         if: runner.os == 'macOS'
         run: |
-          sudo brew install msitools
+          brew install msitools
       - name: run recipe autopkg
-        run: python autopkg/Code/autopkg run -vvv Test-Recipes/FileMsiGetProperty.test.recipe.yaml
+        run: python autopkg/Code/autopkg run -vv Test-Recipes/FileMsiGetProperty.test.recipe.yaml
 # Related:
 # - https://github.com/jgstew/bigfix-content/blob/master/.github/workflows/AutoPkgCoreProcessors.yaml

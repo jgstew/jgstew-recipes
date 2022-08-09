@@ -42,6 +42,16 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
             "required": False,
             "description": "Path to the msiinfo binary. Not used on Windows.",
         },
+        "custom_msi_property": {
+            "required": False,
+            "default": "ProductVersion",
+            "description": "Custom index to retrieve, defaults to `author`",
+        },
+        "custom_msi_output": {
+            "required": False,
+            "default": "version",
+            "description": "Variable to store the output to, defaults to `file_ole_author`",
+        },
     }
     output_variables = {
         "file_msiinfo_ProductVersion": {"description": "ProductVersion"},
@@ -62,9 +72,15 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
     def get_property_msilib(self):
         """for windows"""
         msi_path = self.env.get("msi_path", self.env.get("pathname", None))
+        custom_msi_property = self.env.get("custom_msi_property", None)
+        custom_msi_output = self.env.get("custom_msi_output", None)
 
         self.env["file_msiinfo_ProductVersion"] = self.get_property_msi(
             msi_path, "ProductVersion"
+        )
+
+        self.env[custom_msi_output] = self.get_property_msi(
+            msi_path, custom_msi_property
         )
 
     def main(self):

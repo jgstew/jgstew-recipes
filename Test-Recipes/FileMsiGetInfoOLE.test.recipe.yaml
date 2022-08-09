@@ -1,8 +1,8 @@
 ---
-Description: Test FileMsiGetProperty Processor
-Identifier: com.github.jgstew.test.FileMsiGetProperty
+Description: Test FileMsiGetInfoOLE Processor
+Identifier: com.github.jgstew.test.FileMsiGetInfoOLE
 Input:
-  NAME: FileMsiGetPropertyTest
+  NAME: FileMsiGetInfoOLETest
 MinimumVersion: "2.3"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython

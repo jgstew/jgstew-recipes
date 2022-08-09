@@ -13,4 +13,4 @@ Process:
       verbose: 1
   - Processor: com.github.jgstew.SharedProcessors/FileMsiGetInfoOLE
     Arguments:
-      verbose: 3
+      verbose: 2

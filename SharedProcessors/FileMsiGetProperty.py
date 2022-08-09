@@ -58,7 +58,14 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
         },
     }
     output_variables = {
-        "file_msiinfo_ProductVersion": {"description": "ProductVersion"},
+        "file_msiinfo_ProductVersion": {
+            "description": "ProductVersion",
+            "msi_property": "ProductVersion",
+        },
+        "file_msiinfo_Manufacturer": {
+            "description": "Manufacturer",
+            "msi_property": "Manufacturer",
+        },
     }
 
     def get_property_msi_msilib(self, path, msi_property):
@@ -76,16 +83,14 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
     def get_properties_msilib(self):
         """for windows"""
         msi_path = self.env.get("msi_path", self.env.get("pathname", None))
-        custom_msi_property = self.env.get("custom_msi_property", None)
-        custom_msi_output = self.env.get("custom_msi_output", None)
 
-        self.env["file_msiinfo_ProductVersion"] = self.get_property_msi_msilib(
-            msi_path, "ProductVersion"
-        )
-
-        self.env[custom_msi_output] = self.get_property_msi_msilib(
-            msi_path, custom_msi_property
-        )
+        for key, value in self.output_variables.items():
+            try:
+                self.env[key] = self.get_property_msi_msilib(
+                    msi_path, value["msi_property"]
+                )
+            except Exception as err:
+                self.output(err, 0)
 
     def verify_file_exists(self, file_path, raise_error=True):
         """verify file exists, raise error if not"""
@@ -167,13 +172,13 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
                 """
             )
 
-        self.output(msiinfo_path)
+        self.output(f"Info: using msiinfo found here: `{msiinfo_path}`", 3)
 
         cmd = [msiinfo_path, "export", msi_path, "Property"]
 
         msiinfo_output = subprocess.check_output(cmd)
 
-        self.output(msiinfo_output, 3)
+        self.output(f"Raw msiinfo output:\n{msiinfo_output}", 5)
 
         self.get_property_msiinfo_output(
             msiinfo_output, custom_msi_property, custom_msi_output
@@ -185,8 +190,16 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
     def main(self):
         """execution starts here"""
         msi_path = self.env.get("msi_path", self.env.get("pathname", None))
+        custom_msi_property = self.env.get("custom_msi_property", None)
+        custom_msi_output = self.env.get("custom_msi_output", None)
+
+        self.output_variables[custom_msi_output] = {
+            "description": "custom msi property",
+            "msi_property": custom_msi_property,
+        }
+
         self.verify_file_exists(msi_path)
-        self.output(msi_path)
+        self.output(f"getting properties from MSI file: {msi_path}")
 
         if msilib:
             self.output("Info: `msilib` found! Must be running on Windows.", 3)

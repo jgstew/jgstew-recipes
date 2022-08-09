@@ -57,6 +57,9 @@ class WinGetPropertyMSI(Processor):  # pylint: disable=too-few-public-methods
 
     def main(self):
         """execution starts here"""
+        self.output(
+            "INFO: Consider using the new and improved `FileMsiGetProperty` processor instead!"
+        )
 
         if not msilib:
             self.output("WARNING: This does not work on non-Windows", 0)

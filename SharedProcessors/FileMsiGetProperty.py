@@ -171,7 +171,11 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
                 msi_property_value = line.split("\t")[1].strip("\r")
                 break
 
-        self.output(f"msi_property_value found: {msi_property_value}")
+        if msi_property_value == "":
+            self.output(f"ERROR: {msi_property} not found!")
+        else:
+            self.output(f"MSI Property `{msi_property}` found: `{msi_property_value}`")
+
         self.env[output_variable] = msi_property_value
         return msi_property_value
 

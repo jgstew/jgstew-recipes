@@ -101,7 +101,7 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
         try:
             return result.GetString(1)
         except AttributeError:
-            self.output(f"ERROR: {msi_property} not found!")
+            self.output(f"ERROR: MSI Property `{msi_property}` not found!")
             return ""
 
     def get_properties_msilib(self):
@@ -172,7 +172,7 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
                 break
 
         if msi_property_value == "":
-            self.output(f"ERROR: {msi_property} not found!")
+            self.output(f"ERROR: MSI Property `{msi_property}` not found!")
         else:
             self.output(f"MSI Property `{msi_property}` found: `{msi_property_value}`")
 

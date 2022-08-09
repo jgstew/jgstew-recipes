@@ -5,6 +5,7 @@ See docstring for FileMsiGetProperty class
 
 import errno
 import os
+import subprocess
 
 try:
     import msilib
@@ -130,15 +131,30 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
 
         return msiinfo_path
 
+    def get_property_msiinfo_output(
+        self, msiinfo_output, msi_property, output_variable
+    ):
+        """parse property from msiinfo output"""
+        msi_property_value = ""
+
+        for line in msiinfo_output.decode().split("\n"):
+            if line.startswith(msi_property):
+                msi_property_value = line.split("\t")[1].strip("\r")
+                break
+
+        self.output(f"msi_property_value found: {msi_property_value}")
+        self.env[output_variable] = msi_property_value
+        return msi_property_value
+
     def get_properties_msiinfo(self):
         """for non-windows
 
         based upon:
         - https://github.com/autopkg/hansen-m-recipes/blob/master/SharedProcessors/MSIInfoVersionProvider.py
         """
-        # msi_path = self.env.get("msi_path", self.env.get("pathname", None))
-        # custom_msi_property = self.env.get("custom_msi_property", None)
-        # custom_msi_output = self.env.get("custom_msi_output", None)
+        msi_path = self.env.get("msi_path", self.env.get("pathname", None))
+        custom_msi_property = self.env.get("custom_msi_property", None)
+        custom_msi_output = self.env.get("custom_msi_output", None)
 
         msiinfo_path = self.get_msiinfo_path()
 
@@ -152,6 +168,19 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
             )
 
         self.output(msiinfo_path)
+
+        cmd = [msiinfo_path, "export", msi_path, "Property"]
+
+        msiinfo_output = subprocess.check_output(cmd)
+
+        self.output(msiinfo_output, 3)
+
+        self.get_property_msiinfo_output(
+            msiinfo_output, custom_msi_property, custom_msi_output
+        )
+        self.get_property_msiinfo_output(
+            msiinfo_output, "ProductVersion", "file_msiinfo_ProductVersion"
+        )
 
     def main(self):
         """execution starts here"""

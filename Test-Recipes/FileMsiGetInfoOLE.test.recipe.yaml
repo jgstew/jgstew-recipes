@@ -18,3 +18,8 @@ Process:
     Arguments:
       input_string: "%file_ole_author%"
       assert_string: "Microsoft Corporation"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      # SourceReleaseDate from test.msi above, from FileMsiGetInfoOLE Processor
+      input_string: "%SourceReleaseDate%"
+      assert_string: "2022-06-15"

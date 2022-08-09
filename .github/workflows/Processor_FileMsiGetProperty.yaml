@@ -32,10 +32,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.9
 
-      - name: Install requirements
-        run: pip install --requirement requirements.txt
+      # - name: Install requirements
+      #   run: pip install --requirement requirements.txt
 
       - name: checkout autopkg dev
         uses: actions/checkout@v3

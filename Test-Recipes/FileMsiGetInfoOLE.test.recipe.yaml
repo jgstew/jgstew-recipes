@@ -13,4 +13,8 @@ Process:
       verbose: 1
   - Processor: com.github.jgstew.SharedProcessors/FileMsiGetInfoOLE
     Arguments:
-      verbose: 2
+      verbose: 3
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_ole_author%"
+      assert_string: "Microsoft Corporation"

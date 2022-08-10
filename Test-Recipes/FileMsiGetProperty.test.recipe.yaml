@@ -20,3 +20,8 @@ Process:
     Arguments:
       input_string: "%file_msi_Manufacturer%"
       assert_string: "Microsoft Corporation"
+  # TextSearcher in this context is like an AssertInputContainsMatch / RegEx validation.
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%version%"
+      re_pattern: '(\d+(\.\d+)+)'

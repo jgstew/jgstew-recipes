@@ -1,0 +1,13 @@
+---
+Description: Test AutoPkgCacheCleanup Processor
+Identifier: com.github.jgstew.test.AutoPkgCacheCleanup
+Input:
+  NAME: AutoPkgCacheCleanupTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/AutoPkgCacheCleanup
+    Arguments:
+      cleanup_max_age_days: 30
+      cleanup_min_size_mb: 2
+      cleanup_empty_files: True
+      cleanup_tmp_files: True

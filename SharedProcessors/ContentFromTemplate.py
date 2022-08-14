@@ -59,9 +59,6 @@ class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
         },
     }
     output_variables = {
-        "content_string": {
-            "description": ("The content output from mustache template")
-        },
         "content_file_pathname": {
             "description": ("The path of the file saved containing the content_string")
         },
@@ -155,6 +152,11 @@ class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
             if validate_bes_xml:
                 if content_file_pathname.endswith(".bes"):
                     self.validate_file(content_file_pathname)
+
+        self.output(
+            f"File Content String that was written to `{content_file_pathname}`\n{content_string}",
+            4,
+        )
 
 
 if __name__ == "__main__":

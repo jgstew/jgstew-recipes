@@ -60,8 +60,6 @@ jobs:
         run: |
           mkdir -p ~/Library/AutoPkg/Cache/com.github.test/downloads
           touch ~/Library/AutoPkg/Cache/com.github.test/downloads/testfile.txt
-          echo "test" > ~/Library/AutoPkg/Cache/com.github.test/downloads/tmpabcd
-          touch -m -d "2012-10-19 12:12:12.000000000 +0530" ~/Library/AutoPkg/Cache/com.github.test/downloads/tmpabcd
       - name: run recipe autopkg
         run: python autopkg/Code/autopkg run -vv Test-Recipes/AutoPkgCacheCleanup.test.recipe.yaml
 # Related:

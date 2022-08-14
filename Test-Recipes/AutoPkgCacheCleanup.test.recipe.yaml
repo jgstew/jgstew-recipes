@@ -9,6 +9,10 @@ Process:
     Arguments:
       pathname: "%RECIPE_CACHE_DIR%/downloads/testfile.txt"
       touch_create_folders: True
+  - Processor: com.github.jgstew.SharedProcessors/FileTouch
+    Arguments:
+      pathname: "%RECIPE_CACHE_DIR%/downloads/tmpabcde"
+      touch_create_folders: True
   # https://github.com/jgstew/jgstew-recipes/blob/main/SharedProcessors/AutoPkgCacheCleanup.py
   - Processor: com.github.jgstew.SharedProcessors/AutoPkgCacheCleanup
     Arguments:
@@ -16,3 +20,7 @@ Process:
       cleanup_min_size_mb: 2
       cleanup_empty_files: True
       cleanup_tmp_files: True
+  # - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+  #   Arguments:
+  #     input_string: "%num_files_deleted%"
+  #     re_pattern: '(\d+)'

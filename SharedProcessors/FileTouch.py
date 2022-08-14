@@ -4,6 +4,8 @@
 #
 """See docstring for FileTouch class"""
 
+import datetime
+import os
 import pathlib
 
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
@@ -25,6 +27,11 @@ class FileTouch(Processor):  # pylint: disable=invalid-name
             "default": False,
             "description": "Create missing folders in path? Default: False",
         },
+        "touch_time_offset_days": {
+            "required": False,
+            "default": 0,
+            "description": "Create missing folders in path? Default: 0",
+        },
     }
     output_variables = {
         "touch_result": {"description": ("The result")},
@@ -35,6 +42,7 @@ class FileTouch(Processor):  # pylint: disable=invalid-name
         """Execution starts here"""
         pathname = self.env.get("pathname", None)
         touch_create_folders = bool(self.env.get("touch_create_folders", False))
+        touch_time_offset_days = int(self.env.get("touch_time_offset_days", 0))
 
         file_pathlib = pathlib.Path(pathname)
         if touch_create_folders and not file_pathlib.parent.exists():
@@ -44,6 +52,15 @@ class FileTouch(Processor):  # pylint: disable=invalid-name
         file_pathlib.touch()
 
         self.env["touch_result"] = "Success"
+
+        if touch_time_offset_days != 0:
+            new_mtime = datetime.datetime.today() + datetime.timedelta(
+                days=touch_time_offset_days
+            )
+            os.utime(
+                file_pathlib.absolute(), (new_mtime.timestamp(), new_mtime.timestamp())
+            )
+            self.env["touch_result"] = "file modification time adjusted"
 
 
 if __name__ == "__main__":

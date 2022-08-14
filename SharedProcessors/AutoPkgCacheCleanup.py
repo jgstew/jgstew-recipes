@@ -18,17 +18,12 @@ from autopkglib import (  # pylint: disable=import-error,wrong-import-position,u
 __all__ = ["AutoPkgCacheCleanup"]
 
 
-def get_file_max_time(file_path):
-    return datetime.datetime.fromtimestamp(
-        max(
-            file_path.stat().st_mtime,
-            file_path.stat().st_ctime,
-        )
-    )
+def get_file_mtime(file_path):
+    return datetime.datetime.fromtimestamp(file_path.stat().st_mtime)
 
 
 def get_file_age(file_path):
-    return datetime.datetime.today() - get_file_max_time(file_path)
+    return datetime.datetime.today() - get_file_mtime(file_path)
 
 
 class AutoPkgCacheCleanup(Processor):  # pylint: disable=invalid-name

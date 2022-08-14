@@ -5,14 +5,17 @@ Input:
   NAME: AutoPkgCacheCleanupTest
 MinimumVersion: "2.3"
 Process:
+  # create empty test file for later cleanup:
   - Processor: com.github.jgstew.SharedProcessors/FileTouch
     Arguments:
       pathname: "%RECIPE_CACHE_DIR%/downloads/testfile.txt"
       touch_create_folders: True
+  # set age on a tmp file for later cleanup:
   - Processor: com.github.jgstew.SharedProcessors/FileTouch
     Arguments:
       pathname: "%RECIPE_CACHE_DIR%/downloads/tmpabcde"
       touch_create_folders: True
+      touch_time_offset_days: -40
   # https://github.com/jgstew/jgstew-recipes/blob/main/SharedProcessors/AutoPkgCacheCleanup.py
   - Processor: com.github.jgstew.SharedProcessors/AutoPkgCacheCleanup
     Arguments:

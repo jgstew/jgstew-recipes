@@ -37,3 +37,7 @@ Process:
           "DisplayName": "Test Mustache Partials",
           "Description": "Test for chevron use of partials in mustache templates",
         }
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%content_string%"
+      assert_string: "This is from the DescriptionIcon.mustache file"

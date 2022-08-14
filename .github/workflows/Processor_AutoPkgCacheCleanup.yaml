@@ -58,7 +58,7 @@ jobs:
       - name: Set up old files
         shell: bash
         run: |
-          mkdir ~/Library/AutoPkg/Cache/com.github.test/downloads
+          mkdir --parents ~/Library/AutoPkg/Cache/com.github.test/downloads
           touch ~/Library/AutoPkg/Cache/com.github.test/downloads/testfile.txt
           echo "test" > ~/Library/AutoPkg/Cache/com.github.test/downloads/tmpabcd
       - name: run recipe autopkg

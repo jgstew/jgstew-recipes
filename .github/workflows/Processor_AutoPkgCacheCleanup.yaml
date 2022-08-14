@@ -36,11 +36,12 @@ jobs:
 
       - name: Install requirements
         run: pip install --requirement requirements.txt
-      - name: git clone autopkg, checkout dev
-        run: |
-          git clone https://github.com/autopkg/autopkg.git
-          cd autopkg
-          git checkout dev
+      - name: checkout autopkg dev
+        uses: actions/checkout@v3
+        with:
+          repository: autopkg/autopkg
+          path: autopkg
+          ref: dev
       - name: Install AutoPkg Reqirements
         run: pip install --requirement autopkg/requirements.txt
       - name: create empty config windows

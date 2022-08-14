@@ -32,10 +32,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.9
 
-      - name: Install requirements
-        run: pip install --requirement requirements.txt
+      # the processors being tested don't need these:
+      # - name: Install requirements
+      #   run: pip install --requirement requirements.txt
       - name: checkout autopkg dev
         uses: actions/checkout@v3
         with:
@@ -43,7 +44,7 @@ jobs:
           path: autopkg
           ref: dev
       - name: Install AutoPkg Reqirements
-        run: pip install --requirement autopkg/requirements.txt
+        run: pip install --requirement autopkg/gh_actions_requirements.txt
       - name: create empty config windows
         # https://stackoverflow.com/questions/57946173/github-actions-run-step-on-specific-os
         if: runner.os == 'Windows'

@@ -8,6 +8,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/FileTouch
     Arguments:
       pathname: "%RECIPE_CACHE_DIR%/downloads/testfile.txt"
+      touch_create_folders: True
   # https://github.com/jgstew/jgstew-recipes/blob/main/SharedProcessors/AutoPkgCacheCleanup.py
   - Processor: com.github.jgstew.SharedProcessors/AutoPkgCacheCleanup
     Arguments:

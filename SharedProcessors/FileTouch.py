@@ -20,11 +20,11 @@ class FileTouch(Processor):  # pylint: disable=invalid-name
     description = __doc__
     input_variables = {
         "pathname": {"required": True, "description": "file to update"},
-        # "mod_time_offset_days": {
-        #     "required": False,
-        #     "default": 0,
-        #     "description": "number of days in the past to alter the mod time of the file",
-        # },
+        "touch_create_folders": {
+            "required": False,
+            "default": False,
+            "description": "Create missing folders in path? Default: False",
+        },
     }
     output_variables = {
         "touch_result": {"description": ("The result")},
@@ -34,10 +34,16 @@ class FileTouch(Processor):  # pylint: disable=invalid-name
     def main(self):
         """Execution starts here"""
         pathname = self.env.get("pathname", None)
+        touch_create_folders = bool(self.env.get("touch_create_folders", False))
 
         file_pathlib = pathlib.Path(pathname)
-        file_pathlib.parent.mkdir(parents=True, exist_ok=True)
+        if touch_create_folders and not file_pathlib.parent.exists():
+            file_pathlib.parent.mkdir(parents=True, exist_ok=True)
+
+        # will create empty file or update timestamp of existing file
         file_pathlib.touch()
+
+        self.env["touch_result"] = "Success"
 
 
 if __name__ == "__main__":

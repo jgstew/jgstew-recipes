@@ -38,10 +38,11 @@ jobs:
           ref: dev
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3
           cache: "pip"
+          # following should be any requirements files used later:
           cache-dependency-path: |
             autopkg/gh_actions_requirements.txt
 

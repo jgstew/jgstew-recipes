@@ -51,6 +51,11 @@ class AutoPkgCacheCleanup(Processor):  # pylint: disable=invalid-name
             "default": True,
             "description": "Delete tmp files older than `cleanup_max_age_days` days? Default `True`",
         },
+        "cleanup_cache_all": {
+            "required": False,
+            "default": False,
+            "description": "Cleanup cache for all recipes? Default `False`",
+        },
     }
     output_variables = {
         "num_files_deleted": {"description": ("The number of files deleted")},
@@ -65,17 +70,23 @@ class AutoPkgCacheCleanup(Processor):  # pylint: disable=invalid-name
 
         cleanup_max_age_days = int(self.env.get("cleanup_max_age_days", 30))
         cleanup_min_size = int(self.env.get("cleanup_min_size_mb", 2)) * 1024 * 1024
-        cleanup_empty_files = self.env.get("cleanup_empty_files", True)
-        cleanup_tmp_files = self.env.get("cleanup_tmp_files", True)
+        cleanup_empty_files = bool(self.env.get("cleanup_empty_files", True))
+        cleanup_tmp_files = bool(self.env.get("cleanup_tmp_files", True))
+        cleanup_cache_all = bool(self.env.get("cleanup_cache_all", True))
         RECIPE_CACHE_DIR = self.env.get("RECIPE_CACHE_DIR", None)
         num_files_deleted = 0
         total_cache_size = 0
 
-        path_cache = pathlib.Path(RECIPE_CACHE_DIR).parent
+        path_cache = pathlib.Path(RECIPE_CACHE_DIR)
+        file_cache_pattern = "downloads/*"
+
+        if cleanup_cache_all:
+            path_cache = pathlib.Path(RECIPE_CACHE_DIR).parent
+            file_cache_pattern = "*/downloads/*"
 
         self.output(path_cache.absolute(), 3)
 
-        for file_path in path_cache.glob("*/downloads/*"):
+        for file_path in path_cache.glob(file_cache_pattern):
             file_size = file_path.stat().st_size
             total_cache_size = total_cache_size + file_size
             file_age_days = get_file_age(file_path).days

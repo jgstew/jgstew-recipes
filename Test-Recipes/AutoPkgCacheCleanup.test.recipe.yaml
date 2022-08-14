@@ -5,6 +5,7 @@ Input:
   NAME: AutoPkgCacheCleanupTest
 MinimumVersion: "2.3"
 Process:
+  # https://github.com/jgstew/jgstew-recipes/blob/main/SharedProcessors/AutoPkgCacheCleanup.py
   - Processor: com.github.jgstew.SharedProcessors/AutoPkgCacheCleanup
     Arguments:
       cleanup_max_age_days: 30

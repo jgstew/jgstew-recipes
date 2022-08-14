@@ -61,6 +61,7 @@ jobs:
         run: |
           mkdir -p ~/Library/AutoPkg/Cache/com.github.test/downloads
           touch ~/Library/AutoPkg/Cache/com.github.test/downloads/testfile.txt
+          mkdir -p ~/Library/AutoPkg/Cache/com.github.jgstew.test.AutoPkgCacheCleanup/downloads
           echo "test" > ~/Library/AutoPkg/Cache/com.github.jgstew.test.AutoPkgCacheCleanup/downloads/tmpabcde
       - name: run recipe autopkg
         run: python autopkg/Code/autopkg run -vv Test-Recipes/AutoPkgCacheCleanup.test.recipe.yaml

@@ -27,7 +27,15 @@ jobs:
         shell: cmd
         run: powershell -command "Set-ExecutionPolicy -Force -ExecutionPolicy RemoteSigned -Scope CurrentUser"
 
-      - uses: actions/checkout@v2
+      - name: checkout this repo
+        uses: actions/checkout@v3
+
+      - name: checkout autopkg dev
+        uses: actions/checkout@v3
+        with:
+          repository: autopkg/autopkg
+          path: autopkg
+          ref: dev
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -40,12 +48,7 @@ jobs:
       # the processors being tested don't need these:
       # - name: Install requirements
       #   run: pip install --requirement requirements.txt
-      - name: checkout autopkg dev
-        uses: actions/checkout@v3
-        with:
-          repository: autopkg/autopkg
-          path: autopkg
-          ref: dev
+
       - name: Install AutoPkg Reqirements
         run: pip install --requirement autopkg/gh_actions_requirements.txt
       - name: create empty config windows

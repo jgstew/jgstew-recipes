@@ -84,21 +84,22 @@ class AutoPkgCacheCleanup(Processor):  # pylint: disable=invalid-name
                 # delete empty files:
                 file_path.unlink(missing_ok=True)
                 num_files_deleted = num_files_deleted + 1
-
-            if file_age_days > cleanup_max_age_days:
-                # example tmp filename: tmpadsflsdf
-                if (
-                    cleanup_tmp_files
-                    and file_path.name.startswith("tmp")
-                    and "." not in file_path.name
-                ):
-                    # delete old tmp files:
-                    file_path.unlink(missing_ok=True)
-                    num_files_deleted = num_files_deleted + 1
-                if file_size > cleanup_min_size:
-                    # delete old files:
-                    file_path.unlink(missing_ok=True)
-                    num_files_deleted = num_files_deleted + 1
+            else:
+                if file_age_days > cleanup_max_age_days:
+                    # example tmp filename: tmpadsflsdf
+                    if (
+                        cleanup_tmp_files
+                        and file_path.name.startswith("tmp")
+                        and "." not in file_path.name
+                    ):
+                        # delete old tmp files:
+                        file_path.unlink(missing_ok=True)
+                        num_files_deleted = num_files_deleted + 1
+                    else:
+                        if file_size > cleanup_min_size:
+                            # delete old files:
+                            file_path.unlink(missing_ok=True)
+                            num_files_deleted = num_files_deleted + 1
 
         self.env["num_files_deleted"] = num_files_deleted
         self.env["total_cache_size_gb"] = round(

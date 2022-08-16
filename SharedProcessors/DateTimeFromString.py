@@ -5,7 +5,7 @@
 #
 """See docstring for DateTimeFromString class"""
 
-from datetime import datetime
+import datetime
 
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
@@ -16,7 +16,12 @@ __all__ = ["DateTimeFromString"]
 
 
 class DateTimeFromString(Processor):  # pylint: disable=invalid-name
-    """Takes a datetime string and converts it"""
+    """Takes a datetime string, parses it using `strptime`
+     and converts it to a new string using `strftime`
+
+    See Example Test Recipe here:
+    - https://github.com/jgstew/jgstew-recipes/blob/main/Test-Recipes/DateTimeFromString.test.recipe.yaml
+    """
 
     description = __doc__
     input_variables = {
@@ -54,13 +59,19 @@ class DateTimeFromString(Processor):  # pylint: disable=invalid-name
         datetime_strptime = self.env.get("datetime_strptime", "")
         datetime_strftime = self.env.get("datetime_strftime", "")
 
-        result = datetime.strptime(datetime_string, datetime_strptime).strftime(
-            datetime_strftime
-        )
+        result = datetime.datetime.strptime(
+            datetime_string, datetime_strptime
+        ).strftime(datetime_strftime)
 
         self.env["datetime_parsed_name"] = datetime_parsed_name
         self.env[datetime_parsed_name] = result
         self.env["datetime_parsed"] = result
+
+        # add custom output variable definition:
+        if datetime_parsed_name and result:
+            self.output_variables[datetime_parsed_name] = {
+                "description": "custom datetime output",
+            }
 
 
 if __name__ == "__main__":

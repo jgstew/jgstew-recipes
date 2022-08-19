@@ -7,13 +7,27 @@
 #
 """See docstring for TemplateDictionaryAppendInput class"""
 
-
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
 )
 
 __all__ = ["TemplateDictionaryAppendInput"]
+
+DEFAULT_input_keys_array = [
+    "DisplayName",
+    "64BitOnly",
+    "32BitOnly",
+    "VendorFolder",
+    "cmd_args",
+    "exe_file",
+    "PublicDesktopShortcutFile",
+    "cpe_product",
+    "cpe_vendor",
+    "cpe",
+    "content_id_vendor",
+    "content_id_product",
+]
 
 
 class TemplateDictionaryAppendInput(Processor):  # pylint: disable=invalid-name
@@ -28,20 +42,7 @@ class TemplateDictionaryAppendInput(Processor):  # pylint: disable=invalid-name
         },
         "input_keys_array": {
             "required": False,
-            "default": [
-                "DisplayName",
-                "64BitOnly",
-                "32BitOnly",
-                "VendorFolder",
-                "cmd_args",
-                "exe_file",
-                "PublicDesktopShortcutFile",
-                "cpe_product",
-                "cpe_vendor",
-                "cpe",
-                "content_id_vendor",
-                "content_id_product",
-            ],
+            "default": DEFAULT_input_keys_array,
             "description": "the input env keys to append",
         },
         "input_keys_prefix": {
@@ -62,8 +63,17 @@ class TemplateDictionaryAppendInput(Processor):  # pylint: disable=invalid-name
         # get the current dictionary
         dictionary_name = self.env.get("dictionary_name", "template_dictionary")
         dictionary_to_append = self.env.get(dictionary_name, {})
-        input_keys_array = self.env.get("input_keys_array", [])
         input_keys_prefix = str(self.env.get("input_keys_prefix", "Template_"))
+        input_keys_array = self.env.get("input_keys_array", DEFAULT_input_keys_array)
+
+        if not isinstance(input_keys_array, (list, tuple)):
+            self.output(
+                f"""
+WARNING: input_keys_array was not a list, setting default value:
+{DEFAULT_input_keys_array}
+                """
+            )
+            input_keys_array = DEFAULT_input_keys_array
 
         self.output(f"dictionary_to_append: {dictionary_to_append}", 2)
 

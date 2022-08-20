@@ -125,6 +125,9 @@ class FileTextSearcher(SharedUtilityMethods):  # pylint: disable=too-few-public-
 
         if file_search_results_var != "":
             self.env[file_search_results_var] = results
+            self.output_variables[file_search_results_var] = {
+                "description": "the custom output"
+            }
 
         if output_file_path != "":
             self.output(f" write output to file {output_file_path}")

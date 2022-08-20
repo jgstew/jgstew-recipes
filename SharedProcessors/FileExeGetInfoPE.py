@@ -75,7 +75,7 @@ class FileExeGetInfoPE(Processor):  # pylint: disable=too-few-public-methods
         self.output(f"Info: full pe_info: {pe_info_dict}", 4)
 
         try:
-            self.env[custom_peinfo_output] = pe_info_dict[custom_peinfo_index]
+            self.env[custom_peinfo_output] = pe_info_dict[custom_peinfo_index].strip()
             self.output_variables[custom_peinfo_output] = {
                 "description": f"custom {custom_peinfo_index} output"
             }
@@ -84,49 +84,57 @@ class FileExeGetInfoPE(Processor):  # pylint: disable=too-few-public-methods
             self.env[custom_peinfo_output] = ""
 
         try:
-            self.env["file_peinfo_FileVersion"] = pe_info_dict["FileVersion"]
+            self.env["file_peinfo_FileVersion"] = pe_info_dict["FileVersion"].strip()
         except KeyError:
             self.output("Info: Missing FileVersion")
             self.env["file_peinfo_FileVersion"] = ""
 
         try:
-            self.env["file_peinfo_ProductVersion"] = pe_info_dict["ProductVersion"]
+            self.env["file_peinfo_ProductVersion"] = pe_info_dict[
+                "ProductVersion"
+            ].strip()
         except KeyError:
             self.output("Info: Missing ProductVersion")
             self.env["file_peinfo_ProductVersion"] = ""
 
         try:
-            self.env["file_peinfo_ProductName"] = pe_info_dict["ProductName"]
+            self.env["file_peinfo_ProductName"] = pe_info_dict["ProductName"].strip()
         except KeyError:
             self.output("Info: Missing ProductName")
             self.env["file_peinfo_ProductName"] = ""
 
         try:
-            self.env["file_peinfo_CompanyName"] = pe_info_dict["CompanyName"]
+            self.env["file_peinfo_CompanyName"] = pe_info_dict["CompanyName"].strip()
         except KeyError:
             self.output("Info: Missing CompanyName")
             self.env["file_peinfo_CompanyName"] = ""
 
         try:
-            self.env["file_peinfo_FileDescription"] = pe_info_dict["FileDescription"]
+            self.env["file_peinfo_FileDescription"] = pe_info_dict[
+                "FileDescription"
+            ].strip()
         except KeyError:
             self.output("Info: Missing FileDescription")
             self.env["file_peinfo_FileDescription"] = ""
 
         try:
-            self.env["file_peinfo_InternalName"] = pe_info_dict["InternalName"]
+            self.env["file_peinfo_InternalName"] = pe_info_dict["InternalName"].strip()
         except KeyError:
             self.output("Info: Missing InternalName")
             self.env["file_peinfo_InternalName"] = ""
 
         try:
-            self.env["file_peinfo_OriginalFilename"] = pe_info_dict["OriginalFilename"]
+            self.env["file_peinfo_OriginalFilename"] = pe_info_dict[
+                "OriginalFilename"
+            ].strip()
         except KeyError:
             self.output("Info: Missing OriginalFilename")
             self.env["file_peinfo_OriginalFilename"] = ""
 
         try:
-            self.env["file_peinfo_LegalCopyright"] = pe_info_dict["LegalCopyright"]
+            self.env["file_peinfo_LegalCopyright"] = pe_info_dict[
+                "LegalCopyright"
+            ].strip()
         except KeyError:
             self.output("Info: Missing LegalCopyright")
             self.env["file_peinfo_LegalCopyright"] = ""

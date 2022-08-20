@@ -1,0 +1,20 @@
+---
+Description: Downloads the latest version of Adobe Remote Update Manager
+# based upon https://github.com/autopkg/moofit-recipes/blob/master/Adobe/RemoteUpdateManager.download.recipe
+Identifier: com.github.jgstew.download.AdobeRemoteUpdateManager
+Input:
+  NAME: "AdobeRemoteUpdateManager"
+  # TYPE must be `dmg` or `zip`
+  TYPE: "zip"
+  # ARCH must be `Win` or `WinARM64` or `MacIntel` or `AppleSilicon`
+  ARCH: Win
+MinimumVersion: "2.3"
+Process:
+  - Processor: URLDownloaderPython
+    Arguments:
+      # Example URLs:
+      # - https://deploymenttools.acp.adobeoobe.com/RUM/Win/RemoteUpdateManager.zip
+      # - https://deploymenttools.acp.adobeoobe.com/RUM/WinARM64/RemoteUpdateManager.zip
+      # - https://deploymenttools.acp.adobeoobe.com/RUM/%ARCH%/RemoteUpdateManager.dmg
+      url: https://deploymenttools.acp.adobeoobe.com/RUM/%ARCH%/RemoteUpdateManager.%TYPE%
+  - Processor: EndOfCheckPhase

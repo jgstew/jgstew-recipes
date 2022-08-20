@@ -76,6 +76,9 @@ class FileExeGetInfoPE(Processor):  # pylint: disable=too-few-public-methods
 
         try:
             self.env[custom_peinfo_output] = pe_info_dict[custom_peinfo_index]
+            self.output_variables[custom_peinfo_output] = {
+                "description": f"custom {custom_peinfo_index} output"
+            }
         except KeyError:
             self.output(f"Info: Missing {custom_peinfo_index}")
             self.env[custom_peinfo_output] = ""

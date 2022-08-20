@@ -58,6 +58,11 @@ class FileExeVerifySignature(Processor):  # pylint: disable=too-few-public-metho
             "default": "",
             "description": "Expected serial number for the signature",
         },
+        "file_sig_date_custom_output": {
+            "required": False,
+            "default": "SourceReleaseDate",
+            "description": "custom variable to store file_signature_date",
+        },
     }
     output_variables = {
         "file_signature_date": {"description": "The date of the signature"},
@@ -76,6 +81,9 @@ class FileExeVerifySignature(Processor):  # pylint: disable=too-few-public-metho
         """execution starts here"""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
         file_signature_throw_error = self.env.get("file_signature_throw_error", True)
+        file_sig_date_custom_output = str(
+            self.env.get("file_sig_date_custom_output", "SourceReleaseDate")
+        ).strip()
         file_signature_expected_serial_number = str(
             self.env.get("file_signature_expected_serial_number", "")
         ).strip()
@@ -114,6 +122,12 @@ class FileExeVerifySignature(Processor):  # pylint: disable=too-few-public-metho
                     self.env["file_signature_date"] = str(
                         signing_time.strftime("%Y-%m-%d")
                     )
+                    self.env[file_sig_date_custom_output] = str(
+                        signing_time.strftime("%Y-%m-%d")
+                    )
+                    self.output_variables[file_sig_date_custom_output] = {
+                        "description": "custom variable to store file_signature_date",
+                    }
                 except Exception:
                     # print(err)
                     pass

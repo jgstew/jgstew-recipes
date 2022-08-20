@@ -27,6 +27,7 @@ DEFAULT_input_keys_array = [
     "cpe",
     "content_id_vendor",
     "content_id_product",
+    "SourceReleaseDate",
 ]
 
 

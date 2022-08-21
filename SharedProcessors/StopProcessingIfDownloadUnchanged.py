@@ -43,14 +43,15 @@ class StopProcessingIfDownloadUnchanged(Processor):  # pylint: disable=invalid-n
     def main(self):
         """Execution starts here"""
         env_var_value_case_insensitive = self.env.get("env_var_value_case_insensitive")
-        # print(env_var_value_case_insensitive)
-        env_var_value_test = self.env.get("env_var_value_test")
-        # print(env_var_value_test)
-        env_var_value_real = self.env.get(self.env.get("env_var_name"))
-        # print(env_var_value_real)
+
+        env_var_value_test = str(self.env.get("env_var_value_test"))
+
+        env_var_value_real = str(self.env.get(self.env.get("env_var_name"), ""))
+        self.output(f"Real Value: {env_var_value_real}")
+
         if env_var_value_case_insensitive:
-            env_var_value_test = str(env_var_value_test).upper()
-            env_var_value_real = str(env_var_value_real).upper()
+            env_var_value_test = env_var_value_test.upper()
+            env_var_value_real = env_var_value_real.upper()
 
         if env_var_value_test in env_var_value_real:
             self.output("Stopping Processing", 0)

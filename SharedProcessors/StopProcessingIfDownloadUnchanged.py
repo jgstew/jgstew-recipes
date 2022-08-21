@@ -32,6 +32,11 @@ class StopProcessingIfDownloadUnchanged(Processor):  # pylint: disable=invalid-n
             "required": False,
             "default": True,
         },
+        "bypass_stop_processing_if": {
+            "description": ("always bypass this processor and continue processing?"),
+            "required": False,
+            "default": False,
+        },
     }
     output_variables = {
         "stop_processing_recipe": {
@@ -42,7 +47,10 @@ class StopProcessingIfDownloadUnchanged(Processor):  # pylint: disable=invalid-n
 
     def main(self):
         """Execution starts here"""
-        env_var_value_case_insensitive = self.env.get("env_var_value_case_insensitive")
+        env_var_value_case_insensitive = bool(
+            self.env.get("env_var_value_case_insensitive")
+        )
+        bypass_stop_processing_if = bool(self.env.get("bypass_stop_processing_if"))
 
         env_var_value_test = str(self.env.get("env_var_value_test"))
 
@@ -53,7 +61,7 @@ class StopProcessingIfDownloadUnchanged(Processor):  # pylint: disable=invalid-n
             env_var_value_test = env_var_value_test.upper()
             env_var_value_real = env_var_value_real.upper()
 
-        if env_var_value_test in env_var_value_real:
+        if env_var_value_test in env_var_value_real and not bypass_stop_processing_if:
             self.output("Stopping Processing", 0)
             self.env["stop_processing_recipe"] = True
         else:

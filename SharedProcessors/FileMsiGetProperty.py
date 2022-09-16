@@ -147,7 +147,11 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
         msiinfo_path_input = self.env.get("msiinfo_path", None)
         msiinfo_path = None
 
-        path_array = ["/usr/bin/msiinfo", "/usr/local/bin/msiinfo"]
+        path_array = [
+            "/usr/bin/msiinfo",
+            "/usr/local/bin/msiinfo",
+            "/opt/homebrew/bin/msiinfo",
+        ]
         if msiinfo_path_input:
             path_array.append(msiinfo_path_input)
             # put provided path first

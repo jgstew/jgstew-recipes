@@ -1,0 +1,54 @@
+---
+Description: Test FileEncodingConvert
+Identifier: com.github.jgstew.test.FileEncodingConvert
+Input:
+  # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"
+  NAME: FileEncodingConvert
+  # DisplayName: The start of the DisplayName key in the Windows Registry, Example: "DB Browser for SQLite"
+  DisplayName: Alienware Digital Delivery
+MinimumVersion: "2.3"
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+
+  - Processor: URLDownloaderPython
+    Arguments:
+      # url: http://ftp.dell.com/catalog/CatalogPC.cab
+      url: https://downloads.dell.com/catalog/catalogpc.cab
+      # download_version: "%version%"
+      COMPUTE_HASHES: True
+  - Processor: EndOfCheckPhase
+
+  # extract
+  - Processor: com.github.jgstew.SharedProcessors/FileGetExecutable
+    Arguments:
+      path_array:
+        [
+          "/Program Files/7-Zip/7z.exe",
+          "/Program Files (x86)/7-Zip/7z.exe",
+          "/usr/local/bin/7z",
+        ]
+  - Processor: com.github.hansen-m.SharedProcessors/WinInstallerExtractor
+    Arguments:
+      extract_dir: "tmp"
+
+  - Processor: com.github.jgstew.SharedProcessors/FileEncodingConvert
+    Arguments:
+      input_file_path: "%RECIPE_CACHE_DIR%/tmp/CatalogPC.xml"
+      output_file_path: "%RECIPE_CACHE_DIR%/tmp/CatalogPC_converted.xml"
+  # THE FOLLOWING DOESN'T WORK:
+
+  # find download url part:
+  - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
+    Arguments:
+      first_result_only: True
+      search_path: "%RECIPE_CACHE_DIR%/tmp/CatalogPC_converted.xml"
+      # output_variable: "file_search_results"
+      file_search_results_var: "url_part"
+      search_pattern: "(Dell-Alienware-Digital-Delivery-Application)"
+      search_extension: ".xml"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%url_part%"
+      assert_string: "Dell-Alienware-Digital-Delivery-Application"

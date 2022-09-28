@@ -21,6 +21,13 @@ Process:
     Arguments:
       first_result_only: True
       file_search_results_var: "file_search_results_var"
+
+  # validate above result
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_search_results_var%"
+      assert_string: "Audacity"
+
   - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
     Arguments:
       first_result_only: True

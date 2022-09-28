@@ -3,10 +3,10 @@ Description: Downloads the latest version of Audacity for Windows
 # based upon https://github.com/autopkg/ahousseini-recipes/blob/master/Audacity/Audacity.download.recipe
 Identifier: com.github.jgstew.download.Audacity-Win
 Input:
-  NAME: "Audacity"
+  NAME: Audacity
   # TYPE must be `exe` or `zip`
   TYPE: "exe"
-MinimumVersion: '2.3'
+MinimumVersion: "2.3"
 Process:
   # see: https://api.github.com/repos/audacity/audacity/releases/latest
   - Processor: GitHubReleasesInfoProvider

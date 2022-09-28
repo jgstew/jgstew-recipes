@@ -66,7 +66,8 @@ class FileImageResize(Processor):  # pylint: disable=too-few-public-methods
                 Image_Object.save(file_path_save, optimize=True)
             else:
                 self.output(f"WARNING: Image already smaller than {max_pixel_dim}")
-                file_path_save = file_pathname
+                # save file to new location, which might be a different type:
+                Image_Object.save(file_path_save)
             self.env["file_path_resized"] = file_path_save
         else:
             self.output(f"WARNING: file does not exist! {file_pathname}", 0)

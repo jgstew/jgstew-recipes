@@ -4,8 +4,6 @@ Identifier: com.github.jgstew.test.FileEncodingConvert
 Input:
   # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"
   NAME: FileEncodingConvert
-  # DisplayName: The start of the DisplayName key in the Windows Registry, Example: "DB Browser for SQLite"
-  DisplayName: Alienware Digital Delivery
 MinimumVersion: "2.3"
 Process:
   # `SharedUtilityMethods` must come first
@@ -36,7 +34,6 @@ Process:
     Arguments:
       input_file_path: "%RECIPE_CACHE_DIR%/tmp/CatalogPC.xml"
       output_file_path: "%RECIPE_CACHE_DIR%/tmp/CatalogPC_converted.xml"
-  # THE FOLLOWING DOESN'T WORK:
 
   # find download url part:
   - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
@@ -47,6 +44,7 @@ Process:
       file_search_results_var: "url_part"
       search_pattern: "(Dell-Alienware-Digital-Delivery-Application)"
       search_extension: ".xml"
+      output_file_path: ""
 
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:

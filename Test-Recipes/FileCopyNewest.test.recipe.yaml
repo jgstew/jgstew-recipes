@@ -1,0 +1,28 @@
+---
+Description: Test FileCopyNewest
+Identifier: com.github.jgstew.test.FileCopyNewest
+Input:
+  # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"
+  NAME: FileCopyNewest
+MinimumVersion: "2.3"
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+
+  - Processor: com.github.jgstew.SharedProcessors/FileTouch
+    Arguments:
+      pathname: "%RECIPE_CACHE_DIR%/test1.txt"
+
+  - Processor: com.github.jgstew.SharedProcessors/FileTouch
+    Arguments:
+      pathname: "%RECIPE_CACHE_DIR%/test2.txt"
+
+  - Processor: com.github.jgstew.SharedProcessors/FileCopyNewest
+    Arguments:
+      file_path_first: "%RECIPE_CACHE_DIR%/test1.txt"
+      file_path_second: "%RECIPE_CACHE_DIR%/test2.txt"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_copy_newest_result%"
+      assert_string: "both files present, overwriting the older one with file_path_second"

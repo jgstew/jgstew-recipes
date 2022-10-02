@@ -19,9 +19,6 @@ import re
 
 from autopkglib import Processor, ProcessorError
 
-MATCH_MESSAGE = "Found matching text"
-NO_MATCH_MESSAGE = "No match found on text"
-
 __all__ = ["TextSubstitutionRegEx"]
 
 

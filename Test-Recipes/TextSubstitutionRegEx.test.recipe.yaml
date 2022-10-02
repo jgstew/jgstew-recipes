@@ -1,0 +1,18 @@
+---
+Description: Test TextSubstitutionRegEx Processor
+Identifier: com.github.jgstew.test.TextSubstitutionRegEx
+Input:
+  NAME: TextSubstitutionRegExTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  # using TextSubstitutionRegEx to change sourceforge download mirrors
+  - Processor: com.github.jgstew.SharedProcessors/TextSubstitutionRegEx
+    Arguments:
+      input_string: "https://cfhcable.dl.sourceforge.net/project/keepass/KeePass%202.x/2.52/KeePass-2.52-Setup.exe"
+      re_pattern: 'https://(\w+).dl.sourceforge.net/'
+      re_substitution: "https://versaweb.dl.sourceforge.net/"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%result_substitution%"
+      assert_string: "https://versaweb.dl.sourceforge.net/project/keepass/KeePass%202.x/2.52/KeePass-2.52-Setup.exe"

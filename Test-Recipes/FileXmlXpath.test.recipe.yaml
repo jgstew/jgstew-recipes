@@ -6,36 +6,37 @@ Input:
   NAME: FileXmlXpathTest
 MinimumVersion: "2.3"
 Process:
-  # `SharedUtilityMethods` must come first
-  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
-
-  # download example XML file
-  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+  # create static xml file for testing:
+  # based upon: https://softwareupdate.vmware.com/cds/vmw-desktop/vmrc-windows.xml
+  - Processor: FileCreator
     Arguments:
-      # https://softwareupdate.vmware.com/cds/vmw-desktop/vmrc-windows.xml
-      url: "https://softwareupdate.vmware.com/cds/vmw-desktop/vmrc-windows.xml"
-      filename: vmrc-windows.xml
-      COMPUTE_HASHES: False
-
-  # Example XML:
-  # <metaList>
-  #   <metadata>
-  #     <productId>vmrc-windows</productId>
-  #     <version>7.0.0</version>
-  #     <url>vmrc/12.0.1/18113358/windows/metadata.xml.gz</url>
-  #     <locale/>
-  #   </metadata>
-  #   <metadata>
-  #     <productId>vmrc-windows</productId>
-  #     <version>7.0.0</version>
-  #     <url>vmrc/12.0.2/19968993/windows/metadata.xml.gz</url>
-  #     <locale/>
-  #   </metadata>
-  # </metaList>
+      file_path: "%RECIPE_CACHE_DIR%/downloads/vmrc-windows.xml"
+      file_content: |
+        <metaList>
+          <metadata>
+            <productId>vmrc-windows</productId>
+            <version>7.0.0</version>
+            <url>vmrc/12.0.1/18113358/windows/metadata.xml.gz</url>
+            <locale/>
+          </metadata>
+          <metadata>
+            <productId>vmrc-windows</productId>
+            <version>7.0.0</version>
+            <url>vmrc/12.0.2/19968993/windows/metadata.xml.gz</url>
+            <locale/>
+          </metadata>
+        </metaList>
 
   # get xpath result:
   - Processor: com.github.jgstew.SharedProcessors/FileXmlXpath
     Arguments:
       pathname: "%RECIPE_CACHE_DIR%/downloads/vmrc-windows.xml"
       xml_xpath: "//metaList/metadata/url/text()"
+      # configure to return only last result:
       xml_only_last: True
+
+  # check result:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%xml_xpath_result%"
+      assert_string: "vmrc/12.0.2/19968993/windows/metadata.xml.gz"

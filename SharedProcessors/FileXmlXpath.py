@@ -4,8 +4,6 @@
 #
 """See docstring for FileXmlXpath class"""
 
-import os
-import pathlib
 
 import lxml
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import

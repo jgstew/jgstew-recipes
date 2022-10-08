@@ -27,5 +27,11 @@ Process:
   # get jq result:
   - Processor: com.github.jgstew.SharedProcessors/JsonJq
     Arguments:
-      json_input: "[1, 2, 3]"
+      json_input: "[1, 2, 5]"
       json_jq: "[.[]+1]"
+
+  # check result:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%json_jq_result%"
+      assert_string: "6"

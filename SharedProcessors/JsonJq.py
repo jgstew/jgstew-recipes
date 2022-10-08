@@ -2,7 +2,7 @@
 #
 # James Stewart @JGStew - 2022
 #
-"""See docstring for FileJsonJq class"""
+"""See docstring for JsonJq class"""
 
 # on Windows:
 #  choco install jq -y
@@ -20,7 +20,7 @@ from autopkglib import (  # pylint: disable=import-error,wrong-import-position,u
 # used for self.get_download_dir()
 from autopkglib.URLDownloader import URLDownloader
 
-__all__ = ["FileJsonJq"]
+__all__ = ["JsonJq"]
 
 JQ_BIN_PATHS = [
     "jq",
@@ -30,7 +30,7 @@ JQ_BIN_PATHS = [
 ]
 
 
-class FileJsonJq(URLDownloader):  # pylint: disable=invalid-name
+class JsonJq(URLDownloader):  # pylint: disable=invalid-name
     """create file or update its modification time"""
 
     description = __doc__
@@ -85,5 +85,5 @@ class FileJsonJq(URLDownloader):  # pylint: disable=invalid-name
 
 
 if __name__ == "__main__":
-    PROCESSOR = FileJsonJq()
+    PROCESSOR = JsonJq()
     PROCESSOR.execute_shell()

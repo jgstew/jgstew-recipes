@@ -1,9 +1,9 @@
 ---
-# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/FileJsonJq.py
-Description: Test FileJsonJq Processor
-Identifier: com.github.jgstew.test.FileJsonJq
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/JsonJq.py
+Description: Test JsonJq Processor
+Identifier: com.github.jgstew.test.JsonJq
 Input:
-  NAME: FileJsonJqTest
+  NAME: JsonJqTest
 MinimumVersion: "2.3"
 Process:
   - Processor: FileCreator
@@ -13,7 +13,7 @@ Process:
         [1, 2, 3]
 
   # get jq result:
-  - Processor: com.github.jgstew.SharedProcessors/FileJsonJq
+  - Processor: com.github.jgstew.SharedProcessors/JsonJq
     Arguments:
       json_input: "%RECIPE_CACHE_DIR%/test.json"
       json_jq: "[.[]+1]"
@@ -25,7 +25,7 @@ Process:
       assert_string: "4"
 
   # get jq result:
-  - Processor: com.github.jgstew.SharedProcessors/FileJsonJq
+  - Processor: com.github.jgstew.SharedProcessors/JsonJq
     Arguments:
       json_input: "[1, 2, 3]"
       json_jq: "[.[]+1]"

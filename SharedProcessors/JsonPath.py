@@ -10,7 +10,7 @@ import json
 import os
 
 # https://www.digitalocean.com/community/tutorials/python-jsonpath-examples
-import jsonpath_ng
+import jsonpath_ng.ext
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
@@ -47,7 +47,7 @@ class JsonPath(Processor):  # pylint: disable=invalid-name
             # read json from string like:
             json_input_obj = json.loads(json_input)
 
-        jsonpath_expression = jsonpath_ng.parse(json_path)
+        jsonpath_expression = jsonpath_ng.ext.parse(json_path)
 
         json_path_result = jsonpath_expression.find(json_input_obj)[0].value
 

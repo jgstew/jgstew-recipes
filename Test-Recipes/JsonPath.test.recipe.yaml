@@ -1,0 +1,60 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/JsonPath.py
+Description: Test JsonPath Processor
+Identifier: com.github.jgstew.test.JsonPath
+Input:
+  NAME: JsonPathTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: FileCreator
+    Arguments:
+      file_path: "%RECIPE_CACHE_DIR%/test.json"
+      file_content: |
+        {
+          "firstName": "John",
+          "lastName": "doe",
+          "age": 26,
+          "address": {
+              "streetAddress": "naist street",
+              "city": "Nara",
+              "postalCode": "630-0192"
+          },
+          "phoneNumbers": [
+              {
+                  "type": "iPhone",
+                  "number": "0123-4567-8888"
+              },
+              {
+                  "type": "home",
+                  "number": "0123-4567-8910"
+              },
+              {
+                  "type": "other",
+                  "number": "0123-4567-9999"
+              }
+          ]
+        }
+
+  # get JSONPath result from file:
+  - Processor: com.github.jgstew.SharedProcessors/JsonPath
+    Arguments:
+      json_input: "%RECIPE_CACHE_DIR%/test.json"
+      json_path: "$.phoneNumbers[-2:-1].number"
+
+  # check result:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%json_path_result%"
+      assert_string: "0123-4567-8910"
+
+  # get JSONPath result from string:
+  - Processor: com.github.jgstew.SharedProcessors/JsonPath
+    Arguments:
+      json_input: "%file_content%"
+      json_path: "$.phoneNumbers[-2:-1].number"
+
+  # check result:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%json_path_result%"
+      assert_string: "0123-4567-8910"

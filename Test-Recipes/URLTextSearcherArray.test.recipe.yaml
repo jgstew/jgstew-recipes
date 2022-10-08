@@ -15,3 +15,10 @@ Process:
       input_string: "%version_maximum%"
       # this may need changed in the future:
       assert_string: "10.0."
+
+  # # find URL strings inside of a binary file:
+  # - Processor: com.github.jgstew.SharedProcessors/URLTextSearcherArray
+  #   Arguments:
+  #     url: https://realplayer-download.real.com/free/windows/installer/stubinst/stub/rp22/T22UKDRP/RealPlayer.exe
+  #     # https://stackoverflow.com/questions/17195924/python-equivalent-of-unix-strings-utility
+  #     re_pattern: "https?://[ -~]{4,}"

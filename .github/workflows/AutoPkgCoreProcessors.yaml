@@ -28,12 +28,12 @@ jobs:
       - name: checkout this repo
         uses: actions/checkout@v3
 
-      - name: checkout autopkg dev
+      - name: checkout autopkg
         uses: actions/checkout@v3
         with:
           repository: autopkg/autopkg
           path: autopkg
-          ref: dev
+          # ref: dev
 
       - name: Set up Python
         uses: actions/setup-python@v3

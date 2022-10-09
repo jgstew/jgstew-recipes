@@ -33,7 +33,7 @@ jobs:
         with:
           repository: autopkg/autopkg
           path: autopkg
-          # ref: dev
+          ref: dev
 
       - name: Set up Python
         uses: actions/setup-python@v3
@@ -44,6 +44,8 @@ jobs:
             autopkg/requirements.txt
             requirements.txt
 
+      - name: Install build tools
+        run: pip install setuptools wheel build
       - name: Install AutoPkg Reqirements
         run: pip install --requirement autopkg/requirements.txt
       - name: Install requirements

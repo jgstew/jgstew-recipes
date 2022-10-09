@@ -39,6 +39,8 @@ jobs:
           git clone https://github.com/autopkg/autopkg.git
           cd autopkg
           git checkout dev
+      - name: Install Python Build Tools
+        run: pip install --upgrade setuptools wheel build
       - name: Install AutoPkg Reqirements
         run: pip install --requirement autopkg/new_requirements.txt
       - name: Install requirements

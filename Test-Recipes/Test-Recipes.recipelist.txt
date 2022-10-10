@@ -2,6 +2,7 @@ com.github.jgstew.test.AssertInputContainsString
 com.github.jgstew.test.AutoPkgCacheCleanup
 com.github.jgstew.test.AutoPkgCore
 com.github.jgstew.test.AutoPkgVariableSubstitution
+com.github.jgstew.test.AutopkgBuildRecipeListTest
 com.github.jgstew.test.BESImport
 com.github.jgstew.test.BigFixActioner
 com.github.jgstew.test.BigFixPrefetchItem
@@ -17,7 +18,6 @@ com.github.jgstew.test.FileEncodingConvert
 com.github.jgstew.test.FileExeGetIcon
 com.github.jgstew.test.FileExeGetInfoPE
 com.github.jgstew.test.FileExeVerifySignature
-com.github.jgstew.test.FileExeVersionExtractor-Win
 com.github.jgstew.test.FileExeVersionExtractor
 com.github.jgstew.test.FileGetBase64
 com.github.jgstew.test.FileGetExecutable

@@ -1,0 +1,18 @@
+---
+Description: Use Autopkg to Build a RecipeList of Test Recipes
+Identifier: com.github.jgstew.test.AutopkgBuildRecipeListTest
+Input:
+  NAME: AutopkgBuildRecipeListTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
+    Arguments:
+      search_path: "Test-Recipes"
+      file_search_results_var: "file_search_results_var"
+      search_pattern: 'Identifier: +(["\w\.]+)'
+      search_extension: "test.recipe.yaml"
+      output_file_path: Test-Recipes/Test-Recipes.recipelist.txt
+
+  # run recipe list:
+  # python ../autopkg/Code/autopkg run -vv --recipe-list Test-Recipes/Test-Recipes.recipelist.txt

@@ -40,7 +40,7 @@ jobs:
         with:
           repository: autopkg/autopkg
           path: autopkg
-          # ref: dev
+          ref: dev
 
       - name: Set up Python
         uses: actions/setup-python@v3

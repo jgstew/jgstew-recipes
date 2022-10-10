@@ -26,3 +26,4 @@ Process:
     Arguments:
       input_string: "%file_copy_newest_result%"
       assert_string: "both files present, overwriting the older one with file_path_second"
+      raise_error: True

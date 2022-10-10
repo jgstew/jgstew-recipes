@@ -3,7 +3,7 @@ Description: Test GitHubReleasesInfoProvider Processor
 # based upon https://github.com/autopkg/ahousseini-recipes/blob/master/Audacity/Audacity.download.recipe
 Identifier: com.github.jgstew.test.GitHubReleasesInfoProvider
 Input:
-  NAME: "Audacity"
+  NAME: "GitHubReleasesInfoProviderTestAudacity"
 MinimumVersion: "2.3"
 Process:
   # see: https://api.github.com/repos/audacity/audacity/releases/latest

@@ -13,9 +13,10 @@ Process:
     Arguments:
       test_var: "%TestStr%"
   # this fails:
-  - Processor: EndOfCheckPhase
-    Arguments:
-      test_var: "%TestInt%"
+  # - Processor: EndOfCheckPhase
+  #   Arguments:
+  #     test_var: "%TestInt%"
+
   # solved by adding str() to:
   #   https://github.com/autopkg/autopkg/blob/1aea1b68aa45c50f4bdc1f4cb66e3a3f2cbe808d/Code/autopkglib/__init__.py#L429
   # def getdata(match):

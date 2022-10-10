@@ -49,22 +49,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: 3.8
+          python-version: 3.9
           cache: "pip"
           cache-dependency-path: |
-            autopkg/requirements.txt
+            autopkg/gh_actions_requirements.txt
             requirements.txt
 
-      # - name: Install requirements
-      #   run: pip install --requirement requirements.txt
-      # - name: git clone autopkg, checkout dev
-      #   run: |
-      #     git clone https://github.com/autopkg/autopkg.git
-      #     cd autopkg
-      #     git checkout dev
-
       - name: Install AutoPkg Reqirements
-        run: pip install --requirement autopkg/requirements.txt
+        run: pip install --requirement autopkg/gh_actions_requirements.txt
       - name: Install requirements
         run: pip install --requirement requirements.txt
       - name: create empty config windows

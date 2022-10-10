@@ -41,13 +41,13 @@ jobs:
           python-version: 3.9
           cache: "pip"
           cache-dependency-path: |
-            autopkg/requirements.txt
+            autopkg/gh_actions_requirements.txt
             requirements.txt
 
       - name: Install build tools
         run: pip install setuptools wheel build
       - name: Install AutoPkg Reqirements
-        run: pip install --requirement autopkg/requirements.txt
+        run: pip install --requirement autopkg/gh_actions_requirements.txt
       - name: Install requirements
         run: pip install --requirement requirements.txt
 

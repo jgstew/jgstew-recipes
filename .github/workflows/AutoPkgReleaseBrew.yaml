@@ -36,6 +36,7 @@ jobs:
         run: |
           cd ~
           echo 'export HOMEBREW_GITHUB_API_TOKEN=${{ secrets.GITHUB_TOKEN }}' >> .bash_profile
+          pwd
 
       - uses: actions/checkout@v3
 
@@ -91,4 +92,4 @@ jobs:
       - name: run brew uninstall
         run: brew uninstall autopkg
       - name: run brew audit
-        run: brew audit --cask --new-cask --verbose --strict --online /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb
+        run: brew audit --cask --new-cask --verbose --strict /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb

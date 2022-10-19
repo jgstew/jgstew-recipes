@@ -29,20 +29,22 @@ jobs:
 
       - uses: actions/checkout@v2
 
+      - name: checkout autopkg dev
+        uses: actions/checkout@v3
+        with:
+          repository: autopkg/autopkg
+          path: autopkg
+          ref: dev
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
 
-      - name: git clone autopkg, checkout dev
-        run: |
-          git clone https://github.com/autopkg/autopkg.git
-          cd autopkg
-          git checkout dev
       - name: Install/Update Python Build Tools
         run: pip install --upgrade setuptools wheel build
       - name: Install AutoPkg Reqirements
-        run: pip install --requirement autopkg/new_requirements.txt
+        run: pip install --requirement autopkg/gh_actions_requirements.txt
       - name: Install requirements
         run: pip install --requirement requirements.txt
       - name: Install/Update Python certs

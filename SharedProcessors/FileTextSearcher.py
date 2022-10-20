@@ -102,9 +102,10 @@ class FileTextSearcher(SharedUtilityMethods):  # pylint: disable=too-few-public-
 
         if self.verify_folder_exists(search_path, False):
             self.output("INFO: folder provided")
-            for _, _, files in os.walk(search_path):
+            for root, _subdirs, files in os.walk(search_path):
                 for file in files:
-                    file_path = os.path.join(search_path, file)
+                    file_path = os.path.join(root, file)
+                    # print(file_path)
                     if search_extension == "" or file.endswith(search_extension):
                         for item in self.search_in_file(file_path, search_pattern):
                             results.append(item.decode())

@@ -40,3 +40,18 @@ Process:
       search_path: "BigFix"
       search_pattern: "Test-ThisShouldNotMatchAnything"
       file_search_results_var: "file_search_results_var"
+
+  # test reading from vendor file:
+  - Processor: com.github.jgstew.SharedProcessors/GetRecipeParentFolderName
+  - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
+    Arguments:
+      first_result_only: True
+      search_path: '%VendorFolder%\vendor_metadata.cfg'
+      # output_variable: "file_search_results"
+      file_search_results_var: "content_id_vendor"
+      search_pattern: 'content_id_vendor *= *(\d+)'
+      search_extension: ".cfg"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%content_id_vendor%"
+      assert_string: "101"

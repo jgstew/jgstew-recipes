@@ -43,6 +43,7 @@ com.github.jgstew.test.TemplateDictionaryAppendDict
 com.github.jgstew.test.TemplateDictionaryAppendInput
 com.github.jgstew.test.TextSearcher
 com.github.jgstew.test.TextSubstitutionRegEx
+com.github.jgstew.test.URLDownloader
 com.github.jgstew.test.URLDownloaderPython
 com.github.jgstew.test.URLTextSearcherArray
 com.github.jgstew.test.VersionGetMajorMinor

@@ -19,3 +19,4 @@ jobs:
           email: ${{ secrets.COVERITY_SCAN_EMAIL }}
           token: ${{ secrets.COVERITY_SCAN_TOKEN }}
           build_language: "other"
+          project: "jgstew-recipes"

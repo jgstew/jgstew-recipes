@@ -1,4 +1,6 @@
 
+REM curl -O https://raw.githubusercontent.com/jgstew/jgstew-recipes/main/setup_win.bat
+
 REM create powershell profile file
 
 if exist %UserProfile%\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 (
@@ -65,3 +67,7 @@ cd %UserProfile%\_Code
 git clone https://github.com/jgstew/jgstew-recipes.git
 
 git clone https://github.com/jgstew/autopkg.git
+
+cd jgstew-recipes
+
+call check-setup-win.bat

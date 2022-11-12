@@ -44,25 +44,24 @@ choco install -y python --version="3.10.8" --install-arguments="'InstallAllUsers
 
 call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd
 
-echo stop here!
-exit
+echo update pip
+python -m pip install --upgrade pip
 
+call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd
 
-@REM echo update pip
-@REM python -m pip install --upgrade pip
+echo update related python modules
+pip install --upgrade setuptools build wheel
 
-@REM echo update related python modules
-@REM pip install --upgrade setuptools build wheel
+echo create UserProfile\_Code folder if missing:
+if not exist %UserProfile%\_Code (
+    REM folder doesn't exist
+    echo creating missing _Code folder
+    mkdir %UserProfile%\_Code
+    echo.
+)
 
-@REM echo create UserProfile\_Code folder if missing:
-@REM if not exist %UserProfile%\_Code (
-@REM     REM folder doesn't exist
-@REM     echo creating missing Autopkg user config folder
-@REM     mkdir %UserProfile%\_Code
-@REM     echo.
-@REM )
+cd %UserProfile%\_Code
 
-@REM cd %UserProfile%\_Code
+git clone https://github.com/jgstew/jgstew-recipes.git
 
-@REM git clone https://github.com/jgstew/jgstew-recipes.git
-
+git clone https://github.com/jgstew/autopkg.git

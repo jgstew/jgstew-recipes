@@ -41,3 +41,22 @@ echo install visualstudio2019-workload-vctools
 choco install visualstudio2019-workload-vctools -y
 
 call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd
+
+echo update pip
+python -m pip install --upgrade pip
+
+echo update related python modules
+pip install --upgrade setuptools build wheel pre-commit certifi python-certifi-win32
+
+echo create UserProfile\_Code folder if missing:
+if not exist %UserProfile%\_Code (
+    REM folder doesn't exist
+    echo creating missing Autopkg user config folder
+    mkdir %UserProfile%\_Code
+    echo.
+)
+
+cd %UserProfile%\_Code
+
+git clone https://github.com/jgstew/jgstew-recipes.git
+

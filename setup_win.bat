@@ -24,12 +24,16 @@ powershell -ExecutionPolicy Bypass -command "[System.Net.ServicePointManager]::S
 call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd
 
 echo install visual studio code
-choco install vscode -y
+choco install -y vscode
 
 echo install python 3.10.x
 REM https://docs.python.org/3/using/windows.html#installing-without-ui
-choco install python --version="3.10.8" -y --install-arguments="InstallAllUsers=1 PrependPath=1 CompileAll=1"
+choco install -y python --version="3.10.8" --install-arguments="'InstallAllUsers=1 PrependPath=1 CompileAll=1'"
 
+echo install git
+choco install -y git.install --params "/GitAndUnixToolsOnPath /WindowsTerminal"
 
 echo install visualstudio2019-workload-vctools
 choco install visualstudio2019-workload-vctools -y
+
+call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd

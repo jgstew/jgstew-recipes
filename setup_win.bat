@@ -29,10 +29,6 @@ choco install -y vscode
 echo install windows WindowsTerminal 
 choco install -y microsoft-windows-terminal
 
-echo install python 3.10.x
-REM https://docs.python.org/3/using/windows.html#installing-without-ui
-choco install -y python --version="3.10.8" --install-arguments="'InstallAllUsers=1 PrependPath=1 CompileAll=1'"
-
 echo install git
 REM https://github.com/chocolatey-community/chocolatey-packages/blob/master/automatic/git.install/ARGUMENTS.md
 choco install -y git.install --params "'/GitAndUnixToolsOnPath /WindowsTerminal /NoGuiHereIntegration /WindowsTerminalProfile /Editor:VisualStudioCode /DefaultBranchName:main'"
@@ -42,21 +38,31 @@ choco install visualstudio2019-workload-vctools -y
 
 call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd
 
-echo update pip
-python -m pip install --upgrade pip
+echo install python 3.10.x
+REM https://docs.python.org/3/using/windows.html#installing-without-ui
+choco install -y python --version="3.10.8" --install-arguments="'InstallAllUsers=1 PrependPath=1 CompileAll=1'"
 
-echo update related python modules
-pip install --upgrade setuptools build wheel pre-commit certifi python-certifi-win32
+call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd
 
-echo create UserProfile\_Code folder if missing:
-if not exist %UserProfile%\_Code (
-    REM folder doesn't exist
-    echo creating missing Autopkg user config folder
-    mkdir %UserProfile%\_Code
-    echo.
-)
+echo stop here!
+exit
 
-cd %UserProfile%\_Code
 
-git clone https://github.com/jgstew/jgstew-recipes.git
+@REM echo update pip
+@REM python -m pip install --upgrade pip
+
+@REM echo update related python modules
+@REM pip install --upgrade setuptools build wheel
+
+@REM echo create UserProfile\_Code folder if missing:
+@REM if not exist %UserProfile%\_Code (
+@REM     REM folder doesn't exist
+@REM     echo creating missing Autopkg user config folder
+@REM     mkdir %UserProfile%\_Code
+@REM     echo.
+@REM )
+
+@REM cd %UserProfile%\_Code
+
+@REM git clone https://github.com/jgstew/jgstew-recipes.git
 

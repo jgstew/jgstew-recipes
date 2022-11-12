@@ -26,12 +26,16 @@ call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd
 echo install visual studio code
 choco install -y vscode
 
+echo install windows WindowsTerminal 
+choco install -y microsoft-windows-terminal
+
 echo install python 3.10.x
 REM https://docs.python.org/3/using/windows.html#installing-without-ui
 choco install -y python --version="3.10.8" --install-arguments="'InstallAllUsers=1 PrependPath=1 CompileAll=1'"
 
 echo install git
-choco install -y git.install --params "/GitAndUnixToolsOnPath /WindowsTerminal"
+REM https://github.com/chocolatey-community/chocolatey-packages/blob/master/automatic/git.install/ARGUMENTS.md
+choco install -y git.install --params "'/GitAndUnixToolsOnPath /WindowsTerminal /NoGuiHereIntegration /WindowsTerminalProfile /Editor:VisualStudioCode /DefaultBranchName:main'"
 
 echo install visualstudio2019-workload-vctools
 choco install visualstudio2019-workload-vctools -y

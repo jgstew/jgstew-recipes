@@ -228,21 +228,6 @@ echo git pull
 git pull
 
 echo.
-echo check pip install requirements for cloned recipes:
-echo pip install -r .\requirements.txt --quiet --quiet
-pip install -r .\requirements.txt --quiet --quiet
-if errorlevel 0 (
-    echo   - pip install for recipes succeeded!  exit code: %errorlevel%
-) else (
-    echo ERROR: pip install for recipes failed! exit code: %errorlevel%
-    echo   - Have you installed visual studio build tools?
-    echo vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.NativeDesktop --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
-    pause
-    exit %errorlevel%
-)
-REM https://stackoverflow.com/a/334890/861745
-
-echo.
 echo update python ssl CA certs:
 pip install -U python-certifi-win32 certifi
 
@@ -302,6 +287,22 @@ if errorlevel 0 (
     pause
     exit %errorlevel%
 )
+
+echo.
+echo check pip install requirements for cloned recipes:
+echo pip install -r .\requirements.txt --quiet --quiet
+pip install -r .\requirements.txt --quiet --quiet
+if errorlevel 0 (
+    echo   - pip install for recipes succeeded!  exit code: %errorlevel%
+) else (
+    echo ERROR: pip install for recipes failed! exit code: %errorlevel%
+    echo   - Have you installed visual studio build tools?
+    echo vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.NativeDesktop --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
+    pause
+    exit %errorlevel%
+)
+REM https://stackoverflow.com/a/334890/861745
+
 
 echo.
 echo AutoPkg Version Check: (WARNINGS are expected on Windows)

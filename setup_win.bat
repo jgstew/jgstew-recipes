@@ -26,12 +26,12 @@ call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd
 echo install visual studio code
 choco install -y vscode
 
-echo install windows WindowsTerminal 
-choco install -y microsoft-windows-terminal
+@REM echo install windows WindowsTerminal 
+@REM choco install -y microsoft-windows-terminal
 
 echo install git
 REM https://github.com/chocolatey-community/chocolatey-packages/blob/master/automatic/git.install/ARGUMENTS.md
-choco install -y git.install --params "'/GitAndUnixToolsOnPath /WindowsTerminal /NoGuiHereIntegration /WindowsTerminalProfile /Editor:VisualStudioCode /DefaultBranchName:main'"
+choco install -y git.install --params "'/GitAndUnixToolsOnPath /NoGuiHereIntegration /Editor:VisualStudioCode /DefaultBranchName:main'"
 
 echo install visualstudio2019-workload-vctools
 choco install visualstudio2019-workload-vctools -y

@@ -1,6 +1,9 @@
 
 REM curl -O https://raw.githubusercontent.com/jgstew/jgstew-recipes/main/setup_win.bat
 
+echo set powershell ExecutionPolicy
+powershell -command "Set-ExecutionPolicy -Force -ExecutionPolicy RemoteSigned -Scope CurrentUser"
+
 REM create powershell profile file
 
 if exist %UserProfile%\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 (
@@ -12,7 +15,7 @@ if exist %UserProfile%\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.
     REM file doesn't exist
     if not exist %UserProfile%\Documents\WindowsPowerShell (
         REM folder doesn't exist
-        echo creating missing Autopkg user config folder
+        echo creating missing powershell profile folder
         mkdir %UserProfile%\Documents\WindowsPowerShell
         echo.
     )

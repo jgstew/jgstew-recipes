@@ -276,8 +276,8 @@ CMD /C "cd ..\autopkg && git pull"
 
 echo.
 echo check pip install requirements for AutoPkg:
-echo pip install -r ..\autopkg\requirements.txt --quiet --quiet
-pip install -r ..\autopkg\requirements.txt --quiet --quiet
+echo pip install -r ..\autopkg\requirements.txt --quiet
+pip install -r ..\autopkg\requirements.txt --quiet
 if errorlevel 0 (
     echo   - pip install for autopkg succeeded!  exit code: %errorlevel%
 ) else (
@@ -290,8 +290,8 @@ if errorlevel 0 (
 
 echo.
 echo check pip install requirements for cloned recipes:
-echo pip install -r .\requirements.txt --quiet --quiet
-pip install -r .\requirements.txt --quiet --quiet
+echo pip install -r .\requirements.txt --quiet
+pip install -r .\requirements.txt --quiet
 if errorlevel 0 (
     echo   - pip install for recipes succeeded!  exit code: %errorlevel%
 ) else (

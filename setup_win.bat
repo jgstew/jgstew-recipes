@@ -35,8 +35,8 @@ echo install git
 REM https://github.com/chocolatey-community/chocolatey-packages/blob/master/automatic/git.install/ARGUMENTS.md
 choco install -y git.install --params "'/GitAndUnixToolsOnPath /NoGuiHereIntegration /Editor:VisualStudioCode /DefaultBranchName:main'"
 
-@REM echo install visualstudio2019-workload-vctools
-@REM choco install visualstudio2019-workload-vctools -y
+echo install visualstudio2019-workload-vctools
+choco install visualstudio2019-workload-vctools -y
 
 call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd
 

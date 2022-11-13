@@ -229,7 +229,7 @@ git pull
 
 echo.
 echo update python ssl CA certs:
-pip install -U python-certifi-win32 certifi
+pip install -U certifi
 
 echo.
 echo besapi python module version:

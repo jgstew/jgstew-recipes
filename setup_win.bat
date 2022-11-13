@@ -72,4 +72,6 @@ git clone https://github.com/jgstew/autopkg.git
 
 cd jgstew-recipes
 
-call check_setup_win.bat
+rem call check_setup_win.bat
+
+echo try reboot?

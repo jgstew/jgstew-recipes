@@ -1,0 +1,14 @@
+---
+Description: Test FileGetPathFile Processor
+Identifier: com.github.jgstew.test.FileGetPathFile
+Input:
+  NAME: FileGetPathFileTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/FileGetPathFile
+    Arguments:
+      command_name: "curl"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%exe_path%"
+      assert_string: "curl"

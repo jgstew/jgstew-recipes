@@ -42,7 +42,7 @@ class FileGetPathFile(Processor):  # pylint: disable=too-few-public-methods
     def main(self):
         """execution starts here"""
         command_name = self.env.get("command_name", None)
-        path_var_name = self.env.get("path_var_name", None)
+        path_var_name = self.env.get("path_var_name", "exe_path")
         file_must_be_executable = self.env.get("file_must_be_executable", True)
 
         path = None
@@ -56,8 +56,12 @@ class FileGetPathFile(Processor):  # pylint: disable=too-few-public-methods
         if command_name:
             path = shutil.which(command_name, mode)
 
-        self.env[path_var_name] = path
-        self.env["path_result"] = path
+        if path:
+            self.env[path_var_name] = path
+            self.env["path_result"] = path
+            self.output_variables[path_var_name] = {
+                "description": "custom variable name for output",
+            }
 
 
 if __name__ == "__main__":

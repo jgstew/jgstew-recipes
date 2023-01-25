@@ -35,9 +35,7 @@ class DangerousEvaluate(Processor):  # pylint: disable=invalid-name
         evaluate_string = self.env.get("evaluate_string")
 
         self.output(
-            "Running Python: \n    {evaluate_string}".format(
-                evaluate_string=evaluate_string
-            ),
+            f"Running Python: \n    {evaluate_string}",
             1,
         )
         try:
@@ -47,7 +45,7 @@ class DangerousEvaluate(Processor):  # pylint: disable=invalid-name
         except Exception as err:
             print(err)
 
-        self.output("self.env: \n{self_env}\n".format(self_env=self.env), 5)
+        self.output(f"self.env: \n{self.env}\n", 5)
 
 
 if __name__ == "__main__":

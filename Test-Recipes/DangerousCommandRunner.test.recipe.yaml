@@ -1,0 +1,18 @@
+---
+Description: Test DangerousCommandRunner Processor
+Identifier: com.github.jgstew.test.DangerousCommandRunner
+Input:
+  NAME: DangerousCommandRunnerTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/DangerousCommandRunner
+    Arguments:
+      # curl is only being used here as a cross platform example
+      # this processor was NOT designed to be used with curl
+      # use URLTextSearcher or URLDownloader instead to interact with curl
+      command_path: "curl"
+      command_args: ["google.com", "-f", "-s"]
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%command_output%"
+      assert_string: "The document has moved"

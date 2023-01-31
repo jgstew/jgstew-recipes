@@ -80,7 +80,9 @@ class URLDownloaderRequests(URLDownloader):
                 self.env.get("requests_session", pickle.dumps(requests.session()))
             )
         except Exception:
-            self.output("WARNING! Could not restore session from previous step.")
+            self.output(
+                "WARNING! Could not restore session from previous step. Ressetting to new session."
+            )
             return requests.session()
 
     def main(self):

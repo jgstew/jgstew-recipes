@@ -11,9 +11,11 @@ Process:
       url: https://valid-isrgrootx1.letsencrypt.org/
       filename: test-lets1.html
       COMPUTE_HASHES: False
+
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderRequests
     Arguments:
       # https://letsencrypt.org/certificates/
       url: https://valid-isrgrootx2.letsencrypt.org/
       filename: test-lets2.html
       COMPUTE_HASHES: False
+      requests_session: ""

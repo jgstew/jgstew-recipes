@@ -75,9 +75,13 @@ class URLDownloaderRequests(URLDownloader):
 
     def get_requests_session(self) -> requests.Session:
         """get the existing or new session"""
-        return pickle.loads(
-            self.env.get("requests_session", pickle.dumps(requests.session()))
-        )
+        try:
+            return pickle.loads(
+                self.env.get("requests_session", pickle.dumps(requests.session()))
+            )
+        except Exception:
+            self.output("WARNING! Could not restore session from previous step.")
+            return requests.session()
 
     def main(self):
         """Execution starts here"""

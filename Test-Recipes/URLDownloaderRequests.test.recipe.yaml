@@ -19,3 +19,5 @@ Process:
       filename: test-lets2.html
       COMPUTE_HASHES: False
       requests_session: ""
+
+  # get cookie here: https://updates.oracle.com/Orion/Services/download

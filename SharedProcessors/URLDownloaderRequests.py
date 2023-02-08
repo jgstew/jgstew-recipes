@@ -67,6 +67,11 @@ class URLDownloaderRequests(URLDownloader):
             "default": {},
             "description": "Request Headers to use.",
         },
+        "request_data": {
+            "required": False,
+            "default": "",
+            "description": "Data to use in request",
+        },
     }
     output_variables = {
         "pathname": {"description": "Path to the downloaded file."},
@@ -93,6 +98,7 @@ class URLDownloaderRequests(URLDownloader):
         # get previous session:
         requests_session = self.get_requests_session()
         request_headers = self.env.get("request_headers", {})
+        request_data = self.env.get("request_data", "")
 
         # Clear and initiazize data structures
         self.clear_vars()
@@ -119,11 +125,21 @@ class URLDownloaderRequests(URLDownloader):
         self.clear_zero_file(self.env["pathname"])
 
         # prepare request: (need to add options for data and headers)
-        req = requests.Request(request_method, url, headers=request_headers)
+        req = requests.Request(
+            request_method, url, headers=request_headers, data=request_data
+        )
 
         prepped = requests_session.prepare_request(req)
 
         requests_result = requests_session.send(prepped, allow_redirects=True)
+
+        # for some reason, requests doesn't save cookies from redirects
+        # the following will merge cookies from redirects into the session
+        # https://stackoverflow.com/a/71151159/861745
+        for r in requests_result.history:
+            requests_session.cookies.update(r.cookies)
+
+        self.output(f"HTTP Status Code: {requests_result.status_code}")
 
         with open(self.env["pathname"], "wb") as f:
             f.write(requests_result.content)

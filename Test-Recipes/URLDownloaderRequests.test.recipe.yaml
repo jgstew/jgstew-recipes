@@ -20,4 +20,10 @@ Process:
       COMPUTE_HASHES: False
       requests_session: ""
 
-  # get cookie here: https://updates.oracle.com/Orion/Services/download
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderRequests
+    Arguments:
+      # https://edelivery.oracle.com/osdc/cliauth
+      url: https://edelivery.oracle.com/osdc/cliauth
+      filename: test-oracle.html
+      COMPUTE_HASHES: False
+      requests_session: ""

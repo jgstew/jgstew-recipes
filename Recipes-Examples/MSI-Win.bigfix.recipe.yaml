@@ -1,0 +1,72 @@
+---
+Description: Generates a BigFix Task for the local msi file
+Identifier: com.github.jgstew.bigfix.msi
+Input:
+  # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"
+  NAME: "LocalMSI"
+  VendorFolder: Recipes-Examples
+  template_file_path: "./%VendorFolder%/MSI-Win-Install_Update.bes.mustache"
+# MinimumVersion of AutoPkg - Should always be 2.3 (or higher once a new version is released)
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.local.msi
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+
+  # `BigFixSetupTemplateDictionary` creates a dictionary to fill out a bigix content template
+  #   If `SourceReleaseDate` is not provided, it will be set to today
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+
+  - Processor: com.github.jgstew.SharedProcessors/GetRecipeParentFolderName
+
+  - Processor: com.github.jgstew.SharedProcessors/TextSubstitutionRegEx
+    Arguments:
+      # replace spaces with underscores for cpe_vendor
+      re_pattern: " "
+      re_substitution: "_"
+      input_string: "%file_msi_Manufacturer%"
+      result_output_var_name: cpe_vendor
+
+  - Processor: com.github.jgstew.SharedProcessors/TextSubstitutionRegEx
+    Arguments:
+      # remove any non-word characters for cpe_vendor
+      re_pattern: '\W'
+      re_substitution: ""
+      input_string: "%cpe_vendor%"
+      result_output_var_name: cpe_vendor
+
+  - Processor: com.github.jgstew.SharedProcessors/GetCommonPlatformEnumeration
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput
+
+  # Generate Install/Update content:
+
+  # `ContentFromTemplate` generates bigfix content from a mustache template file
+  #   The file is filled out with variables from the Template Dictionary
+  #   If variables are missing from the Template Dictionary, then that area will be blank
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: "%template_file_path%"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.bes"
+
+  # `BESImport` imports the generated BES content into a BigFix Server
+  #   Which server and credentials are used is dictated by `~/.besapi.conf`
+  - Processor: com.github.jgstew.SharedProcessors/BESImport
+
+  # `BigFixActioner` creates an action from the imported BigFix Content
+  #   The action is an offer that requires user interaction to run in self service application
+  #   The action targets all computers whose name contains `autopkg`
+  - Processor: com.github.jgstew.SharedProcessors/BigFixActioner
+
+  # Generate Update only content:
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "patch"
+      append_value: True
+
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      # template_file_path: "%template_file_path%"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%-Update.bes"
+
+  - Processor: com.github.jgstew.SharedProcessors/BESImport
+

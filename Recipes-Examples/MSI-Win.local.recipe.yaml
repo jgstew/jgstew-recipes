@@ -10,6 +10,7 @@ Process:
 
   - Processor: com.github.jgstew.SharedProcessors/FileHasher
     Arguments:
+      # must put msi file in this location:
       pathname: "Recipes-Examples/msi.local.msi"
 
   # get SourceReleaseDate from MSI mod time:
@@ -26,8 +27,9 @@ Process:
       re_pattern: " "
       re_substitution: "_"
       input_string: "%DisplayName%"
+      result_output_var_name: file_name_part
 
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
     Arguments:
-      file_name: "%result_substitution%.msi"
-      url: "https://localhost:52311/Uploads/%filehasher_sha1%/%result_substitution%.msi"
+      file_name: "%file_name_part%.msi"
+      url: "https://localhost:52311/Uploads/%filehasher_sha1%/%file_name_part%.msi"

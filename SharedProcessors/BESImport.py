@@ -195,7 +195,6 @@ class BESImport(Processor):
             duplicate_task = False
             for task in tasks().iterchildren():
                 if task.Name == bes_title:
-
                     duplicate_task = True
 
                     self.output(

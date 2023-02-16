@@ -62,7 +62,9 @@ class BigFixFileUploader(SharedUtilityMethods):
         self.output(upload_result)
 
         # store result:
-        self.env["file_upload_prefetch"] = bes_conn.parse_upload_result_to_prefetch(upload_result)
+        self.env["file_upload_prefetch"] = bes_conn.parse_upload_result_to_prefetch(
+            upload_result
+        )
 
 
 if __name__ == "__main__":

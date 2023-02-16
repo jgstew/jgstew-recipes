@@ -14,7 +14,7 @@ Process:
       pathname: "Recipes-Examples/msi.local.msi"
 
   # get SourceReleaseDate from MSI mod time:
-  # - Processor: com.github.jgstew.SharedProcessors/FileMsiGetInfoOLE
+  - Processor: com.github.jgstew.SharedProcessors/FileMsiGetInfoOLE
 
   # get ProductVersion from MSI as version AND DisplayVersion:
   - Processor: com.github.jgstew.SharedProcessors/FileMsiGetProperty

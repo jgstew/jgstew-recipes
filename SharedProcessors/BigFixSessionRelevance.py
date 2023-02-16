@@ -42,6 +42,7 @@ class BigFixSessionRelevance(SharedUtilityMethods):
         self.env["BES_PASSWORD"] = ""
 
         # BigFix Server Connection
+        # https://github.com/jgstew/besapi/blob/master/src/besapi/besapi.py
         bes_conn = besapi.BESConnection(
             BES_USERNAME, BES_PASSWORD, BES_ROOT_SERVER, verify=False
         )

@@ -11,7 +11,9 @@ __all__ = ["BigFixFileUploader"]
 
 
 class BigFixFileUploader(SharedUtilityMethods):
-    """AutoPkg Processor to upload file to root server Uploads folder"""
+    """AutoPkg Processor to upload file to a BigFix root server Uploads
+
+    https://developer.bigfix.com/rest-api/api/upload.html"""
 
     description = __doc__
     input_variables = {
@@ -48,10 +50,13 @@ class BigFixFileUploader(SharedUtilityMethods):
         self.env["BES_PASSWORD"] = ""
 
         # BigFix Server Connection
+        # https://github.com/jgstew/besapi/blob/master/src/besapi/besapi.py
         bes_conn = besapi.BESConnection(
             BES_USERNAME, BES_PASSWORD, BES_ROOT_SERVER, verify=False
         )
 
+        # https://developer.bigfix.com/rest-api/api/upload.html
+        # https://github.com/jgstew/besapi/blob/ff145f09ee31c4d11d7ad7ea955e51e46b24e168/src/besapi/besapi.py#L508
         upload_result = bes_conn.upload(file_path, file_name_override)
 
         self.output(upload_result)

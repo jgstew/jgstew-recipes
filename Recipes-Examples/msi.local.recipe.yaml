@@ -1,0 +1,33 @@
+---
+Description: Get local msi file metadata
+Identifier: com.github.jgstew.local.msi
+Input:
+  NAME: LocalMSI
+MinimumVersion: '2.3'
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+
+  - Processor: com.github.jgstew.SharedProcessors/FileHasher
+    Arguments:
+      pathname: "Recipes-Examples/msi.local.msi"
+
+  # get SourceReleaseDate from MSI mod time:
+  # - Processor: com.github.jgstew.SharedProcessors/FileMsiGetInfoOLE
+
+  # get ProductVersion from MSI as version AND DisplayVersion:
+  - Processor: com.github.jgstew.SharedProcessors/FileMsiGetProperty
+    Arguments:
+      custom_msi_property2: "ProductName"
+      custom_msi_output2: "DisplayName"
+
+  - Processor: com.github.jgstew.SharedProcessors/TextSubstitutionRegEx
+    Arguments:
+      re_pattern: " "
+      re_substitution: "_"
+      input_string: "%DisplayName%"
+
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+    Arguments:
+      file_name: "%result_substitution%.msi"
+      url: "https://localhost:52311/Uploads/%filehasher_sha1%/%result_substitution%.msi"

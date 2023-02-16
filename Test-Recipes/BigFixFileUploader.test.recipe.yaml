@@ -11,6 +11,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/BigFixFileUploader
     Arguments:
       file_path: 'LICENSE'
+      # file_name_override: ""
 
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:

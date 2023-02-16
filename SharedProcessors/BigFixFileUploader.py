@@ -17,7 +17,12 @@ class BigFixFileUploader(SharedUtilityMethods):
     input_variables = {
         "file_path": {
             "required": True,
-            "description": "The session relevance to query",
+            "description": "The path to the file to upload",
+        },
+        "file_name_override": {
+            "required": False,
+            "default": "",
+            "description": "The filename to use in the prefetch",
         },
     }
     output_variables = {
@@ -28,6 +33,7 @@ class BigFixFileUploader(SharedUtilityMethods):
     def main(self):
         """BigFixFileUploader Main Method"""
         file_path = self.env.get("file_path", self.env.get("pathname"))
+        file_name_override = self.env.get("file_name_override", "")
 
         self.verify_file_exists(file_path)
 
@@ -46,7 +52,7 @@ class BigFixFileUploader(SharedUtilityMethods):
             BES_USERNAME, BES_PASSWORD, BES_ROOT_SERVER, verify=False
         )
 
-        upload_result = bes_conn.upload(file_path)
+        upload_result = bes_conn.upload(file_path, file_name_override)
 
         self.output(upload_result)
 

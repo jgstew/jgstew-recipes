@@ -11,7 +11,7 @@ __all__ = ["BigFixFileUploader"]
 
 
 class BigFixFileUploader(SharedUtilityMethods):
-    """AutoPkg Processor to get BigFix Session Relevance Results"""
+    """AutoPkg Processor to upload file to root server Uploads folder"""
 
     description = __doc__
     input_variables = {

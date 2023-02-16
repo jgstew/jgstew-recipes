@@ -70,3 +70,6 @@ Process:
 
   - Processor: com.github.jgstew.SharedProcessors/BESImport
 
+  - Processor: com.github.jgstew.SharedProcessors/BigFixFileUploader
+    Arguments:
+      file_path: 'Recipes-Examples/msi.local.msi'

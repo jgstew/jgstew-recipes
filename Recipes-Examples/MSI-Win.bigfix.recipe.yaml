@@ -70,6 +70,13 @@ Process:
 
   - Processor: com.github.jgstew.SharedProcessors/BESImport
 
+  # https://github.com/autopkg/autopkg/blob/master/Code/autopkglib/Copier.py
+  - Processor: Copier
+    Arguments:
+      source_path: 'Recipes-Examples/msi.local.msi'
+      destination_path: '%RECIPE_CACHE_DIR%/%file_name_part%.msi'
+      overwrite: True
+
   - Processor: com.github.jgstew.SharedProcessors/BigFixFileUploader
     Arguments:
-      file_path: 'Recipes-Examples/msi.local.msi'
+      file_path: '%RECIPE_CACHE_DIR%/%file_name_part%.msi'

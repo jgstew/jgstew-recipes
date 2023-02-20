@@ -13,7 +13,12 @@ from autopkglib import (  # pylint: disable=import-error,unused-import
 __all__ = ["FileExeGetInfoPE"]
 
 
-def dump_info_pefile(filepath):
+def dump_info_pefile(filepath, first_only=True):
+    """dump pefile info StringTable
+
+    Originally from:
+    - https://github.com/jgstew/tools/blob/master/Python/file_get_version_exe_pefile.py
+    """
     pe = pefile.PE(filepath)
 
     pe_info_dict = {}
@@ -28,6 +33,8 @@ def dump_info_pefile(filepath):
                                 pe_info_dict[
                                     str_entry[0].decode("utf-8", "backslashreplace")
                                 ] = str_entry[1].decode("utf-8", "backslashreplace")
+                            if first_only:
+                                return pe_info_dict
     return pe_info_dict
 
 
@@ -52,6 +59,11 @@ class FileExeGetInfoPE(Processor):  # pylint: disable=too-few-public-methods
             "default": "version",
             "description": "Variable to store the output to, defaults to `version`",
         },
+        "peinfo_first_only": {
+            "required": False,
+            "default": True,
+            "description": "If True, return first version info found. If False, return last.",
+        },
     }
     output_variables = {
         "file_peinfo_FileVersion": {"description": "FileVersion"},
@@ -69,8 +81,9 @@ class FileExeGetInfoPE(Processor):  # pylint: disable=too-few-public-methods
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
         custom_peinfo_index = self.env.get("custom_peinfo_index", "FileVersion")
         custom_peinfo_output = self.env.get("custom_peinfo_output", "version")
+        peinfo_first_only = self.env.get("peinfo_first_only", True)
 
-        pe_info_dict = dump_info_pefile(file_pathname)
+        pe_info_dict = dump_info_pefile(file_pathname, peinfo_first_only)
 
         self.output(f"Info: full pe_info: {pe_info_dict}", 4)
 

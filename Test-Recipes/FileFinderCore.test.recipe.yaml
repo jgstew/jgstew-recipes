@@ -1,0 +1,11 @@
+---
+Description: Test FileFinder Core Processor
+Identifier: com.github.jgstew.test.FileFinder
+Input:
+  NAME: FileFinderTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: FileFinder
+    Arguments:
+      # path_array: ["/Program Files/7-Zip/7z.exe", "/usr/local/bin/7z", "/opt/homebrew/bin/7z"]
+      pattern: "/Program Files*/7-Zip/7z.exe"

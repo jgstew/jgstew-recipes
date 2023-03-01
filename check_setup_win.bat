@@ -32,48 +32,6 @@ if exist "%GITPATH%\usr\bin\ssh-keygen.exe" (
     echo.
     echo  - Did you install GIT for Windows? -
     echo.
-    pause
-    REM exit 2
-)
-
-REM check SSH keys (ssh-keygen included with GIT, but must be run)
-REM must generate SSH keys
-REM must copy public key to github
-echo.
-echo check ssh keys exist: (~\.ssh\id_rsa.pub)
-if exist %UserProfile%\.ssh\id_rsa.pub (
-    REM file exists
-    echo    ~\.ssh\id_rsa.pub file found!
-) else (
-    REM file doesn't exist
-    echo ERROR: ~\.ssh\id_rsa.pub missing!
-    echo RUN: cmd /C "%GITPATH%\usr\bin\ssh-keygen.exe"
-    echo          to generate ~\.ssh\id_rsa.pub
-    echo          NOTE: just hit enter at "Enter file in which to save the key (/c/Users/_USER_/.ssh/id_rsa):" prompt
-    echo      then copy the contents of ~\.ssh\id_rsa.pub to your GitHub account SSH keys at https://github.com/settings/keys
-    pause
-    REM exit 3
-)
-
-echo.
-REM https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/testing-your-ssh-connection
-REM https://stackoverflow.com/a/28469910/861745
-echo Test SSH connection to GitHub:
-echo ssh -T -o StrictHostKeyChecking=no git@github.com
-ssh -T -o StrictHostKeyChecking=no git@github.com
-if errorlevel 1 (
-    echo   - ssh test succeeded!  exit code: %errorlevel%
-) else if errorlevel 0 (
-    echo   - ssh test succeeded!  exit code: %errorlevel%
-) else (
-    echo ERROR: ssh test failed!  exit code: %errorlevel%
-    echo   - Have you copied ssh keys to your github account?
-    echo.
-    type %UserProfile%\.ssh\id_rsa.pub
-    echo.
-    REM copy public key to clipboard? powershell -c [Windows.Forms.Clipboard]::SetText(???)
-    pause
-    REM exit %errorlevel%
 )
 
 
@@ -83,25 +41,30 @@ REM   %UserProfile%\AppData\Local\AutoPkg\config.json
 REM On Linux:
 REM   ~/.config/Autopkg/config.json
 echo.
-if exist %UserProfile%\AppData\Local\Autopkg\config.json (
+if exist "%UserProfile%\AppData\Local\Autopkg\config.json" (
     REM file exists
     echo Autopkg config found:
-    type %UserProfile%\AppData\Local\Autopkg\config.json
+    type "%UserProfile%\AppData\Local\Autopkg\config.json"
     echo.
 ) else (
     REM file doesn't exist
-    if not exist %UserProfile%\AppData\Local\Autopkg (
+    if not exist "%UserProfile%\AppData\Local\Autopkg" (
         REM autopkg folder doesn't exist
         echo creating missing Autopkg user config folder
-        mkdir %UserProfile%\AppData\Local\Autopkg
+        mkdir "%UserProfile%\AppData\Local\Autopkg"
         echo.
     )
     echo Autopkg config does not exist
     echo  creating blank Autopkg config
-    echo {} > %UserProfile%\AppData\Local\Autopkg\config.json
+    echo {} > "%UserProfile%\AppData\Local\Autopkg\config.json"
 )
 
-REM TODO: check visual studio build tools
+REM Check visual studio build tools
+REM download from here: https://aka.ms/vs/16/release/vs_buildtools.exe
+REM https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2019
+REM https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-160
+REM https://aka.ms/vs/16/release/vc_redist.x86.exe
+REM https://aka.ms/vs/16/release/vc_redist.x64.exe
 REM VSWhere check:
 REM   .\vswhere.exe -all -legacy -products * -format json
 REM WMI Relevance check:
@@ -136,66 +99,66 @@ if not exist %VSToolsPATH%\Microsoft.Build* (
     echo.
     echo ERROR: missing required Visual Studio Build Tools - Required for Python Pip installs
     echo ERROR: missing folder %VSToolsPATH%\Microsoft.Build*
+    echo Download URL:
+    echo   https://aka.ms/vs/16/release/vs_buildtools.exe
     echo Install Command:
     echo   vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
     echo.
-    pause
-    exit 9
 )
 if not exist %VSToolsPATH%\Microsoft.PythonTools.BuildCore* (
     REM folder missing
     echo.
     echo ERROR: missing required Visual Studio Build Tools - Required for Python Pip installs
     echo ERROR: missing folder %VSToolsPATH%\Microsoft.PythonTools.BuildCore*
+    echo Download URL:
+    echo   https://aka.ms/vs/16/release/vs_buildtools.exe
     echo Install Command:
     echo   vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
     echo.
-    pause
-    exit 9
 )
 if not exist %VSToolsPATH%\Microsoft.VisualStudio.PackageGroup.VC.Tools* (
     REM folder missing
     echo.
     echo ERROR: missing required Visual Studio Build Tools - Required for Python Pip installs
     echo ERROR: missing folder %VSToolsPATH%\Microsoft.VisualStudio.PackageGroup.VC.Tools*
+    echo Download URL:
+    echo   https://aka.ms/vs/16/release/vs_buildtools.exe
     echo Install Command:
     echo   vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
     echo.
-    pause
-    exit 9
 )
 if not exist %VSToolsPATH%\Microsoft.VisualStudio.Workload.MSBuildTools* (
     REM folder missing
     echo.
     echo ERROR: missing required Visual Studio Build Tools - Required for Python Pip installs
     echo ERROR: missing folder %VSToolsPATH%\Microsoft.VisualStudio.Workload.MSBuildTools*
+    echo Download URL:
+    echo   https://aka.ms/vs/16/release/vs_buildtools.exe
     echo Install Command:
     echo   vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
     echo.
-    pause
-    exit 9
 )
 if not exist %VSToolsPATH%\Microsoft.VisualStudio.Workload.VCTools* (
     REM folder missing
     echo.
     echo ERROR: missing required Visual Studio Build Tools - Required for Python Pip installs
     echo ERROR: missing folder %VSToolsPATH%\Microsoft.VisualStudio.Workload.VCTools*
+    echo Download URL:
+    echo   https://aka.ms/vs/16/release/vs_buildtools.exe
     echo Install Command:
     echo   vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
     echo.
-    pause
-    exit 9
 )
 if not exist %VSToolsPATH%\Win10SDK* (
     REM folder missing
     echo.
     echo ERROR: missing required Visual Studio Build Tools - Required for Python Pip installs
     echo ERROR: missing folder %VSToolsPATH%\Win10SDK*
+    echo Download URL:
+    echo   https://aka.ms/vs/16/release/vs_buildtools.exe
     echo Install Command:
     echo   vs_BuildTools.exe --norestart --passive --downloadThenInstall --includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
     echo.
-    pause
-    exit 9
 )
 
 echo.
@@ -214,7 +177,7 @@ if exist .git (
     echo NOTE: this error is expected if you are running this script independantly
     echo         to check intial setup. You should later run this from a cloned repo.
     pause
-    exit 99
+    exit /B 99
 )
 
 echo.
@@ -228,38 +191,13 @@ echo git pull
 git pull
 
 echo.
-echo update python ssl CA certs:
-pip install -U certifi
-
-echo.
-echo besapi python module version:
-echo python -c "import besapi ; print(besapi.__version__)"
-python -c "import besapi ; print(besapi.__version__)"
-
-echo.
-echo Check if besapi config file exists:
-REM %UserProfile%\.besapi.conf
-if exist %UserProfile%\.besapi.conf (
-    REM file exists
-    echo ~\.besapi.conf file found!
-    echo.
-    echo Test besapi config and login:
-    python -m besapi ls quit
-) else (
-    echo ERROR: ~\.besapi.conf file does not exist!
-    echo  copying blank besapi config
-    echo copy _setup\.besapi.conf %UserProfile%\.besapi.conf
-    copy _setup\.besapi.conf %UserProfile%\.besapi.conf
-)
-
-echo.
 echo Check for ..\autopkg git repo folder:
 if not exist ..\autopkg (
     echo ERROR: autopkg git folder missing!
     REM TODO: Consider attempt at automatic fix with the following:
     REM CMD /C "cd .. && git clone https://github.com/jgstew/autopkg.git"
     pause
-    exit 4
+    exit /B 4
 ) else (
     echo ..\autopkg folder found!
 )
@@ -305,6 +243,33 @@ REM https://stackoverflow.com/a/334890/861745
 
 
 echo.
+echo besapi python module version:
+echo python -c "import besapi ; print(besapi.__version__)"
+python -c "import besapi ; print(besapi.__version__)"
+
+echo.
+echo Check if besapi config file exists:
+REM %UserProfile%\.besapi.conf
+if exist %UserProfile%\.besapi.conf (
+    REM file exists
+    echo ~\.besapi.conf file found!
+    echo.
+    echo Test besapi config and login:
+    python -m besapi ls quit
+) else (
+    echo ERROR: ~\.besapi.conf file does not exist!
+    echo  copying blank besapi config
+    echo copy _setup\.besapi.conf %UserProfile%\.besapi.conf
+    copy _setup\.besapi.conf %UserProfile%\.besapi.conf
+)
+
+
+echo.
+echo update python ssl CA certs:
+pip install --upgrade certifi --user
+
+
+echo.
 echo AutoPkg Version Check: (WARNINGS are expected on Windows)
 REM this is assuming you ran check_setup_win.bat from within the recipes folder and that Autopkg is in a sibling folder
 echo python ..\autopkg\Code\autopkg version
@@ -322,6 +287,12 @@ echo Add/Update hansen-m-recipes in AutoPkg
 echo python ..\autopkg\Code\autopkg repo-add hansen-m-recipes
 python ..\autopkg\Code\autopkg repo-add hansen-m-recipes
 
+REM homebysix-recipes
+echo.
+echo Add/Update homebysix-recipes in AutoPkg
+echo python ..\autopkg\Code\autopkg repo-add homebysix-recipes
+python ..\autopkg\Code\autopkg repo-add homebysix-recipes
+
 REM add pre-commit:
 echo.
 echo Add pre-commit hooks:
@@ -337,4 +308,3 @@ echo Expected output `Found Version: 19.0.0.0`
 echo.
 echo Check the _setup folder for other items
 echo.
-pause

@@ -3,14 +3,20 @@ Description: Test BigFixFileUploader Processor
 Identifier: com.github.jgstew.test.BigFixFileUploader
 Input:
   NAME: BigFixFileUploaderTest
-MinimumVersion: '2.3'
+MinimumVersion: "2.3"
 Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
 
+  - Processor: com.github.jgstew.SharedProcessors/FileHasher
+    Arguments:
+      file_path: "LICENSE"
+
   - Processor: com.github.jgstew.SharedProcessors/BigFixFileUploader
     Arguments:
-      file_path: 'LICENSE'
+      file_path: "LICENSE"
+      # provide hash to skip upload:
+      file_sha1: "%filehasher_sha1%"
       # file_name_override: ""
 
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString

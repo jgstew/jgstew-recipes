@@ -21,6 +21,11 @@ class BigFixFileUploader(SharedUtilityMethods):
             "required": True,
             "description": "The path to the file to upload",
         },
+        "file_sha1": {
+            "required": False,
+            "default": "",
+            "description": "The sha1 hash of the file. Optional.",
+        },
         "file_name_override": {
             "required": False,
             "default": "",
@@ -35,6 +40,7 @@ class BigFixFileUploader(SharedUtilityMethods):
     def main(self):
         """BigFixFileUploader Main Method"""
         file_path = self.env.get("file_path", self.env.get("pathname"))
+        file_sha1 = self.env.get("file_sha1", "")
         file_name_override = self.env.get("file_name_override", "")
 
         self.verify_file_exists(file_path)
@@ -57,7 +63,7 @@ class BigFixFileUploader(SharedUtilityMethods):
 
         # https://developer.bigfix.com/rest-api/api/upload.html
         # https://github.com/jgstew/besapi/blob/ff145f09ee31c4d11d7ad7ea955e51e46b24e168/src/besapi/besapi.py#L508
-        upload_result = bes_conn.upload(file_path, file_name_override)
+        upload_result = bes_conn.upload(file_path, file_name_override, file_sha1)
 
         self.output(upload_result)
 

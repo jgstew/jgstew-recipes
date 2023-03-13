@@ -1,0 +1,21 @@
+---
+Description: Test ExtractorSevenZip Processor
+Identifier: com.github.jgstew.test.ExtractorSevenZip
+Input:
+  NAME: ExtractorSevenZipTest
+MinimumVersion: "2.3"
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: http://software.bigfix.com/download/redist/unzip-5.52.exe
+      COMPUTE_HASHES: False
+  - Processor: com.github.jgstew.SharedProcessors/ExtractorSevenZip
+    Arguments:
+      extract_dir: "test"
+      # Example, only extract `.data` file:
+      include_pattern: ".data"
+      # Example, ignore `.text` file:
+      ignore_pattern: ".text"
+      # sevenzip_path: 'C:\Program Files\7-Zip\7z.exe'

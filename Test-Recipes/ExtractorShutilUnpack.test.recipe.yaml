@@ -9,7 +9,8 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: URLDownloaderPython
     Arguments:
-      url: https://deploymenttools.acp.adobeoobe.com/RUM/Win/RemoteUpdateManager.zip
+      # url: https://deploymenttools.acp.adobeoobe.com/RUM/Win/RemoteUpdateManager.zip
+      url: http://software.bigfix.com/download/redist/unzip-5.52.exe
       COMPUTE_HASHES: False
   - Processor: com.github.jgstew.SharedProcessors/ExtractorShutilUnpack
     Arguments:

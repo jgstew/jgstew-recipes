@@ -1,11 +1,44 @@
 #!/usr/bin/python
 """Extracts the file using shutil unpack_archive.
 """
+import os
 import shutil
+import subprocess
 
 from autopkglib import Processor, ProcessorError
 
 __all__ = ["ExtractorShutilUnpack"]
+
+DEFAULT_7ZIP_PATHS = [
+    # Exe in current directory:
+    "7z",
+    "7z.exe",
+    # MacOS typical:
+    # brew install -y sevenzip
+    # brew install -y p7zip
+    "/opt/homebrew/bin/7z",
+    "/usr/local/bin/7z",
+    # Ubuntu typical:
+    # sudo apt-get install -y p7zip-full
+    "/usr/bin/7z",
+    # Windows typical:
+    # choco install -y 7zip
+    "/Program Files/7-Zip/7z.exe",
+    "/Program Files (x86)/7-Zip/7z.exe",
+]
+
+DEFAULT_7ZIP_FORMATS = [
+    ".7z",
+    ".exe",
+    ".rar",
+    ".cab",
+    ".iso",
+    ".rpm",
+    ".deb",
+    ".wim",
+    # alternatives exist for dmgs on MacOS:
+    ".dmg",
+]
 
 
 class ExtractorShutilUnpack(Processor):
@@ -39,6 +72,36 @@ class ExtractorShutilUnpack(Processor):
 
     __doc__ = description
 
+    def extract_7zip(self, filename, extract_dir):
+        """Extracts 7zip archive using subprocess call to 7z."""
+
+        # set initial default path:
+        sevenzip = shutil.which("7z")
+
+        if not sevenzip:
+            sevenzip = ""
+
+        # find 7z executable in default paths:
+        for exepath in [sevenzip] + DEFAULT_7ZIP_PATHS:
+            if os.path.isfile(exepath) and os.access(exepath, os.X_OK):
+                sevenzip = exepath
+                break
+
+        if not sevenzip:
+            raise ProcessorError(
+                f"ERROR: 7zip executable not found! Needed to extract `{filename}`"
+            )
+
+        try:
+            cmd_out = subprocess.check_output(
+                [sevenzip, "x", "-y", "-o" + extract_dir, filename]
+            )
+            self.output(f"7zip subprocess output: {cmd_out}", 4)
+        except subprocess.CalledProcessError as err:
+            raise ProcessorError(
+                f"Error extracting 7zip archive '{filename}': {err}"
+            ) from err
+
     def main(self):
         """Execution starts here:"""
         file_path = self.env.get("file_path", self.env.get("pathname"))
@@ -50,6 +113,16 @@ class ExtractorShutilUnpack(Processor):
 
         extract_path = f"{working_directory}/{extract_directory}"
 
+        # Register 7zip format with shutil
+        shutil.register_unpack_format(
+            "7zip",
+            DEFAULT_7ZIP_FORMATS,
+            self.extract_7zip,
+            description="Uses 7z executable to extract many extra formats",
+        )
+
+        self.output(f"Supported formats: {shutil.get_unpack_formats()}", 4)
+
         try:
             if file_format:
                 shutil.unpack_archive(file_path, extract_path, file_format)
@@ -59,9 +132,13 @@ class ExtractorShutilUnpack(Processor):
             self.output(f"Extracted Archive Path: {extract_path}")
         except BaseException as err:
             err_message = f"ERROR extracting archive '{file_path}': {err}"
-            self.output(err_message, 2)
             if not ignore_errors:
                 raise ProcessorError(err_message) from err
+            else:
+                # if 7z not found, raise error anyway:
+                if "7zip executable not found!" in err_message:
+                    raise ProcessorError(err_message) from err
+                self.output(err_message, 2)
 
 
 if __name__ == "__main__":

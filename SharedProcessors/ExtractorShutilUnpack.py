@@ -1,5 +1,8 @@
 #!/usr/bin/python
 """Extracts the file using shutil unpack_archive.
+
+For more advanced extraction with 7zip, see:
+- SharedProcessors/ExtractorSevenZip.py
 """
 import os
 import shutil

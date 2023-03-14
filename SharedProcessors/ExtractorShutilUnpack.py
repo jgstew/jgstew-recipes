@@ -9,6 +9,8 @@ __all__ = ["ExtractorShutilUnpack"]
 
 
 class ExtractorShutilUnpack(Processor):
+    """This processor unpacks an archive using shutil.unpack_archive"""
+
     description = "Extracts the archive using 7z."
     input_variables = {
         "file_path": {
@@ -17,7 +19,10 @@ class ExtractorShutilUnpack(Processor):
         },
         "file_format": {
             "required": False,
-            "description": "Archive format, if not provided, auto detection used",
+            "description": """The format of the archive
+             (e.g. 'zip', 'tar', 'gztar', 'bztar', 'xztar', or '7z').
+             If not specified, shutil will attempt to guess based on the file extension.
+            """,
         },
         "extract_dir": {
             "required": False,
@@ -53,9 +58,10 @@ class ExtractorShutilUnpack(Processor):
 
             self.output(f"Extracted Archive Path: {extract_path}")
         except BaseException as err:
-            self.output(f"ERROR: {err}", 2)
+            err_message = f"ERROR extracting archive '{file_path}': {err}"
+            self.output(err_message, 2)
             if not ignore_errors:
-                raise
+                raise ProcessorError(err_message) from err
 
 
 if __name__ == "__main__":

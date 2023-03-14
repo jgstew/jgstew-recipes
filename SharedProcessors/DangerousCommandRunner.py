@@ -58,7 +58,7 @@ class DangerousCommandRunner(Processor):  # pylint: disable=invalid-name
             raise ProcessorError(
                 "Script '%s' execution failed with error code %d: %s"
                 % (self.env["command_path"], err.errno, err.strerror)
-            )
+            ) from err
         if proc.returncode:
             self.env["command_return_code"] = proc.returncode
         if proc.returncode != 0:

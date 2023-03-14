@@ -137,11 +137,11 @@ class ExtractorShutilUnpack(Processor):
             err_message = f"ERROR extracting archive '{file_path}': {err}"
             if not ignore_errors:
                 raise ProcessorError(err_message) from err
-            else:
-                # if 7z not found, raise error anyway:
-                if "7zip executable not found!" in err_message:
-                    raise ProcessorError(err_message) from err
-                self.output(err_message, 2)
+
+            # if 7z not found, raise error anyway:
+            if "7zip executable not found!" in err_message:
+                raise ProcessorError(err_message) from err
+            self.output(err_message, 2)
 
 
 if __name__ == "__main__":

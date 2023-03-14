@@ -19,10 +19,12 @@ __all__ = ["AutoPkgCacheCleanup"]
 
 
 def get_file_mtime(file_path):
+    """Get file modification time"""
     return datetime.datetime.fromtimestamp(file_path.stat().st_mtime)
 
 
 def get_file_age(file_path):
+    """get file age interval"""
     return datetime.datetime.today() - get_file_mtime(file_path)
 
 

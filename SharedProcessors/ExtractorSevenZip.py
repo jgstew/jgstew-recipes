@@ -63,6 +63,11 @@ class ExtractorSevenZip(Processor):
             "default": "",
             "description": "Path to 7-Zip binary.",
         },
+        "sevenzip_args": {
+            "required": False,
+            "default": [],
+            "description": "Array of cmd args to pass to 7z executable.",
+        },
     }
     output_variables = {}
 
@@ -77,6 +82,7 @@ class ExtractorSevenZip(Processor):
         ignore_pattern = self.env.get("ignore_pattern", "")
         include_pattern = self.env.get("include_pattern", "")
         ignore_errors = self.env.get("ignore_errors", True)
+        sevenzip_args = self.env.get("sevenzip_args", [])
         # verbosity = self.env.get("verbose", 0)
 
         extract_flag = "x" if preserve_paths else "e"
@@ -109,6 +115,9 @@ class ExtractorSevenZip(Processor):
         # https://sevenzip.osdn.jp/chm/cmdline/switches/include.htm
         if include_pattern:
             cmd.append(f"-ir!{include_pattern}")
+
+        if sevenzip_args and len(sevenzip_args) > 0:
+            cmd.extend(sevenzip_args)
 
         self.output(f"7zip cmd line to be executed: {cmd}", 3)
 

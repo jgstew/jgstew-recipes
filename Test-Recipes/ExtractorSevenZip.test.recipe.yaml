@@ -18,4 +18,5 @@ Process:
       include_pattern: ".data"
       # Example, ignore `.text` file:
       ignore_pattern: ".text"
-      # sevenzip_path: 'C:\Program Files\7-Zip\7z.exe'
+      # also include `.rdata`:
+      sevenzip_args: ["-ir!.rdata"]

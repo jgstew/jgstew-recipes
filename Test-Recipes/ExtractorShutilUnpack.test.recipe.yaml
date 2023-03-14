@@ -1,0 +1,16 @@
+---
+Description: Test ExtractorShutilUnpack Processor
+Identifier: com.github.jgstew.test.ExtractorShutilUnpack
+Input:
+  NAME: ExtractorShutilUnpackTest
+MinimumVersion: "2.3"
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: https://deploymenttools.acp.adobeoobe.com/RUM/Win/RemoteUpdateManager.zip
+      COMPUTE_HASHES: False
+  - Processor: com.github.jgstew.SharedProcessors/ExtractorShutilUnpack
+    Arguments:
+      extract_dir: "test"

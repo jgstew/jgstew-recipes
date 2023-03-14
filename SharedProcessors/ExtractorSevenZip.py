@@ -76,7 +76,7 @@ class ExtractorSevenZip(Processor):
         extract_directory = self.env.get("extract_dir", "tmp")
         ignore_pattern = self.env.get("ignore_pattern", "")
         include_pattern = self.env.get("include_pattern", "")
-        ignore_errors = self.env.get("ignore_errors", "False")
+        ignore_errors = self.env.get("ignore_errors", True)
         # verbosity = self.env.get("verbose", 0)
 
         extract_flag = "x" if preserve_paths else "e"
@@ -115,7 +115,8 @@ class ExtractorSevenZip(Processor):
         try:
             cmd_output = subprocess.check_output(cmd).decode("utf-8")
             self.output(f"Extraction Process Output: {cmd_output}", 4)
-        except BaseException:
+        except BaseException as err:
+            self.output(f"ERROR: {err}", 2)
             if not ignore_errors:
                 raise
 

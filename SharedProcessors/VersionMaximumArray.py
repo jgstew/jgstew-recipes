@@ -3,8 +3,7 @@
 See docstring for VersionMaximumArray class
 """
 
-import distutils.version
-
+import looseversion
 from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,
     ProcessorError,
@@ -52,7 +51,7 @@ class VersionMaximumArray(Processor):  # pylint: disable=too-few-public-methods
             version_array = filtered_array
 
         # get maximum version:
-        version_maximum = max(version_array, key=distutils.version.LooseVersion)
+        version_maximum = max(version_array, key=looseversion.LooseVersion)
 
         self.env["version_maximum"] = version_maximum
 

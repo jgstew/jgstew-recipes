@@ -1,5 +1,5 @@
 [MESSAGES CONTROL]
-disable = C0330, C0326, C0103, R0903, R0801, c-extension-no-member, unused-import, import-error, no-member, broad-except
+disable = C0301, C0103, R0903, R0801, c-extension-no-member, unused-import, import-error, no-member, broad-except
 
 [format]
 max-line-length = 88

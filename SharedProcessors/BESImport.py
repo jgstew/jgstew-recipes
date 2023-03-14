@@ -109,7 +109,7 @@ class BESImport(Processor):
             self.get_config()
         except BaseException:
             self.output("ERROR: No besapi config loaded, use bescli to create one", 0)
-            return None
+            return 0
 
         bes_file_type = self.get_bes_type(bes_file)
         bes_type_api = bes_file_type.lower()

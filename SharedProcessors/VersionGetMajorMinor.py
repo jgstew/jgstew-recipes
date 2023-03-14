@@ -3,8 +3,7 @@
 See docstring for VersionGetMajorMinor class
 """
 
-import distutils.version
-
+import looseversion
 from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,
     ProcessorError,
@@ -15,7 +14,7 @@ __all__ = ["VersionGetMajorMinor"]
 
 def get_version_major_minor(vstring, separator_string="."):
     """Return an X.Y version"""
-    lver = distutils.version.LooseVersion(vstring)
+    lver = looseversion.LooseVersion(vstring)
     # NOTE: this should be done by using `packaging.version.parse` instead
     rval = separator_string.join([str(x) for x in lver.version[0:2]])
     return rval

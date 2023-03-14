@@ -4,6 +4,7 @@ certifi
 chevron
 generate_bes_from_template
 hachoir
+looseversion
 Pillow
 pre-commit
 signify

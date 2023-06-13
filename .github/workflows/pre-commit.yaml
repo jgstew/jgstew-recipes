@@ -1,13 +1,7 @@
 ---
 name: pre-commit
 
-on: 
-  pull_request:
-    branches:
-      - "**"
-  push:
-    paths:
-      - ".github/workflows/pre-commit.yaml"
+on: pull_request
 
 jobs:
   pre-commit:

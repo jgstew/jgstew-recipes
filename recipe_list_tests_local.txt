@@ -8,7 +8,6 @@ com.github.jgstew.test.DateTimeFromString
 com.github.jgstew.test.FileGetBase64
 com.github.jgstew.test.FileHasher
 com.github.jgstew.test.FileImageResize
-com.github.jgstew.test.FileTextSearcher
 com.github.jgstew.test.GetCommonPlatformEnumeration
 com.github.jgstew.test.GetRecipeParentFolderName
 com.github.jgstew.test.TemplateDictionaryAppend
@@ -18,9 +17,6 @@ com.github.jgstew.test.VersionGetMajorMinor
 
 # uses: com.github.homebysix.FindAndReplace/FindAndReplace
 com.github.jgstew.test.FindAndReplace
-
-# uses network:
-com.github.jgstew.test.URLTextSearcherArray
 
 # Uses network and https://github.com/autopkg/hansen-m-recipes/tree/master/SharedProcessors
 com.github.jgstew.test.HachoirMetaDataProvider3

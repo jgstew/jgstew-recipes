@@ -11,7 +11,8 @@ Process:
       search_path: "Test-Recipes"
       file_search_results_var: "file_search_results_var"
       # get identifiers from in scope recipes:
-      search_pattern: 'Identifier: +(["\w\.]+)'
+      # exclude BigFix specific recipes:
+      search_pattern: 'Identifier: +(com.github.jgstew.test.(?!BigFix|BES)["\w\.]+)'
       search_extension: "test.recipe.yaml"
       # write recipe list output to file:
       output_file_path: Test-Recipes/Test-Recipes.recipelist.txt

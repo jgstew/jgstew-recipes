@@ -6,18 +6,11 @@ Input:
 MinimumVersion: "2.3"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
-  - Processor: com.github.jgstew.SharedProcessors/FileGetExecutable
+  - Processor: URLDownloaderPython
     Arguments:
-      path_array:
-        [
-          "/Program Files/7-Zip/7z.exe",
-          "/Program Files (x86)/7-Zip/7z.exe",
-          "/usr/local/bin/7z",
-          "/usr/bin/7z"
-        ]
+      url: http://software.bigfix.com/download/redist/unzip-5.52.exe
+      COMPUTE_HASHES: False
   - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE
-    Arguments:
-      file_pathname: "%sevenzip_path%"
   # Example Output:
   #  'file_peinfo_CompanyName': 'Igor Pavlov',
   #  'file_peinfo_FileDescription': '7-Zip Console',
@@ -31,4 +24,4 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_peinfo_ProductName%"
-      assert_string: "7-Zip"
+      assert_string: "Unzip"

@@ -4,7 +4,9 @@ certifi
 chevron
 generate_bes_from_template
 hachoir
+icoextract
 looseversion
+pefile
 Pillow
 pre-commit
 signify

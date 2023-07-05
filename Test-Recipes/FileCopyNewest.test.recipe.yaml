@@ -25,5 +25,6 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_copy_newest_result%"
-      assert_string: "both files present, overwriting the older one with file_path_second"
+      # there are 2 possible valid results that both start with this:
+      assert_string: "both files present,"
       raise_error: True

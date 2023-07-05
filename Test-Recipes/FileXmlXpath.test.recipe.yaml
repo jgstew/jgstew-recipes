@@ -10,7 +10,7 @@ Process:
   # based upon: https://softwareupdate.vmware.com/cds/vmw-desktop/vmrc-windows.xml
   - Processor: FileCreator
     Arguments:
-      file_path: "%RECIPE_CACHE_DIR%/downloads/vmrc-windows.xml"
+      file_path: "%RECIPE_CACHE_DIR%/vmrc-windows.xml"
       file_content: |
         <metaList>
           <metadata>
@@ -30,7 +30,7 @@ Process:
   # get xpath result:
   - Processor: com.github.jgstew.SharedProcessors/FileXmlXpath
     Arguments:
-      pathname: "%RECIPE_CACHE_DIR%/downloads/vmrc-windows.xml"
+      pathname: "%RECIPE_CACHE_DIR%/vmrc-windows.xml"
       xml_xpath: "//metaList/metadata/url/text()"
       # configure to return only last result:
       xml_only_last: True

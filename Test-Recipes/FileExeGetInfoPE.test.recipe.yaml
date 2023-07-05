@@ -8,7 +8,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: URLDownloaderPython
     Arguments:
-      url: http://software.bigfix.com/download/redist/unzip-5.52.exe
+      url: https://raw.githubusercontent.com/ralphje/signify/master/tests/test_data/SoftwareUpdate.exe
       COMPUTE_HASHES: False
   - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE
   # Example Output:

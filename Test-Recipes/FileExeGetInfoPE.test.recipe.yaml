@@ -11,17 +11,18 @@ Process:
       url: https://raw.githubusercontent.com/ralphje/signify/master/tests/test_data/SoftwareUpdate.exe
       COMPUTE_HASHES: False
   - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE
-  # Example Output:
-  #  'file_peinfo_CompanyName': 'Igor Pavlov',
-  #  'file_peinfo_FileDescription': '7-Zip Console',
-  #  'file_peinfo_FileVersion': '21.06',
-  #  'file_peinfo_InternalName': '7z',
-  #  'file_peinfo_LegalCopyright': 'Copyright (c) 1999-2021 Igor Pavlov',
-  #  'file_peinfo_OriginalFilename': '7z.exe',
-  #  'file_peinfo_ProductName': '7-Zip',
-  #  'file_peinfo_ProductVersion': '21.06',
-  #  'version': '21.06'
+    # Example Output:
+    # 'file_peinfo_CompanyName': 'Apple Inc.',
+    # 'file_peinfo_FileDescription': 'Apple Software Update',
+    # 'file_peinfo_FileVersion': '2.1.1.116',
+    # 'file_peinfo_InternalName': 'Apple Software Update',
+    # 'file_peinfo_LegalCopyright': '(c) 2006-2008 Apple Inc. All rights '
+    #                                       'reserved.',
+    # 'file_peinfo_OriginalFilename': 'SoftwareUpdate.exe',
+    # 'file_peinfo_ProductName': 'Apple Software Update',
+    # 'file_peinfo_ProductVersion': '2.1.1.116',
+    # 'version': '2.1.1.116'
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_peinfo_ProductName%"
-      assert_string: "Unzip"
+      assert_string: "Apple Software Update"

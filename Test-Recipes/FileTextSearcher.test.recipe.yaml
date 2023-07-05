@@ -46,7 +46,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
     Arguments:
       first_result_only: True
-      search_path: '%VendorFolder%\vendor_metadata.cfg'
+      search_path: '%VendorFolder%/vendor_metadata.cfg'
       # output_variable: "file_search_results"
       file_search_results_var: "content_id_vendor"
       search_pattern: 'content_id_vendor *= *(\d+)'

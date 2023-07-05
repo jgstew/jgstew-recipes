@@ -16,7 +16,7 @@ LABEL org.label-schema.vcs-url="https://github.com/jgstew/jgstew-recipes"
 LABEL org.label-schema.docker.cmd="docker run --rm jgstewrecipes run -vv com.github.jgstew.test.DateTimeFromString"
 
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes p7zip-full msitools curl git wget python3 python3-pip build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes jq p7zip-full msitools curl git wget python3 python3-pip build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
 # currently using my fork due to improvements made to URLDownloaderPython
@@ -56,3 +56,5 @@ CMD ["help"]
 
 # Run a specific recipe:
 #   docker run --rm jgstewrecipes run -vv com.github.jgstew.test.DateTimeFromString
+
+# run test recipes: docker run --rm jgstewrecipes run -vv --recipe-list Test-Recipes/Test-Recipes.recipelist.txt

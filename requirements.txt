@@ -5,6 +5,7 @@ chevron
 generate_bes_from_template
 hachoir
 icoextract
+jsonpath_ng
 looseversion
 pefile
 Pillow

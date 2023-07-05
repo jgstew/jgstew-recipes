@@ -11,6 +11,9 @@ Process:
     Arguments:
       url: http://software.bigfix.com/download/redist/unzip-5.52.exe
       COMPUTE_HASHES: False
+  - Processor: com.github.jgstew.SharedProcessors/FileGetExecutable
+    Arguments:
+      path_array: ["/Program Files/7-Zip/7z.exe", "/usr/local/bin/7z", "/opt/homebrew/bin/7z", "/usr/bin/7z"]
   - Processor: com.github.jgstew.SharedProcessors/FileExeVersionExtractor
     Arguments:
       version_first: True

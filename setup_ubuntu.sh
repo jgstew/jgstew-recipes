@@ -10,7 +10,10 @@ python3 -m pip install --upgrade pip
 # update python basics
 python3 -m pip install --upgrade setuptools wheel build
 
+# if autopkg does not exist
+if [ ! -f  ../autopkg ] ; then
 git clone https://github.com/autopkg/autopkg.git ../autopkg
+fi
 
 # install autopkg requirements
 python3 -m pip install --requirement ../autopkg/new_requirements.txt

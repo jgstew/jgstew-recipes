@@ -16,14 +16,14 @@ LABEL org.label-schema.vcs-url="https://github.com/jgstew/jgstew-recipes"
 LABEL org.label-schema.docker.cmd="docker run --rm jgstewrecipes run -vv com.github.jgstew.test.DateTimeFromString"
 
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
-RUN apt-get update && apt-get install -y curl git python3 python3-pip && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes p7zip-full msitools curl git wget python3 python3-pip build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
 # currently using my fork due to improvements made to URLDownloaderPython
-RUN git clone https://github.com/jgstew/autopkg.git
+RUN git clone https://github.com/autopkg/autopkg.git
 WORKDIR /tmp/autopkg
 RUN git checkout dev
-RUN pip3 install --requirement requirements.txt --quiet
+RUN pip3 install --requirement gh_actions_requirements.txt --quiet
 
 WORKDIR /
 # this assumes that the repo contains a `requirements.txt` file:

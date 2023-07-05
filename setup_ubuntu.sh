@@ -36,7 +36,8 @@ for line in $(cat .autopkg_repos.txt); do python3 ../autopkg/Code/autopkg repo-a
 python3 -m pip install --requirement requirements.txt
 
 # test:
-python3 ../autopkg/Code/autopkg run -vv Test-Recipes/AutopkgCore.test.recipe.yaml
+python3 ../autopkg/Code/autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
+python3 ../autopkg/Code/autopkg run -v com.github.jgstew.test.AutopkgBuildRecipeListTest
 
 # get autopkg version
 python3 ../autopkg/Code/autopkg version

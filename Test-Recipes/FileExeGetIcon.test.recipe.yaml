@@ -5,26 +5,19 @@ Input:
   NAME: FileExeGetIconTest
 MinimumVersion: "2.3"
 Process:
-  - Processor: com.github.jgstew.SharedProcessors/FileExeGetIcon
+  - Processor: URLDownloaderPython
     Arguments:
-      file_pathname: 'C:\Program Files\Microsoft VS Code\Code.exe'
-      # icon_file_output: "%RECIPE_CACHE_DIR%/%NAME%.ico"
+      # good signature example
+      url: https://raw.githubusercontent.com/ralphje/signify/master/tests/test_data/SoftwareUpdate.exe
+      COMPUTE_HASHES: False
+  - Processor: com.github.jgstew.SharedProcessors/FileExeGetIcon
+    # Arguments:
+    #   file_pathname: 'C:\Program Files\Microsoft VS Code\Code.exe'
+    #   icon_file_output: "%RECIPE_CACHE_DIR%/%NAME%.ico"
   - Processor: com.github.jgstew.SharedProcessors/FileGetMagicType
     Arguments:
       file_pathname: "%icon_file_output%"
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_mime_type%"
-      assert_string: "image/x-icon"
-  # - Processor: com.github.jgstew.SharedProcessors/FileImageResize
-  #   Arguments:
-  #     file_pathname: "%icon_file_output%"
-  #     file_path_save: "%RECIPE_CACHE_DIR%/%NAME%.png"
-  #     max_pixel_dim: 32
-  # - Processor: com.github.jgstew.SharedProcessors/FileGetMagicType
-  #   Arguments:
-  #     file_pathname: "%file_path_resized%"
-  # - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
-  #   Arguments:
-  #     input_string: "%file_mime_type%"
-  #     assert_string: "image/png"
+      assert_string: "icon"

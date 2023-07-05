@@ -3,8 +3,10 @@
 See docstring for FileGetMagicType class
 """
 
-# pip install python-magic
-# pip install python-magic-bin
+# MacOS:
+# brew install libmagic
+# Ubuntu:
+# apt-get install libmagic-dev
 import magic
 from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,

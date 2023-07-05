@@ -29,6 +29,7 @@ if [ ! -f  ~/.config/Autopkg/config.json ] ; then
 echo {} > ~/.config/Autopkg/config.json
 fi
 
+# add required recipe repos for jgstew-recipes
 for line in $(cat .autopkg_repos.txt); do python3 ../autopkg/Code/autopkg repo-add $line; done
 
 # install jgstew-recipes requirements:

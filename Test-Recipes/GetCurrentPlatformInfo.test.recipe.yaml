@@ -9,13 +9,15 @@ Process:
     Arguments:
       comment_lowercase: "lowercasing shouldn't be needed if the regex is not case sensitive using (?i)"
     # lowercase_results: True
-  - Processor: GitHubReleasesInfoProvider
-    Arguments:
-      github_repo: sassoftware/relic
-      # the goal is to automatically download the correct relic client for the system running autopkg
-      asset_regex: "(?i)relic-client-%platform_system%(-%platform_machine%|(?!-))"
+
+  # # Example:
+  # - Processor: GitHubReleasesInfoProvider
+  #   Arguments:
+  #     github_repo: sassoftware/relic
+  #     # the goal is to automatically download the correct relic client for the system running autopkg
+  #     asset_regex: "(?i)relic-client-%platform_system%(-%platform_machine%|(?!-))"
+
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
-      input_string: "%url%"
-      # assert `NOT_SIGNED` in url
-      assert_string: "/relic-client-"
+      input_string: "%platform_python_version%"
+      assert_string: "3."

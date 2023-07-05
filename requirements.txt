@@ -7,8 +7,11 @@ hachoir
 icoextract
 jsonpath_ng
 looseversion
+olefile
 pefile
 Pillow
 pre-commit
+python-magic
+python-magic-bin
 signify
 validate_bes_xml

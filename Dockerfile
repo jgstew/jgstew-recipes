@@ -15,20 +15,29 @@ LABEL org.label-schema.url="https://github.com/jgstew/jgstew-recipes"
 LABEL org.label-schema.vcs-url="https://github.com/jgstew/jgstew-recipes"
 LABEL org.label-schema.docker.cmd="docker run --rm jgstewrecipes run -vv com.github.jgstew.test.DateTimeFromString"
 
+# Update everything?
+# RUN apt-get update && apt-get upgrade -y
+
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes libmagic-dev jq p7zip-full msitools curl git wget python3 python3-pip build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev && rm -rf /var/lib/apt/lists/*
+
+# update pip:
+RUN python3 -m pip install --upgrade pip
+
+# update python basics
+RUN python3 -m pip install --upgrade setuptools wheel build
 
 WORKDIR /tmp
 # currently using my fork due to improvements made to URLDownloaderPython
 RUN git clone https://github.com/autopkg/autopkg.git
 WORKDIR /tmp/autopkg
 RUN git checkout dev
-RUN pip3 install --requirement gh_actions_requirements.txt --quiet
+RUN python3 -m pip install --requirement gh_actions_requirements.txt --quiet
 
 WORKDIR /
 # this assumes that the repo contains a `requirements.txt` file:
 COPY requirements.txt /tmp/
-RUN pip3 install --requirement /tmp/requirements.txt --quiet
+RUN python3 -m pip install --requirement /tmp/requirements.txt --quiet
 RUN rm -f /tmp/requirements.txt
 
 # create empty autopkg config

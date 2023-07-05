@@ -17,7 +17,7 @@ com.github.jgstew.test.FileExeGetIcon
 com.github.jgstew.test.FileExeGetInfoPE
 com.github.jgstew.test.FileExeVerifySignature
 com.github.jgstew.test.FileExeVersionExtractor
-com.github.jgstew.test.FileFinder
+com.github.jgstew.test.FileFinderCore
 com.github.jgstew.test.FileGetBase64
 com.github.jgstew.test.FileGetExecutable
 com.github.jgstew.test.FileGetMagicType

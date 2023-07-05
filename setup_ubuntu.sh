@@ -10,6 +10,9 @@ python3 -m pip install --upgrade pip
 # update python basics
 python3 -m pip install --upgrade setuptools wheel build
 
+# This may solve a weird issue:
+python3 -m pip install -U pyasn1-modules --ignore-installed pyasn1-modules
+
 # if autopkg does not exist
 if [ ! -f  ../autopkg ] ; then
 git clone https://github.com/autopkg/autopkg.git ../autopkg

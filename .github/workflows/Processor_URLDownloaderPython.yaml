@@ -29,6 +29,7 @@ jobs:
       - name: Install requirements
         run: pip install --requirement requirements.txt
 
+      # update ssl certs:
       - name: Install/Update Python certs
         run: pip install --upgrade certifi
 

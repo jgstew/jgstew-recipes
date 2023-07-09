@@ -1,0 +1,27 @@
+---
+name: Test Action setup-autopkg
+
+on:
+  push:
+    paths:
+      - ".github/workflows/Test_Action_setup-autopkg.yaml"
+      - ".github/actions/setup-autopkg/**"
+  pull_request:
+    paths:
+      - ".github/workflows/Test_Action_setup-autopkg.yaml"
+      - ".github/actions/setup-autopkg/**"
+
+jobs:
+  TestAction_setup-autopkg:
+    runs-on: ubuntu-latest
+    name: Test Action setup-autopkg
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2 # OR "2" -> To retrieve the preceding commit.
+
+      - name: setup-autopkg local action
+        uses: .github/actions/setup-autopkg
+
+      - name: run recipe autopkg
+        run: python autopkg/Code/autopkg run -vv Test-Recipes/AutopkgCore.test.recipe.yaml

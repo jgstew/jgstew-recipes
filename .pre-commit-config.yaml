@@ -44,10 +44,7 @@ repos:
     rev: v5.9.3
     hooks:
       - id: isort
-  - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.9.2
-    hooks:
-      - id: flake8
+
   # this works with json with comments, but gave me an error
   # - repo: https://gitlab.com/bmares/check-json5
   #   rev: v1.0.0

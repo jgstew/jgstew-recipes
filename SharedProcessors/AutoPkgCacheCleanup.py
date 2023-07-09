@@ -114,7 +114,8 @@ class AutoPkgCacheCleanup(Processor):  # pylint: disable=invalid-name
                             file_path.unlink(missing_ok=True)
                             num_files_deleted = num_files_deleted + 1
 
-        self.env["num_files_deleted"] = num_files_deleted
+        # make it a string so that it can be used in var substitution:
+        self.env["num_files_deleted"] = str(num_files_deleted)
         self.env["total_cache_size_gb"] = round(
             total_cache_size / (1024 * 1024 * 1024), 2
         )

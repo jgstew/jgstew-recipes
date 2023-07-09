@@ -11,12 +11,14 @@ Process:
     Arguments:
       pathname: "%RECIPE_CACHE_DIR%/downloads/testfile.txt"
       touch_create_folders: True
+
   # set age on a tmp file for later cleanup:
   - Processor: com.github.jgstew.SharedProcessors/FileTouch
     Arguments:
       pathname: "%RECIPE_CACHE_DIR%/downloads/tmpabcde"
       touch_create_folders: True
       touch_time_offset_days: -40
+
   # https://github.com/jgstew/jgstew-recipes/blob/main/SharedProcessors/AutoPkgCacheCleanup.py
   - Processor: com.github.jgstew.SharedProcessors/AutoPkgCacheCleanup
     Arguments:
@@ -25,11 +27,18 @@ Process:
       cleanup_empty_files: True
       cleanup_tmp_files: True
       cleanup_cache_all: True
+
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%num_files_deleted%"
+      re_pattern: '(\d+)'
+
   # create empty test file for later cleanup:
   - Processor: com.github.jgstew.SharedProcessors/FileTouch
     Arguments:
       pathname: "%RECIPE_CACHE_DIR%/downloads/testfile.txt"
       touch_create_folders: True
+
   - Processor: com.github.jgstew.SharedProcessors/AutoPkgCacheCleanup
     Arguments:
       cleanup_max_age_days: 30
@@ -38,7 +47,8 @@ Process:
       cleanup_tmp_files: True
       # test cleaning cache for only this recipe:
       cleanup_cache_all: False
-  # - Processor: com.github.jgstew.SharedProcessors/TextSearcher
-  #   Arguments:
-  #     input_string: "%num_files_deleted%"
-  #     re_pattern: '(\d+)'
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%num_files_deleted%"
+      assert_string: "1"

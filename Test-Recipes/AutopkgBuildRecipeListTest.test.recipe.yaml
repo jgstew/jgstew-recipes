@@ -6,6 +6,7 @@ Input:
 MinimumVersion: "2.3"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+
   - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
     Arguments:
       search_path: "Test-Recipes"

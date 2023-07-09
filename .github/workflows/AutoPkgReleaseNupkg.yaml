@@ -46,8 +46,7 @@ jobs:
         run: choco install python3 --version 3.11.4 --no-progress --yes --force --force-dependencies
 
       - name: test chocolately install autopkg.nupkg
-        run: cd ~ && choco install autopkg -s "Library\AutoPkg\Cache\com.github.jgstew.nupkg.AutoPkg\nupkgs\" --pre --no-progress --yes --force --force-dependencies --verbose
-        shell: cmd
+        run: choco install autopkg -s "$env:USERPROFILE\Library\AutoPkg\Cache\com.github.jgstew.nupkg.AutoPkg\nupkgs\" --pre --no-progress --yes --force --force-dependencies --verbose
 
       - name: test autopkg chocolately install
         run: autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml

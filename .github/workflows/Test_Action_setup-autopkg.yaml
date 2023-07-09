@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 2 # OR "2" -> To retrieve the preceding commit.
 
       - name: setup-autopkg local action
-        uses: .github/actions/setup-autopkg
+        uses: ./.github/actions/setup-autopkg
 
       - name: run recipe autopkg
         run: python autopkg/Code/autopkg run -vv Test-Recipes/AutopkgCore.test.recipe.yaml

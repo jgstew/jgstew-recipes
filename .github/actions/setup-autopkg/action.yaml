@@ -12,13 +12,18 @@ inputs:
     description: "Which branch of autopkg repo to use"
     required: true
     default: "master"
+  set-powershell-policy:
+    description: "Should this set the windows powershell execution policy?"
+    required: true
+    # only needed on self hosted windows runners, but no harm otherwise:
+    default: "true"
 
 runs:
   using: "composite"
   steps:
     # only needed on self hosted windows runners:
     - name: set powershell execution policy CurrentUser
-      if: runner.os == 'Windows'
+      if: runner.os == 'Windows' && inputs.set-powershell-policy == 'true'
       shell: cmd
       run: powershell -command "Set-ExecutionPolicy -Force -ExecutionPolicy RemoteSigned -Scope CurrentUser"
 

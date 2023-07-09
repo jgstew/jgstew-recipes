@@ -31,7 +31,7 @@ call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd
 echo install visual studio code
 choco install -y vscode
 
-@REM echo install windows WindowsTerminal 
+@REM echo install windows WindowsTerminal
 @REM choco install -y microsoft-windows-terminal
 
 echo install git

@@ -32,46 +32,12 @@ jobs:
           done
           cat TestRecipesAction.txt
 
-      - name: checkout autopkg master
-        if: steps.changed-files.outputs.any_changed == 'true'
-        uses: actions/checkout@v3
-        with:
-          repository: autopkg/autopkg
-          path: autopkg
-          ref: master
+      - name: setup-autopkg local action
+        uses: ./.github/actions/setup-autopkg
 
-      - name: Set up Python
-        if: steps.changed-files.outputs.any_changed == 'true'
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-          cache: "pip"
-          # following should be any requirements files used later:
-          cache-dependency-path: |
-            autopkg/gh_actions_requirements.txt
-            requirements.txt
-
-      - name: Install AutoPkg Reqirements
-        if: steps.changed-files.outputs.any_changed == 'true'
-        run: pip install --requirement autopkg/gh_actions_requirements.txt
-
-      - name: Install requirements
+      - name: Install repo requirements
         if: steps.changed-files.outputs.any_changed == 'true'
         run: pip install --requirement requirements.txt
-
-      - name: create empty config windows
-        # https://stackoverflow.com/questions/57946173/github-actions-run-step-on-specific-os
-        if: runner.os == 'Windows'
-        shell: cmd
-        run: |
-          if not exist "%USERPROFILE%/AppData/Local/Autopkg" mkdir "%USERPROFILE%/AppData/Local/Autopkg"
-          if not exist "%USERPROFILE%/AppData/Local/Autopkg/config.json" echo {} > "%USERPROFILE%/AppData/Local/Autopkg/config.json"
-
-      - name: create default autopkg config file Linux
-        if: runner.os == 'Linux'
-        run: |
-          cd ~ && mkdir -p .config/Autopkg
-          cd ~ && echo {} > .config/Autopkg/config.json
 
       - name: run recipe autopkg
         if: steps.changed-files.outputs.any_changed == 'true'

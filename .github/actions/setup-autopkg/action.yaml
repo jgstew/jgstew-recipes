@@ -4,21 +4,35 @@ inputs:
   name:
     required: false
     description: "Name"
+  use-python-version:
+    description: "Which version of python to use"
+    required: true
+    default: "3.10"
+  use-autopkg-branch:
+    description: "Which branch of autopkg repo to use"
+    required: true
+    default: "master"
 
 runs:
   using: "composite"
   steps:
-    - name: checkout autopkg master
+    # only needed on self hosted windows runners:
+    - name: set powershell execution policy CurrentUser
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: powershell -command "Set-ExecutionPolicy -Force -ExecutionPolicy RemoteSigned -Scope CurrentUser"
+
+    - name: checkout autopkg
       uses: actions/checkout@v3
       with:
         repository: autopkg/autopkg
         path: autopkg
-        ref: master
+        ref: ${{ inputs.use-autopkg-branch }}
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: "3.10"
+        python-version: ${{ inputs.use-python-version }}
         cache: "pip"
         # following should be any requirements files used later:
         cache-dependency-path: |

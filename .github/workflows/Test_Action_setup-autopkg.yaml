@@ -13,7 +13,11 @@ on:
 
 jobs:
   TestAction_setup-autopkg:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # https://ncorti.com/blog/howto-github-actions-build-matrix
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     name: Test Action setup-autopkg
     steps:
       - uses: actions/checkout@v3

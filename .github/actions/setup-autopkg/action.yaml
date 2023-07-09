@@ -42,6 +42,7 @@ runs:
         # following should be any requirements files used later:
         cache-dependency-path: |
           autopkg/gh_actions_requirements.txt
+          requirements.txt
 
     - name: Install AutoPkg Reqirements
       run: pip install --requirement autopkg/gh_actions_requirements.txt

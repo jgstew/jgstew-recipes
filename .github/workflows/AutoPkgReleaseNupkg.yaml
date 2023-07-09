@@ -40,16 +40,21 @@ jobs:
         run: python autopkg/Code/autopkg run -v AutoPkgRecipe/AutoPkgRelease.nupkg.recipe.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: chocolately install python
-        # python versions: 3.8.10, 3.9.12, 3.10.5
-        run: choco install python3 --version 3.10.5 --no-progress --yes --force --force-dependencies
+        # python versions: 3.8.10, 3.9.12, 3.10.5, 3.11.4
+        run: choco install python3 --version 3.11.4 --no-progress --yes --force --force-dependencies
+
       - name: test chocolately install autopkg.nupkg
         run: cd ~ && choco install autopkg -s "Library\AutoPkg\Cache\com.github.jgstew.nupkg.AutoPkg\nupkgs\" --pre --no-progress --yes --force --force-dependencies --verbose
+        shell: cmd
+
       - name: test autopkg chocolately install
         run: autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
-      # - name: Get Choco log contents if failure occurs
-      #   if: ${{ failure() }}
-      #   # should upload artifact instead
-      #   run: cat C:\ProgramData\chocolatey\logs\chocolatey.log
+
+      - name: Get Choco log contents if failure occurs
+        if: ${{ failure() }}
+        # should upload artifact instead
+        run: cat C:\ProgramData\chocolatey\logs\chocolatey.log
 # Related:
 # - https://github.com/jgstew/bigfix-content/blob/master/.github/workflows/autopkg.yaml

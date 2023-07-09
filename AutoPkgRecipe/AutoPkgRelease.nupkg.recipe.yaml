@@ -5,7 +5,7 @@ Identifier: com.github.jgstew.nupkg.AutoPkg
 Input:
   NAME: autopkg
   PYTHON_PACKAGE_ID: python3
-  PYTHON_VERSION: "3.8"
+  PYTHON_VERSION: "3.10.11"
 MinimumVersion: "2.3"
 SupportedPlatforms:
   - Windows
@@ -25,7 +25,7 @@ Process:
         $AutoPkgDir = Resolve-Path $env:ChocolateyPackageFolder\tools\autopkg-*
         & python -m venv $AutoPkgDir\.python-env
         Write-Output 'Running "pip install ..." to generate self-contained environment.'
-        & $AutoPkgDir\.python-env\Scripts\pip --disable-pip-version-check install -r $AutoPkgDir\requirements.txt --quiet
+        & $AutoPkgDir\.python-env\Scripts\pip --disable-pip-version-check install -r $AutoPkgDir\gh_actions_requirements.txt --quiet
         Get-ChildItem -Recurse $AutoPkgDir\.python-env -Include *.exe, *.dll |
             foreach { New-Item -ItemType File "$($_.FullName).ignore" } | Write-Verbose
         Install-ChocolateyPowershellCommand -PackageName $packageArgs.packageName -PsFileFullPath $AutoPkgDir\Scripts\autopkg.ps1

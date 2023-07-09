@@ -33,6 +33,7 @@ jobs:
           cat TestRecipesAction.txt
 
       - name: setup-autopkg local action
+        if: steps.changed-files.outputs.any_changed == 'true'
         uses: ./.github/actions/setup-autopkg
 
       - name: Install repo requirements

@@ -44,6 +44,9 @@ runs:
           autopkg/gh_actions_requirements.txt
           requirements.txt
 
+    - name: Install/Update Python Build Tools
+      run: pip install --upgrade setuptools wheel build
+
     - name: Install AutoPkg Reqirements
       run: pip install --requirement autopkg/gh_actions_requirements.txt
       shell: bash

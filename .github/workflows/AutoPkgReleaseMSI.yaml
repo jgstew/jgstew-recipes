@@ -51,45 +51,21 @@ jobs:
 
       - name: checkout this repo
         uses: actions/checkout@v3
-      - name: checkout autopkg dev
-        uses: actions/checkout@v3
-        with:
-          repository: autopkg/autopkg
-          path: autopkg
-          ref: dev
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.8
-          cache: "pip"
-          cache-dependency-path: |
-            autopkg/requirements.txt
-            requirements.txt
+      - name: setup-autopkg local action
+        uses: ./.github/actions/setup-autopkg
 
-      - name: Install AutoPkg Reqirements
-        run: pip install --requirement autopkg/requirements.txt
       - name: Install requirements
         run: pip install --requirement requirements.txt
 
-      - name: create empty config windows
-        # https://stackoverflow.com/questions/57946173/github-actions-run-step-on-specific-os
-        if: runner.os == 'Windows'
-        shell: cmd
-        run: |
-          if not exist "%USERPROFILE%/AppData/Local/Autopkg" mkdir "%USERPROFILE%/AppData/Local/Autopkg"
-          if not exist "%USERPROFILE%/AppData/Local/Autopkg/config.json" echo {} > "%USERPROFILE%/AppData/Local/Autopkg/config.json"
-      - name: create default autopkg config file Linux
-        if: runner.os == 'Linux'
-        run: |
-          cd ~ && mkdir -p .config/Autopkg
-          cd ~ && echo {} > .config/Autopkg/config.json
       - name: run test recipe autopkg
         run: python autopkg/Code/autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
+
       - name: run msibuild recipe
         run: python autopkg/Code/autopkg run -vv AutoPkgRecipe/AutoPkgRelease.msbuild.recipe.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: run msbuild
         if: runner.os == 'Windows'
         shell: bash
@@ -109,6 +85,7 @@ jobs:
           name="$(basename "$ZIP_FILE" ".zip")"
           version="2.4.1"
           "MSBuild.exe" ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj -p:SourceDir="$GITHUB_WORKSPACE/autopkg/Code" -p:OutputPath="." -p:OutputName="$name" -p:ProductVersion="$version"
+
       - name: upload built MSI
         if: runner.os == 'Windows'
         # https://github.com/actions/upload-artifact

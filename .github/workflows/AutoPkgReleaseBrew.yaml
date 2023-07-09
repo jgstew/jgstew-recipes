@@ -19,12 +19,6 @@ jobs:
   AutoPkgBrew:
     runs-on: macos-latest
     steps:
-      # only needed on self hosted windows runners:
-      - name: set powershell execution policy CurrentUser
-        if: runner.os == 'Windows'
-        shell: cmd
-        run: powershell -command "Set-ExecutionPolicy -Force -ExecutionPolicy RemoteSigned -Scope CurrentUser"
-
       - name: Set github token autopkg
         # required for githubreleaseinfoprovider in github actions
         # without this, API limits will be hit
@@ -40,38 +34,12 @@ jobs:
 
       - uses: actions/checkout@v3
 
-      - name: checkout autopkg dev
-        uses: actions/checkout@v3
-        with:
-          repository: autopkg/autopkg
-          path: autopkg
-          ref: dev
+      - name: setup-autopkg local action
+        uses: ./.github/actions/setup-autopkg
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
-          cache: "pip"
-          cache-dependency-path: |
-            autopkg/gh_actions_requirements.txt
-            requirements.txt
-
-      - name: Install AutoPkg Reqirements
-        run: pip install --requirement autopkg/gh_actions_requirements.txt
       - name: Install requirements
         run: pip install --requirement requirements.txt
-      - name: create empty config windows
-        # https://stackoverflow.com/questions/57946173/github-actions-run-step-on-specific-os
-        if: runner.os == 'Windows'
-        shell: cmd
-        run: |
-          if not exist "%USERPROFILE%/AppData/Local/Autopkg" mkdir "%USERPROFILE%/AppData/Local/Autopkg"
-          if not exist "%USERPROFILE%/AppData/Local/Autopkg/config.json" echo {} > "%USERPROFILE%/AppData/Local/Autopkg/config.json"
-      - name: create default autopkg config file Linux
-        if: runner.os == 'Linux'
-        run: |
-          cd ~ && mkdir -p .config/Autopkg
-          cd ~ && echo {} > .config/Autopkg/config.json
+
       - name: run test recipe autopkg
         run: python autopkg/Code/autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
 

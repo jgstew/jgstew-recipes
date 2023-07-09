@@ -23,6 +23,9 @@ jobs:
         uses: tj-actions/changed-files@v37
         with:
           files: "**.recipe.yaml"
+          # Ignore windows only recipes:
+          files_ignore: |
+            AutoPkgRecipe/AutoPkgRelease.nupkg.recipe.yaml
 
       - name: List all changed files
         if: steps.changed-files.outputs.any_changed == 'true'

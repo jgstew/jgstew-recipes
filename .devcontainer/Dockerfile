@@ -17,21 +17,20 @@ RUN if ! cat /etc/group | grep -e "^pip-global:" > /dev/null 2>&1; then groupadd
 ARG NODE_VERSION="none"
 RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
-# [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
-COPY requirements.txt /tmp/pip-tmp/
-RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
-    && rm -rf /tmp/pip-tmp
-
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends curl wget
+    && apt-get -y install --no-install-recommends libmagic-dev jq p7zip-full msitools curl git wget python3 python3-pip build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 
-# [Optional] Uncomment this line to install global node packages.
-# RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
+# update python basics
+RUN sudo pip3 install --upgrade setuptools wheel build
 
 # setup autopkg:
-# currently using my fork due to improvements made to URLDownloaderPython
-RUN cd /tmp && git clone https://github.com/jgstew/autopkg.git
-RUN cd /tmp/autopkg && git checkout dev
-RUN cd /tmp/autopkg && pip3 install --requirement requirements.txt --quiet
+RUN cd /tmp && git clone https://github.com/autopkg/autopkg.git
+RUN cd /tmp/autopkg && sudo pip3 install --requirement gh_actions_requirements.txt
+
+# [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
+# COPY requirements.txt /tmp/pip-tmp/
+# RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
+#     && rm -rf /tmp/pip-tmp
+
 RUN for line in $(cat /tmp/.autopkg_repos.txt); do python3 /tmp/autopkg/Code/autopkg repo-add $line; done

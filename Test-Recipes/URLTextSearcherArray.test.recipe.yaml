@@ -9,7 +9,9 @@ Process:
     Arguments:
       url: https://support.bigfix.com/bes/release/index.html
       re_pattern: '>(?P<version>\d+\.\d+\.\d+\.\d+)<'
+
   - Processor: com.github.jgstew.SharedProcessors/VersionMaximumArray
+
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%version_maximum%"

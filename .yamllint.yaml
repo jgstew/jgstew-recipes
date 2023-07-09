@@ -11,5 +11,6 @@ rules:
     level: warning
   new-lines:
     level: warning
+  # prettier is doing conflicting indentation:
   indentation:
     level: warning

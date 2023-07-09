@@ -21,49 +21,16 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      # only needed on self hosted windows runners:
-      - name: set powershell execution policy CurrentUser
-        if: runner.os == 'Windows'
-        shell: cmd
-        run: powershell -command "Set-ExecutionPolicy -Force -ExecutionPolicy RemoteSigned -Scope CurrentUser"
-
       - name: checkout this repo
         uses: actions/checkout@v3
 
-      - name: checkout autopkg master
-        uses: actions/checkout@v3
-        with:
-          repository: autopkg/autopkg
-          path: autopkg
-          ref: master
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-          cache: "pip"
-          # following should be any requirements files used later:
-          cache-dependency-path: |
-            autopkg/gh_actions_requirements.txt
+      - name: setup-autopkg local action
+        uses: ./.github/actions/setup-autopkg
 
       # the processors being tested don't need these:
       # - name: Install requirements
       #   run: pip install --requirement requirements.txt
 
-      - name: Install AutoPkg Reqirements
-        run: pip install --requirement autopkg/gh_actions_requirements.txt
-      - name: create empty config windows
-        # https://stackoverflow.com/questions/57946173/github-actions-run-step-on-specific-os
-        if: runner.os == 'Windows'
-        shell: cmd
-        run: |
-          if not exist "%USERPROFILE%/AppData/Local/Autopkg" mkdir "%USERPROFILE%/AppData/Local/Autopkg"
-          if not exist "%USERPROFILE%/AppData/Local/Autopkg/config.json" echo {} > "%USERPROFILE%/AppData/Local/Autopkg/config.json"
-      - name: create default autopkg config file Linux
-        if: runner.os == 'Linux'
-        run: |
-          cd ~ && mkdir -p .config/Autopkg
-          cd ~ && echo {} > .config/Autopkg/config.json
       - name: Set up old files
         shell: bash
         run: |
@@ -71,6 +38,7 @@ jobs:
           touch ~/Library/AutoPkg/Cache/com.github.test/downloads/testfile.txt
           mkdir -p ~/Library/AutoPkg/Cache/com.github.jgstew.test.AutoPkgCacheCleanup/downloads
           echo "test" > ~/Library/AutoPkg/Cache/com.github.jgstew.test.AutoPkgCacheCleanup/downloads/tmpabcde
+
       - name: run recipe autopkg
         run: python autopkg/Code/autopkg run -vv Test-Recipes/AutoPkgCacheCleanup.test.recipe.yaml
 # Related:

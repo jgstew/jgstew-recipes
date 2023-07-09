@@ -30,17 +30,17 @@ jobs:
       - name: checkout this repo
         uses: actions/checkout@v3
 
-      - name: checkout autopkg dev
+      - name: checkout autopkg master
         uses: actions/checkout@v3
         with:
           repository: autopkg/autopkg
           path: autopkg
-          ref: dev
+          ref: master
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3
+          python-version: "3.10"
           cache: "pip"
           # following should be any requirements files used later:
           cache-dependency-path: |

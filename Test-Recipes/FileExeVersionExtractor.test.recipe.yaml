@@ -3,7 +3,7 @@ Description: Test FileExeVersionExtractor Processor
 Identifier: com.github.jgstew.test.FileExeVersionExtractor
 Input:
   NAME: FileExeVersionExtractorTest
-MinimumVersion: '2.3'
+MinimumVersion: "2.3"
 Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
@@ -13,7 +13,23 @@ Process:
       COMPUTE_HASHES: False
   - Processor: com.github.jgstew.SharedProcessors/FileGetExecutable
     Arguments:
-      path_array: ["/Program Files/7-Zip/7z.exe", "/usr/local/bin/7z", "/opt/homebrew/bin/7z", "/usr/bin/7z"]
+      path_array: [
+          # Exe in current directory:
+          "7z",
+          "7z.exe",
+          # MacOS typical:
+          # brew install -y sevenzip
+          # brew install -y p7zip
+          "/opt/homebrew/bin/7z",
+          "/usr/local/bin/7z",
+          # Ubuntu typical:
+          # sudo apt-get install -y p7zip-full
+          "/usr/bin/7z",
+          # Windows typical:
+          # choco install -y 7zip
+          "/Program Files/7-Zip/7z.exe",
+          "/Program Files (x86)/7-Zip/7z.exe",
+        ]
   - Processor: com.github.jgstew.SharedProcessors/FileExeVersionExtractor
     Arguments:
       version_first: True
@@ -21,3 +37,8 @@ Process:
       exe_path: "%pathname%"
       version_string: "Linker Version ="
   # output example: `6.0`
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version%"
+      assert_string: "6.0"

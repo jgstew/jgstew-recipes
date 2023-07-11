@@ -22,23 +22,40 @@ class FileGetBase64(Processor):  # pylint: disable=too-few-public-methods
             "required": False,
             "description": "file path to base64 encode",
         },
+        "file_size_limit": {
+            "required": False,
+            "default": "250",
+            "description": "file path to base64 encode",
+        },
     }
+    # We don't actually want to display the base64 in output:
     output_variables = {
-        "file_base64": {"description": "the base64 encoded string"},
+        # "file_base64": {"description": "the base64 encoded string"},
     }
 
     def main(self):
         """execution starts here"""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
+        file_size_limit = int(self.env.get("file_size_limit", "250"))
         if file_pathname:
             with open(file_pathname, "rb") as file_io:
                 # read file and base64 encode
                 file_base64 = base64.b64encode(file_io.read()).decode("utf-8")
             # get size of base64 string
             size_base64 = len(str(file_base64).encode("utf-8"))
-            if size_base64 / 1024 > 64:
+
+            # default limit is 250kb:
+            if size_base64 / 1024 > file_size_limit:
                 self.output(
-                    f"WARNING: Base64 String from File Larger than 64kb: {size_base64}",
+                    f"ERROR: Base64 String from File Larger than {file_size_limit}kb: {size_base64}",
+                    0,
+                )
+                raise ProcessorError(
+                    f"ERROR: Base64 String from File Larger than {file_size_limit}kb: {size_base64}"
+                )
+            if size_base64 / 1024 > 150:
+                self.output(
+                    f"WARNING: Base64 String from File Larger than 150kb: {size_base64}",
                     0,
                 )
             else:

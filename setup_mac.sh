@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+
+# this script is intended to setup a mac from scratch to be able to develop or build autopkg recipes
 
 # work in progress:
 exit 1

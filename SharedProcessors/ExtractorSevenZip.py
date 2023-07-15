@@ -10,14 +10,14 @@ __all__ = ["ExtractorSevenZip"]
 
 DEFAULT_7ZIP_PATHS = [
     # Exe in current directory:
-    # TODO: check if works in PATH?
     "7z",
     "7z.exe",
     # MacOS typical:
-    # brew install -y sevenzip
-    # brew install -y p7zip
+    # NONINTERACTIVE=1 brew install p7zip
     "/opt/homebrew/bin/7z",
     "/usr/local/bin/7z",
+    # NONINTERACTIVE=1 brew install sevenzip
+    "/usr/local/bin/7zz",
     # Ubuntu typical:
     # sudo apt-get install -y p7zip-full
     "/usr/bin/7z",
@@ -25,7 +25,7 @@ DEFAULT_7ZIP_PATHS = [
     # choco install -y 7zip
     "/Program Files/7-Zip/7z.exe",
     "/Program Files (x86)/7-Zip/7z.exe",
-]
+  ]
 
 
 class ExtractorSevenZip(Processor):

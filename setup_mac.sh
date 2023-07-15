@@ -6,9 +6,9 @@ exit 1
 xcode-select --print-path
 
 # install homebrew:
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/96362c02f64bc1270645f6cd1698dda5a4790619/install.sh)"
+NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/96362c02f64bc1270645f6cd1698dda5a4790619/install.sh)"
 
-brew install -y python3.10 vscode sevenzip msitools
+NONINTERACTIVE=1 brew install python3.10 sevenzip msitools
 
 python3 -m pip install --upgrade pip 
 

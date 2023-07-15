@@ -18,10 +18,11 @@ Process:
           "7z",
           "7z.exe",
           # MacOS typical:
-          # brew install -y sevenzip
-          # brew install -y p7zip
+          # NONINTERACTIVE=1 brew install p7zip
           "/opt/homebrew/bin/7z",
           "/usr/local/bin/7z",
+          # NONINTERACTIVE=1 brew install sevenzip
+          "/usr/local/bin/7zz",
           # Ubuntu typical:
           # sudo apt-get install -y p7zip-full
           "/usr/bin/7z",

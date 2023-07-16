@@ -9,7 +9,24 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: com.github.jgstew.SharedProcessors/FileGetExecutable
     Arguments:
-      path_array: ["/Program Files/7-Zip/7z.exe", "/usr/local/bin/7z"]
+      path_array: [
+          # Exe in current directory:
+          "7z",
+          "7z.exe",
+          # MacOS typical:
+          # NONINTERACTIVE=1 brew install p7zip
+          "/opt/homebrew/bin/7z",
+          "/usr/local/bin/7z",
+          # NONINTERACTIVE=1 brew install sevenzip
+          "/usr/local/bin/7zz",
+          # Ubuntu typical:
+          # sudo apt-get install -y p7zip-full
+          "/usr/bin/7z",
+          # Windows typical:
+          # choco install -y 7zip
+          "/Program Files/7-Zip/7z.exe",
+          "/Program Files (x86)/7-Zip/7z.exe",
+        ]
   - Processor: com.github.hansen-m.SharedProcessors/WinInstallerExtractor
     Arguments:
       preserve_paths: False

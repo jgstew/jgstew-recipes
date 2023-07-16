@@ -41,11 +41,3 @@ Process:
       input_string: "%file_signature_result%"
       # assert `NOT_SIGNED` result
       assert_string: "NOT_SIGNED"
-  # - Processor: URLDownloaderPython
-  #   Arguments:
-  #     url: https://d.7-zip.org/a/7z2201-x64.msi
-  #     filename: 7zip-x64.msi
-  #     COMPUTE_HASHES: False
-  # - Processor: com.github.jgstew.SharedProcessors/FileExeVerifySignature
-  #   Arguments:
-  #     file_pathname: "%pathname%"

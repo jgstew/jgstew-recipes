@@ -25,7 +25,7 @@ DEFAULT_7ZIP_PATHS = [
     # choco install -y 7zip
     "/Program Files/7-Zip/7z.exe",
     "/Program Files (x86)/7-Zip/7z.exe",
-  ]
+]
 
 
 class ExtractorSevenZip(Processor):

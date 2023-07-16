@@ -7,12 +7,32 @@ Based on WinInstallerExtractor by Matt Hansen
 Extracts version info from .exe file using the 7z utility.
 """
 
+import os
 import subprocess
 
 from autopkglib import Processor, ProcessorError, is_windows
 from SharedUtilityMethods import SharedUtilityMethods
 
 __all__ = ["FileExeVersionExtractor"]
+
+DEFAULT_7ZIP_PATHS = [
+    # Exe in current directory:
+    "7z",
+    "7z.exe",
+    # MacOS typical:
+    # NONINTERACTIVE=1 brew install p7zip
+    "/opt/homebrew/bin/7z",
+    "/usr/local/bin/7z",
+    # NONINTERACTIVE=1 brew install sevenzip
+    "/usr/local/bin/7zz",
+    # Ubuntu typical:
+    # sudo apt-get install -y p7zip-full
+    "/usr/bin/7z",
+    # Windows typical:
+    # choco install -y 7zip
+    "/Program Files/7-Zip/7z.exe",
+    "/Program Files (x86)/7-Zip/7z.exe",
+]
 
 
 class FileExeVersionExtractor(SharedUtilityMethods):
@@ -65,14 +85,15 @@ class FileExeVersionExtractor(SharedUtilityMethods):
 
         self.verify_file_exists(exe_path)
 
-        if is_windows():
-            sevenzip_path = self.env.get(
-                "sevenzip_path", r"C:\Program Files\7-Zip\7z.exe"
-            )
-        else:
-            sevenzip_path = self.env.get("sevenzip_path", "/usr/local/bin/7z")
+        sevenzip_path = self.env.get("sevenzip_path", "/usr/local/bin/7z")
 
-        self.verify_file_exists(sevenzip_path)
+        # find 7z executable in default paths:
+        for exepath in [sevenzip_path] + DEFAULT_7ZIP_PATHS:
+            if os.path.isfile(exepath) and os.access(exepath, os.X_OK):
+                sevenzip_path = exepath
+                break
+
+        self.output(f"Using 7z binary found here: {sevenzip_path}", 3)
 
         self.output("Extracting: %s" % exe_path)
         cmd = [sevenzip_path, extract_flag, "-y", exe_path]

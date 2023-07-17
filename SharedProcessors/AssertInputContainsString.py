@@ -49,13 +49,12 @@ class AssertInputContainsString(Processor):  # pylint: disable=invalid-name
 
         try:
             assert assert_string in input_string
+            self.env["assert_result"] = "found!"
         except AssertionError:
             self.env["assert_result"] = "ERROR: not found!"
             self.output(f"ERROR: `{assert_string}` not found in `{input_string}`!", 0)
             if raise_error:
                 raise
-
-        self.env["assert_result"] = "found!"
 
 
 if __name__ == "__main__":

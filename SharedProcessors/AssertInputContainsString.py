@@ -40,7 +40,6 @@ class AssertInputContainsString(Processor):  # pylint: disable=invalid-name
     def main(self):
         """Execution starts here"""
 
-        # get the current dictionary
         input_string = self.env.get("input_string")
         assert_string = self.env.get("assert_string")
         raise_error = bool(self.env.get("raise_error", True))

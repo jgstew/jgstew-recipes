@@ -1,0 +1,29 @@
+---
+Description: Example recipe getting SourceReleaseDate from the EXE signature
+Identifier: com.github.bigfix.test.ExampleSourceReleaseDateHTTPHeaders
+Input:
+  NAME: ExampleSourceReleaseDateHTTPHeaders
+MinimumVersion: "2.3"
+Process:
+  - Processor: GitHubReleasesInfoProvider
+    Arguments:
+      github_repo: Maximus5/ConEmu
+      asset_regex: ConEmuSetup\..+\.exe$
+      include_prereleases: False
+  - Processor: URLDownloaderPython
+    Arguments:
+      # example url https://github.com/Maximus5/ConEmu/releases/download/v22.04.18/ConEmuSetup.220418.exe
+      filename: ConEmu.exe
+      download_version: ""
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase
+
+  # get SourceReleaseDate from HTTP `Last-Modified` header:
+  - Processor: com.github.jgstew.SharedProcessors/DateTimeFromString
+    Arguments:
+      # parse last_modified header info from URLDownloaderPython
+      datetime_string: "%last_modified%"
+      datetime_strptime: "%a, %d %b %Y %H:%M:%S %Z"
+      datetime_strftime: "%Y-%m-%d"
+      datetime_parsed_name: SourceReleaseDate

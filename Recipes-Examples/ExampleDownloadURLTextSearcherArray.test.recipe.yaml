@@ -1,0 +1,25 @@
+---
+Description: Example download recipe using URLTextSearcherArray
+Identifier: com.github.bigfix.test.DownloadExampleURLTextSearcherArray
+Input:
+  NAME: DownloadExampleURLTextSearcherArray
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLTextSearcherArray
+    Arguments:
+      url: https://support.bigfix.com/bes/release/index.html
+      re_pattern: '>(?P<version>\d+\.\d+\.\d+\.\d+)<'
+  # VersionMaximumArray collapses the multiple results from URLTextSearcherArray above into the single maximum version result
+  - Processor: com.github.jgstew.SharedProcessors/VersionMaximumArray
+  # VersionGetMajorMinor is used because it is part of the bigfix url
+  - Processor: com.github.jgstew.SharedProcessors/VersionGetMajorMinor
+    Arguments:
+      separator_string: ""
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: https://software.bigfix.com/download/bes/%version_major_minor%/BigFix-BES-Client-%version_maximum%.exe
+      # Last-Modified headers do not work properly for software.bigfix.com so `download_version` is used
+      #  to detect if the software is new or not. Normally this would not be required.
+      download_version: "%version_maximum%"
+      COMPUTE_HASHES: True
+  - Processor: EndOfCheckPhase

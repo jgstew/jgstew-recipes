@@ -1,0 +1,14 @@
+---
+Description: Example recipe getting the version from the MSI file
+Identifier: com.github.bigfix.test.ExampleVersionFromMSI
+Input:
+  NAME: ExampleVersionFromMSI
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://download.microsoft.com/download/A/2/7/A271EFFF-6C9E-4E9B-9259-0F72FDEDD153/ProjectMyScreenApp.msi
+      filename: test.msi
+      COMPUTE_HASHES: False
+  # by default, the MSI `ProductVersion` will be saved to the `version` output variable by `FileMsiGetProperty`
+  - Processor: com.github.jgstew.SharedProcessors/FileMsiGetProperty

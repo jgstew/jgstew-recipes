@@ -1,0 +1,30 @@
+---
+Description: Example recipe getting the version from the EXE file
+Identifier: com.github.bigfix.test.ExampleVersionFromExtractedEXE
+Input:
+  NAME: ExampleVersionFromExtractedEXE
+MinimumVersion: "2.3"
+ParentRecipe: com.github.bigfix.download.AdobeRemoteUpdateManager
+Process:
+  # see recipe here: `Adobe/RemoteUpdateManager.download.recipe.yaml`
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: https://deploymenttools.acp.adobeoobe.com/RUM/Win/RemoteUpdateManager.zip
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: com.github.jgstew.SharedProcessors/FileGetExecutable
+    Arguments:
+      path_array: ["/Program Files/7-Zip/7z.exe", "/Program Files (x86)/7-Zip/7z.exe", "/usr/local/bin/7z"]
+
+  - Processor: com.github.hansen-m.SharedProcessors/WinInstallerExtractor
+    Arguments:
+      extract_dir: "tmp"
+
+  # get EXE file version from file inside the above file:
+  - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE
+    Arguments:
+      file_pathname: "%RECIPE_CACHE_DIR%/tmp/RemoteUpdateManager.exe"

@@ -1,0 +1,11 @@
+---
+Description: Example recipe getting the version from a webpage
+Identifier: com.github.bigfix.test.ExampleVersionFromURL
+Input:
+  NAME: ExampleVersionFromURL
+MinimumVersion: "2.3"
+Process:
+  - Processor: URLTextSearcher
+    Arguments:
+      url: https://obsproject.com/download
+      re_pattern: 'OBS-Studio-(?P<version>\d+(\.\d+)+)-Full-Installer-x64.exe'

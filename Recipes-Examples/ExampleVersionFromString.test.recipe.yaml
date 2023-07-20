@@ -1,0 +1,12 @@
+---
+Description: Example recipe getting the version from a longer string
+Identifier: com.github.bigfix.test.ExampleVersionFromString
+Input:
+  NAME: ExampleVersionFromString
+MinimumVersion: "2.3"
+Process:
+  # get version from longer version string
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "2.0.0.v20210717-M17"
+      re_pattern: '(?P<version>\d+\.\d+\.\d+)'

@@ -1,0 +1,23 @@
+---
+Description: Example recipe getting SourceReleaseDate from the MSI Metadata
+Identifier: com.github.bigfix.test.ExampleSourceReleaseDateMSI
+Input:
+  NAME: ExampleSourceReleaseDateMSI
+MinimumVersion: "2.3"
+Process:
+  - Processor: GitHubReleasesInfoProvider
+    Arguments:
+      github_repo: PowerShell/powershell
+      asset_regex: PowerShell-.*-win-x64.msi$
+      include_prereleases: False
+
+  - Processor: URLDownloaderPython
+    Arguments:
+      filename: PowerShell-Setup-Win-x64.msi
+      download_version: ""
+      COMPUTE_HASHES: False
+
+  - Processor: EndOfCheckPhase
+
+  # Get SourceReleaseDate from MSI metadata:
+  - Processor: com.github.jgstew.SharedProcessors/FileMsiGetInfoOLE

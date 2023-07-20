@@ -1,0 +1,14 @@
+---
+Description: Example recipe getting the version from a GitHub release
+Identifier: com.github.bigfix.test.ExampleVersionFromGitHub
+Input:
+  NAME: ExampleVersionFromGitHub
+MinimumVersion: "2.3"
+Process:
+  - Processor: GitHubReleasesInfoProvider
+    Arguments:
+      github_repo: Maximus5/ConEmu
+      asset_regex: ConEmuSetup\..+\.exe$
+      include_prereleases: False
+  # GitHubReleasesInfoProvider automatically provides the version
+  #   of the latest release as the `version` output variable

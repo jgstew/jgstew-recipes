@@ -1,0 +1,22 @@
+---
+Description: Example recipe getting SourceReleaseDate from the EXE signature
+Identifier: com.github.bigfix.test.ExampleSourceReleaseDateEXE
+Input:
+  NAME: ExampleSourceReleaseDateEXE
+MinimumVersion: "2.3"
+Process:
+  - Processor: GitHubReleasesInfoProvider
+    Arguments:
+      github_repo: Maximus5/ConEmu
+      asset_regex: ConEmuSetup\..+\.exe$
+      include_prereleases: False
+  - Processor: URLDownloaderPython
+    Arguments:
+      # example url https://github.com/Maximus5/ConEmu/releases/download/v22.04.18/ConEmuSetup.220418.exe
+      filename: ConEmu.exe
+      download_version: ""
+      COMPUTE_HASHES: True
+  - Processor: EndOfCheckPhase
+
+  # validate file signature and get signature date as SourceReleaseDate:
+  - Processor: com.github.jgstew.SharedProcessors/FileExeVerifySignature

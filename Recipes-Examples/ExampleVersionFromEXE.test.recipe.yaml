@@ -1,0 +1,16 @@
+---
+Description: Example recipe getting the version from the EXE file
+Identifier: com.github.bigfix.test.ExampleVersionFromEXE
+Input:
+  NAME: ExampleVersionFromEXE
+MinimumVersion: "2.3"
+Process:
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: https://github.com/ShareX/ShareX/releases/download/v14.1.0/ShareX-14.1.0-setup.exe
+      filename: test.exe
+      download_version: ""
+      COMPUTE_HASHES: True
+
+  # get FileVersion from EXE and save to `version` variable
+  - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE

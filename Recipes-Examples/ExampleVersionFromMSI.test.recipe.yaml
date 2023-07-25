@@ -1,6 +1,6 @@
 ---
 Description: Example recipe getting the version from the MSI file
-Identifier: com.github.bigfix.test.ExampleVersionFromMSI
+Identifier: com.github.jgstew.test.ExampleVersionFromMSI
 Input:
   NAME: ExampleVersionFromMSI
 MinimumVersion: "2.3"

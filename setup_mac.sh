@@ -14,7 +14,7 @@ NONINTERACTIVE=1 brew tap microsoft/git
 
 NONINTERACTIVE=1 brew install --adopt python@3.10 sevenzip msitools visual-studio-code libmagic jq git-credential-manager-core
 
-python3 -m pip install --upgrade pip 
+python3 -m pip install --upgrade pip
 
 python3 -m pip install --upgrade setuptools build wheel
 

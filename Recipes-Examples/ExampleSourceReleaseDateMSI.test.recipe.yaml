@@ -1,6 +1,6 @@
 ---
 Description: Example recipe getting SourceReleaseDate from the MSI Metadata
-Identifier: com.github.bigfix.test.ExampleSourceReleaseDateMSI
+Identifier: com.github.jgstew.test.ExampleSourceReleaseDateMSI
 Input:
   NAME: ExampleSourceReleaseDateMSI
 MinimumVersion: "2.3"

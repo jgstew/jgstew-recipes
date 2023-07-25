@@ -1,6 +1,6 @@
 ---
 Description: Example download recipe using URLTextSearcherArray
-Identifier: com.github.bigfix.test.DownloadExampleURLTextSearcherArray
+Identifier: com.github.jgstew.test.DownloadExampleURLTextSearcherArray
 Input:
   NAME: DownloadExampleURLTextSearcherArray
 MinimumVersion: "2.3"

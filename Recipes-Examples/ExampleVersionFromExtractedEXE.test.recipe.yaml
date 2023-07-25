@@ -1,10 +1,10 @@
 ---
 Description: Example recipe getting the version from the EXE file
-Identifier: com.github.bigfix.test.ExampleVersionFromExtractedEXE
+Identifier: com.github.jgstew.test.ExampleVersionFromExtractedEXE
 Input:
   NAME: ExampleVersionFromExtractedEXE
 MinimumVersion: "2.3"
-ParentRecipe: com.github.bigfix.download.AdobeRemoteUpdateManager
+ParentRecipe: com.github.jgstew.download.AdobeRemoteUpdateManager
 Process:
   # see recipe here: `Adobe/RemoteUpdateManager.download.recipe.yaml`
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
@@ -18,7 +18,12 @@ Process:
 
   - Processor: com.github.jgstew.SharedProcessors/FileGetExecutable
     Arguments:
-      path_array: ["/Program Files/7-Zip/7z.exe", "/Program Files (x86)/7-Zip/7z.exe", "/usr/local/bin/7z"]
+      path_array:
+        [
+          "/Program Files/7-Zip/7z.exe",
+          "/Program Files (x86)/7-Zip/7z.exe",
+          "/usr/local/bin/7z",
+        ]
 
   - Processor: com.github.hansen-m.SharedProcessors/WinInstallerExtractor
     Arguments:

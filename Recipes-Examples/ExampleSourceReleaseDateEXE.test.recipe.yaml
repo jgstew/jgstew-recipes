@@ -1,6 +1,6 @@
 ---
 Description: Example recipe getting SourceReleaseDate from the EXE signature
-Identifier: com.github.bigfix.test.ExampleSourceReleaseDateEXE
+Identifier: com.github.jgstew.test.ExampleSourceReleaseDateEXE
 Input:
   NAME: ExampleSourceReleaseDateEXE
 MinimumVersion: "2.3"

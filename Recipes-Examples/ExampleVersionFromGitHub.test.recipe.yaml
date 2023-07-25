@@ -1,6 +1,6 @@
 ---
 Description: Example recipe getting the version from a GitHub release
-Identifier: com.github.bigfix.test.ExampleVersionFromGitHub
+Identifier: com.github.jgstew.test.ExampleVersionFromGitHub
 Input:
   NAME: ExampleVersionFromGitHub
 MinimumVersion: "2.3"

@@ -1,6 +1,6 @@
 ---
 Description: Example download recipe using URLTextSearcher
-Identifier: com.github.bigfix.download.ExampleDownloadURLTextSearcher
+Identifier: com.github.jgstew.download.ExampleDownloadURLTextSearcher
 Input:
   # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"
   NAME: "ExampleDownloadURLTextSearcher"

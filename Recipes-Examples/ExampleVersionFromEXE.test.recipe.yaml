@@ -1,6 +1,6 @@
 ---
 Description: Example recipe getting the version from the EXE file
-Identifier: com.github.bigfix.test.ExampleVersionFromEXE
+Identifier: com.github.jgstew.test.ExampleVersionFromEXE
 Input:
   NAME: ExampleVersionFromEXE
 MinimumVersion: "2.3"

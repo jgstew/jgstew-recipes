@@ -100,13 +100,8 @@ class ExtractorSevenZip(Processor):
         self.output(f"Using Path to 7zip: {sevenzip}")
 
         self.output(f"Extracting: {file_path}")
-        cmd = [
-            sevenzip,
-            extract_flag,
-            "-y",
-            f"-o{extract_path}",
-            file_path,
-        ]
+        # "-aoa" to always overwrite all files:
+        cmd = [sevenzip, extract_flag, "-y", f"-o{extract_path}", file_path, "-aoa"]
 
         # https://sevenzip.osdn.jp/chm/cmdline/switches/exclude.htm
         if ignore_pattern:

@@ -8,3 +8,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/FileGetStat
     Arguments:
       file_pathname: "BigFix/BigFix_logo_DevSiteToOriginal_128px.png"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%SourceReleaseDate%"
+      assert_string: "-"

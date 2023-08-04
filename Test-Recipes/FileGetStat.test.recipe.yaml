@@ -1,0 +1,10 @@
+---
+Description: Test FileGetStat Processor
+Identifier: com.github.jgstew.test.FileGetStat
+Input:
+  NAME: FileGetStatTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/FileGetStat
+    Arguments:
+      file_pathname: "BigFix/BigFix_logo_DevSiteToOriginal_128px.png"

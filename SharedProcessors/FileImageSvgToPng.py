@@ -3,8 +3,14 @@
 See docstring for FileImageSvgToPng class
 """
 
+import os.path
+
 # Requires cairosvg: python -m pip install --upgrade cairosvg
 import cairosvg
+
+# also needs:
+# brew install cairo libffi
+
 from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,
     ProcessorError,
@@ -47,7 +53,7 @@ class FileImageSvgToPng(Processor):  # pylint: disable=too-few-public-methods
 
     def main(self):
         """execution starts here"""
-        max_pixel_dim = self.env.get("max_pixel_dim", 256)
+        max_pixel_dim = int(self.env.get("max_pixel_dim", 256))
         if max_pixel_dim == 0:
             max_pixel_dim = 256
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))

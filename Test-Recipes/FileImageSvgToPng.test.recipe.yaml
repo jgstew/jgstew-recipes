@@ -15,3 +15,5 @@ Process:
       COMPUTE_HASHES: False
 
   - Processor: com.github.jgstew.SharedProcessors/FileImageSvgToPng
+    Arguments:
+      max_pixel_dim: 200

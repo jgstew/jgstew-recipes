@@ -1,0 +1,17 @@
+---
+Description: Test FileImageSvgToPng Processor
+Identifier: com.github.jgstew.test.FileImageSvgToPng
+Input:
+  NAME: FileImageSvgToPngTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://static.4kdownload.com/main/img/redesign-v2/products-page/videodownloaderplus.a855bb9dddb2.svg
+      # need to provide filename to not overwrite the setup file
+      filename: "%NAME%-icon.svg"
+      # User_Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36
+      download_version: ""
+      COMPUTE_HASHES: False
+
+  - Processor: com.github.jgstew.SharedProcessors/FileImageSvgToPng

@@ -1,5 +1,6 @@
 besapi
 bigfix_prefetch
+cairosvg
 certifi
 chevron
 generate_bes_from_template

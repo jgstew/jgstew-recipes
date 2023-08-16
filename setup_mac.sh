@@ -12,7 +12,7 @@ fi
 
 NONINTERACTIVE=1 brew tap microsoft/git
 
-NONINTERACTIVE=1 brew install --adopt python@3.10 sevenzip msitools visual-studio-code libmagic jq git-credential-manager-core
+NONINTERACTIVE=1 brew install --adopt python@3.10 sevenzip msitools visual-studio-code libmagic jq git-credential-manager-core cairo libffi
 
 python3 -m pip install --upgrade pip
 

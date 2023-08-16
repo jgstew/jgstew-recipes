@@ -17,3 +17,12 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/FileImageSvgToPng
     Arguments:
       max_pixel_dim: 200
+
+  - Processor: com.github.jgstew.SharedProcessors/FileGetMagicType
+    Arguments:
+      file_pathname: "%file_path_png%"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_mime_type%"
+      assert_string: "image/png"

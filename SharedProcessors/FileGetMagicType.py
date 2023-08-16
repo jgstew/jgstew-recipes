@@ -7,6 +7,8 @@ See docstring for FileGetMagicType class
 # brew install libmagic
 # Ubuntu:
 # apt-get install libmagic-dev
+# python module:
+# python3 -m pip install --upgrade python-magic
 import magic
 from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,

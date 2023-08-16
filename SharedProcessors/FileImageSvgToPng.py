@@ -7,14 +7,14 @@ import os.path
 
 # Requires cairosvg: python -m pip install --upgrade cairosvg
 import cairosvg
-
-# also needs:
-# brew install cairo libffi
-
 from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,
     ProcessorError,
 )
+
+# also needs:
+# brew install cairo libffi
+
 
 __all__ = ["FileImageSvgToPng"]
 

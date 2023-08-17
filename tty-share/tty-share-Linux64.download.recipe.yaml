@@ -1,0 +1,21 @@
+---
+Description: Download latest tty-share
+Identifier: com.github.jgstew.download.tty-share-Linux64
+Input:
+  NAME: tty-share
+MinimumVersion: "2.3"
+Process:
+  - Processor: GitHubReleasesInfoProvider
+    Arguments:
+      github_repo: elisescu/tty-share
+      asset_regex: "tty-share_linux-amd64$"
+      include_prereleases: False
+
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      # example url https://github.com/elisescu/tty-share/releases/download/v2.4.0/tty-share_linux-amd64
+      filename: tty-share_linux-amd64
+      download_version: ""
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase

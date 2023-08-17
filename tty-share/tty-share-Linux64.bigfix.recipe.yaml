@@ -1,0 +1,38 @@
+---
+Description: Generates a BigFix Task for tty-share for Linux x64
+Identifier: com.github.jgstew.bigfix.tty-share-Linux64
+Input:
+  # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"
+  NAME: "tty-share"
+  # DisplayName: The start of the DisplayName key in the Windows Registry, Example: "DB Browser for SQLite"
+  DisplayName: "tty-share"
+MinimumVersion: "2.3"
+ParentRecipe: tty-share/tty-share-Linux64.download.recipe.yaml
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+
+  # `BigFixSetupTemplateDictionary` creates a dictionary to fill out a bigix content template
+  #   If `SourceReleaseDate` is not provided, it will be set to today
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+
+  - Processor: com.github.jgstew.SharedProcessors/GetRecipeParentFolderName
+
+  - Processor: com.github.jgstew.SharedProcessors/GetCommonPlatformEnumeration
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "patch"
+      append_value: true
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "install_only"
+      append_value: true
+
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: "./%VendorFolder%/tty-share-Linux64-Run.bes.mustache"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%-Install.bes"
+
+  - Processor: com.github.jgstew.SharedProcessors/BESImport

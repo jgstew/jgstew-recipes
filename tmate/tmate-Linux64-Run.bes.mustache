@@ -38,11 +38,13 @@
 
 action parameter query "WARNING" with default "Work In Progress!"
 
-delete /tmp/tty-share
-copy __Download/tty-share_linux-amd64 /tmp/tty-share
+delete /tmp/tmate
+
+// extract tar.gz
+wait tar xzf __Download/tmate-static-linux-amd64.tar.xz --directory /tmp
 
 // Run:
-run sudo bash -c "cd /tmp && nohup bash tty-share --public & disown"
+run sudo bash -c "cd /tmp && nohup bash tmate -F & disown"
 
 // End]]></ActionScript>
       <SuccessCriteria Option="RunToCompletion"></SuccessCriteria>

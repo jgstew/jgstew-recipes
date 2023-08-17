@@ -1,0 +1,21 @@
+---
+Description: Download latest tmate
+Identifier: com.github.jgstew.download.tmate-Linux64
+Input:
+  NAME: tmate
+MinimumVersion: "2.3"
+Process:
+  - Processor: GitHubReleasesInfoProvider
+    Arguments:
+      github_repo: tmate-io/tmate
+      asset_regex: "tmate-.+-static-linux-amd64.tar.xz$"
+      include_prereleases: False
+
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      # example url https://github.com/tmate-io/tmate/releases/download/2.4.0/tmate-2.4.0-static-linux-amd64.tar.xz
+      filename: tmate-static-linux-amd64.tar.xz
+      download_version: ""
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase

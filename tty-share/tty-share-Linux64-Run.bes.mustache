@@ -36,13 +36,14 @@
 // Download:
 {{{prefetch}}}
 
-action parameter query "WARNING" with default "Work In Progress!"
+action parameter query "WARNING" with default "This has security concerns!"
+action parameter query "WARNING2" with default "Work In Progress!"
 
 delete /tmp/tty-share
 copy __Download/tty-share_linux-amd64 /tmp/tty-share
 
 // Run:
-run sudo bash -c "cd /tmp && nohup bash tty-share --public & disown"
+run sudo bash -c "cd /tmp && nohup ./tty-share --public > /tmp/tty-share.out & disown"
 
 // End]]></ActionScript>
       <SuccessCriteria Option="RunToCompletion"></SuccessCriteria>

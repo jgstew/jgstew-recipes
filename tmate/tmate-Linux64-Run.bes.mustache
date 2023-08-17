@@ -41,10 +41,10 @@ action parameter query "WARNING" with default "Work In Progress!"
 delete /tmp/tmate
 
 // extract tar.gz
-wait tar xzf __Download/tmate-static-linux-amd64.tar.xz --directory /tmp
+wait tar xf __Download/tmate-static-linux-amd64.tar.xz --directory /tmp --strip-components 1
 
 // Run:
-run sudo bash -c "cd /tmp && nohup bash tmate -F & disown"
+run sudo bash -c "cd /tmp && nohup ./tmate > /tmp/tmate.out"
 
 // End]]></ActionScript>
       <SuccessCriteria Option="RunToCompletion"></SuccessCriteria>

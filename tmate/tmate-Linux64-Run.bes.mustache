@@ -44,7 +44,7 @@ delete /tmp/tmate
 wait tar xf __Download/tmate-static-linux-amd64.tar.xz --directory /tmp --strip-components 1
 
 // Run:
-run sudo bash -c "cd /tmp && nohup ./tmate > /tmp/tmate.out"
+run sudo bash -c "cd /tmp && nohup ./tmate -F > /tmp/tmate.out"
 
 // End]]></ActionScript>
       <SuccessCriteria Option="RunToCompletion"></SuccessCriteria>

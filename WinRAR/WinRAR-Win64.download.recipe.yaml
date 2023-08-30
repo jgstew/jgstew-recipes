@@ -1,0 +1,29 @@
+---
+Description: Downloads the latest WinRAR For Windows x64
+Identifier: com.github.jgstew.download.WinRAR-Win64
+Input:
+  NAME: "WinRAR"
+  FileType: exe
+  DisplayName: "WinRAR"
+MinimumVersion: "2.3"
+Process:
+  - Processor: URLTextSearcher
+    Arguments:
+      url: "https://www.win-rar.com/download.html?&L=0"
+      # example: https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-611.exe
+      re_pattern: '(?P<url>https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-\d+?.%FileType%)'
+
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      # url: https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-%major_version%%FileType%
+      filename: winrar-x64.%FileType%
+      download_version: ""
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase
+
+  # validate file signature and get signature date as SourceReleaseDate:
+  - Processor: com.github.jgstew.SharedProcessors/FileExeVerifySignature
+
+  # get FileVersion from EXE and save to `version` variable
+  - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE

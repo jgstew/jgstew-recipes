@@ -22,7 +22,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: checkout this repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: setup-autopkg local action
         uses: ./.github/actions/setup-autopkg

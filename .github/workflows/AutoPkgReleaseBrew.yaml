@@ -32,7 +32,7 @@ jobs:
           echo 'export HOMEBREW_GITHUB_API_TOKEN=${{ secrets.GITHUB_TOKEN }}' >> .bash_profile
           pwd
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: setup-autopkg local action
         uses: ./.github/actions/setup-autopkg

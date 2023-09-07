@@ -64,6 +64,6 @@ jobs:
         run: brew uninstall autopkg
 
       - name: run brew audit
-        run: brew audit --cask --new-cask --verbose --strict /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb
+        run: cd /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease && brew audit --cask --new-cask --verbose --strict autopkg
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}

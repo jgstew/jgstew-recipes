@@ -60,10 +60,7 @@ jobs:
       - name: test brew installed autopkg
         run: autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
 
-      - name: run brew uninstall
-        run: brew uninstall autopkg
-
       - name: run brew audit
-        run: cd /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease && brew audit --cask --new-cask --verbose --strict autopkg
+        run: brew audit --cask --new-cask --verbose --strict autopkg
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,19 @@
+---
+Description: Example AutoPkgCacheCleanup Recipe
+Identifier: com.github.jgstew.example.AutoPkgCacheCleanup
+Input:
+  NAME: AutoPkgCacheCleanupExample
+MinimumVersion: "2.3"
+Process:
+  # https://github.com/jgstew/jgstew-recipes/blob/main/SharedProcessors/AutoPkgCacheCleanup.py
+  - Processor: com.github.jgstew.SharedProcessors/AutoPkgCacheCleanup
+    Arguments:
+      cleanup_max_age_days: 20
+      cleanup_empty_files: True
+      cleanup_tmp_files: True
+      cleanup_cache_all: True
+
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%num_files_deleted%"
+      re_pattern: '(\d+)'

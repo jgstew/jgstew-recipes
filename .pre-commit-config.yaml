@@ -50,7 +50,11 @@ repos:
     hooks:
       - id: check-jsonschema
         files: \.recipe\.yaml$
-        args: ["--schemafile", ".AutoPkgRecipe.schema.json"]
+        args:
+          [
+            "--schemafile",
+            "https://raw.githubusercontent.com/jgstew/jgstew-recipes/main/.AutoPkgRecipe.schema.json",
+          ]
       - id: check-metaschema
         files: \.schema\.json$
         args: ["--verbose"]

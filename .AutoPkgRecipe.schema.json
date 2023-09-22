@@ -38,7 +38,7 @@
           }
         }
       },
-      "required": ["Description", "Identifier", "Input", "MinimumVersion", "Process"],
+      "required": ["Description", "Identifier", "Input", "MinimumVersion"],
       "title": "AutoPkgRecipe"
     },
     "Input": {

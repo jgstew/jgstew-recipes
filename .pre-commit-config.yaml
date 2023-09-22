@@ -2,10 +2,11 @@
 # run on only items staged in git:  pre-commit
 # automatically run on commit:      pre-commit install
 # check all files in repo:          pre-commit run --all-files
+# update all checks to latest:      pre-commit autoupdate
 # https://github.com/pre-commit/pre-commit-hooks
 repos:
   - repo: https://github.com/homebysix/pre-commit-macadmin
-    rev: v1.10.1
+    rev: v1.12.4
     hooks:
       - id: check-autopkg-recipe-list
       - id: check-autopkg-recipes
@@ -13,7 +14,7 @@ repos:
         exclude: ".*.test.recipe.yaml"
       - id: forbid-autopkg-overrides
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.4.0
     hooks:
       - id: check-yaml
       # check-json doesn't work with json with comments
@@ -36,14 +37,27 @@ repos:
       # - id: no-commit-to-branch
       #   args: [--branch, main]
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.26.3
+    rev: v1.32.0
     hooks:
       - id: yamllint
         args: [-c=.yamllint.yaml]
   - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.9.3
+    rev: v5.10.1
     hooks:
       - id: isort
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.26.3
+    hooks:
+      - id: check-jsonschema
+        files: \.recipe\.yaml$
+        args: ["--schemafile", ".AutoPkgRecipe.schema.json"]
+      - id: check-metaschema
+        files: \.schema\.json$
+        args: ["--verbose"]
+      - id: check-github-workflows
+        args: ["--verbose"]
+      - id: check-dependabot
+      - id: check-github-actions
 
   # this works with json with comments, but gave me an error
   # - repo: https://gitlab.com/bmares/check-json5

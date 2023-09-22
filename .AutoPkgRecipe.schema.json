@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/jgstew/jgstew-recipes/blob/main/.AutoPkgRecipe.schema.json",
+  "$comment": "v0.1",
+  "title": "AutoPkg Recipe YAML schema",
+  "description": "A schema for validating AutoPkg Recipe YAML files.",
+  "$ref": "#/definitions/AutoPkgRecipe",
+  "definitions": {
+    "AutoPkgRecipe": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "Description": {
+          "type": "string"
+        },
+        "Identifier": {
+          "type": "string",
+          "comment": "No Spaces Allowed",
+          "pattern": "^[^\\s]*$"
+        },
+        "Input": {
+          "$ref": "#/definitions/Input"
+        },
+        "MinimumVersion": {
+          "type": "string"
+        },
+        "ParentRecipe": {
+          "type": "string",
+          "comment": "No Spaces Allowed",
+          "pattern": "^[^\\s]*$"
+        },
+        "Process": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Process"
+          }
+        }
+      },
+      "required": ["Description", "Identifier", "Input", "MinimumVersion", "Process"],
+      "title": "AutoPkgRecipe"
+    },
+    "Input": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "NAME": {
+          "type": "string",
+          "comment": "No Spaces Allowed",
+          "pattern": "^[^\\s]*$"
+        }
+      },
+      "required": ["NAME"],
+      "title": "Input"
+    },
+    "Process": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Processor": {
+          "type": "string"
+        },
+        "Arguments": {
+          "$ref": "#/definitions/Arguments"
+        }
+      },
+      "required": ["Processor"],
+      "title": "Process"
+    },
+    "Arguments": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "re_pattern": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string",
+          "comment": "No Spaces Allowed, Opinionated",
+          "pattern": "^[^\\s]*$"
+        },
+        "COMPUTE_HASHES": {
+          "type": "boolean"
+        }
+      },
+      "required": [],
+      "title": "Arguments"
+    }
+  }
+}

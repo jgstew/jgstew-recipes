@@ -18,7 +18,7 @@
             {"type": "string", "comment": "No Spaces Allowed", "pattern": "^[^\\s]*$"},
             {
               "type": "string",
-              "comment": "prefix",
+              "$comment": "prefix",
               "pattern": "com\\.github\\..+"
             }
           ]
@@ -28,12 +28,12 @@
         },
         "MinimumVersion": {
           "type": "string",
-          "comment": "Allow 0.0 through 3.9.9, does not support RC's",
+          "$comment": "Allow 0.0 through 3.9.9, does not support RC's",
           "pattern": "[0-3](\\.\\d){1,2}"
         },
         "ParentRecipe": {
           "type": "string",
-          "comment": "No Spaces Allowed",
+          "$comment": "No Spaces Allowed",
           "pattern": "^[^\\s]*$"
         },
         "Process": {
@@ -52,7 +52,7 @@
       "properties": {
         "NAME": {
           "type": "string",
-          "comment": "No Spaces Allowed",
+          "$comment": "No Spaces Allowed",
           "pattern": "^[^\\s]*$"
         }
       },
@@ -65,9 +65,9 @@
       "properties": {
         "Processor": {
           "anyOf": [
-            {"type": "string", "pattern": "^com\\.github\\.\\S+"},
             {
               "type": "string",
+              "$comment": "The built in AutoPkg Processors from https://github.com/autopkg/autopkg/tree/dev/Code/autopkglib",
               "enum": [
                 "AppDmgVersioner",
                 "AppPkgCreator",
@@ -117,6 +117,11 @@
                 "URLTextSearcher",
                 "Versioner"
               ]
+            },
+            {
+              "type": "string",
+              "$comment": "Fallback validation",
+              "pattern": "^com\\.github\\.\\S+$"
             }
           ]
         },
@@ -140,7 +145,7 @@
         },
         "filename": {
           "type": "string",
-          "comment": "No Spaces Allowed, Opinionated",
+          "$comment": "No Spaces Allowed, Opinionated",
           "pattern": "^[^\\s]*$"
         },
         "COMPUTE_HASHES": {

@@ -53,7 +53,7 @@ repos:
         args:
           [
             "--schemafile",
-            "https://raw.githubusercontent.com/jgstew/jgstew-recipes/main/.AutoPkgRecipe.schema.json",
+            "https://raw.githubusercontent.com/jgstew/jgstew-recipes/main/.AutoPkgRecipeOpinionated.schema.json",
           ]
       - id: check-metaschema
         files: \.schema\.json$

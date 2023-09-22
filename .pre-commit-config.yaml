@@ -2,6 +2,7 @@
 # run on only items staged in git:  pre-commit
 # automatically run on commit:      pre-commit install
 # check all files in repo:          pre-commit run --all-files
+# check all files + manual checks:  pre-commit run --all-files --hook-stage manual
 # update all checks to latest:      pre-commit autoupdate
 # https://github.com/pre-commit/pre-commit-hooks
 repos:
@@ -62,7 +63,11 @@ repos:
         args: ["--verbose"]
       - id: check-dependabot
       - id: check-github-actions
-
+      - id: check-jsonschema
+        name: check-jsonschema local file
+        files: \.recipe\.yaml$
+        args: ["--schemafile", ".AutoPkgRecipeOpinionated.schema.json"]
+        stages: [manual]
   # this works with json with comments, but gave me an error
   # - repo: https://gitlab.com/bmares/check-json5
   #   rev: v1.0.0

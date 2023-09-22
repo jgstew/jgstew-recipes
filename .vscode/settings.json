@@ -11,5 +11,10 @@
   "python.analysis.completeFunctionParens": true,
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/jgstew/jgstew-recipes/main/.AutoPkgRecipe.schema.json": [
+      "**.recipe.yaml"
+    ]
   }
 }

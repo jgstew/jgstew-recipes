@@ -3,7 +3,7 @@
   "$id": "https://github.com/jgstew/jgstew-recipes/blob/main/.AutoPkgRecipe.schema.json",
   "$comment": "v0.1",
   "title": "AutoPkg Recipe YAML schema",
-  "description": "A schema for validating AutoPkg Recipe YAML files.",
+  "description": "A schema for validating AutoPkg Recipe YAML files. Used by check-jsonschema pre-commit hook.",
   "$ref": "#/definitions/AutoPkgRecipe",
   "definitions": {
     "AutoPkgRecipe": {

@@ -22,7 +22,9 @@
           "$ref": "#/definitions/Input"
         },
         "MinimumVersion": {
-          "type": "string"
+          "type": "string",
+          "comment": "Allow 0.0 through 3.9.9, does not support RC's",
+          "pattern": "[0-3](\\.\\d){1,2}"
         },
         "ParentRecipe": {
           "type": "string",

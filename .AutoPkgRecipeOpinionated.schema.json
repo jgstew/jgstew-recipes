@@ -14,9 +14,14 @@
           "type": "string"
         },
         "Identifier": {
-          "type": "string",
-          "comment": "No Spaces Allowed",
-          "pattern": "^[^\\s]*$"
+          "allOf": [
+            {"type": "string", "comment": "No Spaces Allowed", "pattern": "^[^\\s]*$"},
+            {
+              "type": "string",
+              "comment": "prefix",
+              "pattern": "com\\.github\\..+"
+            }
+          ]
         },
         "Input": {
           "$ref": "#/definitions/Input"
@@ -59,7 +64,61 @@
       "additionalProperties": false,
       "properties": {
         "Processor": {
-          "type": "string"
+          "anyOf": [
+            {"type": "string", "pattern": "^com\\.github\\.\\S+"},
+            {
+              "type": "string",
+              "enum": [
+                "AppDmgVersioner",
+                "AppPkgCreator",
+                "BrewCaskInfoProvider",
+                "ChocolateyPackager",
+                "CodeSignatureVerifier",
+                "Copier",
+                "CURLDownloader",
+                "CURLTextSearcher",
+                "DeprecationWarning",
+                "DmgCreator",
+                "DmgMounter",
+                "EndOfCheckPhase",
+                "FileCreator",
+                "FileFinder",
+                "FileMover",
+                "FlatPkgPacker",
+                "FlatPkgUnpacker",
+                "GitHubReleasesInfoProvider",
+                "Installer",
+                "InstallFromDMG",
+                "MunkiCatalogBuilder",
+                "MunkiImporter",
+                "MunkiInfoCreator",
+                "MunkiInstallsItemsCreator",
+                "MunkiOptionalReceiptEditor",
+                "MunkiPkginfoMerger",
+                "MunkiSetDefaultCatalog",
+                "PackageRequired",
+                "PathDeleter",
+                "PkgCopier",
+                "PkgCreator",
+                "PkgExtractor",
+                "PkgInfoCreator",
+                "PkgPayloadUnpacker",
+                "PkgRootCreator",
+                "PlistEditor",
+                "PlistReader",
+                "SignToolVerifier",
+                "SparkleUpdateInfoProvider",
+                "StopProcessingIf",
+                "Symlinker",
+                "Unarchiver",
+                "URLDownloader",
+                "URLDownloaderPython",
+                "URLGetter",
+                "URLTextSearcher",
+                "Versioner"
+              ]
+            }
+          ]
         },
         "Arguments": {
           "$ref": "#/definitions/Arguments"
@@ -80,7 +139,9 @@
           "type": "string"
         },
         "filename": {
-          "type": "string"
+          "type": "string",
+          "comment": "No Spaces Allowed, Opinionated",
+          "pattern": "^[^\\s]*$"
         },
         "COMPUTE_HASHES": {
           "type": "boolean"

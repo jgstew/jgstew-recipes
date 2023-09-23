@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/jgstew/jgstew-recipes/blob/main/.AutoPkgRecipe.schema.json",
+  "$id": "https://github.com/jgstew/jgstew-recipes/blob/main/.AutoPkgRecipeOpinionated.schema.json",
   "$comment": "v0.1",
   "title": "AutoPkg Recipe YAML schema",
   "description": "A schema for validating AutoPkg Recipe YAML files. Used by check-jsonschema pre-commit hook.",

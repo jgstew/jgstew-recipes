@@ -198,15 +198,76 @@
           "format": "uri"
         },
         "re_pattern": {
-          "type": "string"
+          "type": "string",
+          "$comment": "Can't use the built in regex validation"
+        },
+        "github_repo": {
+          "$comment": "for GitHubReleasesInfoProvider, No Spaces Allowed",
+          "type": "string",
+          "pattern": "^[^\\s]*$"
         },
         "filename": {
           "type": "string",
           "$comment": "No Spaces Allowed, Opinionated",
           "pattern": "^[^\\s]*$"
         },
-        "COMPUTE_HASHES": {
+        "asset_regex": {
+          "$comment": "for GitHubReleasesInfoProvider",
+          "type": "string"
+        },
+        "input_string": {
+          "$comment": "for Many Processors",
+          "type": "string"
+        },
+        "include_prereleases": {
+          "$comment": "for GitHubReleasesInfoProvider",
           "type": "boolean"
+        },
+        "COMPUTE_HASHES": {
+          "$comment": "for URLDownloaderPython",
+          "type": "boolean"
+        },
+        "download_version": {
+          "$comment": "for URLDownloaderPython",
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": ["", "%version%"]
+            },
+            {
+              "type": "string",
+              "$comment": "No Spaces Allowed",
+              "pattern": "^[^\\s]*$"
+            }
+          ]
+        },
+        "User_Agent": {
+          "$comment": "for URLDownloaderPython",
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0",
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0",
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+              ]
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "custom_peinfo_index": {
+          "$comment": "for com.github.jgstew.SharedProcessors/FileExeGetInfoPE",
+          "type": "string",
+          "enum": [
+            "ProductVersion",
+            "ProductName",
+            "CompanyName",
+            "FileVersion",
+            "FileDescription",
+            "LegalCopyright"
+          ]
         }
       },
       "required": [],

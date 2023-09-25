@@ -1,0 +1,43 @@
+---
+Description: Example recipe getting the github api limits
+Identifier: com.github.jgstew.test.ExampleGitHubAPI
+Input:
+  NAME: ExampleGitHubAPI
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+
+  - Processor: FileFinder
+    Arguments:
+      # create a read only limited personal access token on GitHub.com
+      # set the expiration to 1 year
+      # put the token in this file:
+      pattern: "/Users/*/.autopkg_gh_token"
+
+  - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
+    Arguments:
+      search_path: "%found_filename%"
+      file_search_results_var: "GITHUB_TOKEN"
+      # match all characters that are not whitespace:
+      search_pattern: '\S+'
+      first_result_only: True
+
+  - Processor: URLTextSearcher
+    Arguments:
+      # example using gh command: `gh api --method GET /rate_limit`
+      url: https://api.github.com/rate_limit
+      curl_opts: ["-H", "Authorization: token %GITHUB_TOKEN%"]
+      # the GITHUB_API_LIMIT should be 5000:
+      re_pattern: '(?m)"rate":\s*{[\s\n\r]+"limit":\s*(?P<GITHUB_API_LIMIT>\d+),[\s\n\r]+"used":\s*(?P<GITHUB_API_USED>\d+)'
+      # Example Match:
+      # "rate": {
+      #   "limit": 5000,
+      #   "used": 3,
+      #   "remaining": 4997,
+      #   "reset": 1677627218
+      # }
+
+  - Processor: EndOfCheckPhase
+    Arguments:
+      # clear token so it isn't saved in plist
+      GITHUB_TOKEN: ""

@@ -58,7 +58,7 @@ class FileImageSvgToPng(Processor):  # pylint: disable=too-few-public-methods
             max_pixel_dim = 256
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
 
-        self.output(f"INFO: input file path: {file_pathname}")
+        self.output(f"INFO: input file path: {file_pathname}", 3)
 
         # reset file path png:
         self.env["file_path_png"] = ""
@@ -72,7 +72,7 @@ class FileImageSvgToPng(Processor):  # pylint: disable=too-few-public-methods
             self.convert_svg_to_png(file_pathname, file_path_save, max_pixel_dim)
 
             self.env["file_path_png"] = file_path_save
-            self.output(f"INFO: output file path: {file_path_save}")
+            self.output(f"INFO: output file path: {file_path_save}", 4)
         else:
             self.output(f"WARNING: file does not exist! {file_pathname}", 0)
 

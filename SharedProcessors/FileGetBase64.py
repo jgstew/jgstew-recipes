@@ -36,6 +36,9 @@ class FileGetBase64(Processor):  # pylint: disable=too-few-public-methods
     def main(self):
         """execution starts here"""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
+
+        self.output(f"INFO: input file path: {file_pathname}", 3)
+
         file_size_limit = int(self.env.get("file_size_limit", "250"))
         if file_pathname:
             with open(file_pathname, "rb") as file_io:

@@ -23,6 +23,11 @@ if [ ! -f  ../autopkg ] ; then
 git clone https://github.com/autopkg/autopkg.git ../autopkg
 fi
 
+# if autopkg Library folder does not exist
+if [ ! -f  ~/Library/AutoPkg ] ; then
+mkdir ~/Library/AutoPkg
+fi
+
 # install autopkg requirements
 python3 -m pip install --requirement ../autopkg/gh_actions_requirements.txt
 

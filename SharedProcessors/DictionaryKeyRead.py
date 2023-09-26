@@ -44,9 +44,14 @@ class DictionaryKeyRead(Processor):
             )
 
     def main(self):
+        """Execution starts here"""
+        # get name of dictionary to read from:
         input_dictionary = self.env.get("input_dictionary")
+        # get actual dictionary object:
         input_dictionary = self.env.get(input_dictionary)
+        # get name of key:
         dictionary_key = self.env.get("dictionary_key")
+        # get name of variable to store output:
         output_variable = self.env.get("output_variable")
 
         value = self.read_dictionary_key(input_dictionary, dictionary_key)

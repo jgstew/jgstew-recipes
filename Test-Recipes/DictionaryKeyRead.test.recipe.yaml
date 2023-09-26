@@ -1,9 +1,9 @@
 ---
-Description: Test TemplateDictionaryAppendInput Processor
-Identifier: com.github.jgstew.test.TemplateDictionaryAppendInput
+Description: Test DictionaryKeyRead Processor
+Identifier: com.github.jgstew.test.DictionaryKeyRead
 Input:
-  NAME: TemplateDictionaryAppendInputTest
-  DisplayName: TemplateDictionaryAppendInput
+  NAME: DictionaryKeyReadTest
+  DisplayName: DictionaryKeyRead
   Template_version: "0.0.0"
   Template_example: "example value"
 MinimumVersion: "2.3"

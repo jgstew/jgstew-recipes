@@ -1,0 +1,11 @@
+---
+Description: Test Int Subtitution - failing test
+Identifier: com.github.jgstew.test.IntSubtitution
+Input:
+  NAME: IntSubtitutionTest
+  Number: 123
+MinimumVersion: "2.3"
+Process:
+  - Processor: EndOfCheckPhase
+    Arguments:
+      test_string: "%Number%"

@@ -31,6 +31,8 @@ class DictionaryKeyRead(Processor):
             "description": "Name of the output variable to store the value.",
         },
     }
+    output_variables = {}
+    __doc__ = description
 
     def read_dictionary_key(self, input_dictionary, dictionary_key):
         try:

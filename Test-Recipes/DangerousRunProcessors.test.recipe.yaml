@@ -5,7 +5,7 @@ Input:
   NAME: DangerousRunProcessorsTest
 MinimumVersion: "2.3"
 Process:
-  - Processor: com.github.jgstew.SharedProcessors/DangerousRunProcessors
+  - Processor: com.github.jgstew.SharedDangerousProcessors/DangerousRunProcessors
     Arguments:
       dangerous_processor_array: ["FileFinder"]
       pattern: "*/*.recipe*"

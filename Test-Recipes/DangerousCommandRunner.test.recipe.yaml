@@ -5,7 +5,7 @@ Input:
   NAME: DangerousCommandRunnerTest
 MinimumVersion: "2.3"
 Process:
-  - Processor: com.github.jgstew.SharedProcessors/DangerousCommandRunner
+  - Processor: com.github.jgstew.SharedDangerousProcessors/DangerousCommandRunner
     Arguments:
       # curl is only being used here as a cross platform example
       # this processor was NOT designed to be used with curl

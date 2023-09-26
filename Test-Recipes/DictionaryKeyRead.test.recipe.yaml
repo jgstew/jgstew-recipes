@@ -1,0 +1,20 @@
+---
+Description: Test TemplateDictionaryAppendInput Processor
+Identifier: com.github.jgstew.test.TemplateDictionaryAppendInput
+Input:
+  NAME: TemplateDictionaryAppendInputTest
+  DisplayName: TemplateDictionaryAppendInput
+  Template_version: "0.0.0"
+  Template_example: "example value"
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput
+  - Processor: com.github.jgstew.SharedProcessors/DictionaryKeyRead
+    Arguments:
+      input_dictionary: template_dictionary
+      dictionary_key: version
+      output_variable: version
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version%"
+      assert_string: "0.0.0"

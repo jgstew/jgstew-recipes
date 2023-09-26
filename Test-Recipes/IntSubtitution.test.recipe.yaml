@@ -4,8 +4,16 @@ Identifier: com.github.jgstew.test.IntSubtitution
 Input:
   NAME: IntSubtitutionTest
   Number: 123
+  Boolean: False
+  Float: 1.2
 MinimumVersion: "2.3"
 Process:
   - Processor: EndOfCheckPhase
     Arguments:
-      test_string: "%Number%"
+      test_number: "%Number%"
+      test_boolean: "%Boolean%"
+      test_float: "%Float%"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%test_number%"
+      assert_string: "123"

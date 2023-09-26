@@ -45,6 +45,7 @@ class DictionaryKeyRead(Processor):
 
     def main(self):
         input_dictionary = self.env.get("input_dictionary")
+        input_dictionary = self.env.get(input_dictionary)
         dictionary_key = self.env.get("dictionary_key")
         output_variable = self.env.get("output_variable")
 

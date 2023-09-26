@@ -5,7 +5,7 @@ Input:
   NAME: DictionaryKeyReadTest
   DisplayName: DictionaryKeyRead
   Template_version: "0.0.0"
-  Template_example: "example value"
+  Template_example: "example value1"
 MinimumVersion: "2.3"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput

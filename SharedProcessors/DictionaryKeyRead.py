@@ -35,13 +35,14 @@ class DictionaryKeyRead(Processor):
     __doc__ = description
 
     def read_dictionary_key(self, input_dictionary, dictionary_key):
+        """read the value from the key in the dictionary"""
         try:
             value = input_dictionary.get(dictionary_key)
             return value
         except Exception as e:
             raise ProcessorError(
                 f"Failed to read key '{dictionary_key}' from the dictionary: {str(e)}"
-            )
+            ) from e
 
     def main(self):
         """Execution starts here"""
@@ -59,6 +60,9 @@ class DictionaryKeyRead(Processor):
         if value is not None:
             self.output(f"Read '{dictionary_key}' from the dictionary: {value}")
             self.env[output_variable] = value
+            self.output_variables[output_variable] = {
+                "description": "the custom output"
+            }
         else:
             raise ProcessorError(f"Key '{dictionary_key}' not found in the dictionary.")
 

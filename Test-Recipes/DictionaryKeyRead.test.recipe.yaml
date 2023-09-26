@@ -9,11 +9,13 @@ Input:
 MinimumVersion: "2.3"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput
+
   - Processor: com.github.jgstew.SharedProcessors/DictionaryKeyRead
     Arguments:
       input_dictionary: template_dictionary
       dictionary_key: version
       output_variable: version
+
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%version%"

@@ -47,18 +47,20 @@ class DictionaryKeyRead(Processor):
     def main(self):
         """Execution starts here"""
         # get name of dictionary to read from:
-        input_dictionary = self.env.get("input_dictionary")
+        input_dictionary_name = self.env.get("input_dictionary", "")
         # get actual dictionary object:
-        input_dictionary = self.env.get(input_dictionary)
+        input_dictionary = self.env.get(input_dictionary_name, None)
         # get name of key:
-        dictionary_key = self.env.get("dictionary_key")
+        dictionary_key = self.env.get("dictionary_key", None)
         # get name of variable to store output:
-        output_variable = self.env.get("output_variable")
+        output_variable = self.env.get("output_variable", None)
 
         value = self.read_dictionary_key(input_dictionary, dictionary_key)
 
         if value is not None:
-            self.output(f"Read '{dictionary_key}' from the dictionary: {value}")
+            self.output(
+                f"Read '{dictionary_key}' from dictionary '{input_dictionary_name}': {value}"
+            )
             self.env[output_variable] = value
             self.output_variables[output_variable] = {
                 "description": "the custom output"

@@ -40,11 +40,12 @@ class VariableToString(Processor):
 
         if value is not None:
             self.env[output_variable] = value
-            self.output_variables[output_variable] = {
-                "description": "the custom output"
-            }
+            if input_variable != output_variable:
+                self.output_variables[output_variable] = {
+                    "description": "the string output"
+                }
         else:
-            raise ProcessorError(f"Variable not found.")
+            raise ProcessorError("Variable not found.")
 
 
 if __name__ == "__main__":

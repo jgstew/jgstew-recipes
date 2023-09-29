@@ -1,0 +1,26 @@
+---
+Description: Test VariableToString Processor
+Identifier: com.github.jgstew.test.VariableToString
+Input:
+  NAME: VariableToStringTest
+  float: 1.2
+  int: 1
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: float
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%float%"
+      assert_string: 1.2
+
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: int
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%int%"
+      assert_string: 1

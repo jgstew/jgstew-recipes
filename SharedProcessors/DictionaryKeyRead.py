@@ -30,6 +30,11 @@ class DictionaryKeyRead(Processor):
             "required": True,
             "description": "Name of the output variable to store the value.",
         },
+        "output_string": {
+            "required": False,
+            "default": True,
+            "description": "Make the value read a string.",
+        },
     }
     output_variables = {}
     __doc__ = description
@@ -54,10 +59,14 @@ class DictionaryKeyRead(Processor):
         dictionary_key = self.env.get("dictionary_key", None)
         # get name of variable to store output:
         output_variable = self.env.get("output_variable", None)
+        # get if the output should be a string:
+        output_string = self.env.get("output_string", True)
 
         value = self.read_dictionary_key(input_dictionary, dictionary_key)
 
         if value is not None:
+            if output_string:
+                value = str(value)
             self.output(
                 f"Read '{dictionary_key}' from dictionary '{input_dictionary_name}': {value}"
             )

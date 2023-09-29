@@ -4,8 +4,10 @@ Identifier: com.github.jgstew.test.DictionaryKeyRead
 Input:
   NAME: DictionaryKeyReadTest
   DisplayName: DictionaryKeyRead
-  Template_version: "0.0.0"
+  Template_version: 1.2.3
   Template_example: "example value"
+  Template_float: 1.2
+  Template_int: 1
 MinimumVersion: "2.3"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput
@@ -19,4 +21,26 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%version%"
-      assert_string: "0.0.0"
+      assert_string: "1.2.3"
+
+  - Processor: com.github.jgstew.SharedProcessors/DictionaryKeyRead
+    Arguments:
+      input_dictionary: template_dictionary
+      dictionary_key: float
+      output_variable: float
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%float%"
+      assert_string: 1.2
+
+  - Processor: com.github.jgstew.SharedProcessors/DictionaryKeyRead
+    Arguments:
+      input_dictionary: template_dictionary
+      dictionary_key: int
+      output_variable: int
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%int%"
+      assert_string: 1

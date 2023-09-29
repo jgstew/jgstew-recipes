@@ -40,8 +40,8 @@ class AssertInputContainsString(Processor):  # pylint: disable=invalid-name
     def main(self):
         """Execution starts here"""
 
-        input_string = self.env.get("input_string")
-        assert_string = self.env.get("assert_string")
+        input_string = str(self.env.get("input_string"))
+        assert_string = str(self.env.get("assert_string"))
         raise_error = bool(self.env.get("raise_error", True))
 
         self.output(f"`{input_string}` must contain `{assert_string}`", 2)

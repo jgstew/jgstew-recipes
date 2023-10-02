@@ -13,7 +13,7 @@ from autopkglib import (  # pylint: disable=import-error,unused-import
 __all__ = ["FileExeGetInfoPE"]
 
 
-def dump_info_pefile(filepath, first_only=True):
+def dump_info_pefile(filepath, first_only=True, verbosity=0):
     """dump pefile info StringTable
 
     Originally from:
@@ -33,6 +33,8 @@ def dump_info_pefile(filepath, first_only=True):
                                 pe_info_dict[
                                     str_entry[0].decode("utf-8", "backslashreplace")
                                 ] = str_entry[1].decode("utf-8", "backslashreplace")
+                            if verbosity > 3:
+                                print(pe_info_dict)
                             if first_only:
                                 return pe_info_dict
     return pe_info_dict
@@ -82,8 +84,9 @@ class FileExeGetInfoPE(Processor):  # pylint: disable=too-few-public-methods
         custom_peinfo_index = self.env.get("custom_peinfo_index", "FileVersion")
         custom_peinfo_output = self.env.get("custom_peinfo_output", "version")
         peinfo_first_only = self.env.get("peinfo_first_only", True)
+        verbosity = int(self.env.get("verbose", 0))
 
-        pe_info_dict = dump_info_pefile(file_pathname, peinfo_first_only)
+        pe_info_dict = dump_info_pefile(file_pathname, peinfo_first_only, verbosity)
 
         self.output(f"Info: full pe_info: {pe_info_dict}", 4)
 

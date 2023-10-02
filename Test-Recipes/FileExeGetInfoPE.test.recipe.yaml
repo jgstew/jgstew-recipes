@@ -6,10 +6,12 @@ Input:
 MinimumVersion: "2.3"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+
   - Processor: URLDownloaderPython
     Arguments:
       url: https://raw.githubusercontent.com/ralphje/signify/master/tests/test_data/SoftwareUpdate.exe
       COMPUTE_HASHES: False
+
   - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE
     # Example Output:
     # 'file_peinfo_CompanyName': 'Apple Inc.',

@@ -1,4 +1,5 @@
 name: "setup-autopkg"
+# This has been moved to: https://github.com/autopkg/setup-autopkg-actions
 description: "Sets up autopkg"
 inputs:
   name:
@@ -16,53 +17,15 @@ inputs:
     description: "Should this set the windows powershell execution policy?"
     required: true
     # only needed on self hosted windows runners, but no harm otherwise:
-    default: true
+    default: "true"
 
 runs:
   using: "composite"
   steps:
-    # only needed on self hosted windows runners:
-    - name: set powershell execution policy CurrentUser
-      if: runner.os == 'Windows' && inputs.set-powershell-policy
-      shell: cmd
-      run: powershell -command "Set-ExecutionPolicy -Force -ExecutionPolicy RemoteSigned -Scope CurrentUser"
-
-    - name: checkout autopkg
-      uses: actions/checkout@v3
+    # This has been moved to: https://github.com/autopkg/setup-autopkg-actions
+    - name: test setup-autopkg-actions action
+      uses: autopkg/setup-autopkg-actions@v0.1.2
       with:
-        repository: autopkg/autopkg
-        path: autopkg
-        ref: ${{ inputs.use-autopkg-branch }}
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ inputs.use-python-version }}
-        cache: "pip"
-        # following should be any requirements files used later:
-        cache-dependency-path: |
-          autopkg/gh_actions_requirements.txt
-          requirements.txt
-
-    - name: Install/Update Python Build Tools
-      run: pip install setuptools wheel build
-      shell: bash
-
-    - name: Install AutoPkg Reqirements
-      run: pip install --requirement autopkg/gh_actions_requirements.txt
-      shell: bash
-
-    - name: create empty config windows
-      # https://stackoverflow.com/questions/57946173/github-actions-run-step-on-specific-os
-      if: runner.os == 'Windows'
-      shell: cmd
-      run: |
-        if not exist "%USERPROFILE%/AppData/Local/Autopkg" mkdir "%USERPROFILE%/AppData/Local/Autopkg"
-        if not exist "%USERPROFILE%/AppData/Local/Autopkg/config.json" echo {} > "%USERPROFILE%/AppData/Local/Autopkg/config.json"
-
-    - name: create default autopkg config file Linux
-      if: runner.os == 'Linux'
-      shell: bash
-      run: |
-        cd ~ && mkdir -p .config/Autopkg
-        cd ~ && echo {} > .config/Autopkg/config.json
+        use-python-version: ${{ inputs.use-python-version }}
+        use-autopkg-branch: ${{ inputs.use-autopkg-branch }}
+        set-powershell-policy: ${{ inputs.set-powershell-policy }}

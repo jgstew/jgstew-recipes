@@ -1,0 +1,32 @@
+---
+name: Test setup-autopkg-actions
+
+on:
+  push:
+    paths:
+      - ".github/workflows/Test_setup-autopkg-actions_full.yaml"
+  pull_request:
+    paths:
+      - ".github/workflows/Test_setup-autopkg-actions_full.yaml"
+
+jobs:
+  TestAction_setup-autopkg:
+    strategy:
+      matrix:
+        # https://ncorti.com/blog/howto-github-actions-build-matrix
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    name: Test Action setup-autopkg
+    steps:
+      - uses: actions/checkout@v4
+
+      # https://github.com/orgs/community/discussions/26073
+      - name: setup-autopkg local action
+        uses: autopkg/setup-autopkg-actions@v0.1.1
+        with:
+          use-python-version: "3.11"
+          use-autopkg-branch: dev
+          set-powershell-policy: false
+
+      - name: run recipe autopkg
+        run: python autopkg/Code/autopkg run -vv Test-Recipes/AutopkgCore.test.recipe.yaml

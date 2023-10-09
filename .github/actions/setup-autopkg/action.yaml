@@ -16,14 +16,14 @@ inputs:
     description: "Should this set the windows powershell execution policy?"
     required: true
     # only needed on self hosted windows runners, but no harm otherwise:
-    default: "true"
+    default: true
 
 runs:
   using: "composite"
   steps:
     # only needed on self hosted windows runners:
     - name: set powershell execution policy CurrentUser
-      if: runner.os == 'Windows' && inputs.set-powershell-policy == 'true'
+      if: runner.os == 'Windows' && inputs.set-powershell-policy
       shell: cmd
       run: powershell -command "Set-ExecutionPolicy -Force -ExecutionPolicy RemoteSigned -Scope CurrentUser"
 

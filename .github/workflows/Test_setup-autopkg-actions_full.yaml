@@ -10,7 +10,7 @@ on:
       - ".github/workflows/Test_setup-autopkg-actions_full.yaml"
 
 jobs:
-  TestAction_setup-autopkg:
+  Test_setup-autopkg-actions:
     strategy:
       matrix:
         # https://ncorti.com/blog/howto-github-actions-build-matrix

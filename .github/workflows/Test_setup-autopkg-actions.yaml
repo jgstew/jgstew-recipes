@@ -4,10 +4,10 @@ name: Test setup-autopkg-actions
 on:
   push:
     paths:
-      - ".github/workflows/Test_Action_setup-autopkg.yaml"
+      - ".github/workflows/Test_setup-autopkg-actions.yaml"
   pull_request:
     paths:
-      - ".github/workflows/Test_Action_setup-autopkg.yaml"
+      - ".github/workflows/Test_setup-autopkg-actions.yaml"
 
 jobs:
   TestAction_setup-autopkg:

@@ -24,7 +24,7 @@ runs:
   steps:
     # This has been moved to: https://github.com/autopkg/setup-autopkg-actions
     - name: test setup-autopkg-actions action
-      uses: autopkg/setup-autopkg-actions@v0.1.2
+      uses: autopkg/setup-autopkg-actions@main
       with:
         use-python-version: ${{ inputs.use-python-version }}
         use-autopkg-branch: ${{ inputs.use-autopkg-branch }}

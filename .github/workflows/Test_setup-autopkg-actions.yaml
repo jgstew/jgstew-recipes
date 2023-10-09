@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: setup-autopkg local action
-        uses: autopkg/setup-autopkg-actions@v0.1
+        uses: autopkg/setup-autopkg-actions@latest
 
       - name: run recipe autopkg
         run: python autopkg/Code/autopkg run -vv Test-Recipes/AutopkgCore.test.recipe.yaml

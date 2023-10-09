@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: setup-autopkg local action
+      - name: test setup-autopkg-actions action
         # https://github.com/orgs/community/discussions/26073
         uses: autopkg/setup-autopkg-actions@v0.1.2
 

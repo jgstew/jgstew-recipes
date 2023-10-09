@@ -6,10 +6,12 @@ on:
     paths:
       - "Test-Recipes/AutopkgCore.test.recipe.yaml"
       - ".github/workflows/AutoPkgCoreProcessors.yaml"
+      - ".github/actions/setup-autopkg/action.yaml"
   pull_request:
     paths:
       - "Test-Recipes/AutopkgCore.test.recipe.yaml"
       - ".github/workflows/AutoPkgCoreProcessors.yaml"
+      - ".github/actions/setup-autopkg/action.yaml"
 
 jobs:
   AutoPkgCoreTest:

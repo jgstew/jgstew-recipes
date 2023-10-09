@@ -1,5 +1,5 @@
 ---
-name: Test setup-autopkg-actions
+name: Test setup-autopkg-actions Full
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
       - ".github/workflows/Test_setup-autopkg-actions_full.yaml"
 
 jobs:
-  Test_setup-autopkg-actions:
+  Test_setup-autopkg-actions_full:
     strategy:
       matrix:
         # https://ncorti.com/blog/howto-github-actions-build-matrix

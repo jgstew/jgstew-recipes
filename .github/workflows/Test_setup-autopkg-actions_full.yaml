@@ -22,7 +22,7 @@ jobs:
 
       # https://github.com/orgs/community/discussions/26073
       - name: setup-autopkg local action
-        uses: autopkg/setup-autopkg-actions@v0.1.2
+        uses: autopkg/setup-autopkg-actions@latest
         with:
           use-python-version: "3.10"
           use-autopkg-branch: dev

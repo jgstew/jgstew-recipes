@@ -1,0 +1,10 @@
+---
+Description: Test Sleep Processor
+Identifier: com.github.jgstew.test.Sleep
+Input:
+  NAME: SleepTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/Sleep
+    Arguments:
+      sleep_seconds: "5"

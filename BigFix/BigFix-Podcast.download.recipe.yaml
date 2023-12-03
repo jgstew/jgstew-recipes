@@ -5,16 +5,46 @@ Input:
   NAME: BigFix-Podcast
 MinimumVersion: '2.3'
 Process:
-  - Processor: URLTextSearcher
+  - Processor: URLDownloaderPython
     Arguments:
       url: https://feeds.buzzsprout.com/1248878.rss
-      re_pattern: 'enclosure url="(?P<url>https://www.buzzsprout.com/.+.mp3)" length="\d+"'
+      filename: podcast.rss.xml
+      download_version: ""
+      COMPUTE_HASHES: False
+      HEADERS_TO_TEST: ["Content-Length"]
+      User_Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0
+
+  - Processor: URLTextSearcher
+    Arguments:
+      url: "file://%RECIPE_CACHE_DIR%/downloads/podcast.rss.xml"
+      re_pattern: 'enclosure url="(?P<url>https://www.buzzsprout.com/.+.mp3)" length="(?P<ep_file_size>\d+)"'
 
   - Processor: URLDownloaderPython
     Arguments:
       # url: https://www.buzzsprout.com/1248878/13899237-bigfix-insider-interview-michelle-mcgough-bigfix-technical-engagement.mp3
+      filename: podcast_episode.mp3
       download_version: ""
       COMPUTE_HASHES: True
       User_Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0
 
   - Processor: EndOfCheckPhase
+
+  - Processor: URLTextSearcher
+    Arguments:
+      url: "file://%RECIPE_CACHE_DIR%/downloads/podcast.rss.xml"
+      re_pattern: '<pubDate>(?P<ep_pubDate>.+)</pubDate>'
+
+  # - Processor: URLTextSearcher
+  #   Arguments:
+  #     url: "file://%RECIPE_CACHE_DIR%/downloads/podcast.rss.xml"
+  #     re_pattern: '<content:encoded>(?P<ep_description>.+)<'
+
+  - Processor: URLTextSearcher
+    Arguments:
+      url: "file://%RECIPE_CACHE_DIR%/downloads/podcast.rss.xml"
+      re_pattern: '<itunes:title>(?P<ep_title>.+)</itunes:title>'
+
+  - Processor: URLTextSearcher
+    Arguments:
+      url: "file://%RECIPE_CACHE_DIR%/downloads/podcast.rss.xml"
+      re_pattern: '<itunes:episode>(?P<ep_number>\d+)</itunes:episode>'

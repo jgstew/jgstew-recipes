@@ -1,0 +1,23 @@
+---
+Description: Generates a BigFix Task for the latest BigFix Podcast Episode
+Identifier: com.github.jgstew.bigfix.BigFix-Podcast
+Input:
+  NAME: BigFix-Podcast
+MinimumVersion: '2.3'
+ParentRecipe: com.github.jgstew.download.BigFix-Podcast
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+    Arguments:
+      template_version: "%ep_number%"
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "ep_title"
+      append_value: "%ep_title%"
+
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: ./BigFix/%NAME%.bes.mustashe
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.bes"

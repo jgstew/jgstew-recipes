@@ -5,6 +5,7 @@ Input:
   NAME: BigFix-Podcast
 MinimumVersion: '2.3'
 Process:
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: URLDownloaderPython
     Arguments:
       url: https://feeds.buzzsprout.com/1248878.rss

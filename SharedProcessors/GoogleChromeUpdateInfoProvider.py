@@ -45,7 +45,7 @@ class GoogleChromeUpdateInfoProvider(Processor):
         },
         "chrome_os_version": {
             "required": False,
-            "default": "10.0",
+            "default": "11.0",
             "description": "Operating system version (e.g., 10.0, 6.2).",
         },
         # "chrome_version": {

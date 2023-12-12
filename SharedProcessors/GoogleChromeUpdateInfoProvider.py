@@ -7,7 +7,7 @@
 # - https://gist.github.com/pudquick/8cd029d0967ee6f5ee353ed5a967f33c
 #
 import uuid
-from xml.etree import ElementTree as ET
+import xml.etree.ElementTree
 
 import requests
 from autopkglib import Processor, ProcessorError
@@ -110,7 +110,7 @@ class GoogleChromeUpdateInfoProvider(Processor):
                 f"Error reported: {response.status_code} : {response.text}"
             )
 
-        content_xml = ET.fromstring(response.content)
+        content_xml = xml.etree.ElementTree.fromstring(response.content)
         try:
             package_name = content_xml.find(
                 "app/updatecheck/manifest/packages/package"

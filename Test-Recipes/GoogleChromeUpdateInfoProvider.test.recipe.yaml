@@ -1,0 +1,24 @@
+---
+Description: Test GoogleChromeUpdateInfoProvider Processor
+Identifier: com.github.jgstew.test.GoogleChromeUpdateInfoProvider
+Input:
+  NAME: GoogleChromeUpdateInfoProviderTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/GoogleChromeUpdateInfoProvider
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%chrome_package_name%"
+      assert_string: "chrome_installer."
+
+  - Processor: com.github.jgstew.SharedProcessors/GoogleChromeUpdateInfoProvider
+    Arguments:
+      chrome_os: mac
+      chrome_os_version: "10.12"
+      chrome_appid: com.google.Chrome
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%chrome_package_name%"
+      assert_string: "GoogleChrome-"

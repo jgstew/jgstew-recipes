@@ -3,8 +3,13 @@
 # based upon a script written by JasonWalker
 #
 # Related:
+# - https://github.com/google/omaha/blob/main/doc/ServerProtocolV3.md
+# - https://source.chromium.org/chromium/chromium/src/+/main:docs/updater/protocol_3_1.md
 # - https://github.com/hjuutilainen/adminscripts/blob/master/chrome-enable-autoupdates.py
 # - https://gist.github.com/pudquick/8cd029d0967ee6f5ee353ed5a967f33c
+# - https://squirrelistic.com/blog/how_to_download_older_version_of_google_chrome
+# - https://github.com/SukkaW/CheckChrome
+# - https://source.chromium.org/chromium/chromium/src/+/main:docs/updater/protocol_3_1.md
 #
 import uuid
 import xml.etree.ElementTree

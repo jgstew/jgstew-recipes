@@ -14,7 +14,7 @@ Process:
 
   - Processor: com.github.jgstew.SharedProcessors/GoogleChromeUpdateInfoProvider
     Arguments:
-      chrome_os: mac
+      chrome_os_platform: mac
       chrome_os_version: "10.12"
       chrome_appid: com.google.Chrome
 

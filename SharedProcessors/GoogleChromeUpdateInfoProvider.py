@@ -32,12 +32,12 @@ class GoogleChromeUpdateInfoProvider(Processor):
         #     "default": "stable",
         #     "description": "Update channel (e.g., stable, beta, dev).",
         # },
-        "chrome_os": {
+        "chrome_os_platform": {
             "required": False,
             "default": "win",
             "description": "Operating system (e.g., win, mac, linux).",
         },
-        # "chrome_arch": {
+        # "chrome_os_arch": {
         #     "required": False,
         #     "default": "x64",
         #     "description": "Architecture (e.g., x64, x86).",
@@ -75,11 +75,35 @@ class GoogleChromeUpdateInfoProvider(Processor):
         # session_id = str(uuid.uuid4()).upper()
 
         # channel = self.env.get("chrome_channel")
-        os = self.env.get("chrome_os")
-        # arch = self.env.get("chrome_arch")
-        os_version = self.env.get("chrome_os_version")
+        chrome_os_platform = self.env.get("chrome_os_platform")
+        # arch = self.env.get("chrome_os_arch")
+        chrome_os_version = self.env.get("chrome_os_version")
         # chrome_version = self.env.get("chrome_version", "")
         chrome_appid = self.env.get("chrome_appid", "")
+
+        # chrome_os_platform must be one of:
+        # "android" or "Android": Android.
+        # "chromeos" or "ChromeOS" or "Chrome OS": Chrome OS.
+        # "chromiumos" or "ChromiumOS" or "Chromium OS": Chromium OS.
+        # "dragonfly": DragonFly BSD.
+        # "freebsd" or "FreeBSD": FreeBSD.
+        # "Fuchsia": Fuchsia.
+        # "ios" or "iOS": Apple iOS.
+        # "linux" or "Linux": Linux and its derivatives, except as mentioned below.
+        # "mac" or "Mac OS X": Apple macOS and its derivatives.
+        # "openbsd" or "OpenBSD": OpenBSD.
+        # "Solaris": Solaris.
+        # "win" or "Windows": Microsoft Windows and its derivatives.
+        # "Unknown": Sent by some clients instead of "" when the platform is not recognized.
+
+        # chrome_os_arch must be one of:
+        # "arm": ARM
+        # "arm64": 64-bit ARM
+        # "x86": x86
+        # "x86_64": x86-64
+        # "x64": x64
+
+        # ------------
 
         # update_request = f"""<?xml version="1.0" encoding="UTF-8"?>
         # <request protocol="3.0" updater="Omaha" sessionid="{{{session_id}}}"
@@ -93,7 +117,7 @@ class GoogleChromeUpdateInfoProvider(Processor):
         # from: https://gist.github.com/pudquick/8cd029d0967ee6f5ee353ed5a967f33c
         update_request = f"""<?xml version="1.0" encoding="UTF-8"?>
         <request protocol="3.0" requestid="{{{request_id}}}">
-                <os platform="{os}" version="{os_version}" />
+                <os platform="{chrome_os_platform}" version="{chrome_os_version}" />
                 <app appid="{chrome_appid}">
                         <updatecheck />
                 </app>

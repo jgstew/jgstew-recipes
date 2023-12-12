@@ -28,21 +28,21 @@ class GoogleChromeUpdateInfoProvider(Processor):
         "Provides download information for the latest version of Google Chrome."
     )
     input_variables = {
-        # "chrome_channel": {
-        #     "required": False,
-        #     "default": "stable",
-        #     "description": "Update channel (e.g., stable, beta, dev).",
-        # },
+        "chrome_channel": {
+            "required": False,
+            "default": "stable",
+            "description": "Update channel (e.g., stable, beta, dev).",
+        },
         "chrome_os_platform": {
             "required": False,
             "default": "win",
             "description": "Operating system (e.g., win, mac, linux).",
         },
-        # "chrome_os_arch": {
-        #     "required": False,
-        #     "default": "x64",
-        #     "description": "Architecture (e.g., x64, x86).",
-        # },
+        "chrome_os_arch": {
+            "required": False,
+            "default": "",
+            "description": "Architecture (e.g., x64, x86).",
+        },
         "chrome_os_version": {
             "required": False,
             "default": "10.0",
@@ -75,9 +75,9 @@ class GoogleChromeUpdateInfoProvider(Processor):
         request_id = str(uuid.uuid4()).upper()
         # session_id = str(uuid.uuid4()).upper()
 
-        # channel = self.env.get("chrome_channel")
+        chrome_channel = self.env.get("chrome_channel")
         chrome_os_platform = self.env.get("chrome_os_platform")
-        # arch = self.env.get("chrome_os_arch")
+        chrome_os_arch = self.env.get("chrome_os_arch")
         chrome_os_version = self.env.get("chrome_os_version")
         # chrome_version = self.env.get("chrome_version", "")
         chrome_appid = self.env.get("chrome_appid", "")
@@ -118,10 +118,10 @@ class GoogleChromeUpdateInfoProvider(Processor):
         # from: https://gist.github.com/pudquick/8cd029d0967ee6f5ee353ed5a967f33c
         update_request = f"""<?xml version="1.0" encoding="UTF-8"?>
         <request protocol="3.0" requestid="{{{request_id}}}">
-                <os platform="{chrome_os_platform}" version="{chrome_os_version}" />
-                <app appid="{chrome_appid}">
-                        <updatecheck />
-                </app>
+            <os platform="{chrome_os_platform}" version="{chrome_os_version}" arch="{chrome_os_arch}" />
+            <app appid="{chrome_appid}" ismachine="1" release_channel="{chrome_channel}">
+                <updatecheck />
+            </app>
         </request>
         """
 

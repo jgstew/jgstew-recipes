@@ -89,7 +89,7 @@ class GoogleChromeUpdateInfoProvider(Processor):
         update_request = f"""<?xml version="1.0" encoding="UTF-8"?>
         <request protocol="3.0" requestid="{{{request_id}}}">
                 <os platform="{os}" version="{os_version}" />
-                <app appid="{chrome_appid}" lang="">
+                <app appid="{chrome_appid}">
                         <updatecheck />
                 </app>
         </request>

@@ -5,6 +5,7 @@ Input:
   NAME: GoogleChromeUpdateInfoProviderTest
 MinimumVersion: "2.3"
 Process:
+  # https://github.com/jgstew/jgstew-recipes/blob/main/SharedProcessors/GoogleChromeUpdateInfoProvider.py
   - Processor: com.github.jgstew.SharedProcessors/GoogleChromeUpdateInfoProvider
 
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString

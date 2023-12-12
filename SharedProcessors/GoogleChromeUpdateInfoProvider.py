@@ -3,6 +3,7 @@
 # based upon a script written by JasonWalker
 #
 # Related:
+# - https://github.com/jgstew/jgstew-recipes/blob/main/Test-Recipes/GoogleChromeUpdateInfoProvider.test.recipe.yaml
 # - https://github.com/google/omaha/blob/main/doc/ServerProtocolV3.md
 # - https://source.chromium.org/chromium/chromium/src/+/main:docs/updater/protocol_3_1.md
 # - https://github.com/hjuutilainen/adminscripts/blob/master/chrome-enable-autoupdates.py

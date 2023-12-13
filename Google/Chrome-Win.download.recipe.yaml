@@ -11,6 +11,8 @@ Process:
 
   # https://github.com/jgstew/jgstew-recipes/blob/main/SharedProcessors/GoogleChromeUpdateInfoProvider.py
   - Processor: com.github.jgstew.SharedProcessors/GoogleChromeUpdateInfoProvider
+    Arguments:
+      chrome_os_arch: "x64"
 
   - Processor: EndOfCheckPhase
     # Arguments:

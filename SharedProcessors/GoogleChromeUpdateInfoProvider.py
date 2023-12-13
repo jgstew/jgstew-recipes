@@ -166,7 +166,7 @@ class GoogleChromeUpdateInfoProvider(Processor):
         self.env["chrome_download_urls"] = urls
 
         # Note, it might make sense to filter the list in a smarter way:
-        self.env["url"] = urls[-1]
+        self.env["url"] = f"{urls[-1]}{package_name}"
 
         # self.output(
         #     f"\nUpdates found:\nName: {package_name}\nSHA256: {package_sha256}\nSize: {package_size}\nDownload URLs: {urls}"

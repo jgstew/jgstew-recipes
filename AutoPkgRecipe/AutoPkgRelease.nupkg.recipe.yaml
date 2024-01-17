@@ -5,7 +5,7 @@ Identifier: com.github.jgstew.nupkg.AutoPkg
 Input:
   NAME: autopkg
   PYTHON_PACKAGE_ID: python3
-  PYTHON_VERSION: "3.10.11"
+  PYTHON_VERSION: "3.10.13"
 MinimumVersion: "2.3"
 SupportedPlatforms:
   - Windows

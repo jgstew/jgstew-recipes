@@ -43,6 +43,10 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: pip install --requirement requirements.txt
 
+      - name: Install prereq
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: apt-get install msitools -y
+
       - name: run recipe autopkg
         if: steps.changed-files.outputs.any_changed == 'true'
         run: python autopkg/Code/autopkg run -vv --recipe-list TestRecipesAction.txt

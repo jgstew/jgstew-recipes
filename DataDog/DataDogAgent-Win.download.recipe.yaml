@@ -1,0 +1,38 @@
+---
+Description: Downloads the latest DataDog Agent for Windows
+Identifier: com.github.jgstew.download.DataDog-Agent-Win
+Input:
+  NAME: DataDog-Agent-Win
+  DisplayName: Datadog Agent
+MinimumVersion: "2.3"
+Process:
+  # get all versions found in this JSON doc:
+  - Processor: com.github.jgstew.SharedProcessors/URLTextSearcherArray
+    Arguments:
+      url: https://ddagent-windows-stable.s3.amazonaws.com/installers_v2.json
+      re_pattern: '(\d+\.\d+\.\d+)-'
+
+  # get the maximum version:
+  - Processor: com.github.jgstew.SharedProcessors/VersionMaximumArray
+
+  - Processor: URLDownloaderPython
+    Arguments:
+      # %version_maximum%
+      url: https://s3.amazonaws.com/ddagent-windows-stable/ddagent-cli-%version_maximum%.msi
+      filename: datadog-agent-x86_64.msi
+      download_version: ""
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase
+
+  # Get apparent SourceReleaseDate from MSI metadata:
+  - Processor: com.github.jgstew.SharedProcessors/FileMsiGetInfoOLE
+
+  # Get version number from MSI ProductVersion:
+  - Processor: com.github.jgstew.SharedProcessors/FileMsiGetProperty
+
+  # verify version is set correctly, at least major.minor:
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%version%"
+      re_pattern: '^\d+\.\d+'

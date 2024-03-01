@@ -34,3 +34,5 @@ Process:
     Arguments:
       # template_file_path: "./%VendorFolder%/%NAME%-Win-Install_Update.bes.mustache"
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%-Update.bes"
+
+  - Processor: com.github.jgstew.SharedProcessors/BESImport

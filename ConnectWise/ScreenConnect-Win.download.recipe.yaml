@@ -10,7 +10,7 @@ Process:
   - Processor: URLTextSearcher
     Arguments:
       url: https://screenconnect.connectwise.com/download
-      re_pattern: "(?P<url>https://d1kuyuqowve5id.cloudfront.net/ScreenConnect_23.9.10.8817_Release.msi)"
+      re_pattern: "(?P<url>https://.+?.cloudfront.net/ScreenConnect_.+?_Release.msi)"
 
   - Processor: URLDownloaderPython
     Arguments:

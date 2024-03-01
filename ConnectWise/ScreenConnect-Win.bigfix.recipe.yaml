@@ -1,0 +1,36 @@
+---
+Description: Generates a BigFix Task for ScreenConnect
+Identifier: com.github.jgstew.bigfix.ScreenConnect-Win
+Input:
+  NAME: ScreenConnect-Win
+  DisplayName: ScreenConnect
+  # 64BitOnly: TRUE
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.download.ScreenConnect-Win
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput
+
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      # use UNIX style paths so this works on Windows and non-Windows:
+      template_file_path: ./ConnectWise/ScreenConnect-Win-Install_Update.bes.mustache
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%-InstallUpdate.bes"
+
+  - Processor: com.github.jgstew.SharedProcessors/BESImport
+
+  - Processor: com.github.jgstew.SharedProcessors/BigFixActioner
+
+  # create update(patch) only content:
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "patch"
+      append_value: true
+
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      # template_file_path: "./%VendorFolder%/%NAME%-Win-Install_Update.bes.mustache"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%-Update.bes"

@@ -11,7 +11,8 @@ from BESImport import BESImport
 __all__ = ["BigFixActioner"]
 
 # noqa: B950
-BES_SourcedFixletAction = """\
+# if this template is used, you get an offer:
+BES_SourcedFixletActionOffer = """\
 <BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
     <SourcedFixletAction>
         <SourceFixlet>
@@ -54,6 +55,22 @@ BES_SourcedFixletAction = """\
 </BES>
 """
 
+# if this template is used, you get an action:
+BES_SourcedFixletAction = """\
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+    <SourcedFixletAction>
+        <SourceFixlet>
+            <Sitename>{{bes_customsite}}</Sitename>
+            <FixletID>{{bes_id}}</FixletID>
+            <Action>{{bes_action}}</Action>
+        </SourceFixlet>
+        <Target>
+            <AllComputers>true</AllComputers>
+        </Target>
+    </SourcedFixletAction>
+</BES>
+"""
+
 
 class BigFixActioner(BESImport):
     """AutoPkg Processor to create a BigFix action from imported content"""
@@ -75,6 +92,11 @@ class BigFixActioner(BESImport):
             "default": "Action1",
             "description": "Which Action to run",
         },
+        "bes_action_type": {
+            "required": False,
+            "default": "Offer",
+            "description": "Tells autopkg to create an action or offer.",
+        },
     }
     output_variables = {
         "bes_action_id": {
@@ -90,6 +112,8 @@ class BigFixActioner(BESImport):
         """BigFixActioner Main Method"""
         template_dict = {}
         template_dict["bes_id"] = self.env.get("bes_id", 0)
+        bes_action_type = str(self.env.get("bes_action_type", "Offer"))
+
         if template_dict["bes_id"] == 0:
             self.output("Nothing to action.", 0)
         else:
@@ -104,7 +128,12 @@ class BigFixActioner(BESImport):
             # clear password from ENV
             self.env["BES_PASSWORD"] = ""
 
-            bes_action_data = chevron.render(BES_SourcedFixletAction, template_dict)
+            if "action" in bes_action_type.lower():
+                bes_action_data = chevron.render(BES_SourcedFixletAction, template_dict)
+            else:
+                bes_action_data = chevron.render(
+                    BES_SourcedFixletActionOffer, template_dict
+                )
 
             self.output(bes_action_data, 4)
 

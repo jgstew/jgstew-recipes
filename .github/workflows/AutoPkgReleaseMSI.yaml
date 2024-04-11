@@ -40,7 +40,7 @@ jobs:
       - name: Add msbuild to PATH
         # https://github.com/microsoft/setup-msbuild
         if: runner.os == 'Windows'
-        uses: microsoft/setup-msbuild@v1.3
+        uses: microsoft/setup-msbuild@v2
 
       - name: Set token
         # required for githubreleaseinfoprovider in github actions

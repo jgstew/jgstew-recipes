@@ -24,7 +24,7 @@ class Sleep(Processor):  # pylint: disable=invalid-name
     input_variables = {
         "sleep_seconds": {
             "required": False,
-            "default": 2,
+            "default": 15,
             "description": "seconds to sleep",
         },
     }
@@ -34,7 +34,7 @@ class Sleep(Processor):  # pylint: disable=invalid-name
     def main(self):
         """Execution starts here"""
 
-        sleep_seconds = int(self.env.get("sleep_seconds", 2))
+        sleep_seconds = int(self.env.get("sleep_seconds", 15))
 
         self.output(f"Pausing Execution for {sleep_seconds} seconds")
 

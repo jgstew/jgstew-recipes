@@ -1,0 +1,25 @@
+---
+Description: Downloads the latest DataDog Agent for Windows
+Identifier: com.github.jgstew.download.KasperskyVirusRemovalTool-Win
+Input:
+  NAME: KasperskyVirusRemovalTool-Win
+  DisplayName: KasperskyVirusRemovalTool
+MinimumVersion: "2.3"
+Process:
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: https://devbuilds.s.kaspersky-labs.com/devbuilds/KVRT/latest/full/KVRT.exe
+      filename: KVRT.exe
+      download_version: ""
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase
+
+  # get FileVersion from EXE and save to `version` variable
+  - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE
+
+  # verify version is set correctly, at least major.minor:
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%version%"
+      re_pattern: '^\d+\.\d+'

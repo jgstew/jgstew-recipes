@@ -10,6 +10,4 @@ Process:
       github_repo: git-for-windows/git
       asset_regex: Git-.*-64-bit.exe
   - Processor: URLDownloaderPython
-    Arguments:
-      download_version: "%version%"
   - Processor: EndOfCheckPhase

@@ -47,7 +47,7 @@ copy __Download\KVRT.exe "{parameter "RunFolder"}\KVRT.exe"
 run "{parameter "RunFolder"}\KVRT.exe" -accepteula -d "{parameter "RunFolder"}" -silent -adinsilent -processlevel 1 -dontcryptsupportinfo
 
 // End]]></ActionScript>
-      		<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
+      		<SuccessCriteria Option="RunToCompletion"></SuccessCriteria>
 		</DefaultAction>
 	</{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
 </BES>

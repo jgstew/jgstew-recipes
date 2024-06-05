@@ -6,7 +6,7 @@ Input:
   DisplayName: KasperskyVirusRemovalTool
 MinimumVersion: "2.3"
 Process:
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: https://devbuilds.s.kaspersky-labs.com/devbuilds/KVRT/latest/full/KVRT.exe
       filename: KVRT.exe

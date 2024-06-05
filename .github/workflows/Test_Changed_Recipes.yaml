@@ -45,7 +45,7 @@ jobs:
 
       - name: Install prereq
         if: steps.changed-files.outputs.any_changed == 'true'
-        run: apt-get install msitools -y
+        run: sudo apt-get install msitools -y
 
       - name: run recipe autopkg
         if: steps.changed-files.outputs.any_changed == 'true'

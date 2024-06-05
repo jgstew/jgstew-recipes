@@ -1,5 +1,5 @@
 ---
-Description: Downloads the latest DataDog Agent for Windows
+Description: Downloads the latest KasperskyVirusRemovalTool for Windows
 Identifier: com.github.jgstew.download.KasperskyVirusRemovalTool-Win
 Input:
   NAME: KasperskyVirusRemovalTool-Win

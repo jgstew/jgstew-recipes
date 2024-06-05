@@ -12,6 +12,8 @@ Process:
       filename: KVRT.exe
       download_version: ""
       COMPUTE_HASHES: True
+      # Seems like ETag and Last-Modified change every time, which is annoying
+      CHECK_FILESIZE_ONLY: True
 
   - Processor: EndOfCheckPhase
 

@@ -36,7 +36,9 @@ This task will run {{DisplayName}} on the system.
 
 parameter "RunFolder" = "{ (it & "\KVRT") of pathnames of folders "temp" of windows folder }"
 
-folder delete "{ parameter "RunFolder" }"
+// Delete RunFolder if it exists:
+wait CMD /C "del /F /Q /S "{parameter "RunFolder"}""
+
 folder create "{ parameter "RunFolder" }"
 
 // Copy to RunFolder

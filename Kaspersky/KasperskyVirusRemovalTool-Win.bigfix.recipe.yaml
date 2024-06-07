@@ -15,6 +15,11 @@ Process:
 
   - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput
 
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "build_time"
+      append_value: "%build_time%"
+
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
       # use UNIX style paths so this works on Windows and non-Windows:

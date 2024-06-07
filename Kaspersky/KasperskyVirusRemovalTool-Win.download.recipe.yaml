@@ -25,3 +25,17 @@ Process:
     Arguments:
       input_string: "%version%"
       re_pattern: '^\d+\.\d+'
+
+  # validate file signature and get signature date as SourceReleaseDate:
+  - Processor: com.github.jgstew.SharedProcessors/FileExeVerifySignature
+
+  # verify SourceReleaseDate is set correctly:
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%SourceReleaseDate%"
+      re_pattern: '^20\d{2}-[0-1]\d{1}-[0-3]\d{1}$'
+
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%file_signature_datetime%"
+      re_pattern: '(?P<build_time>.+)\+'

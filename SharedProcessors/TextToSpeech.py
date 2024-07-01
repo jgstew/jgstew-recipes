@@ -52,6 +52,8 @@ class TextToSpeech(Processor):  # pylint: disable=invalid-name
             engine.say(input_string)
             engine.runAndWait()
 
+        # related: https://stackoverflow.com/a/39647762/861745
+
     def main(self):
         """Execution starts here"""
 

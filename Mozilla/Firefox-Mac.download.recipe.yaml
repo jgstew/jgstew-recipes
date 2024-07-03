@@ -1,0 +1,33 @@
+# https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
+---
+Description: Downloads the latest version of Firefox
+# based upon https://github.com/autopkg/moofit-recipes/blob/master/Adobe/RemoteUpdateManager.download.recipe
+Identifier: com.github.jgstew.download.Firefox-Mac
+Input:
+  NAME: "Firefox"
+  OS: osx
+  filename: Firefox.dmg
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      # Example URLs:
+      # - https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
+      url: https://download.mozilla.org/?product=firefox-latest-ssl&os=%OS%&lang=en-US
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%download_url%"
+      re_pattern: 'releases/(?P<version>\d+\.\d+\.\d+)/'
+
+  # get SourceReleaseDate from HTTP `Last-Modified` header:
+  - Processor: com.github.jgstew.SharedProcessors/DateTimeFromString
+    Arguments:
+      # parse last_modified header info from URLDownloaderPython
+      datetime_string: "%last_modified%"
+      datetime_strptime: "%a, %d %b %Y %H:%M:%S %Z"
+      datetime_strftime: "%Y-%m-%d"
+      datetime_parsed_name: SourceReleaseDate

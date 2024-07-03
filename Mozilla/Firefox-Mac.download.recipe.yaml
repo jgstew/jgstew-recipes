@@ -5,6 +5,7 @@ Description: Downloads the latest version of Firefox
 Identifier: com.github.jgstew.download.Firefox-Mac
 Input:
   NAME: "Firefox"
+  product: firefox-latest-ssl
   OS: osx
   filename: Firefox.dmg
 MinimumVersion: "2.3"
@@ -13,7 +14,7 @@ Process:
     Arguments:
       # Example URLs:
       # - https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
-      url: https://download.mozilla.org/?product=firefox-latest-ssl&os=%OS%&lang=en-US
+      url: https://download.mozilla.org/?product=%product%&os=%OS%&lang=en-US
       COMPUTE_HASHES: True
 
   - Processor: EndOfCheckPhase

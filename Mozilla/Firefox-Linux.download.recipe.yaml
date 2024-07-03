@@ -1,0 +1,15 @@
+# https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
+---
+Description: Downloads the latest version of Firefox
+# based upon https://github.com/autopkg/moofit-recipes/blob/master/Adobe/RemoteUpdateManager.download.recipe
+Identifier: com.github.jgstew.download.Firefox-Linux
+Input:
+  NAME: "Firefox"
+  product: firefox-latest-ssl
+  OS: linux64
+  filename: firefox.tar.bz2
+  # https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.download.Firefox-Mac
+Process:
+  - Processor: EndOfCheckPhase

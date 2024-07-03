@@ -27,6 +27,7 @@ jobs:
 
       - uses: actions/checkout@v4
 
+      # TODO: switch to using https://github.com/autopkg/setup-autopkg-actions
       - name: setup-autopkg local action
         uses: ./.github/actions/setup-autopkg
 
@@ -49,7 +50,7 @@ jobs:
         run: choco install autopkg -s "$env:USERPROFILE\Library\AutoPkg\Cache\com.github.jgstew.nupkg.AutoPkg\nupkgs\" --pre --no-progress --yes --force --verbose
 
       - name: test autopkg chocolately install
-        run: autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
+        run: autopkg run -vv Test-Recipes/AutopkgCore.test.recipe.yaml
 
       - name: Get Choco log contents if failure occurs
         if: ${{ failure() }}

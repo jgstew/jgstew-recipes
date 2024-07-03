@@ -1,0 +1,41 @@
+---
+Description: Downloads the latest KasperskyVirusRemovalTool for Windows
+Identifier: com.github.jgstew.download.KasperskyVirusRemovalTool-Win
+Input:
+  NAME: KasperskyVirusRemovalTool-Win
+  DisplayName: KasperskyVirusRemovalTool
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://devbuilds.s.kaspersky-labs.com/devbuilds/KVRT/latest/full/KVRT.exe
+      filename: KVRT.exe
+      download_version: ""
+      COMPUTE_HASHES: True
+      # Seems like ETag and Last-Modified change every time, which is annoying
+      CHECK_FILESIZE_ONLY: True
+
+  - Processor: EndOfCheckPhase
+
+  # get FileVersion from EXE and save to `version` variable
+  - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE
+
+  # verify version is set correctly, at least major.minor:
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%version%"
+      re_pattern: '^\d+\.\d+'
+
+  # validate file signature and get signature date as SourceReleaseDate:
+  - Processor: com.github.jgstew.SharedProcessors/FileExeVerifySignature
+
+  # verify SourceReleaseDate is set correctly:
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%SourceReleaseDate%"
+      re_pattern: '^20\d{2}-[0-1]\d{1}-[0-3]\d{1}$'
+
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%file_signature_datetime%"
+      re_pattern: '(?P<build_time>.+)\+'

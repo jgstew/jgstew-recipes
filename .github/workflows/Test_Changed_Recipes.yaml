@@ -20,7 +20,7 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v39
+        uses: tj-actions/changed-files@v44
         with:
           files: "**.recipe.yaml"
           # Ignore windows only recipes:
@@ -42,6 +42,10 @@ jobs:
       - name: Install repo requirements
         if: steps.changed-files.outputs.any_changed == 'true'
         run: pip install --requirement requirements.txt
+
+      - name: Install prereq
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: sudo apt-get install msitools -y
 
       - name: run recipe autopkg
         if: steps.changed-files.outputs.any_changed == 'true'

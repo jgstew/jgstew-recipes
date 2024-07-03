@@ -1,0 +1,20 @@
+---
+Description: Test TextToSpeech Processor
+Identifier: com.github.jgstew.test.TextToSpeech
+Input:
+  NAME: TextToSpeechTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/TextToSpeech
+    Arguments:
+      input_string: "Hello World from AutoPkg!"
+  # so far tested on macos only, but should support windows and ubuntu as well with no deps or any os with pyttsx3
+
+  # - Processor: URLTextSearcher
+  #   Arguments:
+  #     url: https://en.wikipedia.org/wiki/Special:Random
+  #     re_pattern: 'class="mw-page-title-main">([a-zA-Z0-9 ]+)'
+
+  # - Processor: com.github.jgstew.SharedProcessors/TextToSpeech
+  #   Arguments:
+  #     input_string: "Random Wikipedia article: %match%"

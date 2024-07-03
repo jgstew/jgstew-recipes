@@ -26,7 +26,7 @@ RUN sudo pip3 install --upgrade setuptools wheel build
 
 # setup autopkg:
 RUN cd /tmp && git clone https://github.com/autopkg/autopkg.git
-RUN cd /tmp/autopkg && sudo pip3 install --requirement gh_actions_requirements.txt
+RUN cd /tmp/autopkg && sudo pip3 --disable-pip-version-check --no-cache-dir install --requirement gh_actions_requirements.txt
 
 # [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
 # COPY requirements.txt /tmp/pip-tmp/

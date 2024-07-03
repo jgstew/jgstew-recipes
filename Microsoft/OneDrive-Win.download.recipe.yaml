@@ -1,0 +1,46 @@
+---
+Description: Download the latest Microsoft OneDrive client for Windows
+Identifier: com.github.jgstew.download.OneDrive-Win
+Input:
+  # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"
+  NAME: "OneDrive"
+MinimumVersion: "2.3"
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+
+  # - Processor: URLTextSearcher
+  #   Arguments:
+  #     url: https://www.microsoft.com/en-us/microsoft-365/onedrive/download
+  #     # example match `https://go.microsoft.com/fwlink/p/?LinkID=2182910&clcid=0x409&culture=en-us&country=us`
+  #     re_pattern: "(?P<url>https://go.microsoft.com/fwlink/p/?LinkID=2182910&clcid=0x409&culture=en-us&country=us)"
+
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      # not certain if this always points to latest:
+      url: https://go.microsoft.com/fwlink/p/?LinkID=2182910&clcid=0x409&culture=en-us&country=us
+      filename: OneDriveSetup.exe
+      download_version: ""
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase
+    Arguments:
+      prefetch_url: "%download_url%"
+
+  # validate file signature and get signature date as SourceReleaseDate:
+  - Processor: com.github.jgstew.SharedProcessors/FileExeVerifySignature
+
+  # get FileVersion from EXE and save to `version` variable
+  - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE
+
+  # verify version is set correctly:
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%version%"
+      re_pattern: '^\d+\.\d+'
+
+  # verify SourceReleaseDate is set correctly:
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%SourceReleaseDate%"
+      re_pattern: '^20\d{2}-[0-1]\d{1}-[0-3]\d{1}$'

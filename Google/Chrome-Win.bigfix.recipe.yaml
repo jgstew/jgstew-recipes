@@ -1,0 +1,103 @@
+---
+Description: Generates a BigFix Task for the latest Chrome-Win
+Identifier: com.github.jgstew.bigfix.Chrome-Win
+Input:
+  # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"
+  NAME: "Chrome-Win"
+  # DisplayName: The start of the DisplayName key in the Windows Registry, Example: "DB Browser for SQLite"
+  DisplayName: "Google Chrome"
+  VendorFolder: Google
+  64BitOnly: True
+  template_file_path: "./%VendorFolder%/%NAME%-Install_Update.bes.mustache"
+# MinimumVersion of AutoPkg - Should always be 2.3 (or higher once a new version is released)
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.download.Chrome-Win
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  # `BigFixPrefetchItem` takes the hashes from `URLDownloaderPython`
+  #   Then it assembles them into a BigFix Prefetch Statement or Block
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+    Arguments:
+      file_name: chrome_installer.exe
+      file_sha1: ""
+      file_sha256: "%chrome_package_sha256%"
+      file_size: "%chrome_package_size%"
+      prefetch_type: block
+      # prefetch_url: "%url%"
+
+  # remove empty sha1= from prefetch:
+  - Processor: com.github.jgstew.SharedProcessors/TextSubstitutionRegEx
+    Arguments:
+      input_string: "%bigfix_prefetch_item%"
+      re_pattern: " sha1= "
+      re_substitution: " "
+      result_output_var_name: bigfix_prefetch_item
+
+  # `BigFixSetupTemplateDictionary` creates a dictionary to fill out a bigix content template
+  #   If `SourceReleaseDate` is not provided, it will be set to today
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "DownloadSize"
+      append_value: "%chrome_package_size%"
+
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      filename: "%NAME%-icon.png"
+      url: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Chrome_icon_%28September_2014%29.svg/64px-Google_Chrome_icon_%28September_2014%29.svg.png
+      COMPUTE_HASHES: false
+
+  - Processor: com.github.jgstew.SharedProcessors/FileGetBase64
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "icon_base64"
+      append_value: "%file_base64%"
+
+  # Generate Install/Update content:
+
+  # `ContentFromTemplate` generates bigfix content from a mustache template file
+  #   The file is filled out with variables from the Template Dictionary
+  #   If variables are missing from the Template Dictionary, then that area will be blank
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: "%template_file_path%"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.bes"
+
+  # `BESImport` imports the generated BES content into a BigFix Server
+  #   Which server and credentials are used is dictated by `~/.besapi.conf`
+  - Processor: com.github.jgstew.SharedProcessors/BESImport
+
+  # `BigFixActioner` creates an action from the imported BigFix Content
+  #   The action is an offer that requires user interaction to run in self service application
+  #   The action targets all computers whose name contains `autopkg`
+  - Processor: com.github.jgstew.SharedProcessors/BigFixActioner
+
+  # Generate Update only content:
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "patch"
+      append_value: True
+
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      # template_file_path: "%template_file_path%"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%-Update.bes"
+
+  - Processor: com.github.jgstew.SharedProcessors/BESImport
+
+  # Generate Install Only Content:
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "install_only"
+      append_value: true
+
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      # template_file_path: "%template_file_path%"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%-InstallOnly.bes"
+  - Processor: com.github.jgstew.SharedProcessors/BESImport

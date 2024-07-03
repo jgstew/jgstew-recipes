@@ -1,0 +1,29 @@
+---
+Description: Generates a BigFix Task for the latest KasperskyVirusRemovalTool
+Identifier: com.github.jgstew.bigfix.KasperskyVirusRemovalTool-Win
+Input:
+  NAME: KasperskyVirusRemovalTool-Win
+  DisplayName: KasperskyVirusRemovalTool
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.download.KasperskyVirusRemovalTool-Win
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+    # Arguments:
+    #   template_version: "%version_maximum%"
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "build_time"
+      append_value: "%build_time%"
+
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      # use UNIX style paths so this works on Windows and non-Windows:
+      template_file_path: ./Kaspersky/KasperskyVirusRemovalTool-Win-Run.bes.mustache
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%-Run.bes"
+
+  - Processor: com.github.jgstew.SharedProcessors/BESImport

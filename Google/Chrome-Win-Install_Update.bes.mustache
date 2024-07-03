@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+		<Title>{{>TitlePrefix}} {{DisplayName}} v{{version}} - Windows{{#64BitOnly}} (x64){{/64BitOnly}}</Title>
+		<Description><![CDATA[
+{{>DescriptionBasic}}
+{{>DescriptionIcon}}
+		]]></Description>
+		<Relevance>windows of operating system</Relevance>
+		{{#64BitOnly}}
+		<Relevance><![CDATA[x64 of operating system]]></Relevance>
+		{{/64BitOnly}}
+		{{#patch}}{{#DisplayName}}
+		<Relevance><![CDATA[{{#install_only}}not {{/install_only}}exists keys whose(value "DisplayName" of it as string starts with "{{DisplayName}}") of keys "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall" of (x32 registries; x64 registries)]]></Relevance>
+		{{/DisplayName}}{{/patch}}
+		{{^install_only}}
+		<Relevance><![CDATA[not exists (it as string as version) whose(it >= "{{version}}") of values "DisplayVersion" of keys whose(value "DisplayName" of it as string starts with "{{DisplayName}}") of keys "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall" of (x32 registries; x64 registries)]]></Relevance>
+		{{/install_only}}
+		<Category>{{>Category}}</Category>
+		<DownloadSize>{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}</DownloadSize>
+		<Source>{{VendorFolder}}</Source>
+		<SourceID>BigFix</SourceID>
+		<SourceReleaseDate>{{SourceReleaseDate}}</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>action-ui-metadata</Name>
+			<Value>{{>action-ui-metadata}}</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>{{x-fixlet-modification-time}}</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink><![CDATA[Click ]]></PreLink>
+				<Link>here</Link>
+				<PostLink><![CDATA[ to deploy {{DisplayName}} v{{version}}.]]></PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[
+// Download:
+begin prefetch block
+{{{prefetch}}}
+end prefetch block
+
+// Install:
+override wait
+hidden=true
+completion=job
+timeout_seconds=3600
+disposition=terminate
+wait __Download\{{{file_name}}} /silent /install --system-level
+
+// https://chromium.googlesource.com/chromium/src/+/master/chrome/installer/mini_installer/
+
+// End]]></ActionScript>
+      		<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
+		</DefaultAction>
+	</{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+</BES>

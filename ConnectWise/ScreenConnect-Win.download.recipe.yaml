@@ -1,0 +1,33 @@
+---
+Description: Downloads the latest ScreenConnect
+Identifier: com.github.jgstew.download.ScreenConnect-Win
+Input:
+  NAME: ScreenConnect-Win
+  DisplayName: ScreenConnect
+MinimumVersion: "2.3"
+Process:
+  # get all versions found in this JSON doc:
+  - Processor: URLTextSearcher
+    Arguments:
+      url: https://screenconnect.connectwise.com/download
+      re_pattern: "(?P<url>https://.+?.cloudfront.net/ScreenConnect_.+?_Release.msi)"
+
+  - Processor: URLDownloaderPython
+    Arguments:
+      filename: ScreenConnect_Release.msi
+      download_version: ""
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase
+
+  # Get apparent SourceReleaseDate from MSI metadata:
+  - Processor: com.github.jgstew.SharedProcessors/FileMsiGetInfoOLE
+
+  # Get version number from MSI ProductVersion:
+  - Processor: com.github.jgstew.SharedProcessors/FileMsiGetProperty
+
+  # verify version is set correctly, at least major.minor:
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%version%"
+      re_pattern: '^\d+\.\d+'

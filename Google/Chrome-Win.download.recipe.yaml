@@ -1,0 +1,30 @@
+---
+Description: Downloads the latest version of Chrome for Windows
+# based upon https://github.com/autopkg/ahousseini-recipes/blob/master/Chrome/Chrome.download.recipe
+Identifier: com.github.jgstew.download.Chrome-Win
+Input:
+  NAME: Chrome
+MinimumVersion: "2.3"
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+
+  # https://github.com/jgstew/jgstew-recipes/blob/main/SharedProcessors/GoogleChromeUpdateInfoProvider.py
+  - Processor: com.github.jgstew.SharedProcessors/GoogleChromeUpdateInfoProvider
+    Arguments:
+      chrome_os_arch: "x64"
+
+  - Processor: EndOfCheckPhase
+    # Arguments:
+    #   # need to add the package name onto the URL:
+    #   url: "%url%%chrome_package_name%"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%chrome_package_name%"
+      assert_string: "chrome_installer."
+
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%chrome_package_name%"
+      re_pattern: '(?P<version>\d+(\.\d+)+)'

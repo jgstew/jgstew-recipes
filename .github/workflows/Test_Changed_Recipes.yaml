@@ -45,7 +45,7 @@ jobs:
 
       - name: Install prereq
         if: steps.changed-files.outputs.any_changed == 'true'
-        run: sudo apt-get install msitools -y
+        run: sudo apt-get install msitools pyttsx3 -y
 
       - name: run recipe autopkg
         if: steps.changed-files.outputs.any_changed == 'true'

@@ -7,7 +7,7 @@ MinimumVersion: "2.3"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/TextToSpeech
     Arguments:
-      input_string: "Hello World from AutoPkg!"
+      input_string: "Hello World from AutoPkg!!"
   # so far tested on macos only, but should support windows and ubuntu as well with no deps or any os with pyttsx3
 
   # - Processor: URLTextSearcher

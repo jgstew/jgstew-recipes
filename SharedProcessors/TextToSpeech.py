@@ -9,6 +9,7 @@
 
 import os
 import platform
+import shutil
 
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
@@ -34,7 +35,8 @@ class TextToSpeech(Processor):  # pylint: disable=invalid-name
 
         # from: https://stackoverflow.com/a/59118441/861745
         syst = platform.system()
-        if syst == "Linux" and platform.linux_distribution()[0] == "Ubuntu":
+        # change check to look for command existance, rather than Ubuntu specific:
+        if syst == "Linux" and shutil.which("spd-say") is not None:
             os.system("spd-say %s" % tx)
         elif syst == "Windows":
             os.system(

@@ -10,7 +10,7 @@ if [ ! -f /usr/local/bin/brew ] ; then
 NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/029184a90aecb8afff8b3ad56a2ea4f1be68cec6/install.sh)"
 fi
 
-NONINTERACTIVE=1 brew tap microsoft/git
+# NONINTERACTIVE=1 brew tap microsoft/git
 
 NONINTERACTIVE=1 brew install --adopt python@3.10 sevenzip msitools visual-studio-code libmagic jq git-credential-manager-core cairo libffi
 

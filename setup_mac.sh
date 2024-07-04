@@ -6,8 +6,8 @@
 # xcode-select --print-path
 
 # install homebrew:
-if [ ! -f  /usr/local/bin/brew ] ; then
-NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/96362c02f64bc1270645f6cd1698dda5a4790619/install.sh)"
+if [ ! -f /usr/local/bin/brew ] ; then
+NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/029184a90aecb8afff8b3ad56a2ea4f1be68cec6/install.sh)"
 fi
 
 NONINTERACTIVE=1 brew tap microsoft/git

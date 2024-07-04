@@ -32,10 +32,10 @@ mkdir ~/Library/AutoPkg
 fi
 
 # install autopkg requirements
-python3 -m pip install --requirement ../autopkg/gh_actions_requirements.txt
+python3 -m pip install --requirement ../autopkg/gh_actions_requirements.txt --user
 
 # add required recipe repos for jgstew-recipes
 for line in $(cat .autopkg_repos.txt); do python3 ../autopkg/Code/autopkg repo-add $line; done
 
 # install jgstew-recipes requirements:
-python3 -m pip install --requirement requirements.txt
+python3 -m pip install --requirement requirements.txt --user

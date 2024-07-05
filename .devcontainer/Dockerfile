@@ -27,6 +27,10 @@ RUN sudo pip3 install --upgrade pip
 RUN sudo pip3 install --upgrade setuptools wheel build
 
 RUN mkdir /workspaces
+RUN mkdir -p /home/vscode/Library/AutoPkg
+RUN mkdir -p /home/vscode/.config/Autopkg
+
+RUN echo {} > /home/vscode/.config/Autopkg/config.json
 
 # setup autopkg:
 RUN cd /workspaces && git clone https://github.com/autopkg/autopkg.git

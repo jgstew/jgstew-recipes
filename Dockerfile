@@ -19,43 +19,17 @@ LABEL org.label-schema.docker.cmd="docker run --rm jgstewrecipes run -vv com.git
 # RUN apt-get update && apt-get upgrade -y
 
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes libmagic-dev jq p7zip-full msitools curl git wget python3 python3-pip build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes libmagic-dev jq p7zip-full msitools curl git wget python3 python3-pip build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev && rm -rf /var/lib/apt/lists/*
 
-# update pip:
-RUN python3 -m pip install --upgrade pip
+RUN mkdir -p /root/jgstew-recipes
 
-# update python basics
-RUN python3 -m pip install --upgrade setuptools wheel build
+COPY . /root/jgstew-recipes
 
-WORKDIR /tmp
-# currently using my fork due to improvements made to URLDownloaderPython
-RUN git clone https://github.com/autopkg/autopkg.git
-WORKDIR /tmp/autopkg
-RUN git checkout dev
-RUN python3 -m pip install --requirement gh_actions_requirements.txt --quiet
+WORKDIR /root/jgstew-recipes
 
-WORKDIR /
-# this assumes that the repo contains a `requirements.txt` file:
-COPY requirements.txt /tmp/
-RUN python3 -m pip install --requirement /tmp/requirements.txt --quiet
-RUN rm -f /tmp/requirements.txt
+RUN bash setup_ubuntu.sh
 
-# create empty autopkg config
-RUN mkdir -p ~/.config/Autopkg
-# create config if it does not exist
-RUN echo {} > ~/.config/Autopkg/config.json
-
-# this assumes that the repo contains an `.autopkg_repos.txt` file:
-COPY .autopkg_repos.txt /tmp/.autopkg_repos.txt
-WORKDIR /tmp/autopkg
-# add AutoPkg recipe repos:
-#   https://stackoverflow.com/a/19182518/861745
-RUN for line in $(cat /tmp/.autopkg_repos.txt); do python3 ../autopkg/Code/autopkg repo-add $line; done
-#RUN python3 ../autopkg/Code/autopkg repo-add hansen-m-recipes
-
-COPY . /tmp/recipes
-WORKDIR /tmp/recipes
-ENTRYPOINT ["python3", "../autopkg/Code/autopkg"]
+ENTRYPOINT ["./../autopkg/.venv/bin/python3", "../autopkg/Code/autopkg"]
 CMD ["help"]
 
 # Interactive:

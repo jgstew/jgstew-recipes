@@ -16,6 +16,7 @@ sudo add-apt-repository ppa:deadsnakes/ppa -y && apt update
 
 sudo DEBIAN_FRONTEND=noninteractive apt install -y python3.10 python3.10-venv python3.10-dev
 
+# https://pip.pypa.io/en/stable/installation/#ensurepip
 sudo python3.10 -m ensurepip --upgrade
 
 # update python pip
@@ -62,6 +63,7 @@ for line in $(cat .autopkg_repos.txt); do ./../autopkg/.venv/bin/python3 ../auto
 ./../autopkg/.venv/bin/python3 -m pip install --requirement requirements.txt
 
 # fix issue with new openssl and a processor
+# https://github.com/wbond/oscrypto/issues/78#issuecomment-2210120532
 ./../autopkg/.venv/bin/python3 -m pip install -I git+https://github.com/wbond/oscrypto.git
 
 # test:

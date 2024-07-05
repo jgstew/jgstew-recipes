@@ -16,7 +16,7 @@ Process:
     Arguments:
       input_string: "%version_maximum%"
       # this may need changed in the future:
-      assert_string: "10.0."
+      assert_string: "11.0."
 
   # # find URL strings inside of a binary file:
   # - Processor: com.github.jgstew.SharedProcessors/URLTextSearcherArray

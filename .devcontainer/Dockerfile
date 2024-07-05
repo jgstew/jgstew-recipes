@@ -3,6 +3,7 @@
 ARG VARIANT=3.10-bullseye
 FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
 
+# https://stackoverflow.com/a/72378273/861745
 # [Optional] Allow the vscode user to pip install globally w/o sudo
 #ENV PIP_TARGET=/usr/local/pip-global
 ENV PYTHONPATH=/usr/local/pip-global:${PYTHONPATH}

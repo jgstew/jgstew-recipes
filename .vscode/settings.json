@@ -6,9 +6,9 @@
   "editor.formatOnSave": true,
   "git.autofetch": true,
   "python.analysis.completeFunctionParens": true,
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
-  },
+  // "[python]": {
+  //   "editor.defaultFormatter": "ms-python.black-formatter"
+  // },
   "yaml.schemas": {
     "https://raw.githubusercontent.com/jgstew/jgstew-recipes/main/.AutoPkgRecipeOpinionated.schema.json": [
       "**.recipe.yaml",

@@ -43,11 +43,6 @@ RUN chown -R vscode /workspaces/autopkg
 
 RUN sudo pip3 --disable-pip-version-check --no-cache-dir install besapi bigfix_prefetch cairosvg certifi chevron generate_bes_from_template hachoir icoextract jsonpath_ng looseversion olefile pefile Pillow pre-commit python-magic signify validate_bes_xml
 
-# add required recipe repos for jgstew-recipes
-RUN cd /workspaces && python3 autopkg/Code/autopkg repo-add hansen-m-recipes
-RUN cd /workspaces && python3 autopkg/Code/autopkg repo-add homebysix-recipes
-RUN cd /workspaces && python3 autopkg/Code/autopkg repo-add https://github.com/jgstew/jgstew-recipes.git
-
 # # [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
 # COPY requirements.txt /tmp/pip-tmp/
 # RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \

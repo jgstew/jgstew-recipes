@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
-# if already root and no sudo available like in docker:
-# alias sudo=""
+if [ ${EUID:-0} -ne 0 ] || [ "$(id -u)" -ne 0 ]; then
+    # echo You are not root.
+else
+    # if already root and no sudo available like in docker:
+    alias sudo="" && shopt -s expand_aliases
+fi
 
-sudo apt update
+sudo apt update && DEBIAN_FRONTEND=noninteractive apt install -y git
 
 # setup python3.10: https://gist.github.com/rutcreate/c0041e842f858ceb455b748809763ddb
-sudo DEBIAN_FRONTEND=noninteractive apt install -y software-properties-common git-all
+sudo DEBIAN_FRONTEND=noninteractive apt install -y software-properties-common git
 sudo add-apt-repository ppa:deadsnakes/ppa -y && apt update
 
 sudo DEBIAN_FRONTEND=noninteractive apt install -y python3.10 python3.10-venv python3.10-dev
@@ -37,6 +41,10 @@ python3.10 -m venv ../autopkg/.venv
 # install autopkg requirements
 ./../autopkg/.venv/bin/python3 -m pip install --requirement ../autopkg/gh_actions_requirements.txt
 
+# create folder for autopkg recipe map
+mkdir -p ~/Library/AutoPkg
+
+# create folder for autopkg config
 mkdir -p ~/.config/Autopkg
 
 # if config file does not exist, create it:

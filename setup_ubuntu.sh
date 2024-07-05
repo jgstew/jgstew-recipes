@@ -62,7 +62,7 @@ for line in $(cat .autopkg_repos.txt); do ./../autopkg/.venv/bin/python3 ../auto
 ./../autopkg/.venv/bin/python3 -m pip install --requirement requirements.txt
 
 # fix issue with new openssl and a processor
-./../autopkg/.venv/bin/python3 -m pip install git+https://github.com/wbond/oscrypto.git@1547f535001ba568b239b8797465536759c742a3
+./../autopkg/.venv/bin/python3 -m pip install -I git+https://github.com/wbond/oscrypto.git
 
 # test:
 ./../autopkg/.venv/bin/python3 ../autopkg/Code/autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml

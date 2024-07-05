@@ -1,8 +1,20 @@
 #!/usr/bin/env bash
 
-sudo apt update && sudo apt upgrade -y
+# if already root and no sudo available like in docker:
+# alias sudo=""
 
-sudo DEBIAN_FRONTEND=noninteractive apt install -y libmagic-dev jq p7zip-full msitools curl git wget python3.11 python3.11-pip python3.11-setuptools python3.11-build python3.11-wheel build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
+sudo apt update
+
+# setup python3.10: https://gist.github.com/rutcreate/c0041e842f858ceb455b748809763ddb
+sudo apt install -y software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+
+sudo DEBIAN_FRONTEND=noninteractive apt install -y python3.10 python3.10-venv python3.10-dev
+
+sudo python -m ensurepip --upgrade
+
+sudo DEBIAN_FRONTEND=noninteractive apt install -y libmagic-dev jq p7zip-full msitools curl git wget build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 
 # # update python pip
 # python3 -m pip install --upgrade pip
@@ -21,7 +33,7 @@ bash -c "cd ../autopkg && git checkout dev"
 fi
 
 # create virtual environment
-python3 -m venv ../autopkg/.venv
+python3.10 -m venv ../autopkg/.venv
 
 # install autopkg requirements
 ./../autopkg/.venv/bin/python3 -m pip install --requirement ../autopkg/gh_actions_requirements.txt

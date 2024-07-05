@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ ${EUID:-0} -ne 0 ] || [ "$(id -u)" -ne 0 ]; then
-    # echo You are not root.
+    echo ""
 else
     # if already root and no sudo available like in docker:
     alias sudo="" && shopt -s expand_aliases

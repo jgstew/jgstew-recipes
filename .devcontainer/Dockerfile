@@ -32,18 +32,17 @@ RUN mkdir -p /home/vscode/.config/Autopkg
 
 RUN echo {} > /home/vscode/.config/Autopkg/config.json
 
-RUN chown -R vscode /home/vscode
-
 # setup autopkg:
 RUN cd /workspaces && git clone https://github.com/autopkg/autopkg.git
 RUN cd /workspaces/autopkg && git checkout dev
 RUN cd /workspaces/autopkg && sudo pip3 --disable-pip-version-check --no-cache-dir install --requirement gh_actions_requirements.txt
 
-RUN chown -R vscode /workspaces/autopkg
-
 RUN sudo pip3 --disable-pip-version-check --no-cache-dir install besapi bigfix_prefetch cairosvg certifi chevron generate_bes_from_template hachoir icoextract jsonpath_ng looseversion olefile pefile Pillow pre-commit python-magic signify validate_bes_xml
 
 RUN python3 /workspaces/autopkg/Code/autopkg repo-add hansen-m-recipes homebysix-recipes https://github.com/jgstew/jgstew-recipes.git
+
+RUN chown -R vscode /workspaces
+RUN chown -R vscode /home/vscode
 
 # # [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
 # COPY requirements.txt /tmp/pip-tmp/

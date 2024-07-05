@@ -23,7 +23,7 @@ sudo python3.10 -m pip install --upgrade pip
 # update python basics
 sudo python3.10 -m pip install --upgrade setuptools wheel build
 
-sudo DEBIAN_FRONTEND=noninteractive apt install -y libmagic-dev jq p7zip-full msitools curl git wget build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
+sudo DEBIAN_FRONTEND=noninteractive apt install -y libcairo2-dev libmagic-dev jq p7zip-full msitools curl git wget build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 
 # This may solve a weird issue:
 # python3 -m pip install -U 'pyasn1<0.5.0'
@@ -53,10 +53,13 @@ echo {} > ~/.config/Autopkg/config.json
 fi
 
 # add required recipe repos for jgstew-recipes
-for line in $(cat .autopkg_repos.txt); do python3 ../autopkg/Code/autopkg repo-add $line; done
+for line in $(cat .autopkg_repos.txt); do ./../autopkg/.venv/bin/python3 ../autopkg/Code/autopkg repo-add $line; done
 
 # install jgstew-recipes requirements:
 ./../autopkg/.venv/bin/python3 -m pip install --requirement requirements.txt
+
+# fix issue with new openssl and a processor
+./../autopkg/.venv/bin/python3 -m pip install git+https://github.com/wbond/oscrypto.git@1547f535001ba568b239b8797465536759c742a3
 
 # test:
 ./../autopkg/.venv/bin/python3 ../autopkg/Code/autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
@@ -65,4 +68,4 @@ for line in $(cat .autopkg_repos.txt); do python3 ../autopkg/Code/autopkg repo-a
 # get autopkg version
 ./../autopkg/.venv/bin/python3 ../autopkg/Code/autopkg version
 
-# further test: python3 ../autopkg/Code/autopkg run -vv --recipe-list Test-Recipes/Test-Recipes.recipelist.txt
+# further test: ./../autopkg/.venv/bin/python3 ../autopkg/Code/autopkg run -vv --recipe-list Test-Recipes/Test-Recipes.recipelist.txt

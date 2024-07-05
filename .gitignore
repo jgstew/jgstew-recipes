@@ -3,6 +3,9 @@
 *.zip
 *.exe
 
+# ignore resized images
+*.png_resized64.png
+
 # Custom Additions:
 .DS_Store
 

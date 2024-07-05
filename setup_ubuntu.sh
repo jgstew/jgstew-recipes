@@ -25,7 +25,8 @@ sudo python3.10 -m pip install --upgrade pip
 # update python basics
 sudo python3.10 -m pip install --upgrade setuptools wheel build
 
-sudo DEBIAN_FRONTEND=noninteractive apt install -y speech-dispatcher libcairo2-dev libmagic-dev jq p7zip-full msitools curl git wget build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
+# install packages needed for installing python requirements and using python processors
+sudo DEBIAN_FRONTEND=noninteractive apt install -y python-dev-is-python3 speech-dispatcher libcairo2-dev libmagic-dev jq p7zip-full msitools curl git wget build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 
 # This may solve a weird issue:
 # python3 -m pip install -U 'pyasn1<0.5.0'

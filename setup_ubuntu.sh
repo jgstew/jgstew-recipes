@@ -8,6 +8,7 @@ else
 fi
 
 sudo apt update && DEBIAN_FRONTEND=noninteractive apt install -y git
+# git clone https://github.com/jgstew/jgstew-recipes.git
 
 # setup python3.10: https://gist.github.com/rutcreate/c0041e842f858ceb455b748809763ddb
 sudo DEBIAN_FRONTEND=noninteractive apt install -y software-properties-common git
@@ -37,6 +38,8 @@ fi
 
 # create virtual environment
 python3.10 -m venv ../autopkg/.venv
+./../autopkg/.venv/bin/python3 -m pip install --upgrade pip
+./../autopkg/.venv/bin/python3 -m pip install --upgrade setuptools wheel build
 
 # install autopkg requirements
 ./../autopkg/.venv/bin/python3 -m pip install --requirement ../autopkg/gh_actions_requirements.txt

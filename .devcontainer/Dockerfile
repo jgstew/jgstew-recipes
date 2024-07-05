@@ -23,12 +23,17 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends python-dev-is-python3 speech-dispatcher libcairo2-dev libmagic-dev jq p7zip-full msitools curl git wget python3 python3-pip build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 
 # update python basics
+RUN sudo pip3 install --upgrade pip
 RUN sudo pip3 install --upgrade setuptools wheel build
 
+RUN mkdir /workspaces
+
 # setup autopkg:
-RUN cd /tmp && git clone https://github.com/autopkg/autopkg.git
-RUN cd /tmp/autopkg && git checkout dev
-RUN cd /tmp/autopkg && sudo pip3 --disable-pip-version-check --no-cache-dir install --requirement gh_actions_requirements.txt
+RUN cd /workspaces && git clone https://github.com/autopkg/autopkg.git
+RUN cd /workspaces/autopkg && git checkout dev
+RUN cd /workspaces/autopkg && sudo pip3 --disable-pip-version-check --no-cache-dir install --requirement gh_actions_requirements.txt
+
+RUN sudo pip3 --disable-pip-version-check --no-cache-dir install besapi bigfix_prefetch cairosvg certifi chevron generate_bes_from_template hachoir icoextract jsonpath_ng looseversion olefile pefile Pillow pre-commit python-magic signify validate_bes_xml
 
 # # [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
 # COPY requirements.txt /tmp/pip-tmp/

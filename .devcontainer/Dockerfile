@@ -41,10 +41,10 @@ RUN sudo pip3 --disable-pip-version-check --no-cache-dir install besapi bigfix_p
 
 RUN python3 /workspaces/autopkg/Code/autopkg repo-add hansen-m-recipes homebysix-recipes https://github.com/jgstew/jgstew-recipes.git
 
+RUN echo 'alias autopkg="python3 /workspaces/autopkg/Code/autopkg"' >> /home/vscode/.bashrc
+
 RUN chown -R vscode /workspaces
 RUN chown -R vscode /home/vscode
-
-RUN echo 'alias autopkg="python3 /workspaces/autopkg/Code/autopkg"' >> /home/vscode/.bashrc
 
 # # [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
 # COPY requirements.txt /tmp/pip-tmp/

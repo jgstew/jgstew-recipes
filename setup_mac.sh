@@ -28,8 +28,10 @@ fi
 
 # if autopkg Library folder does not exist
 if [ ! -f  ~/Library/AutoPkg ] ; then
-mkdir ~/Library/AutoPkg
+mkdir -p ~/Library/AutoPkg
 fi
+
+# mkdir -p ~/.config/Autopkg
 
 # install autopkg requirements
 python3 -m pip install --requirement ../autopkg/gh_actions_requirements.txt --user

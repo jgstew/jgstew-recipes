@@ -74,4 +74,8 @@ for line in $(cat .autopkg_repos.txt); do ./../autopkg/.venv/bin/python3 ../auto
 # get autopkg version
 ./../autopkg/.venv/bin/python3 ../autopkg/Code/autopkg version
 
+# because this is relative path, it will only work within the recipe or autopkg folder:
+echo 'alias autopkg="./../autopkg/.venv/bin/python3 ../autopkg/Code/autopkg"' >> ~/.bashrc
+alias autopkg="./../autopkg/.venv/bin/python3 ../autopkg/Code/autopkg"
+
 # further test: ./../autopkg/.venv/bin/python3 ../autopkg/Code/autopkg run -vv --recipe-list Test-Recipes/Test-Recipes.recipelist.txt

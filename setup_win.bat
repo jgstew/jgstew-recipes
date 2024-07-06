@@ -47,7 +47,7 @@ call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd
 
 echo install python 3.10.x
 REM https://docs.python.org/3/using/windows.html#installing-without-ui
-choco install -y python3 --version="3.10.8" --params "'/NoLockdown'" --install-arguments="'InstallAllUsers=1 PrependPath=1 CompileAll=1'"
+choco install -y python3 --version="3.10.11" --params "'/NoLockdown'" --install-arguments="'InstallAllUsers=1 PrependPath=1 CompileAll=1'"
 
 call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd
 
@@ -58,6 +58,32 @@ call C:\ProgramData\chocolatey\bin\RefreshEnv.cmd
 
 echo update related python modules
 pip install --upgrade setuptools build wheel
+
+
+REM check if autopkg config file exists
+REM On Windows:
+REM   %UserProfile%\AppData\Local\AutoPkg\config.json
+REM On Linux:
+REM   ~/.config/Autopkg/config.json
+echo.
+if exist "%UserProfile%\AppData\Local\Autopkg\config.json" (
+    REM file exists
+    echo Autopkg config found:
+    type "%UserProfile%\AppData\Local\Autopkg\config.json"
+    echo.
+) else (
+    REM file doesn't exist
+    if not exist "%UserProfile%\AppData\Local\Autopkg" (
+        REM autopkg folder doesn't exist
+        echo creating missing Autopkg user config folder
+        mkdir "%UserProfile%\AppData\Local\Autopkg"
+        echo.
+    )
+    echo Autopkg config does not exist
+    echo  creating blank Autopkg config
+    echo {} > "%UserProfile%\AppData\Local\Autopkg\config.json"
+)
+
 
 echo create UserProfile\_Code folder if missing:
 if not exist %UserProfile%\_Code (
@@ -75,4 +101,28 @@ git clone https://github.com/jgstew/autopkg.git
 
 cd jgstew-recipes
 
-call check_setup_win.bat
+echo.
+echo check autopkg on dev branch:
+echo CMD /C "cd ..\autopkg && git checkout dev"
+CMD /C "cd ..\autopkg && git checkout dev"
+
+echo.
+echo update autopkg repo:
+echo CMD /C "cd ..\autopkg && git pull"
+CMD /C "cd ..\autopkg && git pull"
+
+echo.
+echo check pip install requirements for AutoPkg:
+echo pip install -r ..\autopkg\requirements.txt --quiet
+pip install -r ..\autopkg\requirements.txt --quiet --user
+
+echo.
+echo check pip install requirements for cloned recipes:
+echo pip install -r .\requirements.txt --quiet
+pip install -r .\requirements.txt --quiet --user
+
+echo.
+echo update python ssl CA certs:
+pip install --upgrade certifi --user
+
+REM call check_setup_win.bat

@@ -35,13 +35,19 @@ RUN echo {} > /home/vscode/.config/Autopkg/config.json
 # setup autopkg:
 RUN cd /workspaces && git clone https://github.com/autopkg/autopkg.git
 RUN cd /workspaces/autopkg && git checkout dev
+# install requirements for autopkg dev branch:
 RUN cd /workspaces/autopkg && sudo pip3 --disable-pip-version-check --no-cache-dir install --requirement gh_actions_requirements.txt
 
+# install requirements for jgstew-recipes:
 RUN sudo pip3 --disable-pip-version-check --no-cache-dir install besapi bigfix_prefetch cairosvg certifi chevron generate_bes_from_template hachoir icoextract jsonpath_ng looseversion olefile pefile Pillow pre-commit python-magic signify validate_bes_xml
 
 RUN python3 /workspaces/autopkg/Code/autopkg repo-add hansen-m-recipes homebysix-recipes https://github.com/jgstew/jgstew-recipes.git
 
+# add alias for autopkg for vscode user:
 RUN echo 'alias autopkg="python3 /workspaces/autopkg/Code/autopkg"' >> /home/vscode/.bashrc
+
+# in case you run this as root / a regular docker container:
+RUN echo 'alias autopkg="python3 /workspaces/autopkg/Code/autopkg"' >> /root/.bashrc
 
 RUN chown -R vscode /workspaces
 RUN chown -R vscode /home/vscode

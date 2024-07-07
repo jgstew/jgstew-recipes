@@ -36,6 +36,11 @@ class SevenZip(Processor):
             # "default": [],
             "description": "Array of cmd args to pass to 7z executable.",
         },
+        "relative_directory": {
+            "required": False,
+            "default": False,
+            "description": "relative directory.",
+        },
         "ignore_errors": {
             "required": False,
             "default": True,
@@ -55,6 +60,7 @@ class SevenZip(Processor):
     def main(self):
         """Execution starts here:"""
         working_directory = self.env.get("RECIPE_CACHE_DIR")
+        relative_directory = self.env.get("relative_directory", False)
         ignore_errors = self.env.get("ignore_errors", True)
         sevenzip_args = self.env.get("sevenzip_args", [])
         # verbosity = self.env.get("verbose", 0)
@@ -71,16 +77,19 @@ class SevenZip(Processor):
         self.output(f"Using Path to 7zip: {sevenzip}")
 
         # "-aoa" to always overwrite all files:
-        cmd = [sevenzip]
+        cmd = [sevenzip] + sevenzip_args
 
-        if sevenzip_args and len(sevenzip_args) > 0:
-            cmd.extend(sevenzip_args)
+        # if sevenzip_args and len(sevenzip_args) > 0:
+        #     cmd.extend(sevenzip_args)
 
-        self.output(f"7zip cmd line to be executed: {cmd}", 3)
+        self.output(f"7zip cmd line to be executed: {cmd}", 1)
+
+        if relative_directory:
+            os.chdir(os.path.join(working_directory, relative_directory))
 
         try:
             cmd_output = subprocess.check_output(cmd).decode("utf-8")
-            self.output(f"Extraction Process Output: {cmd_output}", 4)
+            self.output(f"Extraction Process Output: {cmd_output}", 2)
         except BaseException as err:
             self.output(f"ERROR: {err}", 2)
             if not ignore_errors:

@@ -35,4 +35,5 @@ Process:
   # TODO create zip Firefox.nupkg
   - Processor: com.github.jgstew.SharedProcessors/SevenZip
     Arguments:
-      sevenzip_args: ["a -tzip firefox.nupkg ./tmp/*"]
+      sevenzip_args: ["a", "-tzip", "../firefox.nupkg", "*"]
+      relative_directory: tmp

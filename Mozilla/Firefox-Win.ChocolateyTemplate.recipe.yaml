@@ -31,3 +31,8 @@ Process:
     Arguments:
       file_path_first: "%RECIPE_CACHE_DIR%/downloads/FirefoxSetup.exe"
       file_path_second: "%RECIPE_CACHE_DIR%/tmp/tools/FirefoxSetup.exe"
+
+  # TODO create zip Firefox.nupkg
+  - Processor: com.github.jgstew.SharedProcessors/SevenZip
+    Arguments:
+      sevenzip_args: ["a -tzip firefox.nupkg ./tmp/*"]

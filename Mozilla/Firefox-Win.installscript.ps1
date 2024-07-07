@@ -8,6 +8,7 @@ $expectedHash = "{{file_sha256}}"
 $outputFile = "C:\Windows\Temp\{{file_name}}"
 
 # Download the file
+$ProgressPreference = 'SilentlyContinue'
 Invoke-WebRequest -Uri $url -OutFile $outputFile
 
 # Calculate the actual SHA256 hash of the downloaded file
@@ -18,7 +19,7 @@ if ($actualHash -eq $expectedHash) {
     Write-Output "Hashes match. Proceeding to execute the file."
 
     # Execute the downloaded file
-    Start-Process -FilePath $outputFile -ArgumentList "/S"
+    Start-Process -FilePath $outputFile -ArgumentList "/S" -Wait
 } else {
     Write-Output "Hashes do not match. The downloaded file may be corrupted or tampered with."
     # You can choose to delete the downloaded file in case of hash mismatch

@@ -1,0 +1,62 @@
+---
+Description: Example TextToSpeech Weather Recipe
+Identifier: com.github.jgstew.example.TextToSpeechWeather
+Input:
+  NAME: TextToSpeechWeather
+  # get free API key here: https://ipinfo.io/
+  API_IPINFO: REDACTED
+  # get free API key here: https://openweathermap.org/
+  API_OPENWEATHER: REDACTED
+MinimumVersion: "2.3"
+Process:
+  # https://ipinfo.io/?token=APIKEY
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: https://ipinfo.io/?token=%API_IPINFO%
+      filename: ipinfo.json
+
+  # get jq result:
+  - Processor: com.github.jgstew.SharedProcessors/JsonJq
+    Arguments:
+      json_input: "%RECIPE_CACHE_DIR%/downloads/ipinfo.json"
+      json_jq: '.loc'
+
+  # get lat / lon
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%json_jq_result%"
+      re_pattern: '.*?(?P<lat>-?\d+\.\d+),(?P<lon>-?\d+\.\d+)'
+
+  # https://api.openweathermap.org/data/2.5/weather?units=imperial&lat=33.44&lon=-94.04&appid=
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: https://api.openweathermap.org/data/2.5/weather?units=imperial&lat=%lat%&lon=%lon%&appid=%API_OPENWEATHER%
+      filename: weather.json
+
+  # get current temp
+  - Processor: com.github.jgstew.SharedProcessors/JsonJq
+    Arguments:
+      json_input: "%RECIPE_CACHE_DIR%/downloads/weather.json"
+      json_jq: '.main.temp'
+
+  # get current temp
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%json_jq_result%"
+      re_pattern: '.*?(?P<current_temp>-?\d+\.\d+)'
+
+  # get city
+  - Processor: com.github.jgstew.SharedProcessors/JsonJq
+    Arguments:
+      json_input: "%RECIPE_CACHE_DIR%/downloads/weather.json"
+      json_jq: '.name'
+
+  # get city name
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%json_jq_result%"
+      re_pattern: '"(?P<city_name>.+)"'
+
+  - Processor: com.github.jgstew.SharedProcessors/TextToSpeech
+    Arguments:
+      input_string: "It is currently %current_temp% out in %city_name% area"

@@ -34,3 +34,11 @@ Process:
       datetime_parsed_name: SourceReleaseDate
 
   - Processor: com.github.jgstew.SharedProcessors/FileHasher
+
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      dictionary_name: template_dictionary
+      append_key: file_sha256
+      append_value: "%filehasher_sha256%"

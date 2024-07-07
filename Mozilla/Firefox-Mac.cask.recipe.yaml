@@ -1,0 +1,16 @@
+# https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
+---
+Description: Creates an install script for the latest version of Firefox
+Identifier: com.github.jgstew.cask.Firefox-Mac
+Input:
+  NAME: "Firefox"
+  product: firefox-latest-ssl
+  OS: osx
+  filename: Firefox.dmg
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.download.Firefox-Mac
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: "./Mozilla/Firefox-Mac.cask.rb"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/firefox.rb"

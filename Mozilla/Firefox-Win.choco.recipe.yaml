@@ -1,0 +1,24 @@
+# https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
+---
+Description: Creates an choco package for the latest version of Firefox
+Identifier: com.github.jgstew.choco.Firefox-Win64
+Input:
+  NAME: "Firefox"
+  product: firefox-stub
+  OS: win64
+  filename: FirefoxInstaller.exe
+  # https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.download.Firefox-Win64
+Process:
+  - Processor: ChocolateyPackager
+    Arguments:
+      id: "%NAME%"
+      version: "%version%"
+      title: "%NAME%"
+      authors: Mozilla
+      description: Firefox web browser.
+      installer_type: exe
+      installer_url: "%download_url%"
+      installer_checksum: "%filehasher_sha256%"
+      installer_checksum_type: "sha256"

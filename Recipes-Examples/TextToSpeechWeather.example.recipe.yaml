@@ -4,9 +4,9 @@ Identifier: com.github.jgstew.example.TextToSpeechWeather
 Input:
   NAME: TextToSpeechWeather
   # get free API key here: https://ipinfo.io/
-  API_IPINFO: REDACTED
+  # API_IPINFO: REDACTED (set in autopkg config/prefs)
   # get free API key here: https://openweathermap.org/
-  API_OPENWEATHER: REDACTED
+  # API_OPENWEATHER: REDACTED (set in autopkg config/prefs)
 MinimumVersion: "2.3"
 Process:
   # https://ipinfo.io/?token=APIKEY

@@ -34,7 +34,7 @@ Process:
       datetime_parsed_name: SourceReleaseDate
 
   # this is specifically for BigFix, but won't hurt other use cases:
-  #- Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
 
   - Processor: com.github.jgstew.SharedProcessors/FileHasher
 

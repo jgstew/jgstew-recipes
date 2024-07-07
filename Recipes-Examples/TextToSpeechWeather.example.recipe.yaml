@@ -57,6 +57,7 @@ Process:
       input_string: "%json_jq_result%"
       re_pattern: '"(?P<city_name>.+)"'
 
+  # read weather aloud:
   - Processor: com.github.jgstew.SharedProcessors/TextToSpeech
     Arguments:
       input_string: "It is currently %current_temp% out in %city_name% area"

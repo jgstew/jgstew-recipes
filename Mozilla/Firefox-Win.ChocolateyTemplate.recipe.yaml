@@ -12,28 +12,33 @@ Input:
 MinimumVersion: "2.3"
 ParentRecipe: com.github.jgstew.download.Firefox-Win64
 Process:
+  # create missing folders:
   - Processor: com.github.jgstew.SharedProcessors/FileTouch
     Arguments:
       pathname: "%RECIPE_CACHE_DIR%/tmp/tools/chocolateyInstall.ps1"
       touch_create_folders: True
+
+  # create Firefox.nuspec from template
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
       template_file_path: "./Mozilla/Firefox-Win.ChocolateyTemplate.Firefox.nuspec"
       content_file_pathname: "%RECIPE_CACHE_DIR%/tmp/Firefox.nuspec"
+
+  # create chocolateyInstall.ps1 from template
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
       template_file_path: "./Mozilla/Firefox-Win.ChocolateyTemplate.chocolateyInstall.ps1"
       content_file_pathname: "%RECIPE_CACHE_DIR%/tmp/tools/chocolateyInstall.ps1"
-#   - Processor: PathDeleter
-#     Arguments:
-#       path_list: ["%RECIPE_CACHE_DIR%/tmp/tools/FirefoxSetup.exe"]
+
+  # copy FirefoxSetup.exe into tmp directory for creation of nupkg
   - Processor: com.github.jgstew.SharedProcessors/FileCopyNewest
     Arguments:
       file_path_first: "%RECIPE_CACHE_DIR%/downloads/FirefoxSetup.exe"
       file_path_second: "%RECIPE_CACHE_DIR%/tmp/tools/FirefoxSetup.exe"
 
-  # TODO create zip Firefox.nupkg
+  # create zip file Firefox.nupkg
   - Processor: com.github.jgstew.SharedProcessors/SevenZip
     Arguments:
       sevenzip_args: ["a", "-tzip", "../firefox.nupkg", "*"]
+      # need to change the relative directory to NOT include the directory name
       relative_directory: tmp

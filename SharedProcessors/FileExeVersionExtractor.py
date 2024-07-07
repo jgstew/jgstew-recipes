@@ -23,6 +23,7 @@ DEFAULT_7ZIP_PATHS = [
     # NONINTERACTIVE=1 brew install p7zip
     "/opt/homebrew/bin/7z",
     "/usr/local/bin/7z",
+    "/opt/homebrew/bin/7zz",
     # NONINTERACTIVE=1 brew install sevenzip
     "/usr/local/bin/7zz",
     # Ubuntu typical:

@@ -25,6 +25,8 @@ Process:
       content_file_pathname: "%RECIPE_CACHE_DIR%/tmp/Firefox.nuspec"
 
   # create chocolateyInstall.ps1 from template
+  # https://docs.chocolatey.org/en-us/create/create-packages/
+  # https://docs.chocolatey.org/en-us/create/functions/install-chocolateypackage/
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
       template_file_path: "./Mozilla/Firefox-Win.ChocolateyTemplate.chocolateyInstall.ps1"

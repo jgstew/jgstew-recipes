@@ -95,7 +95,9 @@ class SevenZip(Processor):
             if not ignore_errors:
                 raise
 
-        # self.output(f"Extracted Archive Path: {extract_path}")
+        # reset working dir
+        if relative_directory:
+            os.chdir(working_directory)
 
 
 if __name__ == "__main__":

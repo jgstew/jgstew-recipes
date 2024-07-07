@@ -1,0 +1,33 @@
+# https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
+---
+Description: Creates an choco package for the latest version of Firefox
+Identifier: com.github.jgstew.ChocolateyTemplate.Firefox-Win64
+Input:
+  NAME: "Firefox"
+  product: firefox-latest-ssl
+  OS: win64
+  filename: FirefoxSetup.exe
+  # https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US
+  # https://download.mozilla.org/?product=firefox-msi-latest-ssl&os=win64&lang=en-US
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.download.Firefox-Win64
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/FileTouch
+    Arguments:
+      pathname: "%RECIPE_CACHE_DIR%/tmp/tools/chocolateyInstall.ps1"
+      touch_create_folders: True
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: "./Mozilla/Firefox-Win.ChocolateyTemplate.Firefox.nuspec"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/tmp/Firefox.nuspec"
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: "./Mozilla/Firefox-Win.ChocolateyTemplate.chocolateyInstall.ps1"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/tmp/tools/chocolateyInstall.ps1"
+#   - Processor: PathDeleter
+#     Arguments:
+#       path_list: ["%RECIPE_CACHE_DIR%/tmp/tools/FirefoxSetup.exe"]
+  - Processor: com.github.jgstew.SharedProcessors/FileCopyNewest
+    Arguments:
+      file_path_first: "%RECIPE_CACHE_DIR%/downloads/FirefoxSetup.exe"
+      file_path_second: "%RECIPE_CACHE_DIR%/tmp/tools/FirefoxSetup.exe"

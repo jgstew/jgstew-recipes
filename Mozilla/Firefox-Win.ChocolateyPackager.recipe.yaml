@@ -1,6 +1,5 @@
-# https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
 ---
-Description: Creates an choco package for the latest version of Firefox
+Description: Creates an choco package for the latest version of Firefox - Only runs on Windows
 Identifier: com.github.jgstew.ChocolateyPackager.Firefox-Win64
 Input:
   NAME: "Firefox"
@@ -12,6 +11,7 @@ Input:
 MinimumVersion: "2.3"
 ParentRecipe: com.github.jgstew.download.Firefox-Win64
 Process:
+  # The following processor is windows only:
   - Processor: ChocolateyPackager
     Arguments:
       id: "%NAME%"

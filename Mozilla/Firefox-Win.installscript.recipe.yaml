@@ -1,0 +1,25 @@
+# https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
+---
+Description: Creates an installscript for the latest version of Firefox
+Identifier: com.github.jgstew.installscript.Firefox-Win64
+Input:
+  NAME: "Firefox"
+  product: firefox-latest-ssl
+  OS: win64
+  filename: FirefoxSetup.exe
+  # https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US
+  # https://download.mozilla.org/?product=firefox-msi-latest-ssl&os=win64&lang=en-US
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.download.Firefox-Win64
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      dictionary_name: template_dictionary
+      append_key: download_url
+      append_value: "%download_url%"
+
+  # create InstallFirefox.ps1 from template
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: "./Mozilla/Firefox-Win.installscript.ps1"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/InstallFirefox.ps1"

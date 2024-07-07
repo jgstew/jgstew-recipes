@@ -52,7 +52,6 @@ class SevenZip(Processor):
             "default": "",
             "description": "Path to 7-Zip binary.",
         },
-
     }
     output_variables = {}
 

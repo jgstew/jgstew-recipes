@@ -15,7 +15,7 @@ Process:
       # Example URLs:
       # - https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
       url: https://download.mozilla.org/?product=%product%&os=%OS%&lang=en-US
-      COMPUTE_HASHES: True
+      # COMPUTE_HASHES: True
 
   - Processor: EndOfCheckPhase
 
@@ -32,3 +32,5 @@ Process:
       datetime_strptime: "%a, %d %b %Y %H:%M:%S %Z"
       datetime_strftime: "%Y-%m-%d"
       datetime_parsed_name: SourceReleaseDate
+
+  - Processor: com.github.jgstew.SharedProcessors/FileHasher

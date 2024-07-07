@@ -1,0 +1,31 @@
+# https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
+---
+Description: Creates an install script for the latest version of Firefox
+Identifier: com.github.jgstew.installscript.Firefox-Linux
+Input:
+  NAME: "Firefox"
+  product: firefox-latest-ssl
+  OS: linux64
+  filename: firefox.tar.bz2
+  # https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.download.Firefox-Linux
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      dictionary_name: template_dictionary
+      append_key: file_sha256
+      append_value: "%filehasher_sha256%"
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      dictionary_name: template_dictionary
+      append_key: download_url
+      append_value: "%download_url%"
+
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: "./Mozilla/Firefox-Linux.installscript.sh"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/install-firefox.sh"

@@ -16,10 +16,12 @@ $actualHash = Get-FileHash -Path $outputFile -Algorithm SHA256 | Select-Object -
 
 # Compare the actual and expected hashes
 if ($actualHash -eq $expectedHash) {
-    Write-Output "Hashes match. Proceeding to execute the file."
+    Write-Output "Hashes match. Proceeding to install."
 
     # Execute the downloaded file
     Start-Process -FilePath $outputFile -ArgumentList "/S" -Wait
+
+    Write-Output "Install completed."
 } else {
     Write-Output "Hashes do not match. The downloaded file may be corrupted or tampered with."
     # You can choose to delete the downloaded file in case of hash mismatch

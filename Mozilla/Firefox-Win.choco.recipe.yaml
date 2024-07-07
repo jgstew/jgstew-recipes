@@ -19,6 +19,8 @@ Process:
       authors: Mozilla
       description: Firefox web browser.
       installer_type: exe
-      installer_url: "%download_url%"
+      # installer_url: "%download_url%"
+      installer_path: "%pathname%"
       installer_checksum: "%filehasher_sha256%"
       installer_checksum_type: "sha256"
+      installer_args: "/S"

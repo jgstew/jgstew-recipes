@@ -5,10 +5,11 @@ Description: Downloads the latest version of Firefox
 Identifier: com.github.jgstew.download.Firefox-Win64
 Input:
   NAME: "Firefox"
-  product: firefox-stub
+  product: firefox-latest-ssl
   OS: win64
-  filename: FirefoxInstaller.exe
-  # https://download.mozilla.org/?product=firefox-stub&os=win64&lang=en-US
+  filename: FirefoxSetup.exe
+  # https://download.mozilla.org/?product=firefox-msi-latest-ssl&os=win64&lang=en-US
+  # https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=en-US
 MinimumVersion: "2.3"
 ParentRecipe: com.github.jgstew.download.Firefox-Mac
 Process:

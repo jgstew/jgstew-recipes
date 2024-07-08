@@ -1,0 +1,36 @@
+---
+Description: Test TemplateDictionaryReadKey Processor
+Identifier: com.github.jgstew.test.TemplateDictionaryReadKey
+Input:
+  NAME: TemplateDictionaryReadKeyTest
+MinimumVersion: '2.3'
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: example_key_template
+      append_value: example_value_template
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryReadKey
+    Arguments:
+      dictionary_key: example_key_template
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%dictionary_value%"
+      assert_string: "example_value_template"
+
+  # just used because it does nothing:
+  - Processor: EndOfCheckPhase
+    Arguments:
+      new_dictionary: {"filehasher_sha256": "9e200146236e2403d4be088b49a6c8de3294ff1aa000ebf385d42c593207954b"}
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryReadKey
+    Arguments:
+      dictionary_name: "new_dictionary"
+      dictionary_key: filehasher_sha256
+      dictionary_value_name: file_sha256
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_sha256%"
+      assert_string: "9e200146236e2403d4be088b49a6c8de3294ff1aa000ebf385d42c593207954b"

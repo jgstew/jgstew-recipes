@@ -22,7 +22,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/TextSearcher
     Arguments:
       input_string: "%download_url%"
-      re_pattern: 'releases/(?P<version>\d+\.\d+\.\d+)/'
+      re_pattern: 'releases/(?P<version>\d+(\.\d+)+)/'
 
   # get SourceReleaseDate from HTTP `Last-Modified` header:
   - Processor: com.github.jgstew.SharedProcessors/DateTimeFromString

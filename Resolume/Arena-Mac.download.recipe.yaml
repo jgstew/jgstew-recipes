@@ -22,7 +22,7 @@ Process:
       # - https://www.resolume.com/download/file?file=Resolume_Arena_7_21_2_rev_37990_Installer.dmg
       url: https://www.resolume.com/download/file?file=%match%
       # example match: //dd5sgwxv3xok.cloudfront.net/Resolume_Arena_7_21_2_rev_37990_Installer.dmg
-      re_pattern: '//\S+.cloudfront.net/%match%'
+      re_pattern: '//\w+.cloudfront.net/%match%'
 
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:

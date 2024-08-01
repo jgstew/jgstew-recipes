@@ -1,0 +1,29 @@
+---
+Description: Downloads the latest version of Arena
+# based upon https://github.com/autopkg/moofit-recipes/blob/master/Adobe/RemoteUpdateManager.download.recipe
+Identifier: com.github.jgstew.download.Arena-Mac
+Input:
+  NAME: "Arena"
+MinimumVersion: "2.3"
+Process:
+  - Processor: URLTextSearcher
+    Arguments:
+      # Example URLs:
+      # - https://www.resolume.com/download/
+      url: https://www.resolume.com/download/
+      # example: Resolume_Arena_7_21_2_rev_37990_Installer.dmg
+      re_pattern: 'Resolume_Arena_\d+_\d+_\d+_rev_\d+_Installer.dmg'
+
+  - Processor: URLTextSearcher
+    Arguments:
+      # Example URLs:
+      # - https://www.resolume.com/download/file?file=Resolume_Arena_7_21_2_rev_37990_Installer.dmg
+      url: https://www.resolume.com/download/file?file=%match%
+      # example match: //dd5sgwxv3xok.cloudfront.net/Resolume_Arena_7_21_2_rev_37990_Installer.dmg
+      re_pattern: '//\S+.cloudfront.net/%match%'
+
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: "https:%match%"
+      filename: Resolume_Arena_Installer.dmg
+      COMPUTE_HASHES: True

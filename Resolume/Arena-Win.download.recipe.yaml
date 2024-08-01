@@ -1,0 +1,12 @@
+---
+Description: Downloads the latest version of Arena
+# based upon https://github.com/autopkg/moofit-recipes/blob/master/Adobe/RemoteUpdateManager.download.recipe
+Identifier: com.github.jgstew.download.Arena-Win
+Input:
+  NAME: "Arena"
+  starting_url: https://www.resolume.com/download/win
+  file_type: exe
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.download.Arena-Mac
+Process:
+  - Processor: EndOfCheckPhase

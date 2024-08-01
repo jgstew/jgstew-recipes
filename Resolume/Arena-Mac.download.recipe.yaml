@@ -4,15 +4,17 @@ Description: Downloads the latest version of Arena
 Identifier: com.github.jgstew.download.Arena-Mac
 Input:
   NAME: "Arena"
+  starting_url: https://www.resolume.com/download/
+  file_type: dmg
 MinimumVersion: "2.3"
 Process:
   - Processor: URLTextSearcher
     Arguments:
       # Example URLs:
       # - https://www.resolume.com/download/
-      url: https://www.resolume.com/download/
+      url: "%starting_url%"
       # example: Resolume_Arena_7_21_2_rev_37990_Installer.dmg
-      re_pattern: 'Resolume_Arena_\d+_\d+_\d+_rev_\d+_Installer.dmg'
+      re_pattern: 'Resolume_Arena_\d+_\d+_\d+_rev_\d+_Installer.%file_type%'
 
   - Processor: URLTextSearcher
     Arguments:
@@ -25,5 +27,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: "https:%match%"
-      filename: Resolume_Arena_Installer.dmg
+      filename: Resolume_Arena_Installer.%file_type%
       COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase

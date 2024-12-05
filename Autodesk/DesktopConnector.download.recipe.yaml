@@ -6,7 +6,7 @@ Input:
 MinimumVersion: "2.3"
 ParentRecipe: com.github.jgstew.shared.parent-recipe
 Process:
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: https://www.autodesk.com/adsk-connect-64
       COMPUTE_HASHES: True

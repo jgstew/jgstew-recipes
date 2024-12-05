@@ -1,0 +1,16 @@
+---
+Description: Downloads the latest DesktopConnector
+Identifier: com.github.jgstew.download.DesktopConnector-Win
+Input:
+  NAME: DesktopConnector
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.shared.parent-recipe
+Process:
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: https://www.autodesk.com/adsk-connect-64
+      COMPUTE_HASHES: True
+      filename: DesktopConnector-x64.exe
+      download_version: ""
+      User_Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0
+  - Processor: EndOfCheckPhase

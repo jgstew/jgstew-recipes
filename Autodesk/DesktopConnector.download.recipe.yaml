@@ -11,7 +11,7 @@ Process:
       url: https://help.autodesk.com/cloudhelp/ENU/CONNECT-Whats-New/files/GUID-03D59AAD-65B0-45E3-84F2-A12AAA5BB267.htm
       # example match `November 11, 2024 (v.16.11.1.2320)`
       re_pattern: 'v\.(?P<version>\d+(\.\d+)+)'
-      # curl_opts: ["-A", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0"]
+      curl_opts: ["-A", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0"]
 
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:

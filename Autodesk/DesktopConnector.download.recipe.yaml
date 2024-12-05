@@ -48,4 +48,5 @@ Process:
   #   Arguments:
   #     extract_dir: "tmp"
 
+  # alternative to urltextsearcher:
   # If you extract DesktopConnector-x64.exe there is a file within it called Autodesk_Desktop_Connector_002_002.7z and if you extract that then there is a file within it called setup.xml which has the version number inside of it.

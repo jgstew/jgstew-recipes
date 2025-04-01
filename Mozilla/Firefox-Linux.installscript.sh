@@ -1,5 +1,5 @@
 #!/bin/bash
-
+{{! This is a template for installing Firefox on Linux systems with bash. }}
 # URL of the file to download
 url="{{download_url}}"
 

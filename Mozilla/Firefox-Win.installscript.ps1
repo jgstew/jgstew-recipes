@@ -1,4 +1,5 @@
-# URL of the file to download
+{{! This is a template for installing Firefox on Windows systems with PowerShell. }}
+# URL of the file to download:
 $url = "{{download_url}}"
 
 # Expected SHA256 hash of the file (replace with your actual hash)

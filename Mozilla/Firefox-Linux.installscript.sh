@@ -10,7 +10,9 @@ expected_sha256="{{file_sha256}}"
 download_file_path=/tmp/{{file_name}}
 
 # install prereqs if missing (docker)
-apt install -y curl bzip2
+if command -v apt &> /dev/null; then
+    apt install -y curl bzip2
+fi
 
 # Download the file using curl
 curl -sSL "$url" -o "$download_file_path"

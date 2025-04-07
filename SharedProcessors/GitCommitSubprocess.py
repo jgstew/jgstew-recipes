@@ -5,10 +5,10 @@ import subprocess
 
 from autopkglib import Processor, ProcessorError
 
-__all__ = ["GitCommit"]
+__all__ = ["GitCommitSubprocess"]
 
 
-class GitCommit(Processor):
+class GitCommitSubprocess(Processor):
     """An AutoPkg processor to commit changed files to a Git repository."""
 
     input_variables = {
@@ -85,5 +85,5 @@ class GitCommit(Processor):
 
 
 if __name__ == "__main__":
-    PROCESSOR = GitCommit()
+    PROCESSOR = GitCommitSubprocess()
     PROCESSOR.execute_shell()

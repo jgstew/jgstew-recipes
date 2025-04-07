@@ -1,0 +1,12 @@
+---
+Description: Test GitCommitSubprocess Processor
+Identifier: com.github.jgstew.test.GitCommitSubprocess
+Input:
+  NAME: GitCommitSubprocessTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/GitCommitSubprocess
+    Arguments:
+      repo_path: "."
+      commit_message: "GitCommitSubprocess processor test"
+      push_changes: false

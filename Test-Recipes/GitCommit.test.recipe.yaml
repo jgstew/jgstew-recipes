@@ -9,3 +9,4 @@ Process:
     Arguments:
       repo_path: "."
       commit_message: "gitcommit processor test"
+      push_changes: false

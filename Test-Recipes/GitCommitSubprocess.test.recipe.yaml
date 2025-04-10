@@ -5,7 +5,7 @@ Input:
   NAME: GitCommitSubprocessTest
 MinimumVersion: "2.3"
 Process:
-  # commit changes to the git repository
+  # commit changes to the git repository, if any
   - Processor: com.github.jgstew.SharedProcessors/GitCommitSubprocess
     Arguments:
       repo_path: "."

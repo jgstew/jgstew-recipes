@@ -54,6 +54,12 @@ jobs:
         run: |
           for line in $(cat .autopkg_repos.txt); do python autopkg/Code/autopkg repo-add $line; done
 
+      - name: config git for 1 particular recipe
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          git config --global user.email "actions@github"
+          git config --global user.name "GitHub Actions"
+
       - name: run recipe autopkg
         if: steps.changed-files.outputs.any_changed == 'true'
         run: python autopkg/Code/autopkg run -vv --recipe-list TestRecipesAction.txt

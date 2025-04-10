@@ -49,6 +49,11 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: sudo apt-get install msitools speech-dispatcher -y
 
+      - name: add recipe repos
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          for line in $(cat .autopkg_repos.txt); do python autopkg/Code/autopkg repo-add $line; done
+
       - name: run recipe autopkg
         if: steps.changed-files.outputs.any_changed == 'true'
         run: python autopkg/Code/autopkg run -vv --recipe-list TestRecipesAction.txt

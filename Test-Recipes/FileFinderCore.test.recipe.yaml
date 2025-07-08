@@ -8,6 +8,16 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/FileTouch
     Arguments:
       pathname: "%RECIPE_CACHE_DIR%/test1.txt"
+
   - Processor: FileFinder
     Arguments:
       pattern: "%RECIPE_CACHE_DIR%/test*.txt"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "test1.txt"
+      assert_string: "%found_basename%"
+
+  - Processor: PathDeleter
+    Arguments:
+      path_list: "%RECIPE_CACHE_DIR%/test1.txt"

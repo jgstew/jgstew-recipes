@@ -38,8 +38,8 @@ jobs:
       - name: setup-autopkg local action
         if: steps.changed-files.outputs.any_changed == 'true'
         uses: ./.github/actions/setup-autopkg
-        with:
-          use-autopkg-branch: dev
+        # with:
+        #   use-autopkg-branch: dev
 
       - name: Install repo requirements
         if: steps.changed-files.outputs.any_changed == 'true'

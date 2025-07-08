@@ -42,6 +42,8 @@ RUN cd /workspaces/autopkg && sudo pip3 --disable-pip-version-check --no-cache-d
 # install requirements for jgstew-recipes:
 RUN sudo pip3 --disable-pip-version-check --no-cache-dir install besapi bigfix_prefetch cairosvg certifi chevron generate_bes_from_template hachoir icoextract jsonpath_ng looseversion olefile pefile Pillow pre-commit python-magic signify validate_bes_xml
 
+RUN sudo update-ca-certificates --fresh
+
 RUN python3 /workspaces/autopkg/Code/autopkg repo-add hansen-m-recipes homebysix-recipes https://github.com/jgstew/jgstew-recipes.git
 
 # add alias for autopkg for vscode user:

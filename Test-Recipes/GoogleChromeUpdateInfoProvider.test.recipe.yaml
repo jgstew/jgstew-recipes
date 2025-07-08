@@ -11,7 +11,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%chrome_package_name%"
-      assert_string: "chrome_installer."
+      assert_string: "chrome_installer"
 
   - Processor: com.github.jgstew.SharedProcessors/GoogleChromeUpdateInfoProvider
     Arguments:

@@ -34,7 +34,8 @@ RUN echo {} > /home/vscode/.config/Autopkg/config.json
 
 # setup autopkg:
 RUN cd /workspaces && git clone https://github.com/autopkg/autopkg.git
-RUN cd /workspaces/autopkg && git checkout dev
+# RUN cd /workspaces/autopkg && git checkout dev
+
 # install requirements for autopkg dev branch:
 RUN cd /workspaces/autopkg && sudo pip3 --disable-pip-version-check --no-cache-dir install --requirement gh_actions_requirements.txt
 

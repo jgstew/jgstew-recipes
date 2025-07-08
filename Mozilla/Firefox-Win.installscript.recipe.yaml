@@ -21,5 +21,5 @@ Process:
   # create InstallFirefox.ps1 from template
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
-      template_file_path: "./Mozilla/Firefox-Win.installscript.ps1"
+      template_file_path: "%RECIPE_DIR%/Firefox-Win.installscript.ps1"
       content_file_pathname: "%RECIPE_CACHE_DIR%/InstallFirefox.ps1"

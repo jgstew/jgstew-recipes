@@ -12,5 +12,5 @@ ParentRecipe: com.github.jgstew.download.Firefox-Mac
 Process:
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
-      template_file_path: "./Mozilla/Firefox-Mac.cask.rb"
+      template_file_path: "%RECIPE_DIR%/Firefox-Mac.cask.rb"
       content_file_pathname: "%RECIPE_CACHE_DIR%/firefox.rb"

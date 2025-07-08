@@ -19,5 +19,5 @@ Process:
 
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
-      template_file_path: "./Mozilla/Firefox-Linux.installscript.sh"
+      template_file_path: "%RECIPE_DIR%/Firefox-Linux.installscript.sh"
       content_file_pathname: "%RECIPE_CACHE_DIR%/install-firefox.sh"

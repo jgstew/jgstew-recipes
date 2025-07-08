@@ -21,7 +21,7 @@ Process:
   # create Firefox.nuspec from template
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
-      template_file_path: "./Mozilla/Firefox-Win.ChocolateyTemplate.Firefox.nuspec"
+      template_file_path: "%RECIPE_DIR%/Firefox-Win.ChocolateyTemplate.Firefox.nuspec"
       content_file_pathname: "%RECIPE_CACHE_DIR%/tmp/Firefox.nuspec"
 
   # create chocolateyInstall.ps1 from template
@@ -29,7 +29,7 @@ Process:
   # https://docs.chocolatey.org/en-us/create/functions/install-chocolateypackage/
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
-      template_file_path: "./Mozilla/Firefox-Win.ChocolateyTemplate.chocolateyInstall.ps1"
+      template_file_path: "%RECIPE_DIR%/Firefox-Win.ChocolateyTemplate.chocolateyInstall.ps1"
       content_file_pathname: "%RECIPE_CACHE_DIR%/tmp/tools/chocolateyInstall.ps1"
 
   # copy FirefoxSetup.exe into tmp directory for creation of nupkg

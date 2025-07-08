@@ -1,0 +1,8 @@
+com.github.jgstew.download.Firefox-Linux
+com.github.jgstew.download.Firefox-Mac
+com.github.jgstew.download.Firefox-Win64
+com.github.jgstew.ChocolateyTemplate.Firefox-Win64
+com.github.jgstew.cask.Firefox-Mac
+com.github.jgstew.installscript.Firefox-Linux
+com.github.jgstew.installscript.Firefox-Win64
+com.github.jgstew.bigfix.Firefox-Win64

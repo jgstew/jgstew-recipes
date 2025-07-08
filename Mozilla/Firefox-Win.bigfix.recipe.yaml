@@ -35,7 +35,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
       # use UNIX style paths so this works on Windows and non-Windows:
-      template_file_path: ./Mozilla/Firefox-Win-Install_Update.bes.mustache
+      template_file_path: "%RECIPE_DIR%/Firefox-Win-Install_Update.bes.mustache"
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%-InstallUpdate.bes"
 
   - Processor: com.github.jgstew.SharedProcessors/BESImport

@@ -1,6 +1,6 @@
 ---
 Description: Test GitCommitSubprocess Processor
-Identifier: com.github.jgstew.test.GitCommitSubprocess
+Identifier: com.github.jgstew.test.ExampleGitCommitSubprocess
 Input:
   NAME: GitCommitSubprocessTest
 MinimumVersion: "2.3"

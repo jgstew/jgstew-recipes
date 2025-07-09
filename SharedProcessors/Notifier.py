@@ -54,12 +54,8 @@ class Notifier(Processor):
         Private async method to configure and send the notification.
         This is required because the desktop-notifier library is asynchronous.
         """
-        try:
-            notifier = DesktopNotifier(app_name=app_name)
-            await notifier.send(title=title, message=message)
-        except Exception as e:
-            # Catch exceptions from the notifier library and raise a ProcessorError
-            raise ProcessorError(f"Failed to send notification: {e}") from e
+        notifier = DesktopNotifier(app_name=app_name)
+        await notifier.send(title=title, message=message)
 
     def main(self):
         """Main entry point for the processor."""
@@ -86,7 +82,9 @@ class Notifier(Processor):
         # functions within an asyncio event loop.
         try:
             asyncio.run(self._send_notification_async(title, message, app_name))
-            self.output("Successfully sent notification to the OS.")
+            self.output(
+                "Sent notification to the OS. (should work if on supported system)"
+            )
         except Exception as e:
             # Surface any errors that occur during the notification process
             self.output(f"Failed to send notification: {e}")

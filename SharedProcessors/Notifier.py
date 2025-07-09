@@ -89,7 +89,7 @@ class Notifier(Processor):
             self.output("Successfully sent notification to the OS.")
         except Exception as e:
             # Surface any errors that occur during the notification process
-            raise ProcessorError(e) from e
+            self.output(f"Failed to send notification: {e}")
 
 
 if __name__ == "__main__":

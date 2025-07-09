@@ -68,7 +68,10 @@ class Notifier(Processor):
             "notification_title", self.input_variables["notification_title"]["default"]
         )
         message = self.env.get("notification_message")
-        app_name = self.env.get("notification_app_name", self.input_variables["notification_app_name"]["default"])
+        app_name = self.env.get(
+            "notification_app_name",
+            self.input_variables["notification_app_name"]["default"],
+        )
 
         # Ensure the required message variable is present
         if not message:

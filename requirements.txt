@@ -3,6 +3,7 @@ bigfix_prefetch
 cairosvg
 certifi
 chevron
+desktop_notifier
 generate_bes_from_template
 hachoir
 icoextract

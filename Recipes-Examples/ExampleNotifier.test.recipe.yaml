@@ -1,0 +1,12 @@
+---
+Description: Example recipe getting the github api limits
+Identifier: com.github.jgstew.test.ExampleNotifier
+Input:
+  NAME: ExampleNotifier
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/Notifier
+    Arguments:
+      notification_title: "AutoPkg Notifier Processor Test"
+      notification_message: "Example of the AutoPkg Notifier Processor in action."
+      notification_app_name: "AutoPkg"

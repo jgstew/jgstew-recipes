@@ -23,11 +23,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install prereq
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get install libssl-dev -y
+
       - name: setup-autopkg local action
         uses: ./.github/actions/setup-autopkg
 
       - name: Install requirements
         run: pip install --requirement requirements.txt
+
+      - name: update pip package
+        run: python -m pip install --upgrade oscrypto
 
       - name: run recipe autopkg
         run: python autopkg/Code/autopkg run -vv Test-Recipes/FileExeVerifySignature.test.recipe.yaml

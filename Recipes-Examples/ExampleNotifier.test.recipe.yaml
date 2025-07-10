@@ -10,6 +10,6 @@ Process:
   # The Notifier processor will silently fail on unsupported platforms. (headless, docker, etc.)
   - Processor: com.github.jgstew.SharedProcessors/Notifier
     Arguments:
+      notification_app_name: "AutoPkg"
       notification_title: "AutoPkg Notifier Processor"
       notification_message: "Example of the AutoPkg Notifier Processor in action."
-      notification_app_name: "AutoPkg"

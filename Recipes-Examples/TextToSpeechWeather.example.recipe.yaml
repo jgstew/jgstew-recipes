@@ -61,3 +61,9 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/TextToSpeech
     Arguments:
       input_string: "It is currently %current_temp% degrees out in %city_name% area"
+
+  # - Processor: com.github.jgstew.SharedProcessors/Notifier
+  #   Arguments:
+  #     notification_app_name: "AutoPkg Weather"
+  #     notification_title: "Current Weather from AutoPkg"
+  #     notification_message: "It is currently %current_temp% degrees out in %city_name% area."

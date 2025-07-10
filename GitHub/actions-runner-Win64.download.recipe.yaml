@@ -5,7 +5,7 @@ Input:
   NAME: "actions-runner"
   TYPE: "zip"
   OS: win-x64
-  # this will be used as the asset regex patter, but then replaced by the real version downloaded
+  # this will be used as the asset regex pattern, but then replaced by the real version downloaded
   version: ".*\\.\\d+"
 MinimumVersion: "2.3"
 ParentRecipe: com.github.jgstew.shared.parent-recipe

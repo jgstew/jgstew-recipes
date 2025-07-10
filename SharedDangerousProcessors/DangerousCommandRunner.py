@@ -18,7 +18,11 @@ __all__ = ["DangerousCommandRunner"]
 
 
 class DangerousCommandRunner(Processor):  # pylint: disable=invalid-name
-    """Runs a command using subprocess"""
+    """Runs a command using subprocess
+
+    You should probably not use this processor, as it is dangerous.
+    It is intended to be used for testing and debugging purposes only.
+    It is not recommended to use this processor in production recipes."""
 
     input_variables = {
         "command_path": {

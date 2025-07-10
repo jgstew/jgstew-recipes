@@ -105,9 +105,9 @@ class FileExeVerifySignature(Processor):  # pylint: disable=too-few-public-metho
                     file_signature_serial_number = str(
                         list(pefile.signed_datas)[0].signer_infos[0].serial_number
                     ).strip()
-                    self.env[
-                        "file_signature_serial_number"
-                    ] = file_signature_serial_number
+                    self.env["file_signature_serial_number"] = (
+                        file_signature_serial_number
+                    )
                 except Exception:
                     # print(err)
                     pass

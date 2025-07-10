@@ -102,7 +102,7 @@ class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
             template_file_path, os.R_OK
         ):
             content_string = chevron.render(
-                open(template_file_path, "r"), template_dict, template_partials_path
+                open(template_file_path), template_dict, template_partials_path
             )
         else:
             raise ProcessorError("ERROR: No Template File Found!")
@@ -137,9 +137,7 @@ class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
         content_string = self.generate_content(template_dictionary)
 
         content_size = len(content_string)
-        self.output(
-            "Content String Size = {content_size}".format(content_size=content_size), 1
-        )
+        self.output(f"Content String Size = {content_size}", 1)
 
         if content_file_pathname:
             self.write_file_content(content_file_pathname, content_string)

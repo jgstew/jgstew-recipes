@@ -1,6 +1,5 @@
 #!/usr/bin/python
-"""Extracts the file using the 7z utility.
-"""
+"""Extracts the file using the 7z utility."""
 import os
 import subprocess
 

@@ -96,9 +96,9 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
             "prefetch_type": self.env.get("prefetch_type", "statement"),
             #'template_file_path': "./BigFix/FixletDebugger-Win.bes.mustache"
         }
-        self.env[
-            "template_dictionary"
-        ] = generate_bes_from_template.get_missing_bes_values(template_dict)
+        self.env["template_dictionary"] = (
+            generate_bes_from_template.get_missing_bes_values(template_dict)
+        )
 
 
 if __name__ == "__main__":

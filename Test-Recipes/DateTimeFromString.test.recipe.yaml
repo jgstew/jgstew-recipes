@@ -3,7 +3,7 @@ Description: Test DateTimeFromString Processor
 Identifier: com.github.jgstew.test.DateTimeFromString
 Input:
   NAME: DateTimeFromStringTest
-  # example last_modified HTTP header valeu:
+  # example last_modified HTTP header value:
   last_modified: "Wed, 09 Mar 2022 18:26:34 GMT"
 MinimumVersion: "2.3"
 Process:

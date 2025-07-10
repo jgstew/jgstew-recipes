@@ -6,7 +6,7 @@ Input:
   # TYPE must be `zip` or `7z` or `tar.gz`
   TYPE: "zip"
   OS: -win64
-  # this will be used as the asset regex patter, but then replaced by the real version downloaded
+  # this will be used as the asset regex pattern, but then replaced by the real version downloaded
   version: ".*"
   log4j2scan-common-parameters: "--scan-log4j1 --no-symlink --no-empty-report"
 MinimumVersion: "2.3"

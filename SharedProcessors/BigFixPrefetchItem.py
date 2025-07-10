@@ -137,7 +137,7 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
 
         self.get_prefetch(prefetch_dictionary)
 
-        self.output("self.env: \n{self_env}\n".format(self_env=self.env), 4)
+        self.output(f"self.env: \n{self.env}\n", 4)
 
 
 if __name__ == "__main__":

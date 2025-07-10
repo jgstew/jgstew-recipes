@@ -78,7 +78,7 @@ class FileHasher(Processor):  # pylint: disable=invalid-name
             ),
             1,
         )
-        self.output("File Size   = {filehasher_size}".format(filehasher_size=size), 1)
+        self.output(f"File Size   = {size}", 1)
 
         self.env["filehasher_sha1"] = hashes[0].hexdigest()
         self.env["filehasher_sha256"] = hashes[1].hexdigest()

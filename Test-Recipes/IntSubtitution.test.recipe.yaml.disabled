@@ -1,5 +1,5 @@
 ---
-Description: Test Int Subtitution - failing test
+Description: Test Int Substitution - failing test
 Identifier: com.github.jgstew.test.IntSubtitution
 Input:
   NAME: IntSubtitutionTest

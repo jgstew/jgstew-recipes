@@ -73,7 +73,7 @@ class TextSearcher(Processor):
     description = __doc__
 
     def prepare_re_flags(self):
-        """Create flag varible for re.compile"""
+        """Create flag variable for re.compile"""
         flag_accumulator = 0
         for flag in self.env.get("re_flags", {}):
             if flag in re.__dict__:

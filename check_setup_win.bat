@@ -174,8 +174,8 @@ if exist .git (
 ) else (
     echo ERROR: .git folder not found!
     echo Are you running this from the cloned git "recipes" folder?
-    echo NOTE: this error is expected if you are running this script independantly
-    echo         to check intial setup. You should later run this from a cloned repo.
+    echo NOTE: this error is expected if you are running this script independently
+    echo         to check initial setup. You should later run this from a cloned repo.
     pause
     exit /B 99
 )

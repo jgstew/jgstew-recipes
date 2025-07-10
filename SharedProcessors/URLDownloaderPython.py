@@ -129,7 +129,7 @@ class URLDownloaderPython(URLDownloader):
              regardless of value supplied.
             This is designed to be used in AWS Lambda or similar Docker use cases.
             Only as much RAM as consumed by `chunksize`
-             within `download_and_hash()` plus overhead is requried
+             within `download_and_hash()` plus overhead is required
              because the file is never fully read into memory and never written to disk
              if this setting is used.
             """,

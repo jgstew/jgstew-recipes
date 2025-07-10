@@ -16,7 +16,7 @@ __all__ = ["URLDownloaderRequests"]
 
 
 class URLDownloaderRequests(URLDownloader):
-    """This is meant to be supplimental to URLDownloader or URLDownloaderPython,
+    """This is meant to be supplemental to URLDownloader or URLDownloaderPython,
     but use requests to handle sessions / cookies."""
 
     description = __doc__
@@ -86,7 +86,7 @@ class URLDownloaderRequests(URLDownloader):
             )
         except Exception:
             self.output(
-                "WARNING! Could not restore session from previous step. Ressetting to new session."
+                "WARNING! Could not restore session from previous step. Resetting to new session."
             )
             return requests.session()
 

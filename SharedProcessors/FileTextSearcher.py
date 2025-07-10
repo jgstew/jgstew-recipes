@@ -43,7 +43,7 @@ class FileTextSearcher(SharedUtilityMethods):  # pylint: disable=too-few-public-
         "file_search_results_var": {
             "required": False,
             "default": "",
-            "description": "where to save the ouput",
+            "description": "where to save the output",
         },
         "unique_results_only": {
             "required": False,

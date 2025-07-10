@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
 	<{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
-		<Title>Install Microsoft.VisualStudio.Product.BuildTools - {{version}} - Python Pip Dependancy - Windows</Title>
+		<Title>Install Microsoft.VisualStudio.Product.BuildTools - {{version}} - Python Pip Dependency - Windows</Title>
 		<Description><![CDATA[
-<p>This will install Visual Studio Build Tools v{{version}} which is a python pip dependancy.</p>
+<p>This will install Visual Studio Build Tools v{{version}} which is a python pip dependency.</p>
 {{#icon_base64}}<br/><br/><b>Icon:</b><br/><img style="display:block; width:256px;" src="data:{{icon_type}}{{^icon_type}}image/png{{/icon_type}};base64,{{icon_base64}}" />{{/icon_base64}}
 		]]></Description>
 		<Relevance>windows of operating system</Relevance>

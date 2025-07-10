@@ -15,9 +15,10 @@ __all__ = ["DangerousEvaluate"]
 
 class DangerousEvaluate(Processor):  # pylint: disable=invalid-name
     """Takes a string and evaluates it as python
-    This is a bad idea and dangerous
-    This is useful for quick debugging
-    """
+
+    You should probably not use this processor, as it is dangerous.
+    It is intended to be used for testing and debugging purposes only.
+    It is not recommended to use this processor in production recipes."""
 
     description = __doc__
     input_variables = {

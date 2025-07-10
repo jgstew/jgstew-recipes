@@ -36,7 +36,7 @@ class TextToSpeech(Processor):  # pylint: disable=invalid-name
 
         # from: https://stackoverflow.com/a/59118441/861745
         syst = platform.system()
-        # change check to look for command existance, rather than Ubuntu specific:
+        # change check to look for command existence, rather than Ubuntu specific:
         if syst == "Linux" and shutil.which("spd-say") is not None:
             os.system("spd-say %s" % text_shellquoted)
         elif syst == "Windows":

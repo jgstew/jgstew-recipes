@@ -31,7 +31,7 @@ class TextSubstitutionRegEx(Processor):
             "required": True,
         },
         "re_substitution": {
-            "description": "Text to substitue from the Regular Expression Match.",
+            "description": "Text to substitute from the Regular Expression Match.",
             "required": True,
         },
         "input_string": {"description": "String to search", "required": True},

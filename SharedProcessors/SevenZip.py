@@ -1,6 +1,5 @@
 #!/usr/bin/python
-"""Creates archive using the 7z utility.
-"""
+"""Creates archive using the 7z utility."""
 import os
 import subprocess
 

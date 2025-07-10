@@ -17,7 +17,11 @@ __all__ = ["DangerousRunProcessors"]
 
 
 class DangerousRunProcessors(Processor):  # pylint: disable=invalid-name
-    """a processor that runs other processors"""
+    """a processor that runs other processors
+
+    You should probably not use this processor, as it is dangerous.
+    It is intended to be used for testing and debugging purposes only.
+    It is not recommended to use this processor in production recipes."""
 
     description = __doc__
     input_variables = {

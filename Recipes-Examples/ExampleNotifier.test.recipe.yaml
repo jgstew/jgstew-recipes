@@ -1,5 +1,5 @@
 ---
-Description: Example recipe getting the github api limits
+Description: Example recipe that creates native os notifications
 Identifier: com.github.jgstew.test.ExampleNotifier
 Input:
   NAME: ExampleNotifier

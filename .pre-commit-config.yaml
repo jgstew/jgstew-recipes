@@ -11,7 +11,7 @@ repos:
     hooks:
       - id: check-autopkg-recipe-list
       - id: check-autopkg-recipes
-        args: ["--recipe-prefix=com.github.jgstew.", "--strict", "--"]
+        args: ["--recipe-prefix=com.github.jgstew.", "--override-prefix=com.github.jgstew.", "--strict", "--"]
         exclude: ".*.test.recipe.yaml"
       # - id: forbid-autopkg-overrides
   - repo: https://github.com/pre-commit/pre-commit-hooks

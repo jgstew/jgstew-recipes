@@ -18,10 +18,13 @@ Process:
       asset_regex: "actions-runner-%OS%-%version%\\.%TYPE%$"
       include_prereleases: False
       # curl_opts: ["--raw"]
-  - Processor: URLDownloaderPython
+
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       filename: actions-runner-%OS%.%TYPE%
       #download_version: "%version%"
       COMPUTE_HASHES: True
+
   - Processor: EndOfCheckPhase
+
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem

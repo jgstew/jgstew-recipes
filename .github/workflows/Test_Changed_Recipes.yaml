@@ -35,6 +35,10 @@ jobs:
           done
           cat TestRecipesAction.txt
 
+      - name: Install prereq
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: sudo apt-get install msitools speech-dispatcher libssl-dev -y
+
       - name: setup-autopkg local action
         if: steps.changed-files.outputs.any_changed == 'true'
         uses: ./.github/actions/setup-autopkg
@@ -44,10 +48,6 @@ jobs:
       - name: Install repo requirements
         if: steps.changed-files.outputs.any_changed == 'true'
         run: pip install --requirement requirements.txt
-
-      - name: Install prereq
-        if: steps.changed-files.outputs.any_changed == 'true'
-        run: sudo apt-get install msitools speech-dispatcher -y
 
       - name: add recipe repos
         if: steps.changed-files.outputs.any_changed == 'true'

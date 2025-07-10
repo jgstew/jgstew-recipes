@@ -11,31 +11,37 @@ MinimumVersion: "2.3"
 Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+
   - Processor: URLDownloaderPython
     Arguments:
       # good signature example
       url: https://raw.githubusercontent.com/ralphje/signify/master/tests/test_data/SoftwareUpdate.exe
       COMPUTE_HASHES: False
+
   - Processor: com.github.jgstew.SharedProcessors/FileExeVerifySignature
     Arguments:
       file_pathname: "%pathname%"
       file_signature_expected_serial_number: "12451790217711796967571790799059482938"
+
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_signature_result%"
       # assert `VALID` result
       assert_string: "VALID"
+
   - Processor: URLDownloaderPython
     Arguments:
       # bad / unsigned example
       url: http://software.bigfix.com/download/redist/unzip-5.52.exe
       filename: unzip.exe
       COMPUTE_HASHES: False
+
   - Processor: com.github.jgstew.SharedProcessors/FileExeVerifySignature
     Arguments:
       file_pathname: "%pathname%"
       file_signature_throw_error: False
       file_signature_expected_serial_number: ""
+
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_signature_result%"

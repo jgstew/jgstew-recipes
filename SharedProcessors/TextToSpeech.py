@@ -9,6 +9,7 @@
 
 import os
 import platform
+import shlex
 import shutil
 
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
@@ -31,21 +32,21 @@ class TextToSpeech(Processor):  # pylint: disable=invalid-name
 
     def speak(self, input_string):
         """speak text aloud"""
-        tx = input_string
+        text_shellquoted = shlex.quote(input_string)
 
         # from: https://stackoverflow.com/a/59118441/861745
         syst = platform.system()
         # change check to look for command existance, rather than Ubuntu specific:
         if syst == "Linux" and shutil.which("spd-say") is not None:
-            os.system("spd-say %s" % tx)
+            os.system("spd-say %s" % text_shellquoted)
         elif syst == "Windows":
             os.system(
                 'PowerShell -Command "Add-Type –AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak(%s);"'
-                % tx
+                % input_string
             )
         elif syst == "Darwin":
             # add & at end of command to NOT wait.
-            os.system("say %s" % tx)
+            os.system("say %s" % text_shellquoted)
         else:
             # use pyttsx3 to handle other OSes:
             import pyttsx3

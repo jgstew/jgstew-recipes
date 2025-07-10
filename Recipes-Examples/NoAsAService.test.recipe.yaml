@@ -1,0 +1,24 @@
+---
+Description: Example recipe that gets a No As A Service answer
+Identifier: com.github.jgstew.test.NoAsAService
+Input:
+  NAME: NoAsAService
+MinimumVersion: "2.3"
+Process:
+  - Processor: URLTextSearcher
+    Arguments:
+      url: https://naas.isalman.dev/no
+      # example match `{"reason":"No."}`
+      re_pattern: '{ *"reason" *: *"(?P<NoAsAService>[^"]+)" *}'
+
+  # notification:
+  - Processor: com.github.jgstew.SharedProcessors/Notifier
+    Arguments:
+      notification_app_name: "AutoPkg"
+      notification_title: "AutoPkg: No As A Service"
+      notification_message: "%NoAsAService%"
+
+  # read aloud:
+  - Processor: com.github.jgstew.SharedProcessors/TextToSpeech
+    Arguments:
+      input_string: "%NoAsAService%"

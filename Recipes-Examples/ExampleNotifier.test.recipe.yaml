@@ -1,0 +1,15 @@
+---
+Description: Example recipe getting the github api limits
+Identifier: com.github.jgstew.test.ExampleNotifier
+Input:
+  NAME: ExampleNotifier
+MinimumVersion: "2.3"
+Process:
+  # This recipe demonstrates the use of the Notifier processor to send a notification.
+  # The Notifier processor will create a OS native notification on MacOS, Windows, or Linux.
+  # The Notifier processor will silently fail on unsupported platforms. (headless, docker, etc.)
+  - Processor: com.github.jgstew.SharedProcessors/Notifier
+    Arguments:
+      notification_title: "AutoPkg Notifier Processor"
+      notification_message: "Example of the AutoPkg Notifier Processor in action."
+      notification_app_name: "AutoPkg"

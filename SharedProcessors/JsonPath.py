@@ -16,6 +16,8 @@ from autopkglib import (  # pylint: disable=import-error,wrong-import-position,u
     ProcessorError,
 )
 
+__all__ = ["JsonPath"]
+
 
 class JsonPath(Processor):  # pylint: disable=invalid-name
     """create file or update its modification time"""

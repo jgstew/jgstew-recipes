@@ -23,9 +23,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install prereq
-        if: matrix.os == 'ubuntu-22.04'
-        run: sudo apt-get install libssl-dev -y
+      # - name: Install prereq
+      #   if: matrix.os == 'ubuntu-22.04'
+      #   run: sudo apt-get install libssl-dev -y
 
       - name: setup-autopkg local action
         uses: ./.github/actions/setup-autopkg

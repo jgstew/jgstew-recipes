@@ -7,6 +7,7 @@ MinimumVersion: '2.3'
 Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
     Arguments:
       file_name: SuperOrcaSetup.exe
@@ -17,6 +18,18 @@ Process:
       template_prefetch: None
       # pathname: "folder/whatever.exe"
       # prefetch_type: block
+
   - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
-    # Arguments:
-    #   file_name: SuperOrcaSetup.exe
+    Arguments:
+      download_info: {"file_sha256":"68ed565438e206e805f81980374e6439e6f4f60f63a3fcb6f0840c8a8de189da"}
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryReadKey
+    Arguments:
+      dictionary_name: "template_dictionary"
+      dictionary_key: file_sha256
+      dictionary_value_name: file_sha256
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_sha256%"
+      assert_string: "68ed565438e206e805f81980374e6439e6f4f60f63a3fcb6f0840c8a8de189da"

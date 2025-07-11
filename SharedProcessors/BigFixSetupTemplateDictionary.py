@@ -96,6 +96,15 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
             "prefetch_type": self.env.get("prefetch_type", "statement"),
             #'template_file_path': "./BigFix/FixletDebugger-Win.bes.mustache"
         }
+
+        # add hashes from download_info if they exist
+        if "file_sha256" in download_info:
+            template_dict["file_sha256"] = download_info["file_sha256"]
+        if "file_sha1" in download_info:
+            template_dict["file_sha1"] = download_info["file_sha1"]
+        if "file_md5" in download_info:
+            template_dict["file_md5"] = download_info["file_md5"]
+
         self.env["template_dictionary"] = (
             generate_bes_from_template.get_missing_bes_values(template_dict)
         )

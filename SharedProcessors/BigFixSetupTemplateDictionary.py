@@ -105,6 +105,10 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
         if "file_md5" in download_info:
             template_dict["file_md5"] = download_info["file_md5"]
 
+        # add download_url if it exists
+        if "download_url" in download_info:
+            template_dict["download_url"] = download_info["download_url"]
+
         self.env["template_dictionary"] = (
             generate_bes_from_template.get_missing_bes_values(template_dict)
         )

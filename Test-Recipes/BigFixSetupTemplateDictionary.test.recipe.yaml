@@ -21,14 +21,16 @@ Process:
 
   - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
     Arguments:
-      download_info: {"file_sha256":"68ed565438e206e805f81980374e6439e6f4f60f63a3fcb6f0840c8a8de189da"}
+      download_info: {"file_sha256":"68ed565438e206e805f81980374e6439e6f4f60f63a3fcb6f0840c8a8de189da", "download_url": "http://www.pantaray.com/SuperOrcaSetup.exe"}
 
+  # read file_sha256 from the template dictionary to make sure it is there
   - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryReadKey
     Arguments:
       dictionary_name: "template_dictionary"
       dictionary_key: file_sha256
       dictionary_value_name: file_sha256
 
+  # assert that the file_sha256 is as expected
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_sha256%"

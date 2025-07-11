@@ -18,13 +18,13 @@ jobs:
     strategy:
       matrix:
         # https://ncorti.com/blog/howto-github-actions-build-matrix
-        os: [ubuntu-24.04, windows-latest, macos-latest]
+        os: [ubuntu-22.04, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
 
       - name: Install prereq
-        if: matrix.os == 'ubuntu-24.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: sudo apt-get install libssl-dev -y
 
       - name: setup-autopkg local action

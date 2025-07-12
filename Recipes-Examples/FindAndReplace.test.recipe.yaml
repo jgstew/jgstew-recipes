@@ -1,0 +1,19 @@
+---
+Description: Test FindAndReplace Processor
+Identifier: com.github.jgstew.test.FindAndReplace
+Input:
+  NAME: FindAndReplace
+MinimumVersion: "2.7.6"
+Process:
+  # This FindAndReplace Processor is not released yet, but will be in 2.7.6
+  - Processor: FindAndReplace
+    Arguments:
+      input_string: "1_2_3"
+      find: "_"
+      replace: "."
+      replace_output_var: "version"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version%"
+      assert_string: "1.2.3"

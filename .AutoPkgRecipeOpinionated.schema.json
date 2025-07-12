@@ -84,6 +84,7 @@
                 "FileCreator",
                 "FileFinder",
                 "FileMover",
+                "FindAndReplace",
                 "FlatPkgPacker",
                 "FlatPkgUnpacker",
                 "GitHubReleasesInfoProvider",

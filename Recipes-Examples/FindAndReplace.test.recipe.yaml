@@ -11,7 +11,9 @@ Process:
       input_string: "1_2_3"
       find: "_"
       replace: "."
-      replace_output_var: "version"
+      result_output_var_name: "version"
+      # this should NOT show up in the verbose output
+      output_string: "this_is_not_actually_used"
 
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:

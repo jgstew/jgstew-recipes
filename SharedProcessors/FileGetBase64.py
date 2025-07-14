@@ -25,7 +25,7 @@ class FileGetBase64(Processor):  # pylint: disable=too-few-public-methods
         "file_size_limit": {
             "required": False,
             "default": "250",
-            "description": "file path to base64 encode",
+            "description": "maximum file size in kb to encode",
         },
     }
     # We don't actually want to display the base64 in output:

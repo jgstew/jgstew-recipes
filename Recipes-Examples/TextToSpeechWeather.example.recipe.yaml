@@ -43,7 +43,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/TextSearcher
     Arguments:
       input_string: "%json_jq_result%"
-      re_pattern: '.*?(?P<current_temp>-?\d+)\.\d+'
+      re_pattern: '.*?(?P<current_temp>-?\d+)(\.\d+)?'
 
   # get city
   - Processor: com.github.jgstew.SharedProcessors/JsonJq

@@ -1,0 +1,11 @@
+---
+Description: Test EnvRead Processor
+Identifier: com.github.jgstew.test.EnvRead
+Input:
+  NAME: EnvReadTest
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/EnvRead
+    Arguments:
+      env_var_name: "USER"
+      output_var_name: "user"

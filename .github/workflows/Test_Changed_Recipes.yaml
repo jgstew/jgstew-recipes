@@ -11,7 +11,7 @@ on:
 
 jobs:
   TestChangedRecipes:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Test changed-files
     steps:
       - uses: actions/checkout@v5

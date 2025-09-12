@@ -1,0 +1,27 @@
+---
+Description: Downloads the latest version of ZipInstaller from NirSoft
+Identifier: com.github.jgstew.download.ZipInst-Win
+Input:
+  NAME: ZipInst
+MinimumVersion: "2.3"
+ParentRecipe: com.github.jgstew.shared.parent-recipe
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://www.nirsoft.net/utils/zipinst.exe
+      filename: zipinst.exe
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase
+
+  # get FileVersion from EXE and save to `version` variable
+  - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE
+
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: NirSoft/ZipInst-Win.mustache
+      content_file_pathname: .templates/.partials/ActionPrefetchZipinst.mustache

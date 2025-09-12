@@ -14,6 +14,9 @@ Process:
       COMPUTE_HASHES: True
 
   - Processor: EndOfCheckPhase
+    Arguments:
+      # this is needed for the bigfix recipes:
+      fixlet_folder: "%RECIPE_CACHE_DIR%"
 
   # get FileVersion from EXE and save to `version` variable
   - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE

@@ -28,7 +28,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
       template_file_path: "Microsoft/WindowsDefenderDefinitions-Win_Update.bes.mustache"
-      content_file_pathname: "%RECIPE_CACHE_DIR%/Update_Windows_Defender_Definitions_%arch%_Windows.bes"
+      content_file_pathname: "%fixlet_folder%/Update_Windows_Defender_Definitions_%arch%_Windows.bes"
 
   - Processor: com.github.jgstew.SharedProcessors/BESImport
 

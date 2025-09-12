@@ -1,0 +1,36 @@
+---
+Description: Generates BigFix Task for latest Windows Defender Definitions
+Identifier: com.github.jgstew.bigfix.WindowsDefenderDefinitions-Win-x86
+Input:
+  NAME: WindowsDefenderDefinitions
+  arch_relevance: '"i386" = architecture of operating system'
+  # ("arm64" = architecture of operating system) OR (x64 of operating system AND (/* Include only Windows ARM Systems */ exists (it as string) whose(it as uppercase contains "ARM") of values "PROCESSOR_ARCHITECTURE" of keys "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" of registries))
+MinimumVersion: '2.3'
+ParentRecipe: com.github.jgstew.download.WindowsDefenderDefinitions-Win-x86
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+    Arguments:
+      prefetch_url: "%download_url%"
+
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+    Arguments:
+      template_version: "%version%"
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "arch"
+      append_value: "%arch%"
+
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend
+    Arguments:
+      append_key: "arch_relevance"
+      append_value: "%arch_relevance%"
+
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: "Microsoft/WindowsDefenderDefinitions-Win_Update.bes.mustache"
+      content_file_pathname: "%RECIPE_CACHE_DIR%/Update_Windows_Defender_Definitions_%arch%_Windows.bes"
+
+  - Processor: com.github.jgstew.SharedProcessors/BESImport
+
+  # - Processor: com.github.jgstew.SharedProcessors/BigFixActioner

@@ -1,0 +1,22 @@
+---
+Description: Downloads the latest Microsoft Windows Defender Definitions
+Identifier: com.github.jgstew.download.WindowsDefenderDefinitions-Win-x64
+Input:
+  NAME: WindowsDefenderDefinitions
+  arch: x64
+MinimumVersion: '2.3'
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      # https://www.microsoft.com/en-us/wdsi/defenderupdates
+      url: https://go.microsoft.com/fwlink/?LinkID=121721&arch=%arch%
+      filename: mpam-fe.exe
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase
+
+  # get FileVersion from EXE and save to `version` variable
+  - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE
+
+  # validate file signature and get signature date as SourceReleaseDate:
+  - Processor: com.github.jgstew.SharedProcessors/FileExeVerifySignature

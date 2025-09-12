@@ -1,0 +1,10 @@
+---
+Description: Downloads the latest Microsoft Windows Defender Definitions
+Identifier: com.github.jgstew.download.WindowsDefenderDefinitions-Win-arm64
+Input:
+  NAME: WindowsDefenderDefinitions
+  arch: arm64
+MinimumVersion: '2.3'
+ParentRecipe: com.github.jgstew.download.WindowsDefenderDefinitions-Win-x64
+Process:
+  - Processor: EndOfCheckPhase

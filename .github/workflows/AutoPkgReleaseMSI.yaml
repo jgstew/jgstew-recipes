@@ -50,7 +50,7 @@ jobs:
           echo ${{ secrets.GITHUB_TOKEN }} > ".autopkg_gh_token"
 
       - name: checkout this repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: setup-autopkg local action
         uses: ./.github/actions/setup-autopkg

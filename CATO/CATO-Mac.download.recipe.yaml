@@ -1,0 +1,33 @@
+# https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
+---
+Description: Downloads the latest version of CATO
+# based upon https://github.com/autopkg/moofit-recipes/blob/master/Adobe/RemoteUpdateManager.download.recipe
+Identifier: com.github.jgstew.download.CATO-Mac
+Input:
+  NAME: "CATO"
+  filename: CatoClient.pkg
+MinimumVersion: "2.3"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://clientdownload.catonetworks.com/public/clients/CatoClient.pkg
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase
+    Arguments:
+      prefetch_url: "%download_url%"
+
+  # get SourceReleaseDate from HTTP `Last-Modified` header:
+  - Processor: com.github.jgstew.SharedProcessors/DateTimeFromString
+    Arguments:
+      # parse last_modified header info from URLDownloaderPython
+      datetime_string: "%last_modified%"
+      datetime_strptime: "%a, %d %b %Y %H:%M:%S %Z"
+      datetime_strftime: "%Y-%m-%d"
+      datetime_parsed_name: SourceReleaseDate
+
+  - Processor: com.github.jgstew.SharedProcessors/TextSearcher
+    Arguments:
+      input_string: "%download_url%"
+      # example: https://clients.catonetworks.com/macos/5.10.6.6895/CatoClient.pkg
+      re_pattern: 'macos/(?P<version>\d+(\.\d+)+)/'

@@ -1,7 +1,5 @@
-# https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
 ---
 Description: Downloads the latest version of CATO
-# based upon https://github.com/autopkg/moofit-recipes/blob/master/Adobe/RemoteUpdateManager.download.recipe
 Identifier: com.github.jgstew.download.CATO-Mac
 Input:
   NAME: "CATO"

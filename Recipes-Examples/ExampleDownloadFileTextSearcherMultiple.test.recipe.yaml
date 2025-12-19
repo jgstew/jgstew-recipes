@@ -1,0 +1,40 @@
+---
+Description: Example download a webpage with URLDownloaderPython and search it multiple times with FileTextSearcher.
+Identifier: com.github.jgstew.download.ExampleDownloadFileTextSearcher
+Input:
+  # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"
+  NAME: "ExampleDownloadFileTextSearcher"
+MinimumVersion: "2.3"
+Process:
+  # `SharedUtilityMethods` must come first
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+  # NOTE: every download recipe is going to be a bit different depending on the software
+  #         that said, there a few common cases to use as examples.
+
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      # the url used to download is from re_pattern result from `(?P<url>)`
+      url: https://www.virtualbox.org/wiki/Downloads
+      filename: Downloads.html
+      download_version: ""
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
+    Arguments:
+      # example match `https://download.virtualbox.org/virtualbox/6.1.34/VirtualBox-6.1.34a-150636-Win.exe`
+      search_pattern: 'virtualbox/(\d+(?:\.\d+)+)/VirtualBox-'
+      search_path: "%RECIPE_CACHE_DIR%/downloads"
+      search_extension: ".html"
+      file_search_results_var: "version"
+      first_result_only: True
+
+  - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
+    Arguments:
+      # example match `https://download.virtualbox.org/virtualbox/6.1.34/VirtualBox-6.1.34a-150636-Win.exe`
+      search_pattern: 'https://download.virtualbox.org/virtualbox/%version%/VirtualBox-.+?-Win.exe'
+      search_path: "%RECIPE_CACHE_DIR%/downloads"
+      search_extension: ".html"
+      file_search_results_var: "url"
+      first_result_only: True

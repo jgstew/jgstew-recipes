@@ -8,14 +8,19 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/URLTextSearcherArray
     Arguments:
       url: https://support.bigfix.com/bes/release/index.html
-      re_pattern: '>(?P<version>\d+\.\d+\.\d+\.\d+)<'
+      re_pattern: '>(?P<version>10\.\d+\.\d+\.\d+)<'
+
   - Processor: com.github.jgstew.SharedProcessors/VersionMaximumArray
+
   - Processor: com.github.jgstew.SharedProcessors/VersionGetMajorMinor
     Arguments:
       separator_string: ""
+
   - Processor: URLDownloaderPython
     Arguments:
+      # https://software.bigfix.com/download/bes/100/BESAgent-10.0.15.70-BigFix_MacOSX10.14.pkg
       url: https://software.bigfix.com/download/bes/%version_major_minor%/BESAgent-%version_maximum%-BigFix_MacOSX10.14.pkg
       download_version: "%version_maximum%"
       COMPUTE_HASHES: True
+
   - Processor: EndOfCheckPhase

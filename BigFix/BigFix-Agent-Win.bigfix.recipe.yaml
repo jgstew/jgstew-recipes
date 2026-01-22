@@ -6,7 +6,6 @@ Input:
 MinimumVersion: '2.3'
 ParentRecipe: com.github.jgstew.download.BigFix-Agent-Win
 Process:
-  #- Processor: com.github.jgstew.SharedProcessors/FileHasher
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
   - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
     Arguments:

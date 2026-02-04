@@ -10,6 +10,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
+      # template_partials_path: "./ZZZ-Nonexistent-Path"
       template_file_path: "./BigFix/BigFix-Agent-Windows-Update.bes.mustashe"
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%-BigFix-Win.bes"
       template_dictionary:

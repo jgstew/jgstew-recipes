@@ -92,9 +92,37 @@ class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
             "template_partials_path", ".templates/.partials"
         )
 
+        if not template_partials_path or not os.path.isdir(template_partials_path):
+            self.output(
+                f"WARNING: Template Partials Path does not exist (this might be expected if not using them): {template_partials_path}",
+                1,
+            )
+        else:
+            self.output(
+                f"Template Partials folder found: {template_partials_path}",
+                2,
+            )
+
+            # if verbosity >= 2, enumerate template partials:
+            if int(self.env.get("verbose", 0)) >= 2:
+                num_parials = 0
+                for root, _, files in os.walk(template_partials_path):
+                    for file in files:
+                        # if file ends in .mustache
+                        if file.endswith(".mustache"):
+                            self.output(
+                                f"Template Partial found: {os.path.join(root, file)}", 4
+                            )
+                            num_parials += 1
+                self.output(f"Total Template Partials found: {num_parials}", 2)
+
+        self.output(
+            f"Full Template Partials path: {os.path.abspath(template_partials_path)}", 3
+        )
+
         # template_file_path still missing, but required
         if not template_file_path:
-            raise ValueError(
+            raise ProcessorError(
                 "`template_file_path` not in template_dict and not passed into function"
             )
 

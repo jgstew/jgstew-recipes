@@ -88,6 +88,7 @@ wait cmd /C "{parameter "folder_path"}\run_sqlcmd.bat"
 
 continue if{ exists locked lines containing " rows affected)" of files "sqlcmd_out.txt" of folders (parameter "folder_path")}
 
+exit { sums of (it as integer) of preceding texts of lasts " rows affected)" of following texts of firsts "(" of locked lines containing " rows affected)" of files "sqlcmd_out.txt" of folders (parameter "folder_path") }
 // end]]></ActionScript>
 			<SuccessCriteria Option="RunToCompletion"></SuccessCriteria>
 		</DefaultAction>

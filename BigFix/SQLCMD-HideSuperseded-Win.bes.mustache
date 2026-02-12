@@ -86,8 +86,10 @@ move __createfile "{parameter "folder_path"}\run_sqlcmd.bat"
 
 wait cmd /C "{parameter "folder_path"}\run_sqlcmd.bat"
 
+continue if{ exists locked lines containing " rows affected)" of files "sqlcmd_out.txt" of folders (parameter "folder_path")}
+
 // end]]></ActionScript>
-			<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
+			<SuccessCriteria Option="RunToCompletion"></SuccessCriteria>
 		</DefaultAction>
     </{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
 </BES>

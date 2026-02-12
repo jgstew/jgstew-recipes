@@ -25,7 +25,7 @@ jobs:
           cd ~
           echo ${{ secrets.GITHUB_TOKEN }} > ".autopkg_gh_token"
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       # TODO: switch to using https://github.com/autopkg/setup-autopkg-actions
       - name: setup-autopkg local action

@@ -75,7 +75,7 @@ END_OF_FILE
 
 move __createfile "{parameter "folder_path"}\HideSuperseded.sql"
 
-dos __Download\sqlcmd -S (local) -d BFEnterprise -E -i "{parameter "folder_path"}\HideSuperseded.sql" >> __Download\sqlcmd_out.txt
+dos "{parameter "sqlcmd_path"}" -S (local) -d BFEnterprise -E -i "{parameter "folder_path"}\HideSuperseded.sql" >> __Download\sqlcmd_out.txt
 
 // end]]></ActionScript>
 			<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>

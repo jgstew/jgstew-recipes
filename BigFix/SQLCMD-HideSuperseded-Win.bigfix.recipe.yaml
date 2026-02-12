@@ -4,9 +4,9 @@ Identifier: com.github.jgstew.bigfix.SQLCMD-HideSuperseded-Win
 Input:
   NAME: SQLCMD-HideSuperseded
 MinimumVersion: '2.3'
-ParentRecipe: com.github.jgstew.download.go-sqlcmd-Win
+# ParentRecipe: com.github.jgstew.download.go-sqlcmd-Win
 Process:
-  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+  # - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
 
   - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
 

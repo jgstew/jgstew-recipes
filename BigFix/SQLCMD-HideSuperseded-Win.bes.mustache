@@ -40,6 +40,7 @@ parameter "folder_path" = "{ (it & "\__Download") of pathname of client folder o
 delete __createfile
 delete "{parameter "folder_path"}\HideSuperseded.sql"
 
+// FROM: https://github.com/jgstew/tools/blob/master/SQL/BigFix_FixletsExternal_Superseded_StoredProcedureHide.sql
 createfile until END_OF_FILE
 /****** Call Stored Procedure to hide all Superseded Content with no open actions or relevant devices ******/
 DECLARE @CurrentSiteID INT;

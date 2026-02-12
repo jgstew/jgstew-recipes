@@ -38,7 +38,7 @@ parameter "sqlcmd_path" = "{ tuple string items 0 of concatenations ", " of path
 parameter "folder_path" = "{ (it & "\__Download") of pathname of client folder of current site | "C:\Windows\Temp"}"
 
 delete __createfile
-delete __Download\HideSuperseded.sql
+delete "{parameter "folder_path"}\HideSuperseded.sql"
 
 createfile until END_OF_FILE
 /****** SiteID, FixletID of the combined results of fixlets to exclude from hiding ******/
@@ -75,7 +75,16 @@ END_OF_FILE
 
 move __createfile "{parameter "folder_path"}\HideSuperseded.sql"
 
-dos "{parameter "sqlcmd_path"}" -S (local) -d BFEnterprise -E -i "{parameter "folder_path"}\HideSuperseded.sql" >> __Download\sqlcmd_out.txt
+delete __createfile
+delete "{parameter "folder_path"}\run_sqlcmd.bat"
+
+createfile until END_OF_FILE
+"{parameter "sqlcmd_path"}" -S (local) -d BFEnterprise -E -i "{parameter "folder_path"}\HideSuperseded.sql" > "{parameter "folder_path"}\sqlcmd_out.txt"
+END_OF_FILE
+
+move __createfile "{parameter "folder_path"}\run_sqlcmd.bat"
+
+wait cmd /C "{parameter "folder_path"}\run_sqlcmd.bat"
 
 // end]]></ActionScript>
 			<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>

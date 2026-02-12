@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+		<Title>RUN: SQLCMD - {{version}} - Hide Superseded Fixlets - Windows</Title>
+		<Description><![CDATA[
+            This will run SQLCMD on a root server or the MSSQL server where the root server db is hosted. The SYSTEM account must have access to MSSQL.
+        ]]></Description>
+		<Relevance>/* Windows Only */ windows of operating system</Relevance>
+		<Relevance><![CDATA[/* Windows XP or Higher */ version of operating system >= "5.1"]]></Relevance>
+		<Relevance><![CDATA[/* Exists MSSQL Server */ exists services "MSSQLSERVER"]]></Relevance>
+		<Category></Category>
+		<DownloadSize>{{DownloadSize}}{{^DownloadSize}}0{{/DownloadSize}}</DownloadSize>
+		<Source>Internal</Source>
+		<SourceID>jgstew</SourceID>
+		<SourceReleaseDate>{{SourceReleaseDate}}</SourceReleaseDate>
+      <SourceSeverity><![CDATA[{{{SourceSeverity}}}]]></SourceSeverity>
+		<CVENames><![CDATA[{{{CVENames}}}]]></CVENames>
+		<SANSID><![CDATA[{{{SANSID}}}]]></SANSID>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>{{x-fixlet-modification-time}}</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to deploy this action.</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[
+// Download SQLCMD
+{{{prefetch}}}
+
+{{>ActionPrefetchUnzipExe}}
+
+parameter "folder_path" = "{ (it & "\__Download") of pathname of client folder of current site | "C:\Windows\Temp"}"
+
+// put files in place
+override wait
+hidden=true
+completion=job
+wait __Download\unzip.exe -o "{parameter "folder_path"}\sqlcmd-windows-amd64.zip" -d "{parameter "folder_path"}"
+
+delete __createfile
+delete __Download\HideSuperseded.sql
+
+createfile until END_OF_FILE
+/****** SiteID, FixletID of the combined results of fixlets to exclude from hiding ******/
+WITH CombinedFixletsExclude AS (
+
+-- Fixlets that have at least 1 relevant computer
+SELECT DISTINCT [SiteID]
+	  ,[ID] As FixletID
+FROM [BFEnterprise].[dbo].[FIXLETRESULTS]
+WHERE [IsRelevant] = 1
+
+UNION
+
+-- Fixlets that have at least 1 open action
+SELECT [SourceSiteID] As SiteID
+	  ,[SourceContentID] As FixletID
+FROM [BFEnterprise].[dbo].[ACTIONS]
+WHERE [SourceSiteID] is not NULL
+  AND [IsStopped] = 0
+  AND [IsDeleted] = 0
+
+UNION
+
+-- Fixlets that already have an entry in the visibility table
+SELECT [SiteID]
+      ,[FixletID]
+  FROM [BFEnterprise].[dbo].[FIXLET_VISIBILITY]
+
+)
+
+SELECT * FROM CombinedFixletsExclude
+ORDER BY SiteID, FixletID;
+END_OF_FILE
+
+move __createfile "{parameter "folder_path"}\HideSuperseded.sql"
+
+dos __Download\sqlcmd -S (local) -d BFEnterprise -E -i "{parameter "folder_path"}\HideSuperseded.sql" >> __Download\sqlcmd_out.txt
+
+// end]]></ActionScript>
+			<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
+		</DefaultAction>
+    </{{TypeTaskOrFixlet}}{{^TypeTaskOrFixlet}}Task{{/TypeTaskOrFixlet}}>
+</BES>

@@ -1,0 +1,18 @@
+---
+Description: Downloads the latest go-sqlcmd for Windows
+Identifier: com.github.jgstew.download.go-sqlcmd-Win
+Input:
+  NAME: go-sqlcmd
+MinimumVersion: '2.3'
+Process:
+  - Processor: GitHubReleasesInfoProvider
+    Arguments:
+      github_repo: microsoft/go-sqlcmd
+      # example: sqlcmd-windows-amd64.zip
+      asset_regex: sqlcmd-windows-amd64.zip
+
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      COMPUTE_HASHES: True
+
+  - Processor: EndOfCheckPhase

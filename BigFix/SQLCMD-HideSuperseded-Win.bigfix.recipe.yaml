@@ -1,0 +1,18 @@
+---
+Description: Generates a BigFix Task to run SQLCMD for hiding Superseded Fixlets
+Identifier: com.github.jgstew.bigfix.SQLCMD-HideSuperseded-Win
+Input:
+  NAME: SQLCMD-HideSuperseded
+MinimumVersion: '2.3'
+ParentRecipe: com.github.jgstew.download.go-sqlcmd-Win
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
+
+  - Processor: com.github.jgstew.SharedProcessors/BigFixSetupTemplateDictionary
+
+  - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
+    Arguments:
+      template_file_path: ./BigFix/SQLCMD-HideSuperseded-Win.bes.mustache
+      content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%.bes"
+
+  - Processor: com.github.jgstew.SharedProcessors/BESImport

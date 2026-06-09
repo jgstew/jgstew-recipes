@@ -1,5 +1,5 @@
 ---
-Description: Test FileExeVerifySignature Processor Check
+Description: Test FileExeVerifySignature Processor
 Identifier: com.github.jgstew.test.FileExeVerifySignature
 Input:
   NAME: FileExeVerifySignatureTest

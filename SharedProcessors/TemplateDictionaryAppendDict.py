@@ -7,7 +7,6 @@
 #
 """See docstring for TemplateDictionaryAppendDict class"""
 
-
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
@@ -17,7 +16,7 @@ __all__ = ["TemplateDictionaryAppendDict"]
 
 
 class TemplateDictionaryAppendDict(Processor):  # pylint: disable=invalid-name
-    """Takes input dictionary and adds to it"""
+    """Merges all key-value pairs from one dictionary into a named Python dictionary in the environment."""
 
     description = __doc__
     input_variables = {

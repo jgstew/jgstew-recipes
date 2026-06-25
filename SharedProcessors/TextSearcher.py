@@ -31,10 +31,7 @@ __all__ = ["TextSearcher"]
 
 
 class TextSearcher(Processor):
-    """Parses a string and performs a regular expression match
-    on the text.
-
-    Requires version 1.4."""
+    """Searches a string with a regex pattern, returning the last matched group and all named capture groups as separate outputs."""
 
     input_variables = {
         "re_pattern": {

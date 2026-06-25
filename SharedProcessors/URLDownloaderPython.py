@@ -25,7 +25,7 @@ __all__ = ["URLDownloaderPython"]
 
 
 class URLDownloaderPython(URLDownloader):
-    """This is meant to be a pure python replacement for URLDownloader"""
+    """Downloads files over HTTP/HTTPS in pure Python, skipping unchanged files by comparing etag and Last-Modified headers, and optionally computing file hashes. This is a replacement for URLDownloader that does not require curl, and is cross platform."""
 
     description = __doc__
     input_variables = {

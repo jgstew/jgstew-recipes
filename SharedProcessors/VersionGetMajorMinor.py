@@ -21,7 +21,7 @@ def get_version_major_minor(vstring, separator_string="."):
 
 
 class VersionGetMajorMinor(Processor):  # pylint: disable=too-few-public-methods
-    """Gets the major.minor string from the version."""
+    """Extracts the major and minor version components from a version string with a configurable separator."""
 
     description = __doc__
     input_variables = {

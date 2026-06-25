@@ -1,5 +1,6 @@
 #!/usr/bin/python
 """Extracts the file using the 7z utility."""
+
 import os
 import subprocess
 
@@ -29,7 +30,7 @@ DEFAULT_7ZIP_PATHS = [
 
 
 class ExtractorSevenZip(Processor):
-    description = "Extracts the archive using 7z."
+    description = "Extracts an archive using the 7z executable, with support for path preservation, include/exclude patterns, and custom arguments."
     input_variables = {
         "file_path": {
             "required": False,

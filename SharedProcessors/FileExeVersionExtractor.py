@@ -37,7 +37,7 @@ DEFAULT_7ZIP_PATHS = [
 
 
 class FileExeVersionExtractor(SharedUtilityMethods):
-    """Gets the EXE version from file."""
+    """Extracts a version string from an EXE or MSI by listing its contents with 7z and searching for a version pattern."""
 
     description = __doc__
     input_variables = {

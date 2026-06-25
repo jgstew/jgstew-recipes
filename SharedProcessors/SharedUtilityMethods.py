@@ -16,7 +16,7 @@ __all__ = ["SharedUtilityMethods"]
 
 
 class SharedUtilityMethods(Processor):
-    """Provides shared class methods."""
+    """Base processor class providing shared utility methods for file verification, executable checking, and BigFix configuration loading."""
 
     input_variables = {}
     output_variables = {}

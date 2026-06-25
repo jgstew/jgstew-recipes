@@ -16,7 +16,7 @@ __all__ = ["FileHasher"]
 
 
 class FileHasher(Processor):  # pylint: disable=invalid-name
-    """Hashes file at pathname and returns hash metadata."""
+    """Computes SHA1, SHA256, and MD5 hashes and the byte size of a file in a single pass."""
 
     description = __doc__
     input_variables = {

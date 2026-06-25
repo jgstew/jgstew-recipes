@@ -16,7 +16,7 @@ __all__ = ["FileCopyNewest"]
 
 
 class FileCopyNewest(Processor):  # pylint: disable=invalid-name
-    """create file or update its modification time"""
+    """Copies the newer of two files over the older one based on modification time."""
 
     description = __doc__
     input_variables = {

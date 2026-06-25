@@ -18,7 +18,7 @@ __all__ = ["Sleep"]
 
 
 class Sleep(Processor):  # pylint: disable=invalid-name
-    """Does nothing but delay autopkg for x seconds"""
+    """Pauses AutoPkg recipe execution for a specified number of seconds."""
 
     description = __doc__
     input_variables = {

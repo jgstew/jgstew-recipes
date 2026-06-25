@@ -14,7 +14,7 @@ __all__ = ["FileGetBase64"]
 
 
 class FileGetBase64(Processor):  # pylint: disable=too-few-public-methods
-    """Gets the file contents as base64."""
+    """Encodes a file's contents as base64, enforcing a configurable maximum file size to prevent embedding oversized files."""
 
     description = __doc__
     input_variables = {

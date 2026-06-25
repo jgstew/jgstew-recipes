@@ -15,7 +15,7 @@ __all__ = ["FileExeVerifySignature"]
 
 class FileExeVerifySignature(Processor):  # pylint: disable=too-few-public-methods
     """
-    validates windows binary signature and gets the signature date if available
+    Validates a Windows PE file's Authenticode signature and extracts the signing date and certificate details.
 
     This is a cross platform alternative to `autopkglib/SignToolVerifier`
 

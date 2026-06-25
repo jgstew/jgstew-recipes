@@ -20,7 +20,7 @@ __all__ = ["FileImageSvgToPng"]
 
 
 class FileImageSvgToPng(Processor):  # pylint: disable=too-few-public-methods
-    """Convert SVG image to PNG."""
+    """Converts an SVG image to PNG format using cairosvg, with optional output dimensions."""
 
     description = __doc__
     input_variables = {

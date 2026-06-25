@@ -1,5 +1,6 @@
 #!/usr/bin/python
 """Creates archive using the 7z utility."""
+
 import os
 import subprocess
 
@@ -29,7 +30,7 @@ DEFAULT_7ZIP_PATHS = [
 
 
 class SevenZip(Processor):
-    description = "Extracts the archive using 7z."
+    description = "Runs the 7z executable with custom arguments, optionally changing the working directory, for archiving or extraction tasks."
     input_variables = {
         "sevenzip_args": {
             "required": True,

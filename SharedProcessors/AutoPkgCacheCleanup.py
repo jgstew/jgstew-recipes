@@ -29,7 +29,7 @@ def get_file_age(file_path):
 
 
 class AutoPkgCacheCleanup(Processor):  # pylint: disable=invalid-name
-    """checks that assert_string is within input_string"""
+    """Deletes old, large, or temporary files from the AutoPkg download cache to free disk space."""
 
     description = __doc__
     input_variables = {

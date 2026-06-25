@@ -32,7 +32,7 @@ DEFAULT_input_keys_array = [
 
 
 class TemplateDictionaryAppendInput(Processor):  # pylint: disable=invalid-name
-    """Adds Input ENV Vars to Template Dictionary"""
+    """Copies AutoPkg Input variables into a template dictionary, matching by explicit key array or by key prefix."""
 
     description = __doc__
     input_variables = {
@@ -68,12 +68,10 @@ class TemplateDictionaryAppendInput(Processor):  # pylint: disable=invalid-name
         input_keys_array = self.env.get("input_keys_array", DEFAULT_input_keys_array)
 
         if not isinstance(input_keys_array, (list, tuple)):
-            self.output(
-                f"""
+            self.output(f"""
 WARNING: input_keys_array was not a list, setting default value:
 {DEFAULT_input_keys_array}
-                """
-            )
+                """)
             input_keys_array = DEFAULT_input_keys_array
 
         self.output(f"dictionary_to_append: {dictionary_to_append}", 2)

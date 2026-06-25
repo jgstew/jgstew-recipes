@@ -32,7 +32,7 @@ __all__ = ["ContentFromTemplate"]
 
 
 class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
-    """Takes input dictionary and generates content from a Mustache Template"""
+    """Renders a Mustache template file using a dictionary and saves the result to disk, with optional BES XML validation for .bes files."""
 
     description = __doc__
     input_variables = {

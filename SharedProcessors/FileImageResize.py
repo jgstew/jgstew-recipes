@@ -17,7 +17,7 @@ __all__ = ["FileImageResize"]
 
 
 class FileImageResize(Processor):  # pylint: disable=too-few-public-methods
-    """Gets the property the MSI file."""
+    """Resizes an image to fit within a maximum pixel dimension while preserving aspect ratio."""
 
     description = __doc__
     input_variables = {

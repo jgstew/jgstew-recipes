@@ -16,7 +16,7 @@ __all__ = ["GetRecipeParentFolderName"]
 
 
 class GetRecipeParentFolderName(Processor):  # pylint: disable=invalid-name
-    """get parent folder name of current recipe"""
+    """Stores the parent folder name of the current recipe in an environment variable, typically used to infer the software vendor name."""
 
     description = __doc__
     input_variables = {

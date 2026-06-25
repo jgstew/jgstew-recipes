@@ -28,7 +28,7 @@ __all__ = ["BigFixPrefetchItem"]
 
 
 class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
-    """Takes hash info and returns a bigfix prefetch"""
+    """Assembles a BigFix prefetch statement or block from file hash values and a download URL."""
 
     description = __doc__
     input_variables = {

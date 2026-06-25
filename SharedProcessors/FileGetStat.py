@@ -27,9 +27,7 @@ def timestamp_to_string(timestamp, datetime_format):
 
 
 class FileGetStat(Processor):  # pylint: disable=too-few-public-methods
-    """Gets the file magic type and mime type.
-    See related: https://github.com/jgstew/tools/blob/master/Python/file_get_type_magic.py
-    """
+    """Gets file statistics including byte size, absolute path, and timestamps (mtime, ctime, atime)."""
 
     description = __doc__
     input_variables = {

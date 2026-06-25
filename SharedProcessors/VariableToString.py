@@ -13,7 +13,7 @@ __all__ = ["VariableToString"]
 
 
 class VariableToString(Processor):
-    """Reads a variable and returns it as a string."""
+    """Reads any environment variable and stores its string representation in a named output variable."""
 
     description = __doc__
 

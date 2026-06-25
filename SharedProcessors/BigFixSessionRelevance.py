@@ -11,7 +11,7 @@ __all__ = ["BigFixSessionRelevance"]
 
 
 class BigFixSessionRelevance(SharedUtilityMethods):
-    """AutoPkg Processor to get BigFix Session Relevance Results"""
+    """Runs a BigFix Session Relevance query against a connected BigFix server and returns the results."""
 
     description = __doc__
     input_variables = {

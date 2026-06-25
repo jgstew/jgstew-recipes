@@ -14,9 +14,7 @@ __all__ = ["FileMsiGetInfoOLE"]
 
 
 class FileMsiGetInfoOLE(Processor):  # pylint: disable=too-few-public-methods
-    """Get info from an OLE file (MSI)
-    See related: https://github.com/jgstew/tools/blob/master/Python/file_msi_get_info_ole.py
-    """
+    """Extracts OLE metadata from an MSI file, including creation time, last saved time, and a custom property value."""
 
     description = __doc__
     input_variables = {

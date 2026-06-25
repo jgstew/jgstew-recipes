@@ -18,7 +18,7 @@ __all__ = ["GetCurrentPlatformInfo"]
 
 
 class GetCurrentPlatformInfo(Processor):  # pylint: disable=invalid-name
-    """get platform info for system this is running on"""
+    """Collects detailed platform information (OS, architecture, Python version) using Python's sys and platform modules."""
 
     description = __doc__
     input_variables = {

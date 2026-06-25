@@ -23,7 +23,7 @@ __all__ = ["TextSubstitutionRegEx"]
 
 
 class TextSubstitutionRegEx(Processor):
-    """Parses a string using regular expression and substitute."""
+    """Performs regex-based substitution on an input string and stores the result in a named output variable."""
 
     input_variables = {
         "re_pattern": {

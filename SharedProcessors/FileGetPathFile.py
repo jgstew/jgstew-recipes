@@ -15,7 +15,7 @@ __all__ = ["FileGetPathFile"]
 
 
 class FileGetPathFile(Processor):  # pylint: disable=too-few-public-methods
-    """Gets the first executable in the list."""
+    """Locates a named command on the system PATH using shutil.which and stores the full path in a named environment variable."""
 
     description = __doc__
     input_variables = {

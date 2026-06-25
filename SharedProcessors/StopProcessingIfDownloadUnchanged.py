@@ -13,7 +13,7 @@ __all__ = ["StopProcessingIfDownloadUnchanged"]
 
 
 class StopProcessingIfDownloadUnchanged(Processor):  # pylint: disable=invalid-name
-    """Stops processing if download unchanged in pure python"""
+    """Halts recipe execution when a watched environment variable indicates the download has not changed since the last run."""
 
     description = __doc__
     input_variables = {

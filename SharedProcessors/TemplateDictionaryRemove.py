@@ -7,7 +7,6 @@
 #
 """See docstring for TemplateDictionaryRemove class"""
 
-
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
@@ -17,7 +16,7 @@ __all__ = ["TemplateDictionaryRemove"]
 
 
 class TemplateDictionaryRemove(Processor):  # pylint: disable=invalid-name
-    """Removes a key from the input dictionary"""
+    """Removes a specified key from a named Python dictionary in the environment."""
 
     description = __doc__
     input_variables = {

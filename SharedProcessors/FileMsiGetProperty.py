@@ -22,18 +22,7 @@ __all__ = ["FileMsiGetProperty"]
 
 
 class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
-    """Get properties from MSI files using 2 different methods.
-
-    Use `msilib` on Windows
-    Use `msiinfo` binary on non-Windows
-    - Ubuntu: sudo apt-get install msitools -y
-    - MacOS:  brew install msitools
-
-    See predecessors:
-    - https://github.com/jgstew/jgstew-recipes/blob/main/SharedProcessors/WinGetPropertyMSI.py
-    - https://github.com/autopkg/hansen-m-recipes/blob/master/SharedProcessors/MSIInfoVersionProvider.py
-    - https://github.com/autopkg/hansen-m-recipes/blob/master/SharedProcessors/MSIVersionProvider.py
-    """
+    """Extracts properties from an MSI file using msilib on Windows or the msiinfo binary on Linux and macOS."""
 
     description = __doc__
     input_variables = {
@@ -196,13 +185,11 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
         msiinfo_path = self.get_msiinfo_path()
 
         if not msiinfo_path:
-            raise ProcessorError(
-                """
+            raise ProcessorError("""
                 msiinfo binary not found!
                 Install on MacOS with `brew install msitools`
                 Install on Ubuntu with `sudo apt-get install msitools -y`
-                """
-            )
+                """)
 
         self.output(f"Info: using msiinfo found here: `{msiinfo_path}`", 3)
 

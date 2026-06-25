@@ -22,7 +22,7 @@ __all__ = ["GoogleChromeUpdateInfoProvider"]
 
 
 class GoogleChromeUpdateInfoProvider(Processor):
-    """Gets a static url for latest Chrome Download"""
+    """Queries Google's Omaha update service to find the latest Chrome download URL, SHA256 hash, and file size for a given channel and platform."""
 
     description = (
         "Provides download information for the latest version of Google Chrome."

@@ -17,7 +17,7 @@ __all__ = ["ClearFileXattr"]
 
 
 class ClearFileXattr(SharedUtilityMethods):  # pylint: disable=invalid-name
-    """Clear the etag xattr from file"""
+    """Removes a specified extended attribute from a file, typically used to clear the etag and force a fresh download."""
 
     description = __doc__
     input_variables = {

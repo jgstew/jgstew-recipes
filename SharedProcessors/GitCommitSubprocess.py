@@ -9,7 +9,7 @@ __all__ = ["GitCommitSubprocess"]
 
 
 class GitCommitSubprocess(Processor):
-    """An AutoPkg processor to commit changed files to a Git repository."""
+    """Stages all changes in a Git repository, commits them with a message, and optionally pushes the commit to a remote."""
 
     input_variables = {
         "repo_path": {

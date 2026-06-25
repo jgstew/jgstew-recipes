@@ -4,7 +4,6 @@
 #
 """See docstring for FileXmlXpath class"""
 
-
 import lxml
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
@@ -15,7 +14,7 @@ __all__ = ["FileXmlXpath"]
 
 
 class FileXmlXpath(Processor):  # pylint: disable=invalid-name
-    """create file or update its modification time"""
+    """Evaluates an XPath expression against an XML file and returns the matching values."""
 
     description = __doc__
     input_variables = {

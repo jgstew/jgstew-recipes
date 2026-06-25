@@ -2,6 +2,7 @@
 """
 BESImport.py
 """
+
 from __future__ import absolute_import
 
 import os.path
@@ -25,7 +26,7 @@ __all__ = ["BESImport"]
 
 
 class BESImport(Processor):
-    """AutoPkg Processor to import content to BigFix REST API using besapi wrapper"""
+    """Imports BES XML content to BigFix via REST API, updating existing content when a matching title is found."""
 
     description = __doc__
     input_variables = {

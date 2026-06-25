@@ -41,9 +41,7 @@ def dump_info_pefile(filepath, first_only=True, verbosity=0):
 
 
 class FileExeGetInfoPE(Processor):  # pylint: disable=too-few-public-methods
-    """Get info from a PEFile
-    See related: https://github.com/jgstew/tools/blob/master/Python/file_get_version_exe_pefile.py
-    """
+    """Extracts version and metadata strings (FileVersion, ProductName, CompanyName, etc.) from a Windows PE file using the pefile library."""
 
     description = __doc__
     input_variables = {

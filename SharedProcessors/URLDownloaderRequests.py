@@ -16,8 +16,7 @@ __all__ = ["URLDownloaderRequests"]
 
 
 class URLDownloaderRequests(URLDownloader):
-    """This is meant to be supplemental to URLDownloader or URLDownloaderPython,
-    but use requests to handle sessions / cookies."""
+    """Downloads files using the requests library with persistent session and cookie support, suitable for sites requiring authentication. This is not a full replacement for URLDownloaderPython."""
 
     description = __doc__
     input_variables = {

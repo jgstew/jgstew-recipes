@@ -19,9 +19,7 @@ __all__ = ["FileGetMagicType"]
 
 
 class FileGetMagicType(Processor):  # pylint: disable=too-few-public-methods
-    """Gets the file magic type and mime type.
-    See related: https://github.com/jgstew/tools/blob/master/Python/file_get_type_magic.py
-    """
+    """Determines a file's type using libmagic, returning both the human-readable magic type description and the MIME type."""
 
     description = __doc__
     input_variables = {

@@ -28,7 +28,7 @@ __all__ = ["BigFixSetupTemplateDictionary"]
 
 
 class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
-    """Takes input and generates bigfix content from a Mustache Template"""
+    """Builds a template dictionary populated with file metadata for rendering BigFix Mustache templates."""
 
     description = __doc__
     input_variables = {

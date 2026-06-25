@@ -31,7 +31,7 @@ JQ_BIN_PATHS = [
 
 
 class JsonJq(URLDownloader):  # pylint: disable=invalid-name
-    """create file or update its modification time"""
+    """Evaluates a jq expression against a JSON input string or file and returns the result."""
 
     description = __doc__
     input_variables = {

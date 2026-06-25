@@ -7,7 +7,6 @@
 #
 """See docstring for TemplateDictionaryReadKey class"""
 
-
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
@@ -17,7 +16,7 @@ __all__ = ["TemplateDictionaryReadKey"]
 
 
 class TemplateDictionaryReadKey(Processor):  # pylint: disable=invalid-name
-    """Removes a key from the input dictionary"""
+    """Reads a value from a named key in a Python dictionary and optionally stores it in a named environment variable."""
 
     description = __doc__
     input_variables = {

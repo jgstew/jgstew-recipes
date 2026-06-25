@@ -15,7 +15,7 @@ __all__ = ["FileGetExecutable"]
 
 
 class FileGetExecutable(SharedUtilityMethods):  # pylint: disable=too-few-public-methods
-    """Gets the first executable in the list."""
+    """Searches an ordered list of paths for the first executable file and stores its path in a named environment variable."""
 
     description = __doc__
     input_variables = {

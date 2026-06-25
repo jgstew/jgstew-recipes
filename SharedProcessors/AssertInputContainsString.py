@@ -7,7 +7,6 @@
 #
 """See docstring for AssertInputContainsString class"""
 
-
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
@@ -17,7 +16,7 @@ __all__ = ["AssertInputContainsString"]
 
 
 class AssertInputContainsString(Processor):  # pylint: disable=invalid-name
-    """checks that assert_string is within input_string"""
+    """Asserts that a given substring (assert_string) is contained within a target string (input_string), optionally raising an error on failure."""
 
     description = __doc__
     input_variables = {

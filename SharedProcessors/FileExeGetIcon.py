@@ -14,9 +14,7 @@ __all__ = ["FileExeGetIcon"]
 
 
 class FileExeGetIcon(Processor):  # pylint: disable=too-few-public-methods
-    """Get the icon from a PEFile
-    See related: https://github.com/jgstew/tools/blob/master/Python/file_get_icon_exe_icoextract.py
-    """
+    """Extracts a numbered icon resource from a Windows PE file and saves it as an .ico file using icoextract."""
 
     description = __doc__
     input_variables = {

@@ -16,12 +16,7 @@ __all__ = ["DateTimeFromString"]
 
 
 class DateTimeFromString(Processor):  # pylint: disable=invalid-name
-    """Takes a datetime string, parses it using `strptime`
-     and converts it to a new string using `strftime`
-
-    See Example Test Recipe here:
-    - https://github.com/jgstew/jgstew-recipes/blob/main/Test-Recipes/DateTimeFromString.test.recipe.yaml
-    """
+    """Parses a datetime string with strptime and reformats it using strftime, enabling datetime format conversion."""
 
     description = __doc__
     input_variables = {

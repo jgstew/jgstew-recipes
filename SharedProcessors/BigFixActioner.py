@@ -73,7 +73,7 @@ BES_SourcedFixletAction = """\
 
 
 class BigFixActioner(BESImport):
-    """AutoPkg Processor to create a BigFix action from imported content"""
+    """Creates a BigFix action or offer against a previously imported fixlet or task using the BigFix REST API."""
 
     description = __doc__
     input_variables = {

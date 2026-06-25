@@ -13,7 +13,7 @@ __all__ = ["VersionMaximumArray"]
 
 
 class VersionMaximumArray(Processor):  # pylint: disable=too-few-public-methods
-    """Gets the maximum version string from an array."""
+    """Finds the numerically largest version string from an array, with optional filtering by major.minor prefix."""
 
     description = __doc__
     input_variables = {

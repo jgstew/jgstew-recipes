@@ -4,6 +4,7 @@
 For more advanced extraction with 7zip, see:
 - SharedProcessors/ExtractorSevenZip.py
 """
+
 import os
 import shutil
 import subprocess
@@ -47,7 +48,7 @@ DEFAULT_7ZIP_FORMATS = [
 
 
 class ExtractorShutilUnpack(Processor):
-    """This processor unpacks an archive using shutil.unpack_archive"""
+    """Extracts an archive using Python's shutil, with optional 7z subprocess fallback for unsupported formats."""
 
     description = "Extracts the archive using 7z."
     input_variables = {

@@ -20,7 +20,7 @@ __all__ = ["WinGetPropertyMSI"]
 
 
 class WinGetPropertyMSI(Processor):  # pylint: disable=too-few-public-methods
-    """Gets the property the MSI file."""
+    """Reads a property from an MSI file using Windows msilib. Windows-only; use FileMsiGetProperty for cross-platform support."""
 
     description = __doc__
     input_variables = {

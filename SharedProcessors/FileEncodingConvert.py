@@ -16,7 +16,7 @@ __all__ = ["FileEncodingConvert"]
 
 
 class FileEncodingConvert(Processor):  # pylint: disable=invalid-name
-    """create file or update its modification time"""
+    """Converts a text file from one character encoding to another using Python's codecs module."""
 
     description = __doc__
     input_variables = {

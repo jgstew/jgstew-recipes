@@ -21,7 +21,7 @@ __all__ = ["TextToSpeech"]
 
 
 class TextToSpeech(Processor):  # pylint: disable=invalid-name
-    """checks that assert_string is within input_string"""
+    """Converts a text string to audible speech using platform-native TTS tools (say, spd-say, PowerShell, or pyttsx3)."""
 
     description = __doc__
     input_variables = {

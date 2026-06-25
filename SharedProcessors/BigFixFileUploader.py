@@ -11,9 +11,7 @@ __all__ = ["BigFixFileUploader"]
 
 
 class BigFixFileUploader(SharedUtilityMethods):
-    """AutoPkg Processor to upload file to a BigFix root server Uploads
-
-    https://developer.bigfix.com/rest-api/api/upload.html"""
+    """Uploads a local file to a BigFix root server and returns a prefetch statement for use in BigFix content."""
 
     description = __doc__
     input_variables = {

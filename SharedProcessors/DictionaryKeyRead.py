@@ -13,7 +13,7 @@ __all__ = ["DictionaryKeyRead"]
 
 
 class DictionaryKeyRead(Processor):
-    """Reads a key-value pair from a Python dictionary."""
+    """Reads a value from a named key in a Python dictionary and stores it in a specified environment variable."""
 
     description = __doc__
 

@@ -18,7 +18,7 @@ __all__ = ["FileTextSearcher"]
 
 
 class FileTextSearcher(SharedUtilityMethods):  # pylint: disable=too-few-public-methods
-    """Gets the first executable in the list."""
+    """Searches files or a directory for all regex matches and returns results as a deduplicated, sorted array."""
 
     description = __doc__
     input_variables = {

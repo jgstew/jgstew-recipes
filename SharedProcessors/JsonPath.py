@@ -20,7 +20,7 @@ __all__ = ["JsonPath"]
 
 
 class JsonPath(Processor):  # pylint: disable=invalid-name
-    """create file or update its modification time"""
+    """Evaluates a JSONPath expression against a JSON input string or file and returns the result."""
 
     description = __doc__
     input_variables = {

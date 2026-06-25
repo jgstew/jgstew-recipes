@@ -17,7 +17,7 @@ __all__ = ["FileTouch"]
 
 
 class FileTouch(Processor):  # pylint: disable=invalid-name
-    """create file or update its modification time"""
+    """Creates a file if it does not exist, or updates its modification time, with optional subdirectory creation and time offset."""
 
     description = __doc__
     input_variables = {

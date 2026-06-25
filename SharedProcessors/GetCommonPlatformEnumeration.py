@@ -16,7 +16,7 @@ __all__ = ["GetCommonPlatformEnumeration"]
 
 
 class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
-    """Infer likely CPE from recipe metadata or provided override values"""
+    """Generates a Common Platform Enumeration (CPE) string from recipe metadata or explicit override values."""
 
     description = __doc__
     input_variables = {

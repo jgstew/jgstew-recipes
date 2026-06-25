@@ -12,8 +12,9 @@ Process:
   - Processor: GitHubReleasesInfoProvider
     Arguments:
       github_repo: actions/runner
-      #  actions-runner-win-x64-2.289.2.zip
-      asset_regex: "actions-runner-%OS%-%version%\\.%TYPE%$"
+      # https://github.com/actions/runner/releases/download/v2.335.1/actions-runner-win-x64-2.335.1.zip
+      #  actions-runner-win-x64-2.335.1.zip
+      asset_regex: 'actions-runner-%OS%-.+\.%TYPE%$'
       include_prereleases: False
       # curl_opts: ["--raw"]
 

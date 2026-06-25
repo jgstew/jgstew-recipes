@@ -1,5 +1,5 @@
 ---
-Description: Generates a BigFix Task for running the latest log4j2-scan
+Description: Generates a BigFix Task for running the latest log4j2-scan on Windows 64-bit. Input 64BitOnly restricts task relevance to 64-bit systems when True.
 Identifier: com.github.jgstew.bigfix.log4j2-scan-Win64
 Input:
   # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"

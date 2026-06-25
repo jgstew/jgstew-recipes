@@ -1,5 +1,5 @@
 ---
-Description: Generates a BigFix Task for the latest Chrome-Win
+Description: Generates a BigFix Task for the latest Chrome-Win. Input VendorFolder is the vendor subfolder used to locate the BES mustache template. Input 64BitOnly restricts task relevance to 64-bit systems when True. Input template_file_path overrides the path to the mustache template used to generate BES content.
 Identifier: com.github.jgstew.bigfix.Chrome-Win
 Input:
   # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"

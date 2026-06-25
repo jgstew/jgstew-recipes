@@ -1,5 +1,5 @@
 ---
-Description: Generates a BigFix Task for the local msi file
+Description: Generates a BigFix Task for the local msi file. Input VendorFolder is the vendor subfolder used to locate the BES mustache template. Input template_file_path overrides the path to the mustache template used to generate BES content.
 Identifier: com.github.jgstew.bigfix.msi
 Input:
   # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"

@@ -1,5 +1,5 @@
 ---
-Description: Generates a BigFix Task for running the latest log4j2-scan
+Description: Generates a BigFix Task for running the latest universal log4j2-scan JAR
 Identifier: com.github.jgstew.bigfix.log4j2-scan-Universal
 Input:
   # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"

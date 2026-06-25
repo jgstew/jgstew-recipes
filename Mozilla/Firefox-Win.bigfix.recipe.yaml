@@ -1,6 +1,6 @@
 # https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
 ---
-Description: Creates an choco package for the latest version of Firefox
+Description: Generates a BigFix Task for the latest version of Firefox for Windows. Input product is the Mozilla product string used in the download URL. Input OS is the platform string used in the download URL (e.g. `win64`). Input filename is the output filename for the downloaded installer.
 Identifier: com.github.jgstew.bigfix.Firefox-Win64
 Input:
   NAME: "Firefox"

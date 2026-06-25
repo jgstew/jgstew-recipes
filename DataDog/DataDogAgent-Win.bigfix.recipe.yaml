@@ -1,5 +1,5 @@
 ---
-Description: Generates a BigFix Task for the latest DataDog Agent
+Description: Generates a BigFix Task for the latest DataDog Agent. Input 64BitOnly restricts task relevance to 64-bit systems when True.
 Identifier: com.github.jgstew.bigfix.DataDog-Win
 Input:
   NAME: DataDogAgent-Win

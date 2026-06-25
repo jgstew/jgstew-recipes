@@ -1,5 +1,5 @@
 ---
-Description: Generates BigFix Task for latest Windows Defender Definitions
+Description: Generates BigFix Task for latest Windows Defender Definitions for x64. Input arch_relevance is the BigFix relevance expression used to target the specific CPU architecture.
 Identifier: com.github.jgstew.bigfix.WindowsDefenderDefinitions-Win-x64
 Input:
   NAME: WindowsDefenderDefinitions

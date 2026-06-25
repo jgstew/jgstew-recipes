@@ -1,5 +1,5 @@
 ---
-Description: Generates a BigFix Task for running the latest log4j2-scan
+Description: Generates a BigFix Task for running the latest log4j2-scan on macOS. Input 64BitOnly restricts task relevance to 64-bit systems when True. Input RelevanceOS is the BigFix relevance expression fragment for the target OS. Input TitleOS is the OS name string appended to the BigFix task title.
 Identifier: com.github.jgstew.bigfix.log4j2-scan-Mac
 Input:
   # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"

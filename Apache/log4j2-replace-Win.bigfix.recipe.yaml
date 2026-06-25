@@ -1,5 +1,5 @@
 ---
-Description: Generates a BigFix Task for running the latest log4j2-scan
+Description: Generates a BigFix Task for running the latest log4j2-scan to remediate log4j2. Input BESFileName is the filename (without extension) for the generated BES file.
 Identifier: com.github.jgstew.bigfix.log4j2-bin-Win64
 Input:
   # Name: Short Name of the Software, No spaces, Example: "DBBrowserforSQLite"

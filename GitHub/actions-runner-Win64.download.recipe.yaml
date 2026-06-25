@@ -1,12 +1,10 @@
 ---
-Description: Downloads the latest version of GitHub actions-runner
+Description: Downloads the latest version of GitHub actions-runner. Input TYPE is the archive format (e.g. `zip`). Input OS is the platform string used in the asset filename (e.g. `win-x64`).
 Identifier: com.github.jgstew.download.actions-runner-Win64
 Input:
   NAME: "actions-runner"
   TYPE: "zip"
   OS: win-x64
-  # this will be used as the asset regex pattern, but then replaced by the real version downloaded
-  version: ".*\\.\\d+"
 MinimumVersion: "2.3"
 ParentRecipe: com.github.jgstew.shared.parent-recipe
 Process:

@@ -1,5 +1,5 @@
 ---
-Description: Downloads the latest NVD Data Feeds JSON
+Description: Downloads the latest NVD Data Feeds JSON for the current year (or a specified year). Input TYPE must be `gz` or `zip`. Input YEAR must be 2002 or later; defaults to the current year if not specified.
 # https://nvd.nist.gov/vuln/data-feeds#JSON_FEED
 Identifier: com.github.jgstew.download.NVD-Data-Feeds-JSON-CurrentYear
 Input:

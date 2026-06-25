@@ -1,5 +1,5 @@
 ---
-Description: Downloads the latest version of log4j2-scan
+Description: Downloads the latest universal (cross-platform JAR) version of log4j2-scan. Input TYPE must be `zip`, `7z`, or `tar.gz`. Input OS is the platform suffix in the asset filename (empty string for universal JAR).
 Identifier: com.github.jgstew.download.log4j2-scan-Universal
 Input:
   NAME: "log4j2-scan"

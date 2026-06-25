@@ -1,5 +1,5 @@
 ---
-Description: Downloads the latest version of log4j2-scan
+Description: Downloads the latest version of log4j2-scan for Windows 64-bit. Input TYPE must be `zip`, `7z`, or `tar.gz`. Input OS is the platform suffix in the asset filename (e.g. `-win64`). Input version is a regex pattern to match the release asset version. Input log4j2scan-common-parameters sets default CLI flags passed to log4j2-scan.
 Identifier: com.github.jgstew.download.log4j2-scan-Win64
 Input:
   NAME: "log4j2-scan"

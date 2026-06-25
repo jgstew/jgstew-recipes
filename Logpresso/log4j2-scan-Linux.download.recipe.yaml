@@ -1,5 +1,5 @@
 ---
-Description: Downloads the latest version of log4j2-scan
+Description: Downloads the latest version of log4j2-scan for Linux. Input TYPE must be `zip`, `7z`, or `tar.gz`. Input OS is the platform suffix in the asset filename (e.g. `-linux`).
 Identifier: com.github.jgstew.download.log4j2-scan-Linux
 Input:
   NAME: "log4j2-scan"

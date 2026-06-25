@@ -1,5 +1,5 @@
 ---
-Description: Downloads the latest NVD CPE Dictionary XML
+Description: Downloads the latest NVD CPE Dictionary XML. Input TYPE must be `gz` or `zip`. Input cpe_version must be `2.3` or `2.2`.
 Identifier: com.github.jgstew.download.NVD-CPE-Dictionary-XML
 Input:
   NAME: "NVD-CPE-Dictionary-XML"

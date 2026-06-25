@@ -1,6 +1,6 @@
 # https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US
 ---
-Description: Downloads the latest version of Firefox
+Description: Downloads the latest version of Firefox for Linux. Input product is the Mozilla product string (e.g. `firefox-latest-ssl`). Input OS is the platform string used in the download URL (e.g. `linux64`). Input filename is the output filename for the downloaded file.
 # based upon https://github.com/autopkg/moofit-recipes/blob/master/Adobe/RemoteUpdateManager.download.recipe
 Identifier: com.github.jgstew.download.Firefox-Linux
 Input:

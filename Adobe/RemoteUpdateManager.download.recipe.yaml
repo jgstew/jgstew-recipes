@@ -1,5 +1,5 @@
 ---
-Description: Downloads the latest version of Adobe Remote Update Manager
+Description: Downloads the latest version of Adobe Remote Update Manager. Input TYPE must be `dmg` or `zip`. Input ARCH must be `Win`, `WinARM64`, `MacIntel`, or `AppleSilicon`.
 # based upon https://github.com/autopkg/moofit-recipes/blob/master/Adobe/RemoteUpdateManager.download.recipe
 Identifier: com.github.jgstew.download.AdobeRemoteUpdateManager
 Input:

@@ -1,5 +1,5 @@
 ---
-Description: Downloads the latest version of CATO
+Description: Downloads the latest version of CATO. Input filename is the output filename for the downloaded file.
 Identifier: com.github.jgstew.download.CATO-Mac
 Input:
   NAME: "CATO"

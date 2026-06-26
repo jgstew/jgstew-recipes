@@ -34,7 +34,7 @@ class VersionMaximumArray(Processor):  # pylint: disable=too-few-public-methods
     }
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
 
         # Get `version_array` else `match`
         version_array = self.env.get("version_array", self.env.get("match"))

@@ -59,7 +59,7 @@ class TemplateDictionaryAppendInput(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
 
         # get the current dictionary
         dictionary_name = self.env.get("dictionary_name", "template_dictionary")

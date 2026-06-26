@@ -46,7 +46,9 @@ jobs:
 
       - name: Install linux python prereq
         if: runner.os == 'Linux'
-        run: pip install -U oscrypto
+        run: |
+          pip uninstall oscrypto -y
+          pip install git+https://github.com/wbond/oscrypto.git@d5f3437
 
     #   - name: Create venv
     #     run: python -m venv .venv

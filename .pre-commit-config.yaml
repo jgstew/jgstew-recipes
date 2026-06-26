@@ -108,3 +108,5 @@ repos:
     hooks:
       - id: verify-files-are-ascii
       - id: validate-bes
+      - id: validate-plist
+      # - id: github-action-set-output-fix

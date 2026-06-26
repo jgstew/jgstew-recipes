@@ -30,7 +30,7 @@ jobs:
 
       - name: Install prereq macOS
         if: runner.os == 'macOS'
-        run: brew install libmagic cairo
+        run: brew install libmagic cairo libffi
 
     #   - name: Install prereq Windows
     #     if: runner.os == 'Windows'

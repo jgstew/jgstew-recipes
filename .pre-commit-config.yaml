@@ -104,7 +104,7 @@ repos:
         # args: ["--ignore-words-list=autopkg,AutoPkg,AutoPkgRecipe,AutoPkgRecipes,AutoPkgRecipeList,AutoPkgRecipeLists"]
 
   - repo: https://github.com/jgstew/pre-commit-jgstew
-    rev: v1.1.5
+    rev: v1.3.1
     hooks:
       - id: verify-files-are-ascii
       - id: validate-bes

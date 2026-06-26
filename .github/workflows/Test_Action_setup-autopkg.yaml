@@ -20,7 +20,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: Test Action setup-autopkg
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: setup-autopkg local action
         uses: ./.github/actions/setup-autopkg

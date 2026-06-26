@@ -61,6 +61,11 @@ jobs:
         run: |
           cp /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb "$(brew --prefix)/Library/Taps/jgstew/homebrew-jgstew-recipes/Casks/autopkg.rb"
 
+      - name: run brew fetch
+        run: brew fetch --cask --verbose jgstew/jgstew-recipes/autopkg
+        env:
+          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: run brew install
         run: brew install --cask --verbose jgstew/jgstew-recipes/autopkg
         env:
@@ -71,5 +76,10 @@ jobs:
 
       - name: run brew audit
         run: brew audit --cask --verbose --strict jgstew/jgstew-recipes/autopkg
+        env:
+          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: run brew style
+        run: brew style --cask jgstew/jgstew-recipes/autopkg
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}

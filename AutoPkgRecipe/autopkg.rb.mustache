@@ -6,12 +6,9 @@ cask "autopkg" do
   name "AutoPkg"
   desc "Install AutoPkg"
   homepage "https://github.com/autopkg/autopkg"
+
   # https://github.com/autopkg/autopkg/blob/master/LICENSE.txt
   # license "Apache-2.0"
-
-  pkg "autopkg-#{version}.pkg"
-
-  uninstall pkgutil: "autopkg.autopkg"
 
   livecheck do
     url :homepage
@@ -19,4 +16,10 @@ cask "autopkg" do
     # example: v2.4.1 but NOT 2.5.0BETA1
     regex(/^v?(\d+(?:\.\d+)+)$/i)
   end
+
+  depends_on :macos
+
+  pkg "autopkg-#{version}.pkg"
+
+  uninstall pkgutil: "autopkg.autopkg"
 end

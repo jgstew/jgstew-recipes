@@ -3,7 +3,7 @@ Description: Test URLDownloaderRequests Processor
 Identifier: com.github.jgstew.test.URLDownloaderRequests
 Input:
   NAME: URLDownloaderRequestsTest
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderRequests
     Arguments:

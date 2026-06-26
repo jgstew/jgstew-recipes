@@ -5,7 +5,7 @@ Input:
   NAME: VariableToStringTest
   float: 1.2
   int: 1
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/VariableToString
     Arguments:

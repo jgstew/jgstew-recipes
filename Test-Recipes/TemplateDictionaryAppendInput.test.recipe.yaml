@@ -6,6 +6,6 @@ Input:
   DisplayName: TemplateDictionaryAppendInput
   Template_version: "0.0.0"
   Template_example: "example value"
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput

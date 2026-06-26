@@ -5,7 +5,7 @@ Input:
   NAME: AutoPkgVariableSubstitutionTest
   TestInt: 0
   TestStr: "0"
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   # EndOfCheckPhase is used as a `noop` in this example
   # this works:

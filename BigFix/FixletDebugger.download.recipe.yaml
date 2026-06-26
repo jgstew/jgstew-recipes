@@ -4,7 +4,7 @@ Identifier: com.github.jgstew.download.FixletDebugger
 Input:
   NAME: FixletDebugger
   # version_major_minor_match: "9.5"
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/URLTextSearcherArray
     Arguments:

@@ -5,7 +5,7 @@ Input:
   NAME: "actions-runner"
   TYPE: "zip"
   OS: win-x64
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.shared.parent-recipe
 Process:
   # see: https://github.com/actions/runner/releases

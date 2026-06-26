@@ -7,7 +7,7 @@ Input:
   TYPE: jar
   OS: ""
   version: "2.7.1"
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.log4j2-scan-Win64
 Process:
   - Processor: EndOfCheckPhase

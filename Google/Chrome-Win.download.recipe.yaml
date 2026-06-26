@@ -4,7 +4,7 @@ Description: Downloads the latest version of Chrome for Windows
 Identifier: com.github.jgstew.download.Chrome-Win
 Input:
   NAME: Chrome
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods

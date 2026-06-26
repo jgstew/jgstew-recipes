@@ -4,7 +4,7 @@ Description: Build Chocolatey package for released AutoPkg
 Identifier: com.github.jgstew.msibuild.AutoPkg
 Input:
   NAME: autopkg
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 # SupportedPlatforms:
 #   - Windows
 ParentRecipe: com.github.jgstew.download.AutoPkgReleaseSource

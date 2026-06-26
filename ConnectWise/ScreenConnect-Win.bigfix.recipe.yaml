@@ -5,7 +5,7 @@ Input:
   NAME: ScreenConnect-Win
   DisplayName: ScreenConnect
   # 64BitOnly: TRUE
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.ScreenConnect-Win
 Process:
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem

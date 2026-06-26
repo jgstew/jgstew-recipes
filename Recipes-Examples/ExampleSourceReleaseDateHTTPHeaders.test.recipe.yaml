@@ -3,7 +3,7 @@ Description: Example recipe getting SourceReleaseDate from the EXE signature
 Identifier: com.github.jgstew.test.ExampleSourceReleaseDateHTTPHeaders
 Input:
   NAME: ExampleSourceReleaseDateHTTPHeaders
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: GitHubReleasesInfoProvider
     Arguments:

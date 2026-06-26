@@ -3,7 +3,7 @@ Description: Downloads the latest version of ZipInstaller from NirSoft
 Identifier: com.github.jgstew.download.ZipInst-Win
 Input:
   NAME: ZipInst
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.shared.parent-recipe
 Process:
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython

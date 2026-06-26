@@ -57,7 +57,7 @@ class DangerousCommandRunner(Processor):  # pylint: disable=invalid-name
             proc = subprocess.Popen(
                 command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
             )
-            (out, err_out) = proc.communicate()
+            out, err_out = proc.communicate()
         except OSError as err:
             raise ProcessorError(
                 "Script '%s' execution failed with error code %d: %s"

@@ -4,7 +4,7 @@ Identifier: com.github.jgstew.bigfix.WindowsDefenderDefinitions-Win-arm64
 Input:
   NAME: WindowsDefenderDefinitions
   arch_relevance: '("arm64" = architecture of operating system) OR (x64 of operating system AND (/* Include only Windows ARM Systems */ exists (it as string) whose(it as uppercase contains "ARM") of values "PROCESSOR_ARCHITECTURE" of keys "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" of registries))'
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.WindowsDefenderDefinitions-Win-arm64
 Process:
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem

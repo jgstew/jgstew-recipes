@@ -6,7 +6,7 @@ Input:
   Number: 123
   Boolean: False
   Float: 1.2
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: EndOfCheckPhase
     Arguments:

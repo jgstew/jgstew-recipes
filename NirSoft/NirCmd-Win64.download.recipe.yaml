@@ -3,7 +3,7 @@ Description: Downloads the latest version of NirCmd
 Identifier: com.github.jgstew.download.NirCmd-Win64
 Input:
   NAME: NirCmd
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.shared.parent-recipe
 Process:
   - Processor: URLDownloaderPython

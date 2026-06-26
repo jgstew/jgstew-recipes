@@ -9,7 +9,7 @@ Input:
   # this will be used as the asset regex pattern, but then replaced by the real version downloaded
   version: ".*"
   log4j2scan-common-parameters: "--scan-log4j1 --no-symlink --no-empty-report"
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.shared.parent-recipe
 Process:
   # see: https://github.com/logpresso/CVE-2021-44228-Scanner/releases

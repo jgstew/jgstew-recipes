@@ -6,7 +6,7 @@ Input:
   NAME: autopkg
   PYTHON_PACKAGE_ID: python3
   PYTHON_VERSION: "3.10.11"
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 SupportedPlatforms:
   - Windows
 ParentRecipe: com.github.jgstew.download.AutoPkgReleaseSource

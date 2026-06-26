@@ -3,7 +3,7 @@ Description: Downloads the latest DesktopConnector
 Identifier: com.github.jgstew.download.DesktopConnector-Win
 Input:
   NAME: DesktopConnector
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.shared.parent-recipe
 Process:
   - Processor: URLTextSearcher

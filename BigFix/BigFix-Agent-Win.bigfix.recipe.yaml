@@ -3,7 +3,7 @@ Description: Generates a BigFix Task for the latest BigFix Client
 Identifier: com.github.jgstew.bigfix.BigFixAgent-Win
 Input:
   NAME: BigFixAgent-Win
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.BigFix-Agent-Win
 Process:
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem

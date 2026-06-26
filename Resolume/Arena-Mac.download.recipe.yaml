@@ -6,7 +6,7 @@ Input:
   NAME: "Arena"
   starting_url: https://www.resolume.com/download/
   file_type: dmg
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: URLTextSearcher
     Arguments:

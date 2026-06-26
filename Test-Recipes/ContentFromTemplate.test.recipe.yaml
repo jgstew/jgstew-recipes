@@ -4,7 +4,7 @@ Identifier: com.github.jgstew.test.ContentFromTemplate
 Input:
   NAME: ContentFromTemplateTest
   version: "10.0.4.32"
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods

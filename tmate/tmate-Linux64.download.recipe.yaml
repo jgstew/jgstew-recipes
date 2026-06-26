@@ -3,7 +3,7 @@ Description: Download latest tmate
 Identifier: com.github.jgstew.download.tmate-Linux64
 Input:
   NAME: tmate
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: GitHubReleasesInfoProvider
     Arguments:

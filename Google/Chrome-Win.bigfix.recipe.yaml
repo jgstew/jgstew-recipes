@@ -10,7 +10,7 @@ Input:
   64BitOnly: True
   template_file_path: "./%VendorFolder%/%NAME%-Install_Update.bes.mustache"
 # MinimumVersion of AutoPkg - Should always be 2.3 (or higher once a new version is released)
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.Chrome-Win
 Process:
   # `SharedUtilityMethods` must come first

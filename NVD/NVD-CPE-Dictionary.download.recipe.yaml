@@ -7,7 +7,7 @@ Input:
   TYPE: "zip"
   # cpe_version must be "2.3" or "2.2"
   cpe_version: "2.3"
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: URLDownloaderPython
     Arguments:

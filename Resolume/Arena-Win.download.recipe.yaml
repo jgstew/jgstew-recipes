@@ -6,7 +6,7 @@ Input:
   NAME: "Arena"
   starting_url: https://www.resolume.com/download/win
   file_type: exe
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.Arena-Mac
 Process:
   - Processor: EndOfCheckPhase

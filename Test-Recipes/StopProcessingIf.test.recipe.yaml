@@ -5,7 +5,7 @@ Input:
   NAME: StopProcessingIfDownloadUnchangedTest
   DisableRecipe: True
   bypass_stop_processing_if: False
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   # This should NOT stop the recipe here, because this variable does not contain the test string.
   - Processor: com.github.jgstew.SharedProcessors/StopProcessingIfDownloadUnchanged

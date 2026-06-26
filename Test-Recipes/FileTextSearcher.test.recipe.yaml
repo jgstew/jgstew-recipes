@@ -3,7 +3,7 @@ Description: Test FileTextSearcher Processor
 Identifier: com.github.jgstew.test.FileTextSearcher
 Input:
   NAME: FileTextSearcherTest
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher

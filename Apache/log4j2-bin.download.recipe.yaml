@@ -5,7 +5,7 @@ Input:
   NAME: "log4j2-bin"
   # TYPE must be `zip` or `7z` or `tar.gz`
   TYPE: "zip"
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.shared.parent-recipe
 Process:
   # see: #

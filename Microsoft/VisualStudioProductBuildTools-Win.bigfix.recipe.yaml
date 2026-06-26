@@ -3,7 +3,7 @@ Description: Downloads the latest VisualStudio Product BuildTools
 Identifier: com.github.jgstew.bigfix.VisualStudioProductBuildTools-Win
 Input:
   NAME: VisualStudioProductBuildTools-Win
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.VisualStudioProductBuildTools-Win
 Process:
   #- Processor: com.github.jgstew.SharedProcessors/StopProcessingIfDownloadUnchanged

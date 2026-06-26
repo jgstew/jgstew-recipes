@@ -4,7 +4,7 @@ Identifier: com.github.jgstew.download.DataDog-Agent-Win
 Input:
   NAME: DataDog-Agent-Win
   DisplayName: Datadog Agent
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   # get all versions found in this JSON doc:
   - Processor: com.github.jgstew.SharedProcessors/URLTextSearcherArray

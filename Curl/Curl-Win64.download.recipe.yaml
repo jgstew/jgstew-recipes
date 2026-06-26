@@ -3,7 +3,7 @@ Description: Downloads the latest Curl for Windows x64
 Identifier: com.github.jgstew.download.Curl-Win64
 Input:
   NAME: CurlWin64
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 Process:
   - Processor: URLTextSearcher
     Arguments:

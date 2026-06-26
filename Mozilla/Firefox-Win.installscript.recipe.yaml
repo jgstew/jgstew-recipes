@@ -9,7 +9,7 @@ Input:
   filename: FirefoxSetup.exe
   # https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US
   # https://download.mozilla.org/?product=firefox-msi-latest-ssl&os=win64&lang=en-US
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.Firefox-Win64
 Process:
   - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppend

@@ -3,7 +3,7 @@ Description: Downloads the latest SQL Server Management Studio
 Identifier: com.github.jgstew.download.SQLServerManagementStudio-Win
 Input:
   NAME: SQLServerManagementStudio
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 Process:
   - Processor: URLDownloaderPython
     Arguments:

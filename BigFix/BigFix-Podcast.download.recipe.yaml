@@ -3,7 +3,7 @@ Description: Downloads the latest episode of the BigFix Podcast
 Identifier: com.github.jgstew.download.BigFix-Podcast
 Input:
   NAME: BigFix-Podcast
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: URLDownloaderPython

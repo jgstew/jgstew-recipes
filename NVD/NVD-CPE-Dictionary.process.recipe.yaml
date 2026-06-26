@@ -3,7 +3,7 @@ Description: Expand and transform the latest NVD CPE Dictionary XML
 Identifier: com.github.jgstew.process.NVD-CPE-Dictionary-XML
 Input:
   NAME: NVD-CPE-Dictionary-XML
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.NVD-CPE-Dictionary-XML
 Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods

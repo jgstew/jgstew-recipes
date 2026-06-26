@@ -5,7 +5,7 @@ Input:
   NAME: DateTimeFromStringTest
   # example last_modified HTTP header value:
   last_modified: "Wed, 09 Mar 2022 18:26:34 GMT"
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods

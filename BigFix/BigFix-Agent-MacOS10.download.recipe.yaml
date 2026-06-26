@@ -3,7 +3,7 @@ Description: Downloads the latest BigFix Agent for MacOS 10.14+ (less than 11.x)
 Identifier: com.github.jgstew.download.BigFix-Agent-MacOS10
 Input:
   NAME: BigFix-Agent-MacOS10
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/URLTextSearcherArray
     Arguments:

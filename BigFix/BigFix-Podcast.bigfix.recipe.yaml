@@ -3,7 +3,7 @@ Description: Generates a BigFix Task for the latest BigFix Podcast Episode
 Identifier: com.github.jgstew.bigfix.BigFix-Podcast
 Input:
   NAME: BigFix-Podcast
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.BigFix-Podcast
 Process:
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem

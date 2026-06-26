@@ -7,7 +7,7 @@ Input:
   VendorFolder: Recipes-Examples
   template_file_path: "./%VendorFolder%/MSI-Win-Install_Update.bes.mustache"
 # MinimumVersion of AutoPkg - Should always be 2.3 (or higher once a new version is released)
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.local.msi
 Process:
   # `SharedUtilityMethods` must come first

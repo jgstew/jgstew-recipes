@@ -4,7 +4,7 @@ Description: Test GitHubReleasesInfoProvider Processor
 Identifier: com.github.jgstew.test.GitHubReleasesInfoProvider
 Input:
   NAME: "GitHubReleasesInfoProviderTestAudacity"
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   # see: https://api.github.com/repos/audacity/audacity/releases/latest
   - Processor: GitHubReleasesInfoProvider

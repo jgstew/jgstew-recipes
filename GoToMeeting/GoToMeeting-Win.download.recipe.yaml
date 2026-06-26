@@ -3,7 +3,7 @@ Description: Download GoToMeeting for Windows
 Identifier: com.github.jgstew.download.GoToMeeting-Win
 Input:
   NAME: GoToMeeting
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 Process:
   # https://github.com/autopkg/homebysix-recipes/blob/master/GoToMeeting/GoToMeetingURLProvider.py
   - Processor: com.github.homebysix.download.GoToMeeting/GoToMeetingURLProvider

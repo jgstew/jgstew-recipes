@@ -8,7 +8,7 @@ Input:
   product: firefox-latest-ssl
   OS: osx
   filename: Firefox.dmg
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:

@@ -3,7 +3,7 @@ Description: Downloads the latest GIT for Windows x64
 Identifier: com.github.jgstew.download.Git-Win64
 Input:
   NAME: GitWin64
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: GitHubReleasesInfoProvider
     Arguments:

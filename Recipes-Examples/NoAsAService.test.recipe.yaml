@@ -3,7 +3,7 @@ Description: Example recipe that gets a No As A Service answer
 Identifier: com.github.jgstew.test.NoAsAService
 Input:
   NAME: NoAsAService
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: URLTextSearcher
     Arguments:

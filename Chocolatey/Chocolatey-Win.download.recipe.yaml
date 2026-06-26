@@ -3,7 +3,7 @@ Description: Downloads the latest Chocolatey for Windows
 Identifier: com.github.jgstew.download.Chocolatey-Win
 Input:
   NAME: ChocolateyWin
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 Process:
   - Processor: URLDownloaderPython
     Arguments:

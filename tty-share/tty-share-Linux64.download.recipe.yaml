@@ -3,7 +3,7 @@ Description: Download latest tty-share
 Identifier: com.github.jgstew.download.tty-share-Linux64
 Input:
   NAME: tty-share
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: GitHubReleasesInfoProvider
     Arguments:

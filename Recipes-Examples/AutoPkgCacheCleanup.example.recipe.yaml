@@ -3,7 +3,7 @@ Description: Example AutoPkgCacheCleanup Recipe
 Identifier: com.github.jgstew.example.AutoPkgCacheCleanup
 Input:
   NAME: AutoPkgCacheCleanupExample
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   # https://github.com/jgstew/jgstew-recipes/blob/main/SharedProcessors/AutoPkgCacheCleanup.py
   - Processor: com.github.jgstew.SharedProcessors/AutoPkgCacheCleanup

@@ -3,7 +3,7 @@ Description: Example recipe getting the version from the MSI file
 Identifier: com.github.jgstew.test.ExampleVersionFromMSI
 Input:
   NAME: ExampleVersionFromMSI
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:

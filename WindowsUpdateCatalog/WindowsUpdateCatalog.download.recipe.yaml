@@ -3,7 +3,7 @@ Description: Downloads the latest Windows Update Catalog
 Identifier: com.github.jgstew.download.WindowsUpdateCatalog
 Input:
   NAME: WindowsUpdateCatalog
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 Process:
   - Processor: URLDownloader
     Arguments:

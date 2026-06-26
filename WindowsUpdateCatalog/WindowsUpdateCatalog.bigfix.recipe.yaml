@@ -3,7 +3,7 @@ Description: Generates a BigFix Prefetch for the latest Windows Update Catalog
 Identifier: com.github.jgstew.bigfix.WindowsUpdateCatalog
 Input:
   NAME: WindowsUpdateCatalog
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.WindowsUpdateCatalog
 Process:
   - Processor: com.github.jgstew.SharedProcessors/FileHasher

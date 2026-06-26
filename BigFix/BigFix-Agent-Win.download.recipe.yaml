@@ -3,7 +3,7 @@ Description: Downloads the latest BigFix Agent for Windows
 Identifier: com.github.jgstew.download.BigFix-Agent-Win
 Input:
   NAME: BigFix-Agent-Win
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/URLTextSearcherArray
     Arguments:

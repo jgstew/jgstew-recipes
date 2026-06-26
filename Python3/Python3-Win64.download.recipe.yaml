@@ -3,7 +3,7 @@ Description: Downloads the latest Python3 for Windows x64 installer
 Identifier: com.github.jgstew.download.Python3-Win64
 Input:
   NAME: Python3Win64
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 Process:
   - Processor: URLTextSearcher
     Arguments:

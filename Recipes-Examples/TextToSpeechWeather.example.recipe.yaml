@@ -7,7 +7,7 @@ Input:
   # API_IPINFO: REDACTED (set in autopkg config/prefs)
   # get free API key here: https://openweathermap.org/
   # API_OPENWEATHER: REDACTED (set in autopkg config/prefs)
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   # https://ipinfo.io/?token=APIKEY
   - Processor: URLDownloaderPython
@@ -67,3 +67,5 @@ Process:
   #     notification_app_name: "AutoPkg Weather"
   #     notification_title: "Current Weather from AutoPkg"
   #     notification_message: "It is currently %current_temp% degrees out in %city_name% area."
+
+  - Processor: EndOfCheckPhase

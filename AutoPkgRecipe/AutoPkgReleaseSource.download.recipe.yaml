@@ -3,7 +3,7 @@ Description: download zip for released AutoPkg
 Identifier: com.github.jgstew.download.AutoPkgReleaseSource
 Input:
   NAME: autopkg
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: GitHubReleasesInfoProvider
     Arguments:

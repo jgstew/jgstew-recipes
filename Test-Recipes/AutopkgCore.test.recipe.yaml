@@ -3,7 +3,7 @@ Description: Test AutoPkg Core Cross Platform Processors
 Identifier: com.github.jgstew.test.AutoPkgCore
 Input:
   NAME: AutoPkgCoreTest
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   # TODO: add: PlistEditor, PlistReader, Unarchiver, Versioner
   - Processor: DeprecationWarning

@@ -6,7 +6,7 @@ Input:
   NAME: "tmate"
   # DisplayName: The start of the DisplayName key in the Windows Registry, Example: "DB Browser for SQLite"
   DisplayName: "tmate"
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: tmate/tmate-Linux64.download.recipe.yaml
 Process:
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem

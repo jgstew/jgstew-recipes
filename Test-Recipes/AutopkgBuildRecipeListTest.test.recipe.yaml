@@ -3,7 +3,7 @@ Description: Use Autopkg to Build a RecipeList of Test Recipes
 Identifier: com.github.jgstew.test.AutopkgBuildRecipeListTest
 Input:
   NAME: AutopkgBuildRecipeListTest
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
 

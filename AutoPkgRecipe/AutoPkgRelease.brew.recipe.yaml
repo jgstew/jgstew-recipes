@@ -6,7 +6,7 @@ Description: Build homebrew cask for released AutoPkg
 Identifier: com.github.jgstew.brew.AutoPkgRelease
 Input:
   NAME: autopkg
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.AutoPkgReleasePkg
 Process:
   - Processor: com.github.jgstew.SharedProcessors/FileHasher

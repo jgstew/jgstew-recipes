@@ -4,7 +4,7 @@ Identifier: com.github.jgstew.bigfix.FanControl-Win
 Input:
   NAME: FanControl
   DisplayName: FanControl
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.FanControl-Win
 Process:
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem

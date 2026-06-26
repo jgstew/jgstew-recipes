@@ -3,7 +3,7 @@ Description: Downloads the latest Windows Terminal
 Identifier: com.github.jgstew.download.WindowsTerminal
 Input:
   NAME: WindowsTerminal
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 Process:
   - Processor: GitHubReleasesInfoProvider
     Arguments:

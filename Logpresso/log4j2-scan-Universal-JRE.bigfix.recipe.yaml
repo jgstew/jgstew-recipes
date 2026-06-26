@@ -6,7 +6,7 @@ Input:
   NAME: log4j2-scan
   DisplayName: log4j2-scan
 # MinimumVersion of AutoPkg - Should always be 2.3 (or higher once a new version is released)
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.log4j2-scan-Universal-JRE
 Process:
   # `SharedUtilityMethods` must come first

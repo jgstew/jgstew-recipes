@@ -3,7 +3,7 @@ Description: Generates BigFix Task for latest SQL Server Management Studio
 Identifier: com.github.jgstew.bigfix.SQLServerManagementStudio-Win
 Input:
   NAME: SQLServerManagementStudio
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.SQLServerManagementStudio-Win
 Process:
   #- Processor: com.github.jgstew.SharedProcessors/FileHasher

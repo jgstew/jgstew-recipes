@@ -3,7 +3,7 @@ Description: Downloads the latest Microsoft Trusted Root Updates
 Identifier: com.github.jgstew.download.MicrosoftTrustedRoot-Win
 Input:
   NAME: MicrosoftTrustedRoot
-MinimumVersion: '2.3'
+MinimumVersion: "2.4.1"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:

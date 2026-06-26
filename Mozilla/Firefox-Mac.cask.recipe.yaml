@@ -7,7 +7,7 @@ Input:
   product: firefox-latest-ssl
   OS: osx
   filename: Firefox.dmg
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.download.Firefox-Mac
 Process:
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate

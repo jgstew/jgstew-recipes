@@ -4,7 +4,7 @@ Identifier: com.github.jgstew.test.FindAndReplace
 Input:
   NAME: FindAndReplaceTest
   Input_Example: "Tho That Then"
-MinimumVersion: "2.3"
+MinimumVersion: "2.4.1"
 Process:
   - Processor: com.github.homebysix.FindAndReplace/FindAndReplace
     Arguments:

@@ -24,6 +24,18 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Install prereq linux
+        if: runner.os == 'Linux'
+        run: sudo apt-get install -y msitools speech-dispatcher libssl-dev libxml2-dev libxslt1-dev zlib1g-dev
+
+      - name: Install prereq macOS
+        if: runner.os == 'macOS'
+        run: brew install libmagic jq p7zip msitools
+
+    #   - name: Install prereq Windows
+    #     if: runner.os == 'Windows'
+    #     run: choco install -y speech-dispatcher cairo libmagic jq p7zip curl git wget sevenzip libffi
+
       - name: setup-autopkg
         uses: ./.github/actions/setup-autopkg
 

@@ -52,8 +52,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: create local brew tap
+        run: |
+          brew tap-new jgstew/jgstew-recipes
+          mkdir -p "$(brew --prefix)/Library/Taps/jgstew/homebrew-jgstew-recipes/Casks"
+
+      - name: setup cask to test
+        run: |
+          cp /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb "$(brew --prefix)/Library/Taps/jgstew/homebrew-jgstew-recipes/Casks/autopkg.rb"
+
       - name: run brew install
-        run: brew install --cask --verbose /Users/runner/Library/AutoPkg/Cache/com.github.jgstew.brew.AutoPkgRelease/autopkg.rb
+        run: brew install --cask --verbose jgstew/jgstew-recipes/autopkg
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -61,6 +70,6 @@ jobs:
         run: autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
 
       - name: run brew audit
-        run: brew audit --cask --new-cask --verbose --strict autopkg
+        run: brew audit --cask --new-cask --verbose --strict jgstew/jgstew-recipes/autopkg
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}

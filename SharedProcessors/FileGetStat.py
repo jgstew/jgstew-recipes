@@ -15,7 +15,15 @@ __all__ = ["FileGetStat"]
 
 
 def timestamp_to_string(timestamp, datetime_format):
-    """convert timestamp float to string"""
+    """Convert a Unix timestamp float to a formatted datetime string.
+
+    Args:
+        timestamp: Unix timestamp (float) to convert
+        datetime_format: strftime format string for the output
+
+    Returns:
+        Formatted datetime string, or str(timestamp) if conversion fails
+    """
     try:
         datetime_obj = datetime.datetime.fromtimestamp(
             timestamp, tz=datetime.timezone.utc
@@ -66,7 +74,7 @@ class FileGetStat(Processor):  # pylint: disable=too-few-public-methods
     }
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
         file_stat_time_format = self.env.get("file_stat_time_format", "%Y-%m-%d")
         file_stat_time_output_variable = self.env.get(

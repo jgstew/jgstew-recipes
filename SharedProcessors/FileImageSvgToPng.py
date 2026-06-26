@@ -43,7 +43,16 @@ class FileImageSvgToPng(Processor):  # pylint: disable=too-few-public-methods
     }
 
     def convert_svg_to_png(self, svg_path, png_path, max_pixel_dim):
-        """actual function to convert svg to png using cairosvg"""
+        """Convert an SVG file to PNG format using cairosvg.
+
+        Args:
+            svg_path: Path to the source SVG file
+            png_path: Path where the output PNG should be saved
+            max_pixel_dim: Output width in pixels
+
+        Raises:
+            ProcessorError: If the conversion fails
+        """
         try:
             cairosvg.svg2png(
                 url=svg_path, write_to=png_path, output_width=max_pixel_dim
@@ -52,7 +61,7 @@ class FileImageSvgToPng(Processor):  # pylint: disable=too-few-public-methods
             raise ProcessorError(f"Failed to convert SVG to PNG: {e}") from e
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
         max_pixel_dim = int(self.env.get("max_pixel_dim", 256))
         if max_pixel_dim == 0:
             max_pixel_dim = 256

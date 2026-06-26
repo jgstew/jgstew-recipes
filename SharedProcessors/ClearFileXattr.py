@@ -36,11 +36,14 @@ class ClearFileXattr(SharedUtilityMethods):  # pylint: disable=invalid-name
     __doc__ = description
 
     def clear_etag(self, file_path, file_xattr):
-        """
-        clear xattr from file
+        """Remove a specified extended attribute from a file.
 
-        Keyword arguments:
-        file_path -- the file to clear
+        Args:
+            file_path: Path to the file to clear the attribute from
+            file_xattr: Name of the extended attribute to remove
+
+        Raises:
+            OSError: Silently caught if the attribute does not exist
         """
         try:
             xattr.removexattr(file_path, file_xattr)
@@ -48,7 +51,7 @@ class ClearFileXattr(SharedUtilityMethods):  # pylint: disable=invalid-name
             self.output("WARNING: Xattr not found", 1)
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
 
         # I think this gets the pathname value if `file_path` is not specified?
         file_path = self.env.get("file_path", self.env.get("pathname"))

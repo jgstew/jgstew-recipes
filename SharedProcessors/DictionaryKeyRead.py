@@ -40,7 +40,15 @@ class DictionaryKeyRead(Processor):
     __doc__ = description
 
     def read_dictionary_key(self, input_dictionary, dictionary_key):
-        """read the value from the key in the dictionary"""
+        """Read the value associated with a key in a dictionary.
+
+        Args:
+            input_dictionary: The dictionary to read from
+            dictionary_key: The key whose value to retrieve
+
+        Returns:
+            The value for the key, or None if the key does not exist
+        """
         try:
             value = input_dictionary.get(dictionary_key)
             return value
@@ -50,7 +58,7 @@ class DictionaryKeyRead(Processor):
             ) from e
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
         # get name of dictionary to read from:
         input_dictionary_name = self.env.get("input_dictionary", "")
         # get actual dictionary object:

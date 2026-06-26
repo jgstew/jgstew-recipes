@@ -35,11 +35,12 @@ class FileHasher(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def hash(self, file_path):
-        """
-        run hashes on file
+        """Compute SHA1, SHA256, and MD5 hashes and byte size of a file in a single streaming pass.
 
-        Keyword arguments:
-        file_path -- the file to hash
+        Args:
+            file_path: Path to the file to hash
+
+        Sets env variables: filehasher_sha1, filehasher_sha256, filehasher_md5, filehasher_size
         """
 
         # https://github.com/jgstew/bigfix_prefetch/blob/master/url_to_prefetch.py
@@ -86,7 +87,7 @@ class FileHasher(Processor):  # pylint: disable=invalid-name
         self.env["filehasher_size"] = str(size)
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
 
         # I think this gets the pathname value if `file_path` is not specified?
         file_path = self.env.get("file_path", self.env.get("pathname"))

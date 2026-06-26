@@ -79,7 +79,15 @@ class ExtractorShutilUnpack(Processor):
     __doc__ = description
 
     def extract_7zip(self, filename, extract_dir):
-        """Extracts 7zip archive using subprocess call to 7z."""
+        """Extract a 7-zip archive to a directory using the 7z executable.
+
+        Args:
+            filename: Path to the archive file to extract
+            extract_dir: Target directory for extracted contents
+
+        Raises:
+            ProcessorError: If the 7z executable is not found or extraction fails
+        """
 
         # set initial default path:
         sevenzip = shutil.which("7z")

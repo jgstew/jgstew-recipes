@@ -14,10 +14,15 @@ __all__ = ["FileExeGetInfoPE"]
 
 
 def dump_info_pefile(filepath, first_only=True, verbosity=0):
-    """dump pefile info StringTable
+    """Extract version and metadata strings from a Windows PE file.
 
-    Originally from:
-    - https://github.com/jgstew/tools/blob/master/Python/file_get_version_exe_pefile.py
+    Args:
+        filepath: Path to the PE file
+        first_only: If True, return the first version info found; if False, return the last (default: True)
+        verbosity: Verbosity level for debug output (default: 0)
+
+    Returns:
+        Dictionary mapping metadata keys (e.g., FileVersion, ProductName) to their string values
     """
     pe = pefile.PE(filepath)
 
@@ -77,7 +82,7 @@ class FileExeGetInfoPE(Processor):  # pylint: disable=too-few-public-methods
     }
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
         custom_peinfo_index = self.env.get("custom_peinfo_index", "FileVersion")
         custom_peinfo_output = self.env.get("custom_peinfo_output", "version")

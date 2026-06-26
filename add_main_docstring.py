@@ -3,6 +3,7 @@
 
 import ast
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 DOCSTRING = "Execution starts here."
@@ -79,7 +80,10 @@ def main():
 
     def _iter_py_files(directory):
         for path in sorted(directory.rglob("*.py")):
-            if any(part.startswith(".") or part in {"site-packages", "venv", "virtualenv"} for part in path.parts):
+            if any(
+                part.startswith(".") or part in {"site-packages", "venv", "virtualenv"}
+                for part in path.parts
+            ):
                 # print(f"Skipping {path} (hidden or in site-packages)")
                 continue
             yield path
@@ -95,10 +99,16 @@ def main():
             print(f"Skipping non-Python file: {target}")
 
     changed = 0
-    for f in py_files:
-        if add_docstring(f):
-            print(f"Updated: {f}")
-            changed += 1
+    with ThreadPoolExecutor() as executor:
+        futures = {executor.submit(add_docstring, f): f for f in py_files}
+        for future in as_completed(futures):
+            f = futures[future]
+            try:
+                if future.result():
+                    print(f"Updated: {f}")
+                    changed += 1
+            except Exception as exc:
+                print(f"Error processing {f}: {exc}")
 
     print(f"\n{changed} file(s) updated.")
 

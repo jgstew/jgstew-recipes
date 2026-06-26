@@ -16,8 +16,8 @@ def find_mains_without_docstring(source):
         source: Python source code as a string
 
     Returns:
-        List of (insert_lineno, col_offset) tuples where the docstring should be inserted.
-        lineno is 1-based; col_offset is the indentation in spaces.
+        List of (def_lineno, body_col_offset) tuples for main() functions needing a docstring.
+        def_lineno is 1-based; body_col_offset is the indentation of the body in spaces.
     """
     try:
         tree = ast.parse(source)
@@ -40,8 +40,33 @@ def find_mains_without_docstring(source):
             and first.value.value.strip()
         )
         if not has_docstring:
-            results.append((first.lineno, first.col_offset))
+            # Return the def line and the expected body indentation.
+            # Do NOT use node.body[0].lineno — ast ignores comments, so that
+            # lineno may be below comments that sit between the def and the
+            # first real statement.  We scan for the signature's closing ":"
+            # in add_docstring instead.
+            results.append((node.lineno, node.col_offset + 4))
     return results
+
+
+def _find_def_end(lines, def_lineno):
+    """Return the 0-based index of the line that ends the def signature (the ':' line).
+
+    Args:
+        lines: List of source lines (with line endings)
+        def_lineno: 1-based line number where the def keyword appears
+
+    Returns:
+        0-based index of the closing ':' line
+    """
+    idx = def_lineno - 1
+    while idx < len(lines):
+        # Strip comments and trailing whitespace to find the bare code portion
+        code = lines[idx].split("#")[0].rstrip()
+        if code.endswith(":"):
+            return idx
+        idx += 1
+    return def_lineno - 1  # fallback: same line as def
 
 
 def add_docstring(filepath):
@@ -62,10 +87,11 @@ def add_docstring(filepath):
         return False
 
     # Process in reverse order so earlier insertions don't shift later line numbers
-    for lineno, col_offset in sorted(targets, reverse=True):
+    for def_lineno, col_offset in sorted(targets, reverse=True):
+        sig_end_idx = _find_def_end(lines, def_lineno)
         indent = " " * col_offset
         docstring_line = f'{indent}"""{DOCSTRING}"""\n'
-        lines.insert(lineno - 1, docstring_line)
+        lines.insert(sig_end_idx + 1, docstring_line)
 
     path.write_text("".join(lines), encoding="utf-8")
     return True

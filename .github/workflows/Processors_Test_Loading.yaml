@@ -1,0 +1,44 @@
+---
+name: Test Processor Loading
+
+on:
+  push:
+    paths:
+      - "SharedProcessors/**"
+      - "test_processors_load.sh"
+      - "requirements.txt"
+      - ".github/workflows/Processors_Test_Loading.yaml"
+  pull_request:
+    paths:
+      - "SharedProcessors/**"
+      - "test_processors_load.sh"
+      - "requirements.txt"
+      - ".github/workflows/Processors_Test_Loading.yaml"
+
+jobs:
+  test-processor-loading:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: setup-autopkg
+        uses: ./.github/actions/setup-autopkg
+
+    #   - name: Create venv
+    #     run: python -m venv .venv
+    #     shell: bash
+
+    #   - name: Install requirements (Unix)
+    #     if: runner.os != 'Windows'
+    #     run: .venv/bin/pip install --requirement requirements.txt
+
+    #   - name: Install requirements (Windows)
+    #     if: runner.os == 'Windows'
+    #     run: .venv/Scripts/pip install --requirement requirements.txt
+
+      - name: Run processor loading tests
+        run: bash test_processors_load.sh
+        shell: bash

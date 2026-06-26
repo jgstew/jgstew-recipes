@@ -26,7 +26,7 @@ class BigFixSessionRelevance(SharedUtilityMethods):
     __doc__ = description
 
     def main(self):
-        """BigFixSessionRelevance Main Method"""
+        """Execution starts here."""
         session_relevance = self.env.get("session_relevance")
 
         self.output(f"\nQ: {session_relevance}")

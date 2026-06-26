@@ -98,7 +98,7 @@ class BESImport(Processor):
             )[0]
 
     def main(self):
-        """BESImport Main Method"""
+        """Execution starts here."""
         # Assign BES Console Variables
         bes_file = self.env.get("bes_file", self.env.get("content_file_pathname"))
 

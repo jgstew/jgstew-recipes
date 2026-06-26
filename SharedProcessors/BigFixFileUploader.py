@@ -36,7 +36,7 @@ class BigFixFileUploader(SharedUtilityMethods):
     __doc__ = description
 
     def main(self):
-        """BigFixFileUploader Main Method"""
+        """Execution starts here."""
         file_path = self.env.get("file_path", self.env.get("pathname"))
         file_sha1 = self.env.get("file_sha1", "")
         file_name_override = self.env.get("file_name_override", "")

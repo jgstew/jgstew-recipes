@@ -109,7 +109,7 @@ class BigFixActioner(BESImport):
     __doc__ = description
 
     def main(self):
-        """BigFixActioner Main Method"""
+        """Execution starts here."""
         template_dict = {}
         template_dict["bes_id"] = self.env.get("bes_id", 0)
         bes_action_type = str(self.env.get("bes_action_type", "Offer"))

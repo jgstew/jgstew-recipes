@@ -90,7 +90,7 @@ jobs:
         if: runner.os == 'Windows'
         # https://github.com/actions/upload-artifact
         # TODO: get artifact path dynamically
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: autopkg.msi
           path: C:\Users\runneradmin\Library\AutoPkg\Cache\com.github.jgstew.msibuild.AutoPkg\autopkg.msi

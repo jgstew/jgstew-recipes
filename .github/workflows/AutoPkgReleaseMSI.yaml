@@ -73,18 +73,18 @@ jobs:
           ZIP_FILE: C:\Users\runneradmin\Library\AutoPkg\Cache\com.github.jgstew.msibuild.AutoPkg\downloads\autopkg.zip
           MSBUILD_PATH: ${{ steps.setupmsbuild.outputs.msbuildPath }}
         # TODO: get version from autopkg recipe output
-        # TODO: get MSBuild path from above step
         run: |
           cd ~
           pwd
           cd Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg
           pwd
-          cd "/c/Program Files/Microsoft Visual Studio/2022/Enterprise"
+          MSBUILD_DIR=$(dirname "$MSBUILD_PATH")
+          cd "$MSBUILD_DIR"
           pwd
           cat ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj
           name="$(basename "$ZIP_FILE" ".zip")"
           version="2.4.1"
-          "MSBuild.exe" ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj -p:SourceDir="$GITHUB_WORKSPACE/autopkg/Code" -p:OutputPath="." -p:OutputName="$name" -p:ProductVersion="$version"
+          "$MSBUILD_PATH" ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj -p:SourceDir="$GITHUB_WORKSPACE/autopkg/Code" -p:OutputPath="." -p:OutputName="$name" -p:ProductVersion="$version"
 
       - name: upload built MSI
         if: runner.os == 'Windows'

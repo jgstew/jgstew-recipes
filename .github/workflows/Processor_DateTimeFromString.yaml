@@ -24,6 +24,12 @@ jobs:
       - name: checkout this repo
         uses: actions/checkout@v5
 
+      - name: install ubuntu dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-dev libxml2-dev libxslt1-dev zlib1g-dev build-essential
+
       - name: install macos dependencies
         if: matrix.os == 'macos-latest'
         run: |

@@ -192,7 +192,7 @@ def main():
                 print(f"Error processing {f}: {exc}", file=sys.stderr)
 
     if changed:
-        print(f"\n{changed} file(s) updated — re-stage and commit again.")
+        print(f"\n{changed} file(s) updated - re-stage and commit again.")
         sys.exit(1)
 
 

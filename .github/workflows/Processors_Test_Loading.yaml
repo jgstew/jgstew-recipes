@@ -38,6 +38,8 @@ jobs:
 
       - name: setup-autopkg
         uses: ./.github/actions/setup-autopkg
+        with:
+          use-python-version: 3.12
 
       - name: Install requirements
         run: pip install --requirement requirements.txt

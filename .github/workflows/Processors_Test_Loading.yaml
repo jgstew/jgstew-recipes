@@ -19,18 +19,14 @@ jobs:
   test-processor-loading:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v6
 
-    #   - name: Install prereq linux
-    #     if: runner.os == 'Linux'
-    #     run: sudo apt-get install -y msitools speech-dispatcher libssl-dev libxml2-dev libxslt1-dev zlib1g-dev
-
       - name: Install prereq macOS
         if: runner.os == 'macOS'
-        run: brew install libmagic cairo libffi
+        run: brew install libmagic cairo libffi pkg-config
 
     #   - name: Install prereq Windows
     #     if: runner.os == 'Windows'

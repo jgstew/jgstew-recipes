@@ -27,8 +27,16 @@ class GetRecipeParentFolderName(Processor):  # pylint: disable=invalid-name
         }
     }
     output_variables = {
-        "ouput_variable_name": {"description": ("the env var to store the result")},
-        "parent_folder_result": {"description": ("the result")},
+        "ouput_variable_name": {
+            "description": (
+                "The name of the environment variable where the parent folder name is stored"
+            )
+        },
+        "parent_folder_result": {
+            "description": (
+                "The parent folder name of the current recipe file, typically the software vendor name"
+            )
+        },
     }
     __doc__ = description
 

@@ -40,7 +40,7 @@ class SevenZip(Processor):
         "relative_directory": {
             "required": False,
             "default": False,
-            "description": "relative directory.",
+            "description": "Relative directory to change to before running the 7z command",
         },
         "ignore_errors": {
             "required": False,

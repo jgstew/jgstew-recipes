@@ -43,7 +43,7 @@ class FileTextSearcher(SharedUtilityMethods):  # pylint: disable=too-few-public-
         "file_search_results_var": {
             "required": False,
             "default": "",
-            "description": "where to save the output",
+            "description": "Name of the output variable to store search results in",
         },
         "unique_results_only": {
             "required": False,
@@ -58,11 +58,13 @@ class FileTextSearcher(SharedUtilityMethods):  # pylint: disable=too-few-public-
         "first_result_only": {
             "required": False,
             "default": False,
-            "description": "if true, sort the results",
+            "description": "If true, return only the first matching result as a string instead of an array",
         },
     }
     output_variables = {
-        "file_search_results_var": {"description": "the variable name to store output"},
+        "file_search_results_var": {
+            "description": "Array of all regex matches found; actual variable name is determined by the file_search_results_var input"
+        },
         "output_file_path": {"description": "the file path with the output"},
     }
 

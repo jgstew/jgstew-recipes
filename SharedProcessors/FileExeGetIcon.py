@@ -33,7 +33,9 @@ class FileExeGetIcon(Processor):  # pylint: disable=too-few-public-methods
         },
     }
     output_variables = {
-        "icon_file_output": {"description": "File to save the icon to."},
+        "icon_file_output": {
+            "description": "The file path where the extracted icon was saved"
+        },
     }
 
     def main(self):

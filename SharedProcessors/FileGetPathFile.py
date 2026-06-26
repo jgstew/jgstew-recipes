@@ -36,7 +36,9 @@ class FileGetPathFile(Processor):  # pylint: disable=too-few-public-methods
     }
     output_variables = {
         "path_var_name": {"description": "the variable name to store output"},
-        "path_result": {"description": "the result stored in the variable"},
+        "path_result": {
+            "description": "The full filesystem path to the named command found on PATH"
+        },
     }
 
     def main(self):

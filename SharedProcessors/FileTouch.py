@@ -30,7 +30,7 @@ class FileTouch(Processor):  # pylint: disable=invalid-name
         "touch_time_offset_days": {
             "required": False,
             "default": 0,
-            "description": "Create missing folders in path? Default: 0",
+            "description": "Number of days to offset the file modification time (positive or negative). Default: 0",
         },
     }
     output_variables = {

@@ -42,11 +42,11 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
         },
         "template_prefetch": {
             "required": False,
-            "description": "The input file SHA1. Defaults to %bigfix_prefetch_item%",
+            "description": "The BigFix prefetch statement or block. Defaults to %bigfix_prefetch_item%",
         },
         "template_file_size": {
             "required": False,
-            "description": "The input file size. Defaults to %filehasher_size%",
+            "description": "File size value to include in the template dictionary. Defaults to %filehasher_size%",
         },
         "prefetch_type": {
             "required": False,

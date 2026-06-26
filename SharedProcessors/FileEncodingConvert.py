@@ -37,7 +37,11 @@ class FileEncodingConvert(Processor):  # pylint: disable=invalid-name
         },
     }
     output_variables = {
-        "file_encoding_result": {"description": ("The result")},
+        "file_encoding_result": {
+            "description": (
+                "Status message indicating the encoding conversion completed successfully"
+            )
+        },
     }
     __doc__ = description
 

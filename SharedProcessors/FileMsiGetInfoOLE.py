@@ -34,9 +34,15 @@ class FileMsiGetInfoOLE(Processor):  # pylint: disable=too-few-public-methods
         },
     }
     output_variables = {
-        "file_ole_max_time": {"description": "max creation last_saved time"},
-        "file_ole_create_time": {"description": "create_time"},
-        "file_ole_last_saved_time": {"description": "last_saved_time"},
+        "file_ole_max_time": {
+            "description": "Maximum of the file creation time and last saved time as a datetime object"
+        },
+        "file_ole_create_time": {
+            "description": "File creation time from MSI OLE metadata as a datetime object"
+        },
+        "file_ole_last_saved_time": {
+            "description": "File last saved time from MSI OLE metadata as a datetime object"
+        },
         "SourceReleaseDate": {"description": "max creation last_saved time yyyy-mm-dd"},
     }
 

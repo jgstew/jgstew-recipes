@@ -48,10 +48,7 @@ class TextSubstitutionRegEx(Processor):
     output_variables = {
         "result_output_var_name": {
             "description": (
-                "First matched sub-pattern from input found on the string. "
-                "Note the actual name of variable depends on the input "
-                'variable "result_output_var_name" or is assigned a default of '
-                '"result_substitution."'
+                "Result of the regex substitution. Actual variable name depends on the result_output_var_name input, defaulting to 'result_substitution'."
             )
         }
     }

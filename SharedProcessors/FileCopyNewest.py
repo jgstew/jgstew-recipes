@@ -27,7 +27,11 @@ class FileCopyNewest(Processor):  # pylint: disable=invalid-name
         },
     }
     output_variables = {
-        "file_copy_newest_result": {"description": ("The result")},
+        "file_copy_newest_result": {
+            "description": (
+                "Description of which file was copied over the other, or an error message"
+            )
+        },
     }
     __doc__ = description
 

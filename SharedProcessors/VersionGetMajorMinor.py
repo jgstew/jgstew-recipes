@@ -27,7 +27,9 @@ class VersionGetMajorMinor(Processor):  # pylint: disable=too-few-public-methods
     input_variables = {
         "version_string": {
             "required": False,
-            "description": ("Array of Versions. Defaults to %version_maximum%."),
+            "description": (
+                "Version string to extract major.minor from. Defaults to %version_maximum%."
+            ),
         },
         "separator_string": {
             "required": False,

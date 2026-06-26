@@ -72,10 +72,7 @@ class URLTextSearcherArray(URLTextSearcher):
     output_variables = {
         "result_output_var_name": {
             "description": (
-                "First matched sub-pattern from input found on the fetched "
-                "URL. Note the actual name of variable depends on the input "
-                'variable "result_output_var_name" or is assigned a default of '
-                '"match."'
+                "Array of all regex matches found on the fetched URL. Actual variable name depends on result_output_var_name input, defaulting to 'match'."
             )
         }
     }

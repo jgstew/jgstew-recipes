@@ -24,10 +24,13 @@ class JsonPath(Processor):  # pylint: disable=invalid-name
 
     description = __doc__
     input_variables = {
-        "json_input": {"required": True, "description": "json to get JSONPath from"},
+        "json_input": {
+            "required": True,
+            "description": "JSON string or file path to evaluate the JSONPath expression against",
+        },
         "json_path": {
             "required": True,
-            "description": "JSONPath to read from json",
+            "description": "The JSONPath expression to evaluate against the JSON input",
         },
     }
     output_variables = {

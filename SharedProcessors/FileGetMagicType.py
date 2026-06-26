@@ -25,7 +25,7 @@ class FileGetMagicType(Processor):  # pylint: disable=too-few-public-methods
     input_variables = {
         "file_pathname": {
             "required": False,
-            "description": "array of paths to find first executable within",
+            "description": "Path to the file to determine magic type and MIME type for",
         },
     }
     output_variables = {

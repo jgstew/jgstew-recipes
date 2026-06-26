@@ -70,6 +70,6 @@ jobs:
         run: autopkg run -v Test-Recipes/AutopkgCore.test.recipe.yaml
 
       - name: run brew audit
-        run: brew audit --cask --new-cask --verbose --strict jgstew/jgstew-recipes/autopkg
+        run: brew audit --cask --verbose --strict jgstew/jgstew-recipes/autopkg
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}

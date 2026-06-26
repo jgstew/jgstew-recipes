@@ -68,7 +68,7 @@ jobs:
 
       - name: run msbuild
         if: runner.os == 'Windows'
-        shell: bash
+        shell: powershell
         env:
           ZIP_FILE: C:\Users\runneradmin\Library\AutoPkg\Cache\com.github.jgstew.msibuild.AutoPkg\downloads\autopkg.zip
           MSBUILD_PATH: ${{ steps.setupmsbuild.outputs.msbuildPath }}
@@ -78,13 +78,13 @@ jobs:
           pwd
           cd Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg
           pwd
-          MSBUILD_DIR=$(dirname "$MSBUILD_PATH")
+          $MSBUILD_DIR = Split-Path "$env:MSBUILD_PATH"
           cd "$MSBUILD_DIR"
           pwd
-          cat ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj
-          name="$(basename "$ZIP_FILE" ".zip")"
-          version="2.4.1"
-          "$MSBUILD_PATH" ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj -p:SourceDir="$GITHUB_WORKSPACE/autopkg/Code" -p:OutputPath="." -p:OutputName="$name" -p:ProductVersion="$version"
+          Get-Content ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj
+          $name = [System.IO.Path]::GetFileNameWithoutExtension("$env:ZIP_FILE")
+          $version = "2.4.1"
+          & "$env:MSBUILD_PATH" ~/Library/AutoPkg/Cache/com.github.jgstew.msibuild.AutoPkg/autopkg.wixproj -p:SourceDir="$env:GITHUB_WORKSPACE/autopkg/Code" -p:OutputPath="." -p:OutputName="$name" -p:ProductVersion="$version"
 
       - name: upload built MSI
         if: runner.os == 'Windows'

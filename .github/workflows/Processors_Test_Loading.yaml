@@ -28,9 +28,9 @@ jobs:
     #     if: runner.os == 'Linux'
     #     run: sudo apt-get install -y msitools speech-dispatcher libssl-dev libxml2-dev libxslt1-dev zlib1g-dev
 
-    #   - name: Install prereq macOS
-    #     if: runner.os == 'macOS'
-    #     run: brew install libmagic jq p7zip msitools
+      - name: Install prereq macOS
+        if: runner.os == 'macOS'
+        run: brew install libmagic cairo
 
     #   - name: Install prereq Windows
     #     if: runner.os == 'Windows'

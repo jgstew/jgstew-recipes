@@ -13,7 +13,15 @@ __all__ = ["VersionGetMajorMinor"]
 
 
 def get_version_major_minor(vstring, separator_string="."):
-    """Return an X.Y version"""
+    """Extract major and minor version components from a version string.
+
+    Args:
+        vstring: Version string to parse (e.g., '1.2.3.4')
+        separator_string: Character(s) to insert between major and minor (default: '.')
+
+    Returns:
+        String containing only the major and minor parts joined by separator_string
+    """
     lver = looseversion.LooseVersion(vstring)
     # NOTE: this should be done by using `packaging.version.parse` instead
     rval = separator_string.join([str(x) for x in lver.version[0:2]])
@@ -42,8 +50,7 @@ class VersionGetMajorMinor(Processor):  # pylint: disable=too-few-public-methods
     }
 
     def main(self):
-        """execution starts here"""
-
+        """Execution starts here."""
         # Get `version_string` else `version_maximum`
         version_string = self.env.get("version_string", self.env.get("version_maximum"))
         separator_string = self.env.get("separator_string", ".")

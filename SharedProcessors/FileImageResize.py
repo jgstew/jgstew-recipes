@@ -40,7 +40,7 @@ class FileImageResize(Processor):  # pylint: disable=too-few-public-methods
     }
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
         max_pixel_dim = self.env.get("max_pixel_dim", 256)
         if max_pixel_dim == 0:
             max_pixel_dim = 256

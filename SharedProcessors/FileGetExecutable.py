@@ -35,7 +35,7 @@ class FileGetExecutable(SharedUtilityMethods):  # pylint: disable=too-few-public
     }
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
         path_array = self.env.get("path_array", None)
         path_var_name = self.env.get("path_var_name", None)
 

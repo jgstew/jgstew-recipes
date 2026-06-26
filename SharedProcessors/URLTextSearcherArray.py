@@ -80,7 +80,17 @@ class URLTextSearcherArray(URLTextSearcher):
     description = __doc__
 
     def re_search(self, content):
-        """Search for re_pattern in content"""
+        """Find all regex pattern matches in content and return them as a list.
+
+        Args:
+            content: String to search
+
+        Returns:
+            List of all matched strings (using findall or group captures)
+
+        Raises:
+            ProcessorError: If no matches are found
+        """
 
         re_pattern = re.compile(self.env["re_pattern"], flags=self.prepare_re_flags())
         match_array = re_pattern.findall(content)
@@ -92,8 +102,7 @@ class URLTextSearcherArray(URLTextSearcher):
         return match_array
 
     def main(self):
-        """execution starts here"""
-
+        """Execution starts here."""
         output_var_name = self.env["result_output_var_name"]
         full_results = self.env.get("full_results", False)
 

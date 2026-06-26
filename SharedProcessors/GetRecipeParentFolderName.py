@@ -41,7 +41,11 @@ class GetRecipeParentFolderName(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def get_parent_folder_name(self):
-        """Gets the recipe parent folder name"""
+        """Return the parent directory name of the current recipe file.
+
+        Returns:
+            Parent folder name string, typically the software vendor name
+        """
         print("get_parent_folder_name()")
 
         recipe_dir = self.env.get("RECIPE_DIR", "")
@@ -51,8 +55,7 @@ class GetRecipeParentFolderName(Processor):  # pylint: disable=invalid-name
         return parent_folder_name
 
     def main(self):
-        """Execution starts here"""
-
+        """Execution starts here."""
         ouput_variable_name = self.env.get("ouput_variable_name", "VendorFolder")
         # recipe_dir = self.env.get("RECIPE_DIR", "")
         current_variable_value = self.env.get(ouput_variable_name, "")

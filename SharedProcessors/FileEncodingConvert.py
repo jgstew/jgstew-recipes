@@ -46,7 +46,7 @@ class FileEncodingConvert(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
         input_file_path = self.env.get("input_file_path", None)
         output_file_path = self.env.get("output_file_path", None)
         input_file_encoding = str(self.env.get("input_file_encoding", "utf-16"))

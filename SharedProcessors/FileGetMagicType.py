@@ -34,7 +34,7 @@ class FileGetMagicType(Processor):  # pylint: disable=too-few-public-methods
     }
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
 
         self.env["file_magic_type"] = str(magic.from_file(file_pathname))

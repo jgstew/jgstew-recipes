@@ -45,8 +45,7 @@ class GetCurrentPlatformInfo(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
-
+        """Execution starts here."""
         lowercase_results = self.env.get("lowercase_results", False)
         sys_platform = str(sys.platform)
         # sys_maxsize_raw = str(sys.maxsize)

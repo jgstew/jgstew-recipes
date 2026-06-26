@@ -34,7 +34,7 @@ class FileGetBase64(Processor):  # pylint: disable=too-few-public-methods
     }
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
 
         self.output(f"INFO: input file path: {file_pathname}", 3)

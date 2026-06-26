@@ -78,7 +78,7 @@ class FileExeVerifySignature(Processor):  # pylint: disable=too-few-public-metho
     }
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
         file_signature_throw_error = self.env.get("file_signature_throw_error", True)
         file_sig_date_custom_output = str(

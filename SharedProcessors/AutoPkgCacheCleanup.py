@@ -68,7 +68,7 @@ class AutoPkgCacheCleanup(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
 
         cleanup_max_age_days = int(self.env.get("cleanup_max_age_days", 30))
         cleanup_min_size = int(self.env.get("cleanup_min_size_mb", 2)) * 1024 * 1024

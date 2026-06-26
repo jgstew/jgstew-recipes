@@ -69,7 +69,15 @@ class FileTextSearcher(SharedUtilityMethods):  # pylint: disable=too-few-public-
     }
 
     def search_in_file(self, file_path, search_pattern):
-        """search for regex results in file"""
+        """Search a file for all regex matches using memory-mapped I/O.
+
+        Args:
+            file_path: Path to the file to search
+            search_pattern: Compiled regex pattern to search for
+
+        Returns:
+            List of matched byte strings
+        """
 
         re_pattern = re.compile(search_pattern.encode())
 
@@ -84,7 +92,7 @@ class FileTextSearcher(SharedUtilityMethods):  # pylint: disable=too-few-public-
                 return re.findall(re_pattern, data)
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
         search_path = self.env.get("search_path", None)
         search_pattern = self.env.get("search_pattern", None)
         file_search_results_var = self.env.get("file_search_results_var", "")

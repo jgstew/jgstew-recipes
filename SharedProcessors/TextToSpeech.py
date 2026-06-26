@@ -31,7 +31,14 @@ class TextToSpeech(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def speak(self, input_string):
-        """speak text aloud"""
+        """Convert text to speech using platform-native TTS tools.
+
+        Uses say on macOS, spd-say on Linux, PowerShell SpeechSynthesizer on Windows,
+        or pyttsx3 as a cross-platform fallback.
+
+        Args:
+            input_string: Text string to speak aloud
+        """
         text_shellquoted = shlex.quote(input_string)
 
         # from: https://stackoverflow.com/a/59118441/861745
@@ -58,8 +65,7 @@ class TextToSpeech(Processor):  # pylint: disable=invalid-name
         # related: https://stackoverflow.com/a/39647762/861745
 
     def main(self):
-        """Execution starts here"""
-
+        """Execution starts here."""
         input_string = str(self.env.get("input_string"))
 
         self.output(f"say `{input_string}` aloud", 1)

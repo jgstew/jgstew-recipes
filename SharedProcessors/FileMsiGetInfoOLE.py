@@ -47,7 +47,13 @@ class FileMsiGetInfoOLE(Processor):  # pylint: disable=too-few-public-methods
     }
 
     def get_ole_max_time(self, ole_metadata):
-        """get max of creation and last_saved time"""
+        """Extract creation and last-saved timestamps from MSI OLE metadata.
+
+        Args:
+            ole_metadata: OLE metadata object from the MSI file
+
+        Sets env variables: file_ole_create_time, file_ole_last_saved_time, file_ole_max_time, SourceReleaseDate
+        """
         dates_to_compare = []
 
         # get create_time
@@ -65,7 +71,7 @@ class FileMsiGetInfoOLE(Processor):  # pylint: disable=too-few-public-methods
         self.env["SourceReleaseDate"] = max_time.strftime("%Y-%m-%d")
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
         custom_oleinfo_index = self.env.get("custom_oleinfo_index", None)
         custom_oleinfo_output = self.env.get("custom_oleinfo_output", None)

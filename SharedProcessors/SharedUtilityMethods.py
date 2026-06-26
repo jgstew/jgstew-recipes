@@ -22,7 +22,18 @@ class SharedUtilityMethods(Processor):
     output_variables = {}
 
     def verify_file_exists(self, file_path, raise_error=True):
-        """verify file exists, raise error if not"""
+        """Verify that a file exists at the given path.
+
+        Args:
+            file_path: Path to verify
+            raise_error: If True, raise an error when the file is missing (default: True)
+
+        Returns:
+            file_path if the file exists, None otherwise
+
+        Raises:
+            ProcessorError or FileNotFoundError if raise_error is True and the file is not found
+        """
         verbosity = 3
         if raise_error:
             verbosity = 0
@@ -40,7 +51,18 @@ class SharedUtilityMethods(Processor):
         return file_path
 
     def verify_folder_exists(self, folder_path, raise_error=True):
-        """verify file exists, raise error if not"""
+        """Verify that a folder exists at the given path.
+
+        Args:
+            folder_path: Path to verify
+            raise_error: If True, raise an error when the folder is missing (default: True)
+
+        Returns:
+            folder_path if the folder exists, None otherwise
+
+        Raises:
+            ProcessorError or FileNotFoundError if raise_error is True and the folder is not found
+        """
         verbosity = 3
         if raise_error:
             verbosity = 0
@@ -75,7 +97,14 @@ class SharedUtilityMethods(Processor):
         return value
 
     def get_config(self, conf_file=None):
-        """load config info from file"""
+        """Load BigFix/besapi connection configuration from standard config file locations.
+
+        Searches /etc/besapi.conf, ~/besapi.conf, ~/.besapi.conf, besapi.conf, and an optional
+        custom path, setting BES_ROOT_SERVER, BES_USER_NAME, and BES_PASSWORD in the environment.
+
+        Args:
+            conf_file: Optional path to an additional config file to search
+        """
         # this is from BESImport.py
 
         try:
@@ -108,7 +137,7 @@ class SharedUtilityMethods(Processor):
                 raise
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
         self.output("WARNING: main() Does Nothing.", 4)
 
 

@@ -36,7 +36,7 @@ class FileCopyNewest(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
         file_path_first = pathlib.Path(str(self.env.get("file_path_first", None)))
         file_path_second = pathlib.Path(str(self.env.get("file_path_second", None)))
 

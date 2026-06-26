@@ -56,6 +56,7 @@ class TextSubstitutionRegEx(Processor):
     description = __doc__
 
     def main(self):
+        """Execution starts here."""
         re_pattern = self.env.get("re_pattern", None)
         re_substitution = self.env.get("re_substitution", None)
         input_string = self.env.get("input_string", None)

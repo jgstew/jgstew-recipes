@@ -41,7 +41,18 @@ class GitCommitSubprocess(Processor):
     description = __doc__
 
     def run_git_command(self, args, cwd=None):
-        """Helper function to run Git commands."""
+        """Execute a git command as a subprocess and return its output.
+
+        Args:
+            args: List of git arguments (without the 'git' prefix)
+            cwd: Working directory for the command (default: None uses current dir)
+
+        Returns:
+            Stripped stdout string from the git command
+
+        Raises:
+            ProcessorError: If the git command exits with a non-zero return code
+        """
         try:
             result = subprocess.run(
                 ["git"] + args,
@@ -55,6 +66,7 @@ class GitCommitSubprocess(Processor):
             raise ProcessorError(f"Git command failed: {e.stderr}")
 
     def main(self):
+        """Execution starts here."""
         repo_path = self.env["repo_path"]
         commit_message = self.env["commit_message"]
         push_changes = self.env.get("push_changes", False)

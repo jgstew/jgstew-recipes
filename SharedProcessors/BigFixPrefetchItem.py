@@ -96,7 +96,7 @@ class BigFixPrefetchItem(Processor):  # pylint: disable=invalid-name
         )
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
         # use download_info dictionary from URLDownloaderPython if available
         prefetch_dictionary = self.env.get("download_info", None)
         prefetch_url = self.env.get("prefetch_url", None)

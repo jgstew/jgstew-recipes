@@ -32,7 +32,7 @@ class VariableToString(Processor):
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
         input_variable = self.env.get("input_variable", "")
         output_variable = self.env.get("output_variable", input_variable)
 

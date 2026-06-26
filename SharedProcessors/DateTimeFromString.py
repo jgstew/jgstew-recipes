@@ -47,7 +47,7 @@ class DateTimeFromString(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
 
         datetime_parsed_name = self.env.get("datetime_parsed_name", "datetime_parsed")
         datetime_string = self.env.get("datetime_string", "")

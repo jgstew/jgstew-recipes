@@ -78,7 +78,17 @@ class TextSearcher(Processor):
         return flag_accumulator
 
     def re_search(self, content):
-        """Search for re_pattern in content"""
+        """Search content for the compiled regex pattern and return all matches.
+
+        Args:
+            content: String to search
+
+        Returns:
+            Tuple of (last_matched_group_string, dict_of_named_capture_groups)
+
+        Raises:
+            ProcessorError: If no matches are found
+        """
 
         re_pattern = re.compile(self.env["re_pattern"], flags=self.prepare_re_flags())
         match = re_pattern.search(content)
@@ -90,6 +100,7 @@ class TextSearcher(Processor):
         return (match.group(match.lastindex or 0), match.groupdict())
 
     def main(self):
+        """Execution starts here."""
         output_var_name = self.env["result_output_var_name"]
 
         content = self.env["input_string"]

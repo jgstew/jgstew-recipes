@@ -76,7 +76,7 @@ class FileExeVersionExtractor(SharedUtilityMethods):
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
         exe_path = self.env.get("exe_path", self.env.get("pathname"))
         version_string = self.env.get("version_string", "ProductVersion:")
         version_first = self.verify_value_boolean(self.env.get("version_first", False))

@@ -47,7 +47,11 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def get_parent_folder_name(self):
-        """Gets the recipe parent folder name"""
+        """Return the parent directory name of the current recipe file.
+
+        Returns:
+            Parent folder name string, typically the software vendor name
+        """
 
         recipe_dir = self.env.get("RECIPE_DIR", "")
 
@@ -56,7 +60,14 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
         return parent_folder_name
 
     def sanitize_text_cpe_part(self, input_string):
-        """sanitize input_string to be cpe compliant"""
+        """Convert a string to CPE-compliant format.
+
+        Args:
+            input_string: Text to sanitize
+
+        Returns:
+            Lowercase string with spaces and hyphens replaced by underscores and colons escaped
+        """
         # lower case:
         input_string = str(input_string).lower()
         # replace certain special characters:
@@ -66,7 +77,13 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
         return input_string
 
     def get_env_version(self):
-        """get version from env vars"""
+        """Extract a version string from environment variables.
+
+        Searches env vars whose names contain 'version', excluding known unrelated version vars.
+
+        Returns:
+            First matching version string sanitized for CPE compliance, or '0.0.0' if none found
+        """
 
         exclude_vars = ["AUTOPKG_VERSION", "MinimumVersion"]
 
@@ -79,7 +96,13 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
         return "0.0.0"
 
     def get_env_product_name(self):
-        """infer product name from metadata"""
+        """Infer the product name from recipe metadata environment variables.
+
+        Checks TitleName, DisplayName, and NAME in order.
+
+        Returns:
+            Product name sanitized for CPE compliance, or 'unknown_product' if none found
+        """
 
         env_var_check_order = ["TitleName", "DisplayName", "NAME"]
 
@@ -91,7 +114,13 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
         return "unknown_product"
 
     def get_env_target_sw(self):
-        """infer target_sw from env"""
+        """Infer the target software platform from the template file path.
+
+        Examines template_file_path for platform keywords (linux, mac, win).
+
+        Returns:
+            Platform identifier: 'linux', 'macos', 'windows', or '*' if not determinable
+        """
 
         target_sw = "*"
         # template_file_path is best (should work even in overrides / children)
@@ -111,7 +140,13 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
         return self.sanitize_text_cpe_part(target_sw)
 
     def get_env_target_hw(self):
-        """infer target_hw from metadata"""
+        """Infer the target hardware architecture from environment variables.
+
+        Checks for 64BitOnly and 32BitOnly flags in the environment.
+
+        Returns:
+            Architecture string: 'x64', 'x32', or '*' if not determinable
+        """
 
         # default target_hw:
         target_hw = "*"
@@ -123,7 +158,11 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
         return self.sanitize_text_cpe_part(target_hw)
 
     def get_cpe(self):
-        """primary function"""
+        """Generate a CPE 2.3 string from recipe metadata or explicit overrides.
+
+        Returns:
+            CPE 2.3 formatted string in lowercase
+        """
 
         cpe_product = self.env.get("cpe_product", "")
         cpe_vendor = self.env.get("cpe_vendor", "")
@@ -159,7 +198,7 @@ class GetCommonPlatformEnumeration(Processor):  # pylint: disable=invalid-name
         return cpe.lower()
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
         # References:
         # - https://cpe.mitre.org/specification/
         # - https://en.wikipedia.org/wiki/Common_Platform_Enumeration

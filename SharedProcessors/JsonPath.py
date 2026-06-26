@@ -39,7 +39,7 @@ class JsonPath(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
         json_input = self.env.get("json_input", None)
         json_path = self.env.get("json_path", None)
         json_input_obj = None

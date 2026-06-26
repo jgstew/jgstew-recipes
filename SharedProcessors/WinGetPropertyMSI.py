@@ -44,7 +44,18 @@ class WinGetPropertyMSI(Processor):  # pylint: disable=too-few-public-methods
     }
 
     def get_property_msi(self, path, msi_property):
-        """read property from msi file"""
+        """Read a property value from a Windows MSI database using msilib.
+
+        Args:
+            path: Path to the MSI file
+            msi_property: Name of the property to retrieve (e.g., 'ProductVersion')
+
+        Returns:
+            Property value as a string
+
+        Raises:
+            Exception: If the property is not found or the MSI query fails
+        """
         # https://stackoverflow.com/a/9768876/861745
         msi_db = msilib.OpenDatabase(path, msilib.MSIDBOPEN_READONLY)
         view = msi_db.OpenView(
@@ -56,7 +67,7 @@ class WinGetPropertyMSI(Processor):  # pylint: disable=too-few-public-methods
         return result.GetString(1)
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
         self.output(
             "INFO: Consider using the new and improved `FileMsiGetProperty` processor instead!"
         )

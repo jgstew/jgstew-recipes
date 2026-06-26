@@ -39,7 +39,7 @@ class FileExeGetIcon(Processor):  # pylint: disable=too-few-public-methods
     }
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname", None))
 
         icon_file_output = self.env.get("icon_file_output", None)

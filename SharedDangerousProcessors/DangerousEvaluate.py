@@ -4,7 +4,6 @@
 #
 """See docstring for DangerousEvaluate class"""
 
-
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
@@ -31,7 +30,7 @@ class DangerousEvaluate(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
 
         evaluate_string = self.env.get("evaluate_string")
 

@@ -70,8 +70,7 @@ class GoogleChromeUpdateInfoProvider(Processor):
     }
 
     def main(self):
-        """Execution starts here"""
-
+        """Execution starts here."""
         request_id = str(uuid.uuid4()).upper()
         # session_id = str(uuid.uuid4()).upper()
 

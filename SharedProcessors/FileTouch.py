@@ -39,7 +39,7 @@ class FileTouch(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
         pathname = self.env.get("pathname", None)
         touch_create_folders = bool(self.env.get("touch_create_folders", False))
         touch_time_offset_days = int(self.env.get("touch_time_offset_days", 0))

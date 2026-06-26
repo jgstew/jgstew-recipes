@@ -66,7 +66,7 @@ class BigFixSetupTemplateDictionary(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
         # get download_info dictionary or empty dictionary
         download_info = self.env.get("download_info", {})
 

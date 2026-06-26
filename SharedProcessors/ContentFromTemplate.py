@@ -156,7 +156,7 @@ class ContentFromTemplate(Processor):  # pylint: disable=invalid-name
         file_stream.close()
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
 
         template_dictionary = self.env.get("template_dictionary")
 

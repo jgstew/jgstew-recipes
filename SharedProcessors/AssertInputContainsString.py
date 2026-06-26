@@ -37,7 +37,7 @@ class AssertInputContainsString(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
 
         input_string = str(self.env.get("input_string"))
         assert_string = str(self.env.get("assert_string"))

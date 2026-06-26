@@ -37,7 +37,7 @@ class DangerousRunProcessors(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
 
         # NOTE: can't seem to figure out how to run custom processors, only ones in autopkglib
 

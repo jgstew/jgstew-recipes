@@ -56,7 +56,7 @@ class JsonJq(URLDownloader):  # pylint: disable=invalid-name
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
         json_input = self.env.get("json_input", None)
         json_jq = self.env.get("json_jq", None)
         jq_bin_path = self.env.get("jq_bin_path", "jq")

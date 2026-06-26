@@ -42,7 +42,7 @@ class FileGetPathFile(Processor):  # pylint: disable=too-few-public-methods
     }
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
         command_name = self.env.get("command_name", None)
         path_var_name = self.env.get("path_var_name", "exe_path")
         file_must_be_executable = self.env.get("file_must_be_executable", True)

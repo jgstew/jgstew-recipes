@@ -78,7 +78,14 @@ class URLDownloaderRequests(URLDownloader):
     __doc__ = description
 
     def get_requests_session(self) -> requests.Session:
-        """get the existing or new session"""
+        """Retrieve or create a persistent requests Session with cookie support.
+
+        Attempts to unpickle a previously stored session from the environment.
+        Falls back to a new Session if none exists or unpickling fails.
+
+        Returns:
+            requests.Session with cookies and headers preserved across invocations
+        """
         try:
             return pickle.loads(
                 self.env.get("requests_session", pickle.dumps(requests.session()))
@@ -90,8 +97,7 @@ class URLDownloaderRequests(URLDownloader):
             return requests.session()
 
     def main(self):
-        """Execution starts here"""
-
+        """Execution starts here."""
         self.output("WARNING: This is a work in progress!")
 
         # get previous session:

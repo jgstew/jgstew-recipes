@@ -40,7 +40,7 @@ class FileXmlXpath(Processor):  # pylint: disable=invalid-name
     __doc__ = description
 
     def main(self):
-        """Execution starts here"""
+        """Execution starts here."""
         pathname = self.env.get("pathname", None)
         xml_xpath = self.env.get("xml_xpath", None)
         xml_only_first = self.env.get("xml_only_first", False)

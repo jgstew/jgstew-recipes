@@ -78,7 +78,15 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
     }
 
     def get_property_msi_msilib(self, path, msi_property):
-        """read property from msi file"""
+        """Read a single property value from an MSI database using Windows msilib.
+
+        Args:
+            path: Path to the MSI file
+            msi_property: Name of the property to read (e.g., 'ProductVersion')
+
+        Returns:
+            Property value as a string, or empty string if not found
+        """
         # https://stackoverflow.com/a/9768876/861745
         msi_db = msilib.OpenDatabase(path, msilib.MSIDBOPEN_READONLY)
         view = msi_db.OpenView(
@@ -94,7 +102,10 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
             return ""
 
     def get_properties_msilib(self):
-        """for windows"""
+        """Retrieve all standard MSI properties using msilib (Windows only).
+
+        Iterates output_variables and populates the environment with the corresponding MSI property values.
+        """
         msi_path = self.env.get("msi_path", self.env.get("pathname", None))
 
         for key, value in self.output_variables.items():
@@ -156,7 +167,16 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
     def get_property_msiinfo_output(
         self, msiinfo_output, msi_property, output_variable
     ):
-        """parse property from msiinfo output"""
+        """Parse a named property value from msiinfo command output.
+
+        Args:
+            msiinfo_output: Byte string of raw msiinfo stdout
+            msi_property: Name of the property to extract
+            output_variable: Environment variable name to store the result in
+
+        Returns:
+            Property value as a string, or empty string if not found
+        """
         msi_property_value = ""
 
         for line in msiinfo_output.decode().split("\n"):
@@ -173,10 +193,10 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
         return msi_property_value
 
     def get_properties_msiinfo(self):
-        """for non-windows
+        """Retrieve MSI properties using the msiinfo binary (Linux/macOS).
 
-        based upon:
-        - https://github.com/autopkg/hansen-m-recipes/blob/master/SharedProcessors/MSIInfoVersionProvider.py
+        Raises:
+            ProcessorError: If the msiinfo binary is not found
         """
         msi_path = self.env.get("msi_path", self.env.get("pathname", None))
         # custom_msi_property = self.env.get("custom_msi_property", None)
@@ -215,7 +235,7 @@ class FileMsiGetProperty(Processor):  # pylint: disable=too-few-public-methods
                 self.output(f"dictionary key missing {err} for entry `{key}`", 4)
 
     def main(self):
-        """execution starts here"""
+        """Execution starts here."""
         msi_path = self.env.get("msi_path", self.env.get("pathname", None))
         custom_msi_property = self.env.get("custom_msi_property", None)
         custom_msi_output = self.env.get("custom_msi_output", None)

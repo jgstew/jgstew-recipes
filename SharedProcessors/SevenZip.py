@@ -58,7 +58,7 @@ class SevenZip(Processor):
     __doc__ = description
 
     def main(self):
-        """Execution starts here:"""
+        """Execution starts here."""
         working_directory = self.env.get("RECIPE_CACHE_DIR")
         relative_directory = self.env.get("relative_directory", False)
         ignore_errors = self.env.get("ignore_errors", True)

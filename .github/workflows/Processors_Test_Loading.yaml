@@ -30,7 +30,7 @@ jobs:
 
       - name: Install prereq Windows
         if: runner.os == 'Windows'
-        run: choco install -y cairo libmagic libffi
+        run: choco install -y cairo libmagic
 
       - name: setup-autopkg
         uses: ./.github/actions/setup-autopkg

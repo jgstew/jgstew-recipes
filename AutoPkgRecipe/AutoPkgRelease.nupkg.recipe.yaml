@@ -24,6 +24,8 @@ Process:
       additional_install_actions: |
         $AutoPkgDir = Resolve-Path $env:ChocolateyPackageFolder\tools\autopkg-*
         & python -m venv $AutoPkgDir\.python-env
+        Write-Output 'Remove --no-binary :all: from requirements.txt to ensure that all dependencies are installed as source distributions.'
+        & (Get-Content $AutoPkgDir\requirements.txt) -replace '--no-binary :all:', '' | Set-Content $AutoPkgDir\requirements.txt
         Write-Output 'Running "pip install ..." to generate self-contained environment.'
         & $AutoPkgDir\.python-env\Scripts\pip --disable-pip-version-check install -r $AutoPkgDir\requirements.txt --quiet
         Get-ChildItem -Recurse $AutoPkgDir\.python-env -Include *.exe, *.dll |

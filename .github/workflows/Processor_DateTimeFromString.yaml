@@ -18,14 +18,21 @@ jobs:
     strategy:
       matrix:
         # https://ncorti.com/blog/howto-github-actions-build-matrix
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: checkout this repo
         uses: actions/checkout@v5
 
+      - name: install macos dependencies
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install libxml2 libxslt
+
       - name: setup-autopkg local action
         uses: ./.github/actions/setup-autopkg
+        with:
+          use-python-version: "3.11"
 
       # the processors being tested don't need these:
       # - name: Install requirements

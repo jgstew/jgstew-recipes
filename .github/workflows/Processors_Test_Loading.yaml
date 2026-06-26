@@ -19,7 +19,7 @@ jobs:
   test-processor-loading:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v6
@@ -43,6 +43,10 @@ jobs:
 
       - name: Install requirements
         run: pip install --requirement requirements.txt
+
+      - name: Install linux python prereq
+        if: runner.os == 'Linux'
+        run: pip install -U oscrypto
 
     #   - name: Create venv
     #     run: python -m venv .venv

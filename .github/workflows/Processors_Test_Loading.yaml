@@ -27,6 +27,9 @@ jobs:
       - name: setup-autopkg
         uses: ./.github/actions/setup-autopkg
 
+      - name: Install requirements
+        run: pip install --requirement requirements.txt
+
     #   - name: Create venv
     #     run: python -m venv .venv
     #     shell: bash

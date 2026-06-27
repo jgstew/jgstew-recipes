@@ -1,0 +1,32 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/FileExeVerifySignatureCertInfo.py
+Description: Test FileExeVerifySignatureCertInfo Processor
+Identifier: com.github.jgstew.test.FileExeVerifySignatureCertInfo
+Input:
+  NAME: FileExeVerifySignatureCertInfoTest
+MinimumVersion: "2.4.1"
+Process:
+  # download a known signed Windows PE (signed by Apple Inc.):
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://raw.githubusercontent.com/ralphje/signify/master/tests/test_data/SoftwareUpdate.exe
+      filename: SoftwareUpdate.exe
+      download_version: ""
+      COMPUTE_HASHES: False
+
+  # extract the signing certificate details:
+  - Processor: com.github.jgstew.SharedProcessors/FileExeVerifySignatureCertInfo
+    Arguments:
+      file_pathname: "%RECIPE_CACHE_DIR%/downloads/SoftwareUpdate.exe"
+
+  # confirm the signer common name was extracted:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_cert_subject_cn%"
+      assert_string: "Apple Inc."
+
+  # confirm the serial number was extracted:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_cert_serial_number%"
+      assert_string: "12451790217711796967571790799059482938"

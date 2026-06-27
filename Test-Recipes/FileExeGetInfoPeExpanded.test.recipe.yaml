@@ -1,0 +1,32 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/FileExeGetInfoPeExpanded.py
+Description: Test FileExeGetInfoPeExpanded Processor
+Identifier: com.github.jgstew.test.FileExeGetInfoPeExpanded
+Input:
+  NAME: FileExeGetInfoPeExpandedTest
+MinimumVersion: "2.4.1"
+Process:
+  # download a known signed Windows PE (Apple SoftwareUpdate.exe, x86, 2008):
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://raw.githubusercontent.com/ralphje/signify/master/tests/test_data/SoftwareUpdate.exe
+      filename: SoftwareUpdate.exe
+      download_version: ""
+      COMPUTE_HASHES: False
+
+  # extract structural PE info:
+  - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPeExpanded
+    Arguments:
+      file_pathname: "%RECIPE_CACHE_DIR%/downloads/SoftwareUpdate.exe"
+
+  # confirm the architecture was detected as x86:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_pe_machine%"
+      assert_string: "x86"
+
+  # confirm the compile date was read from the PE header:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_pe_compile_date%"
+      assert_string: "2008-07-25"

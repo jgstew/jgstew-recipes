@@ -1,0 +1,29 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/VersionSort.py
+Description: Test VersionSort Processor
+Identifier: com.github.jgstew.test.VersionSort
+Input:
+  NAME: VersionSortTest
+MinimumVersion: "2.4.1"
+Process:
+  # sort a deliberately out-of-order list (1.2.10 must sort after 1.2.9):
+  - Processor: com.github.jgstew.SharedProcessors/VersionSort
+    Arguments:
+      version_array:
+        - "1.2.10"
+        - "1.2.9"
+        - "1.10.0"
+        - "1.2.3"
+        - "2.0.0"
+
+  # the maximum should be 2.0.0:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_maximum%"
+      assert_string: "2.0.0"
+
+  # the minimum should be 1.2.3:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_minimum%"
+      assert_string: "1.2.3"

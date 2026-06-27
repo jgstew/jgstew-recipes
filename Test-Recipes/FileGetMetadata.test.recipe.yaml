@@ -1,0 +1,27 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/FileGetMetadata.py
+Description: Test FileGetMetadata Processor
+Identifier: com.github.jgstew.test.FileGetMetadata
+Input:
+  NAME: FileGetMetadataTest
+MinimumVersion: "2.4.1"
+Process:
+  # download a small WAV with known properties:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://upload.wikimedia.org/wikipedia/commons/9/98/Beepalert.wav
+      filename: beep.wav
+      download_version: ""
+      COMPUTE_HASHES: False
+      User_Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+
+  # extract metadata with hachoir:
+  - Processor: com.github.jgstew.SharedProcessors/FileGetMetadata
+    Arguments:
+      file_pathname: "%RECIPE_CACHE_DIR%/downloads/beep.wav"
+
+  # confirm hachoir detected the WAV MIME type:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_metadata_mime%"
+      assert_string: "audio/x-wav"

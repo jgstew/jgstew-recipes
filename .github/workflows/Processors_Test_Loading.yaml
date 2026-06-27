@@ -17,6 +17,7 @@ on:
 
 jobs:
   test-processor-loading:
+    timeout-minutes: 20
     strategy:
       matrix:
         os: [macOS-latest, ubuntu-latest, windows-latest]
@@ -50,18 +51,6 @@ jobs:
         run: |
           pip uninstall oscrypto -y
           pip install git+https://github.com/wbond/oscrypto.git@d5f3437
-
-    #   - name: Create venv
-    #     run: python -m venv .venv
-    #     shell: bash
-
-    #   - name: Install requirements (Unix)
-    #     if: runner.os != 'Windows'
-    #     run: .venv/bin/pip install --requirement requirements.txt
-
-    #   - name: Install requirements (Windows)
-    #     if: runner.os == 'Windows'
-    #     run: .venv/Scripts/pip install --requirement requirements.txt
 
       - name: Run processor loading tests
         run: bash test_processors_load.sh

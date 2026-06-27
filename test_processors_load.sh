@@ -55,10 +55,16 @@ pass=0
 fail=0
 declare -a failures
 
+# Use `timeout` if available to prevent a hanging import from blocking the whole run
+TIMEOUT_CMD=""
+if command -v timeout &>/dev/null; then
+    TIMEOUT_CMD="timeout 60"
+fi
+
 # Test importing each processor as a module to ensure it can be imported without error:
 for script in "${PROCESSORS_DIR}"/*.py; do
     name="$(basename "${script}")"
-    output=$(PYTHONPATH="${AUTOPKG_PATH}:${PROCESSORS_DIR}" "${PYTHON}" - "${script}" 2>&1 <<'EOF'
+    output=$(PYTHONPATH="${AUTOPKG_PATH}:${PROCESSORS_DIR}" ${TIMEOUT_CMD} "${PYTHON}" - "${script}" 2>&1 <<'EOF'
 import importlib.util, sys, warnings
 warnings.filterwarnings("ignore")
 spec = importlib.util.spec_from_file_location("module", sys.argv[1])

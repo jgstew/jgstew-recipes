@@ -32,7 +32,10 @@ jobs:
 
       - name: Install prereq Windows
         if: runner.os == 'Windows'
-        run: choco install -y cairo
+        shell: pwsh
+        run: |
+          & "C:\msys64\usr\bin\pacman.exe" -S --noconfirm mingw-w64-x86_64-cairo
+          Add-Content $env:GITHUB_PATH "C:\msys64\mingw64\bin"
 
       - name: setup-autopkg
         uses: ./.github/actions/setup-autopkg

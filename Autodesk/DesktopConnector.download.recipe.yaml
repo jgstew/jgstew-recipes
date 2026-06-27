@@ -6,22 +6,23 @@ Input:
 MinimumVersion: "2.4.1"
 ParentRecipe: com.github.jgstew.shared.parent-recipe
 Process:
-  - Processor: URLTextSearcher
-    Arguments:
-      url: https://help.autodesk.com/cloudhelp/ENU/CONNECT-Whats-New/files/GUID-03D59AAD-65B0-45E3-84F2-A12AAA5BB267.htm
-      # example match `November 11, 2024 (v.16.11.1.2320)`
-      re_pattern: 'v\.(?P<version>\d+(\.\d+)+)'
-      curl_opts: ["-A", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0"]
-
+  # NOTE: the old "what's new" version page (help.autodesk.com GUID htm) was
+  # retired and now 404s, so the version is read from the downloaded EXE below
+  # instead of scraping a web page. This recipe is excluded from the CI
+  # all-recipes run because autodesk.com/adsk-connect-64 returns HTTP 403 to
+  # programmatic requests (Akamai bot protection); it works from a real desktop.
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: https://www.autodesk.com/adsk-connect-64
       COMPUTE_HASHES: True
       filename: DesktopConnector-x64.exe
       download_version: ""
-      User_Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0
+      User_Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36
 
   - Processor: EndOfCheckPhase
+
+  # read the FileVersion from the downloaded EXE (sets `version`):
+  - Processor: com.github.jgstew.SharedProcessors/FileExeGetInfoPE
 
   # - Processor: com.github.jgstew.SharedProcessors/FileGetExecutable
   #   Arguments:

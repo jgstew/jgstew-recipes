@@ -5,6 +5,10 @@ Input:
   NAME: SQLServerManagementStudio
 MinimumVersion: "2.4.1"
 Process:
+  # `SharedUtilityMethods` must come first: it puts the SharedProcessors dir on
+  # sys.path so FileTextSearcher (below) can import SharedUtilityMethods.
+  - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+
   - Processor: URLDownloaderPython
     Arguments:
       url: https://aka.ms/ssmsfullsetup
@@ -12,23 +16,39 @@ Process:
       COMPUTE_HASHES: True
   - Processor: EndOfCheckPhase  # how do I stop here if nothing changed?
   # - Processor: com.github.jgstew.SharedProcessors/StopProcessingIfDownloadUnchanged
-  # Probably only need to do this if new download:
-  # Probably better to get this info from the EXE itself, but this should work in most cases:
-  - Processor: URLTextSearcher
+
+  # Download the release-notes page ONCE, then parse the saved file for the
+  # version and date below (avoids fetching the same URL multiple times).
+  - Processor: URLDownloaderPython
     Arguments:
-      url: https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms
-      # example match `Build number: 15.0.18369.0`
-      re_pattern: 'Build number: (?P<version>\d+\.\d+\.\d+\.\d+)'
-  - Processor: URLTextSearcher
+      url: https://learn.microsoft.com/en-us/ssms/release-notes-22
+      filename: ssms-release-notes.html
+      download_version: ""
+      COMPUTE_HASHES: False
+      User_Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+
+  # The release notes list newest-first, so first_result_only grabs the latest.
+  # SSMS 22+ no longer lists a 4-part "Build number"; use the "Release number".
+  # NOTE: single capturing group + no sort/dedup so the top-of-page (latest) wins.
+  - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
     Arguments:
-      url: https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms
-      # example match `Release number: 18.8` or `Release number: 18.8.1`
-      re_pattern: 'Release number: (?P<release_version>\d+(\.\d+){1,2})'
-  - Processor: URLTextSearcher
+      search_path: "%RECIPE_CACHE_DIR%/downloads/ssms-release-notes.html"
+      file_search_results_var: "version"
+      # example match `Release number: 22.7.2`
+      search_pattern: 'Release number: (\d+(?:\.\d+){1,2})'
+      first_result_only: True
+      unique_results_only: False
+      sort_results: False
+
+  - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
     Arguments:
-      url: https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms
-      # example match `Release date: December 17, 2020`
-      re_pattern: 'Release date: (?P<release_date>\w+ \d{1,2}, \d{4})'
+      search_path: "%RECIPE_CACHE_DIR%/downloads/ssms-release-notes.html"
+      file_search_results_var: "release_date"
+      # example match `Release date: June 23, 2026`
+      search_pattern: 'Release date: (\w+ \d{1,2}, \d{4})'
+      first_result_only: True
+      unique_results_only: False
+      sort_results: False
 # Install: not exists keys whose(value "DisplayName" of it as string starts with "SQL Server " AND value "DisplayName" of it as string contains " Management Studio") of keys "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" of (x64 registries; x32 registries)
 # Install/Update: not exists maxima whose(it >= "13.0.16100.1") of (it as string as version) of values "DisplayVersion" of keys whose(value "DisplayName" of it as string starts with "SQL Server " AND value "DisplayName" of it as string contains " Management Studio") of keys "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" of (x64 registries; x32 registries)
 # Update: exists maxima whose(it < "13.0.16100.1") of (it as string as version) of values "DisplayVersion" of keys whose(value "DisplayName" of it as string starts with "SQL Server " AND value "DisplayName" of it as string contains " Management Studio") of keys "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" of (x64 registries; x32 registries)

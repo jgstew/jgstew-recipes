@@ -22,7 +22,9 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%chrome_package_name%"
-      assert_string: "chrome_installer."
+      # Chrome's package is now named like "<ver>_chrome_installer_uncompressed.exe"
+      # (was "<ver>_chrome_installer.exe"), so match without the trailing dot:
+      assert_string: "chrome_installer"
 
   - Processor: com.github.jgstew.SharedProcessors/TextSearcher
     Arguments:

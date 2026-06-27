@@ -1,0 +1,90 @@
+---
+name: Test Changed Processors
+
+# When a processor in SharedProcessors/ changes, run its matching test recipe
+# (Test-Recipes/<ProcessorName>.test.recipe.yaml) to validate it still works.
+# This complements Test_Changed_Recipes.yaml, which only runs a test recipe
+# when the recipe itself changes - not when the underlying processor changes.
+
+on:
+  push:
+    paths:
+      - "SharedProcessors/**.py"
+  pull_request:
+    paths:
+      - "SharedProcessors/**.py"
+
+jobs:
+  TestChangedProcessors:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    name: Test changed processors
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 2 # OR "2" -> To retrieve the preceding commit.
+
+      - name: Get changed processors
+        id: changed-files
+        uses: tj-actions/changed-files@v47
+        with:
+          files: "SharedProcessors/**.py"
+
+      # Map each changed processor to its matching test recipe. Processors
+      # without a test recipe (e.g. _template.py) are skipped.
+      - name: Map changed processors to test recipes
+        id: map-tests
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_and_modified_files }}; do
+            base="$(basename "$file" .py)"
+            test_recipe="Test-Recipes/${base}.test.recipe.yaml"
+            if [ -f "$test_recipe" ]; then
+              echo "$test_recipe" >> TestProcessorsAction.txt
+              echo "matched: $file -> $test_recipe"
+            else
+              echo "SKIP (no test recipe): $file"
+            fi
+          done
+          if [ -s TestProcessorsAction.txt ]; then
+            echo "has_tests=true" >> "$GITHUB_OUTPUT"
+            echo "--- test recipes to run: ---"
+            cat TestProcessorsAction.txt
+          else
+            echo "No changed processors have a matching test recipe; nothing to run."
+          fi
+
+      - name: Install prereq
+        if: steps.map-tests.outputs.has_tests == 'true'
+        run: sudo apt-get install -y msitools speech-dispatcher libssl-dev libxml2-dev libxslt1-dev zlib1g-dev python3-dev ffmpeg p7zip-full libmagic1 libcairo2
+
+      - name: Read Python version
+        if: steps.map-tests.outputs.has_tests == 'true'
+        id: pyver
+        shell: bash
+        run: echo "version=$(cat .python-version)" >> $GITHUB_OUTPUT
+
+      - name: setup-autopkg
+        if: steps.map-tests.outputs.has_tests == 'true'
+        uses: ./.github/actions/setup-autopkg
+        with:
+          use-python-version: ${{ steps.pyver.outputs.version }}
+
+      - name: Install repo requirements
+        if: steps.map-tests.outputs.has_tests == 'true'
+        run: pip install --requirement requirements.txt
+
+      - name: add recipe repos
+        if: steps.map-tests.outputs.has_tests == 'true'
+        run: |
+          for line in $(cat .autopkg_repos.txt); do python autopkg/Code/autopkg repo-add $line; done
+
+      - name: config git for 1 particular recipe
+        if: steps.map-tests.outputs.has_tests == 'true'
+        run: |
+          git config --global user.email "actions@github"
+          git config --global user.name "GitHub Actions"
+
+      - name: run matched test recipes
+        if: steps.map-tests.outputs.has_tests == 'true'
+        run: python autopkg/Code/autopkg run -vv --recipe-list TestProcessorsAction.txt

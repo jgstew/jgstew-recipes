@@ -1,0 +1,15 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/Notifier.py
+# Notifier has no output variables and catches send failures internally, so on a
+# headless CI host it runs without error (a smoke test that it imports and runs).
+Description: Test Notifier Processor
+Identifier: com.github.jgstew.test.Notifier
+Input:
+  NAME: NotifierTest
+MinimumVersion: "2.4.1"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/Notifier
+    Arguments:
+      notification_title: "AutoPkg Test"
+      notification_message: "Notifier processor test for %NAME%"
+      notification_app_name: "AutoPkg"

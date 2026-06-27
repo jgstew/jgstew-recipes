@@ -1,0 +1,39 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/TemplateDictionaryRemove.py
+Description: Test TemplateDictionaryRemove Processor
+Identifier: com.github.jgstew.test.TemplateDictionaryRemove
+Input:
+  NAME: TemplateDictionaryRemoveTest
+  # Template_ prefixed inputs become template_dictionary keys "keep" and "remove":
+  Template_keep: "keepvalue"
+  Template_remove: "removevalue"
+MinimumVersion: "2.4.1"
+Process:
+  # seed template_dictionary from the Template_ prefixed inputs:
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryAppendInput
+
+  # remove the "remove" key:
+  - Processor: com.github.jgstew.SharedProcessors/TemplateDictionaryRemove
+    Arguments:
+      remove_key: "remove"
+
+  # the reduced dictionary should still contain the kept value:
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: dictionary_reduced
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%dictionary_reduced%"
+      assert_string: "keepvalue"
+
+  # the reduced dictionary should NOT contain the removed value: a non-raising
+  # assert leaves "ERROR: not found!" in assert_result when the string is absent:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%dictionary_reduced%"
+      assert_string: "removevalue"
+      raise_error: false
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%assert_result%"
+      assert_string: "ERROR: not found!"

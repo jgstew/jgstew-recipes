@@ -1,0 +1,40 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/StopProcessingIfDownloadUnchanged.py
+# NOTE: only the "continue processing" path is asserted - if the processor sets
+# stop_processing_recipe to True, AutoPkg halts and later steps never run.
+Description: Test StopProcessingIfDownloadUnchanged Processor
+Identifier: com.github.jgstew.test.StopProcessingIfDownloadUnchanged
+Input:
+  NAME: StopProcessingIfDownloadUnchangedTest
+  # the variable whose contents are tested:
+  my_test_var: "changed"
+MinimumVersion: "2.4.1"
+Process:
+  # CASE 1: the test value is NOT contained in the variable -> keep processing:
+  - Processor: com.github.jgstew.SharedProcessors/StopProcessingIfDownloadUnchanged
+    Arguments:
+      env_var_name: "my_test_var"
+      env_var_value_test: "unchanged"
+
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: stop_processing_recipe
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%stop_processing_recipe%"
+      assert_string: "False"
+
+  # CASE 2: the test value IS contained, but bypass forces processing to continue:
+  - Processor: com.github.jgstew.SharedProcessors/StopProcessingIfDownloadUnchanged
+    Arguments:
+      env_var_name: "my_test_var"
+      env_var_value_test: "changed"
+      bypass_stop_processing_if: true
+
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: stop_processing_recipe
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%stop_processing_recipe%"
+      assert_string: "False"

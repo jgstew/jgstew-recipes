@@ -1,0 +1,36 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/VersionMaximumArray.py
+Description: Test VersionMaximumArray Processor
+Identifier: com.github.jgstew.test.VersionMaximumArray
+Input:
+  NAME: VersionMaximumArrayTest
+MinimumVersion: "2.4.1"
+Process:
+  # CASE 1: the maximum of an unordered list (1.2.10 > 1.2.3, numeric not lexical):
+  - Processor: com.github.jgstew.SharedProcessors/VersionMaximumArray
+    Arguments:
+      version_array:
+        - "1.2.3"
+        - "1.2.10"
+        - "2.0.0"
+        - "1.10.0"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_maximum%"
+      assert_string: "2.0.0"
+
+  # CASE 2: filter to the 1.2.x series, then take the maximum (1.2.10):
+  - Processor: com.github.jgstew.SharedProcessors/VersionMaximumArray
+    Arguments:
+      version_array:
+        - "1.2.3"
+        - "1.2.10"
+        - "2.0.0"
+        - "1.10.0"
+      version_major_minor_match: "1.2"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_maximum%"
+      assert_string: "1.2.10"

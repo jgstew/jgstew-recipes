@@ -1,0 +1,34 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/FileTouch.py
+Description: Test FileTouch Processor
+Identifier: com.github.jgstew.test.FileTouch
+Input:
+  NAME: FileTouchTest
+MinimumVersion: "2.4.1"
+Process:
+  # CASE 1: create a file in a new subfolder (touch_create_folders):
+  - Processor: com.github.jgstew.SharedProcessors/FileTouch
+    Arguments:
+      pathname: "%RECIPE_CACHE_DIR%/touchtest/created.txt"
+      touch_create_folders: true
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%touch_result%"
+      assert_string: "Success"
+
+  # confirm the file actually exists (FileGetStat raises if it does not):
+  - Processor: com.github.jgstew.SharedProcessors/FileGetStat
+    Arguments:
+      file_pathname: "%RECIPE_CACHE_DIR%/touchtest/created.txt"
+
+  # CASE 2: adjust the modification time backwards by 10 days:
+  - Processor: com.github.jgstew.SharedProcessors/FileTouch
+    Arguments:
+      pathname: "%RECIPE_CACHE_DIR%/touchtest/created.txt"
+      touch_time_offset_days: -10
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%touch_result%"
+      assert_string: "file modification time adjusted"

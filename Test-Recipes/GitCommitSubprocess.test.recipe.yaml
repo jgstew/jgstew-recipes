@@ -1,0 +1,48 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/GitCommitSubprocess.py
+# Sets up an isolated throwaway git repo in the cache so the test never touches
+# the real repository and never pushes (push_changes defaults to False).
+Description: Test GitCommitSubprocess Processor
+Identifier: com.github.jgstew.test.GitCommitSubprocess
+Input:
+  NAME: GitCommitSubprocessTest
+MinimumVersion: "2.4.1"
+Process:
+  # initialize a throwaway git repo in the cache:
+  - Processor: com.github.jgstew.SharedDangerousProcessors/DangerousCommandRunner
+    Arguments:
+      command_path: "git"
+      command_args: ["init", "%RECIPE_CACHE_DIR%/gitrepo"]
+
+  # configure a local identity so `git commit` works without global config:
+  - Processor: com.github.jgstew.SharedDangerousProcessors/DangerousCommandRunner
+    Arguments:
+      command_path: "git"
+      command_args: ["-C", "%RECIPE_CACHE_DIR%/gitrepo", "config", "user.email", "test@example.com"]
+  - Processor: com.github.jgstew.SharedDangerousProcessors/DangerousCommandRunner
+    Arguments:
+      command_path: "git"
+      command_args: ["-C", "%RECIPE_CACHE_DIR%/gitrepo", "config", "user.name", "AutoPkg Test"]
+
+  # create a file to commit:
+  - Processor: com.github.jgstew.SharedProcessors/FileTouch
+    Arguments:
+      pathname: "%RECIPE_CACHE_DIR%/gitrepo/hello.txt"
+
+  # stage and commit it (no push):
+  - Processor: com.github.jgstew.SharedProcessors/GitCommitSubprocess
+    Arguments:
+      repo_path: "%RECIPE_CACHE_DIR%/gitrepo"
+      commit_message: "AutoPkg GitCommitSubprocess test commit"
+      push_changes: false
+
+  # confirm the commit landed by reading the git log back:
+  - Processor: com.github.jgstew.SharedDangerousProcessors/DangerousCommandRunner
+    Arguments:
+      command_path: "git"
+      command_args: ["-C", "%RECIPE_CACHE_DIR%/gitrepo", "log", "--oneline"]
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%command_output%"
+      assert_string: "AutoPkg GitCommitSubprocess test commit"

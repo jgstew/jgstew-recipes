@@ -37,7 +37,7 @@ jobs:
 
       - name: Install prereq
         if: steps.changed-files.outputs.any_changed == 'true'
-        run: sudo apt-get install -y msitools speech-dispatcher libssl-dev libxml2-dev libxslt1-dev zlib1g-dev python3-dev
+        run: sudo apt-get install -y msitools speech-dispatcher libssl-dev libxml2-dev libxslt1-dev zlib1g-dev python3-dev ffmpeg
 
       - name: Read Python version
         if: steps.changed-files.outputs.any_changed == 'true'

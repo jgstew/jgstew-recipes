@@ -70,6 +70,14 @@ class FileAudioConvert(Processor):  # pylint: disable=invalid-name
             "default": [],
             "description": "Array of extra cmd args to pass to ffmpeg (e.g. ['-ar', '44100']).",
         },
+        "raise_error": {
+            "required": False,
+            "default": False,
+            "description": (
+                "If True, raise an error when ffmpeg is missing. Default: False, so a "
+                "host without ffmpeg installed does not break a recipe."
+            ),
+        },
     }
     output_variables = {
         "file_path_audio": {
@@ -95,6 +103,7 @@ class FileAudioConvert(Processor):  # pylint: disable=invalid-name
         output_format = self.env.get("output_format", "wav")
         file_path_save = self.env.get("file_path_save", "")
         ffmpeg_args = self.env.get("ffmpeg_args", [])
+        raise_error = bool(self.env.get("raise_error", False))
 
         if not file_pathname or not os.path.isfile(file_pathname):
             raise ProcessorError(f"Audio file not found: {file_pathname}")
@@ -126,9 +135,13 @@ class FileAudioConvert(Processor):  # pylint: disable=invalid-name
                 f"Audio conversion failed: {err.output.decode('utf-8', errors='replace')}"
             ) from err
         except FileNotFoundError as err:
-            raise ProcessorError(
-                f"ffmpeg executable not found ({ffmpeg}). Install ffmpeg to use this processor."
-            ) from err
+            message = f"ffmpeg executable not found ({ffmpeg}). Install ffmpeg to use this processor."
+            if raise_error:
+                raise ProcessorError(message) from err
+            # best-effort: a host without ffmpeg should not break the recipe
+            self.output(f"WARNING: {message}", 0)
+            self.env["file_path_audio"] = ""
+            return
 
         self.output(f"Converted audio saved to: {file_path_save}")
 

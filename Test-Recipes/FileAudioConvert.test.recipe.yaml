@@ -28,6 +28,7 @@ Process:
     Arguments:
       file_pathname: "%RECIPE_CACHE_DIR%/downloads/beep.oga"
       output_format: wav
+      raise_error: true
 
   # confirm the output is actually a WAV file:
   - Processor: com.github.jgstew.SharedProcessors/FileGetMagicType

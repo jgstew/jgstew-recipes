@@ -9,6 +9,7 @@ Contains Shared Class Method Utility Functions
 
 import errno
 import os
+import shutil
 
 from autopkglib import Processor, ProcessorError
 
@@ -61,16 +62,25 @@ DEFAULT_FFMPEG_PATHS = [
 def find_executable(path_array, default=None):
     """Return the first path in path_array that is an executable file.
 
+    If none of the candidates exist and a default is provided, fall back to
+    looking the default up on the system PATH (via shutil.which) - this resolves
+    a command name like "7z" that is installed in a location not listed in
+    path_array. If it is not on PATH either, the default value is returned as-is.
+
     Args:
         path_array: Ordered list of candidate executable paths.
-        default: Value to return if none are found (default: None).
+        default: Value to return if no candidate is found; also looked up on the
+            PATH when it is a command name (default: None).
 
     Returns:
-        The first existing, executable path, or default.
+        The first existing executable path; otherwise the default resolved on the
+        PATH; otherwise the default value unchanged.
     """
     for exe_path in path_array:
         if exe_path and os.path.isfile(exe_path) and os.access(exe_path, os.X_OK):
             return exe_path
+    if default:
+        return shutil.which(default) or default
     return default
 
 

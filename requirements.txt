@@ -15,6 +15,7 @@ Pillow
 pre-commit
 python-magic
 python-magic-bin; sys_platform == 'win32'
+qrcode
 # newer versions of signify (0.9.x) break our usage for now
 signify==0.8.1
 validate_bes_xml

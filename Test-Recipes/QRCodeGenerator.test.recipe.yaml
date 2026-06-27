@@ -1,0 +1,23 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/QRCodeGenerator.py
+Description: Test QRCodeGenerator Processor
+Identifier: com.github.jgstew.test.QRCodeGenerator
+Input:
+  NAME: QRCodeGeneratorTest
+MinimumVersion: "2.4.1"
+Process:
+  # generate a QR code, print it to the log, and save a PNG:
+  - Processor: com.github.jgstew.SharedProcessors/QRCodeGenerator
+    Arguments:
+      qr_data: "https://github.com/jgstew/jgstew-recipes"
+      qr_output_path: "%RECIPE_CACHE_DIR%/%NAME%.png"
+
+  # confirm the saved file is actually a PNG image:
+  - Processor: com.github.jgstew.SharedProcessors/FileGetMagicType
+    Arguments:
+      file_pathname: "%qr_output_path%"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_mime_type%"
+      assert_string: "image/png"

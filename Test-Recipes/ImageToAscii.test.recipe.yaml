@@ -1,0 +1,27 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/ImageToAscii.py
+Description: Test ImageToAscii Processor
+Identifier: com.github.jgstew.test.ImageToAscii
+Input:
+  NAME: ImageToAsciiTest
+MinimumVersion: "2.4.1"
+Process:
+  # download an SVG and convert to PNG to get a real image to work with:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://raw.githubusercontent.com/jgstew/jgstew.github.io/refs/heads/master/images/BigFix/BigFix_logo_DevSite_512.png
+      filename: "%NAME%-icon.png"
+      download_version: ""
+      COMPUTE_HASHES: False
+
+  # render the PNG as ASCII art:
+  - Processor: com.github.jgstew.SharedProcessors/ImageToAscii
+    Arguments:
+      # file_pathname: "%file_path_png%"
+      ascii_width: 60
+
+  # confirm we got non-empty ASCII art containing at least one ramp character:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%ascii_art%"
+      assert_string: "@"

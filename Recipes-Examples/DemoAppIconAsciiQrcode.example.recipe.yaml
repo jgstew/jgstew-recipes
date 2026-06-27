@@ -1,0 +1,37 @@
+---
+# A "for fun" demo recipe in the spirit of TextToSpeechWeather.example.recipe.yaml
+# It shows off how far AutoPkg can be pushed beyond packaging:
+#   download -> extract an icon -> draw that icon in your terminal as ASCII ->
+#   show a scannable QR code of the download link -> ping a chat webhook.
+# https://github.com/jgstew/jgstew-recipes/tree/main/Recipes-Examples
+Description: Example demo recipe - downloads an app, draws its icon as terminal ASCII art, and shows a scannable QR code.
+Identifier: com.github.jgstew.example.ConferenceDemo
+Input:
+  NAME: ConferenceDemo
+  # A Windows executable with a recognizable embedded icon.
+  # SoftwareUpdate.exe is small and proven to have an extractable icon:
+  download_url: https://software.bigfix.com/download/bes/110/BigFix-BES-Client-ARM-11.0.6.137.exe
+MinimumVersion: "2.4.1"
+Process:
+  # 1. download the app:
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: "%download_url%"
+      COMPUTE_HASHES: False
+
+  # 2. extract the embedded application icon:
+  - Processor: com.github.jgstew.SharedProcessors/FileExeGetIcon
+
+  # 3. draw that icon in the terminal as ASCII art:
+  - Processor: com.github.jgstew.SharedProcessors/ImageToAscii
+    Arguments:
+      file_pathname: "%icon_file_output%"
+      ascii_width: 60
+
+  # 4. show a scannable QR code of the download link (audience scans it live):
+  - Processor: com.github.jgstew.SharedProcessors/QRCodeGenerator
+    Arguments:
+      qr_data: "%download_url%"
+      qr_output_path: "%RECIPE_CACHE_DIR%/%NAME%-qr.png"
+
+  - Processor: EndOfCheckPhase

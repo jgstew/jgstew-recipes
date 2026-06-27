@@ -31,11 +31,18 @@ jobs:
           brew install libmagic cairo libffi pkg-config
           echo "DYLD_LIBRARY_PATH=$(brew --prefix)/lib" >> "${GITHUB_ENV}"
 
+      - name: Cache MSYS2 packages
+        if: runner.os == 'Windows'
+        uses: actions/cache@v4
+        with:
+          path: C:\msys64\var\cache\pacman\pkg
+          key: msys2-${{ runner.os }}-cairo-file
+
       - name: Install prereq Windows
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          & "C:\msys64\usr\bin\pacman.exe" -S --noconfirm mingw-w64-x86_64-cairo mingw-w64-x86_64-file
+          & "C:\msys64\usr\bin\pacman.exe" -S --noconfirm --needed mingw-w64-x86_64-cairo mingw-w64-x86_64-file
           Add-Content $env:GITHUB_PATH "C:\msys64\mingw64\bin"
 
       - name: setup-autopkg

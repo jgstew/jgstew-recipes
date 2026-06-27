@@ -1,8 +1,67 @@
 ---
-Description: Test SharedUtilityMethods Processor
+# Tests the SharedUtilityMethods processor AND processors that consume it, both
+# ways it is consumed:
+#   - via subclass / instance methods (FileGetExecutable -> verify_file_executable)
+#   - via the shared module-level finders (FileArchiveListContents -> find_7zip,
+#     FileAudioConvert -> find_ffmpeg)
+Description: Test SharedUtilityMethods Processor and processors that consume it
 Identifier: com.github.jgstew.test.SharedUtilityMethods
 Input:
   NAME: SharedUtilityMethodsTest
 MinimumVersion: "2.4.1"
 Process:
+  # SharedUtilityMethods itself does nothing on its own, but loads cleanly and
+  # puts the SharedProcessors dir on sys.path for any older consumers:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
+
+  # --- consumer 1: FileGetExecutable subclasses SharedUtilityMethods and uses
+  #     its verify_file_executable() method to find the first existing 7z ---
+  - Processor: com.github.jgstew.SharedProcessors/FileGetExecutable
+    Arguments:
+      path_array:
+        - "7z"
+        - "/opt/homebrew/bin/7z"
+        - "/usr/local/bin/7z"
+        - "/usr/bin/7z"
+        - "/Program Files/7-Zip/7z.exe"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%path_result%"
+      assert_string: "7z"
+
+  # --- consumer 2: FileArchiveListContents imports find_7zip from
+  #     SharedUtilityMethods to locate 7z, then lists an archive's contents ---
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: http://software.bigfix.com/download/redist/unzip-5.52.exe
+      COMPUTE_HASHES: False
+  - Processor: com.github.jgstew.SharedProcessors/FileArchiveListContents
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: archive_file_count
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%archive_file_count%"
+      assert_string: "3"
+
+  # --- consumer 3: FileAudioConvert imports find_ffmpeg from
+  #     SharedUtilityMethods to locate ffmpeg, then converts .oga -> .wav ---
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://upload.wikimedia.org/wikipedia/commons/8/81/Heart_Monitor_Beep--freesound.org.oga
+      filename: beep.oga
+      download_version: ""
+      COMPUTE_HASHES: False
+      User_Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36
+  - Processor: com.github.jgstew.SharedProcessors/FileAudioConvert
+    Arguments:
+      file_pathname: "%RECIPE_CACHE_DIR%/downloads/beep.oga"
+      output_format: wav
+      raise_error: true
+  - Processor: com.github.jgstew.SharedProcessors/FileGetMagicType
+    Arguments:
+      file_pathname: "%file_path_audio%"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_magic_type%"
+      assert_string: "WAVE audio"

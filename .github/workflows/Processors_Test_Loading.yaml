@@ -35,7 +35,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          & "C:\msys64\usr\bin\pacman.exe" -S --noconfirm mingw-w64-x86_64-cairo
+          & "C:\msys64\usr\bin\pacman.exe" -S --noconfirm mingw-w64-x86_64-cairo mingw-w64-x86_64-file
           Add-Content $env:GITHUB_PATH "C:\msys64\mingw64\bin"
 
       - name: setup-autopkg

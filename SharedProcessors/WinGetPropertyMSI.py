@@ -26,16 +26,15 @@ __all__ = ["WinGetPropertyMSI"]
 
 DEPRECATION_MESSAGE = (
     "WinGetPropertyMSI is deprecated and will be removed in a future release. "
-    "Use the cross-platform FileMsiGetProperty processor instead."
+    "Use the cross-platform FileMsiGetProperty processor instead, which works on Windows, macOS, and "
+    "Linux."
 )
 
 
 class WinGetPropertyMSI(Processor):  # pylint: disable=too-few-public-methods
-    """DEPRECATED: Reads a property from an MSI file using Windows msilib.
+    f"""DEPRECATED: Reads a property from an MSI file using Windows only msilib.
 
-    This processor is Windows-only and is deprecated. Use the cross-platform
-    `FileMsiGetProperty` processor instead, which works on Windows, macOS, and
-    Linux. This processor will be removed in a future release.
+    {DEPRECATION_MESSAGE}
     """
 
     description = __doc__

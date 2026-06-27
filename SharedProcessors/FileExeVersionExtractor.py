@@ -9,9 +9,16 @@ Extracts version info from .exe file using the 7z utility.
 
 import os
 import subprocess
+import sys
 
 from autopkglib import Processor, ProcessorError, is_windows
-from SharedUtilityMethods import SharedUtilityMethods
+
+# Add this processor's own directory to sys.path so the sibling SharedProcessors
+# module below can be imported without requiring SharedUtilityMethods to run
+# first in the recipe.
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from SharedUtilityMethods import SharedUtilityMethods  # noqa: E402  isort:skip
 
 __all__ = ["FileExeVersionExtractor"]
 

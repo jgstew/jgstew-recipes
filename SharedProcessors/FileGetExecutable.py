@@ -4,12 +4,19 @@ See docstring for FileGetExecutable class
 """
 
 import os
+import sys
 
 from autopkglib import (  # pylint: disable=import-error,unused-import
     Processor,
     ProcessorError,
 )
-from SharedUtilityMethods import SharedUtilityMethods
+
+# Add this processor's own directory to sys.path so the sibling SharedProcessors
+# module below can be imported without requiring SharedUtilityMethods to run
+# first in the recipe.
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from SharedUtilityMethods import SharedUtilityMethods  # noqa: E402  isort:skip
 
 __all__ = ["FileGetExecutable"]
 

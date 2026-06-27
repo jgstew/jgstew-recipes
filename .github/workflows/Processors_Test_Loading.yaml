@@ -26,7 +26,9 @@ jobs:
 
       - name: Install prereq macOS
         if: runner.os == 'macOS'
-        run: brew install libmagic cairo libffi pkg-config
+        run: |
+          brew install libmagic cairo libffi pkg-config
+          echo "DYLD_LIBRARY_PATH=$(brew --prefix)/lib" >> "${GITHUB_ENV}"
 
       - name: Install prereq Windows
         if: runner.os == 'Windows'

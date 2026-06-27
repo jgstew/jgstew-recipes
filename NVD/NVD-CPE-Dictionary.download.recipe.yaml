@@ -9,8 +9,10 @@ Input:
   cpe_version: "2.3"
 MinimumVersion: "2.4.1"
 Process:
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       # https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v2.3.xml.zip
-      url: https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v%cpe_version%.xml.%TYPE%
+      # https://nvd.nist.gov/feeds/json/cpe/2.0/nvdcpe-2.0.zip
+      url: https://nvd.nist.gov/feeds/json/cpe/2.0/nvdcpe-2.0.zip
+
   - Processor: EndOfCheckPhase

@@ -36,7 +36,7 @@ Process:
       # get the unique sorted set of vendor:product parts of CPEs, put in file
       search_pattern: '(?i)"cpe:2.3:a:(\w+:\w+):'
       search_path: "%RECIPE_CACHE_DIR%/downloads"
-      search_extension: ".xml"
+      search_extension: ".json"
       output_file_path: "/tmp/cpe-vendor-product.txt"
   # - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
   #   Arguments:

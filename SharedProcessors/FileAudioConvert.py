@@ -9,31 +9,20 @@
 
 import os
 import subprocess
+import sys
 
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
 )
 
-__all__ = ["FileAudioConvert"]
+# Add this processor's own directory to sys.path so the shared ffmpeg finder can
+# be imported without requiring SharedUtilityMethods to run first in the recipe.
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-# ffmpeg handles the actual decode/encode. Install instructions:
-#   MacOS:   brew install ffmpeg
-#   Ubuntu:  sudo apt-get install -y ffmpeg
-#   Windows: choco install -y ffmpeg
-DEFAULT_FFMPEG_PATHS = [
-    # Exe in current directory / on PATH:
-    "ffmpeg",
-    "ffmpeg.exe",
-    # MacOS typical:
-    "/opt/homebrew/bin/ffmpeg",
-    "/usr/local/bin/ffmpeg",
-    # Ubuntu typical:
-    "/usr/bin/ffmpeg",
-    # Windows typical:
-    "/Program Files/ffmpeg/bin/ffmpeg.exe",
-    "/ProgramData/chocolatey/bin/ffmpeg.exe",
-]
+from SharedUtilityMethods import find_ffmpeg  # noqa: E402  isort:skip
+
+__all__ = ["FileAudioConvert"]
 
 
 class FileAudioConvert(Processor):  # pylint: disable=invalid-name
@@ -86,17 +75,6 @@ class FileAudioConvert(Processor):  # pylint: disable=invalid-name
     }
     __doc__ = description
 
-    def find_ffmpeg(self):
-        """Locate the ffmpeg executable from the configured or default paths.
-
-        Returns:
-            Path to the first ffmpeg executable found, or 'ffmpeg' as a fallback
-        """
-        for exepath in [self.env.get("ffmpeg_path", "")] + DEFAULT_FFMPEG_PATHS:
-            if exepath and os.path.isfile(exepath) and os.access(exepath, os.X_OK):
-                return exepath
-        return "ffmpeg"
-
     def main(self):
         """Execution starts here."""
         file_pathname = self.env.get("file_pathname", self.env.get("pathname"))
@@ -113,7 +91,7 @@ class FileAudioConvert(Processor):  # pylint: disable=invalid-name
             file_root = os.path.splitext(file_pathname)[0]
             file_path_save = f"{file_root}.{output_format}"
 
-        ffmpeg = self.find_ffmpeg()
+        ffmpeg = find_ffmpeg(self.env.get("ffmpeg_path", ""))
         self.output(f"Using Path to ffmpeg: {ffmpeg}")
 
         # -y to overwrite, -loglevel error to keep output quiet unless something breaks

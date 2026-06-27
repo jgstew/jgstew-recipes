@@ -9,33 +9,20 @@
 
 import os
 import subprocess
+import sys
 
 from autopkglib import (  # pylint: disable=import-error,wrong-import-position,unused-import
     Processor,
     ProcessorError,
 )
 
-__all__ = ["FileArchiveListContents"]
+# Add this processor's own directory to sys.path so the shared 7z finder can be
+# imported without requiring SharedUtilityMethods to run first in the recipe.
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-DEFAULT_7ZIP_PATHS = [
-    # Exe in current directory:
-    "7z",
-    "7z.exe",
-    # MacOS typical:
-    # NONINTERACTIVE=1 brew install p7zip
-    "/opt/homebrew/bin/7z",
-    "/usr/local/bin/7z",
-    "/opt/homebrew/bin/7zz",
-    # NONINTERACTIVE=1 brew install sevenzip
-    "/usr/local/bin/7zz",
-    # Ubuntu typical:
-    # sudo apt-get install -y p7zip-full
-    "/usr/bin/7z",
-    # Windows typical:
-    # choco install -y 7zip
-    "/Program Files/7-Zip/7z.exe",
-    "/Program Files (x86)/7-Zip/7z.exe",
-]
+from SharedUtilityMethods import find_7zip  # noqa: E402  isort:skip
+
+__all__ = ["FileArchiveListContents"]
 
 
 class FileArchiveListContents(Processor):  # pylint: disable=invalid-name
@@ -63,17 +50,6 @@ class FileArchiveListContents(Processor):  # pylint: disable=invalid-name
     }
     __doc__ = description
 
-    def find_sevenzip(self):
-        """Locate the 7z executable from the configured or default paths.
-
-        Returns:
-            Path to the first 7z executable found, or '7z' as a fallback
-        """
-        for exepath in [self.env.get("sevenzip_path", "")] + DEFAULT_7ZIP_PATHS:
-            if exepath and os.path.isfile(exepath) and os.access(exepath, os.X_OK):
-                return exepath
-        return "7z"
-
     def main(self):
         """Execution starts here."""
         file_path = self.env.get("file_path", self.env.get("pathname"))
@@ -81,7 +57,7 @@ class FileArchiveListContents(Processor):  # pylint: disable=invalid-name
         if not file_path or not os.path.isfile(file_path):
             raise ProcessorError(f"Archive file not found: {file_path}")
 
-        sevenzip = self.find_sevenzip()
+        sevenzip = find_7zip(self.env.get("sevenzip_path", ""))
         self.output(f"Using Path to 7zip: {sevenzip}")
 
         # `l -slt` produces a technical listing with one `Path = ...` line per entry.

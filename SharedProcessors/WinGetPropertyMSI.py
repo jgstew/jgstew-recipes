@@ -3,9 +3,15 @@
 See docstring for WinGetPropertyMSI class
 """
 
+import os
+import warnings
+
 try:
     import msilib
 except ImportError:
+    # msilib is Windows-only; define it as None so the non-Windows path in
+    # main() can detect its absence instead of raising a NameError.
+    msilib = None
     print("ImportError: msilib")
     print("  Note: this is expected on non-windows platforms")
 
@@ -18,9 +24,19 @@ from autopkglib import (  # pylint: disable=import-error,unused-import
 
 __all__ = ["WinGetPropertyMSI"]
 
+DEPRECATION_MESSAGE = (
+    "WinGetPropertyMSI is deprecated and will be removed in a future release. "
+    "Use the cross-platform FileMsiGetProperty processor instead."
+)
+
 
 class WinGetPropertyMSI(Processor):  # pylint: disable=too-few-public-methods
-    """Reads a property from an MSI file using Windows msilib. Windows-only; use FileMsiGetProperty for cross-platform support."""
+    """DEPRECATED: Reads a property from an MSI file using Windows msilib.
+
+    This processor is Windows-only and is deprecated. Use the cross-platform
+    `FileMsiGetProperty` processor instead, which works on Windows, macOS, and
+    Linux. This processor will be removed in a future release.
+    """
 
     description = __doc__
     input_variables = {
@@ -40,6 +56,9 @@ class WinGetPropertyMSI(Processor):  # pylint: disable=too-few-public-methods
     output_variables = {
         "msi_property_value": {
             "description": "The value of the property if applicable."
+        },
+        "deprecation_warning": {
+            "description": "The deprecation warning message emitted by this processor."
         },
     }
 
@@ -68,9 +87,12 @@ class WinGetPropertyMSI(Processor):  # pylint: disable=too-few-public-methods
 
     def main(self):
         """Execution starts here."""
-        self.output(
-            "INFO: Consider using the new and improved `FileMsiGetProperty` processor instead!"
-        )
+        # emit a real DeprecationWarning for tooling/log capture:
+        warnings.warn(DEPRECATION_MESSAGE, DeprecationWarning, stacklevel=2)
+        # always-visible warning in AutoPkg output (verbosity 0):
+        self.output(f"DEPRECATION WARNING: {DEPRECATION_MESSAGE}", 0)
+        # expose the warning as an output variable so it can be asserted on:
+        self.env["deprecation_warning"] = DEPRECATION_MESSAGE
 
         if not msilib:
             self.output("WARNING: This does not work on non-Windows", 0)
@@ -78,6 +100,15 @@ class WinGetPropertyMSI(Processor):  # pylint: disable=too-few-public-methods
 
         msi_filepath = self.env.get("pathname", None)
         msi_property = self.env.get("msi_property", None)
+
+        # gracefully skip the read if the MSI is missing (keeps this cross-platform
+        # safe to invoke, e.g. for the deprecation-only test recipe):
+        if not msi_filepath or not os.path.isfile(msi_filepath):
+            self.output(
+                f"WARNING: MSI file not found, skipping read: {msi_filepath}", 0
+            )
+            return ""
+
         msi_property_value = self.get_property_msi(msi_filepath, msi_property)
 
         self.output(msi_property_value, 2)

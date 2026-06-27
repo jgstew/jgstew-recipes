@@ -1,0 +1,25 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/WinGetPropertyMSI.py
+# WinGetPropertyMSI is DEPRECATED (use FileMsiGetProperty instead). This test is
+# cross-platform: it only confirms the processor emits its deprecation warning.
+# A non-existent pathname is used so no actual MSI read is attempted on any OS.
+Description: Test WinGetPropertyMSI Processor (deprecation warning only)
+Identifier: com.github.jgstew.test.WinGetPropertyMSI
+Input:
+  NAME: WinGetPropertyMSITest
+MinimumVersion: "2.4.1"
+Process:
+  - Processor: com.github.jgstew.SharedProcessors/WinGetPropertyMSI
+    Arguments:
+      pathname: "%RECIPE_CACHE_DIR%/does_not_exist.msi"
+
+  # confirm the deprecation warning was emitted and points to the replacement:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%deprecation_warning%"
+      assert_string: "deprecated"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%deprecation_warning%"
+      assert_string: "FileMsiGetProperty"

@@ -25,17 +25,18 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Cache Homebrew packages
-        if: runner.os == 'macOS'
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/Library/Caches/Homebrew
-            /opt/homebrew/Cellar/libmagic
-            /opt/homebrew/Cellar/cairo
-            /opt/homebrew/Cellar/libffi
-            /opt/homebrew/Cellar/pkg-config
-          key: brew-${{ runner.os }}-libmagic-cairo-libffi-pkg-config
+      # # this does not seem to save time:
+      # - name: Cache Homebrew packages
+      #   if: runner.os == 'macOS'
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: |
+      #       ~/Library/Caches/Homebrew
+      #       /opt/homebrew/Cellar/libmagic
+      #       /opt/homebrew/Cellar/cairo
+      #       /opt/homebrew/Cellar/libffi
+      #       /opt/homebrew/Cellar/pkg-config
+      #     key: brew-${{ runner.os }}-libmagic-cairo-libffi-pkg-config
 
       - name: Install prereq macOS
         if: runner.os == 'macOS'
@@ -43,12 +44,13 @@ jobs:
           brew install libmagic cairo libffi pkg-config
           echo "DYLD_LIBRARY_PATH=$(brew --prefix)/lib" >> "${GITHUB_ENV}"
 
-      - name: Cache MSYS2 packages
-        if: runner.os == 'Windows'
-        uses: actions/cache@v4
-        with:
-          path: C:\msys64\var\cache\pacman\pkg
-          key: msys2-${{ runner.os }}-cairo-file
+      # # this does not seem to save time:
+      # - name: Cache MSYS2 packages
+      #   if: runner.os == 'Windows'
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: C:\msys64\var\cache\pacman\pkg
+      #     key: msys2-${{ runner.os }}-cairo-file
 
       - name: Install prereq Windows
         if: runner.os == 'Windows'

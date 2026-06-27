@@ -25,6 +25,18 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Cache Homebrew packages
+        if: runner.os == 'macOS'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+            /opt/homebrew/Cellar/libmagic
+            /opt/homebrew/Cellar/cairo
+            /opt/homebrew/Cellar/libffi
+            /opt/homebrew/Cellar/pkg-config
+          key: brew-${{ runner.os }}-libmagic-cairo-libffi-pkg-config
+
       - name: Install prereq macOS
         if: runner.os == 'macOS'
         run: |

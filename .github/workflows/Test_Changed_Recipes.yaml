@@ -65,6 +65,7 @@ jobs:
               -not -name "BigFixFileUploader.test.recipe.yaml" \
               -not -name "MSI-Win.local.recipe.yaml" \
               -not -name "ScreenConnect-Win.download.recipe.yaml" \
+              -not -name "DesktopConnector.download.recipe.yaml" \
               | sort > TestRecipesAction.txt
           else
             echo "Push/PR run: testing changed recipes only."

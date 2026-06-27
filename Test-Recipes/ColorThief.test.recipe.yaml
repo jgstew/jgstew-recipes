@@ -14,13 +14,39 @@ Process:
       download_version: ""
       COMPUTE_HASHES: False
 
-  # extract the dominant color and palette:
+  # CASE 1: extract the dominant color and a 5-color palette:
   - Processor: com.github.jgstew.SharedProcessors/ColorThief
     Arguments:
       file_pathname: "%RECIPE_CACHE_DIR%/downloads/%NAME%.png"
       color_count: 5
 
-  # confirm the dominant color came back as a hex string:
+  # the dominant color should be a #RRGGBB hex string:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%dominant_color_hex%"
+      assert_string: "#"
+
+  # the dominant color should also be reported as an r,g,b string:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%dominant_color_rgb%"
+      assert_string: ","
+
+  # the palette array should contain hex colors:
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: palette_colors
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%palette_colors%"
+      assert_string: "#"
+
+  # CASE 2: a smaller palette still yields a dominant color:
+  - Processor: com.github.jgstew.SharedProcessors/ColorThief
+    Arguments:
+      file_pathname: "%RECIPE_CACHE_DIR%/downloads/%NAME%.png"
+      color_count: 2
+
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%dominant_color_hex%"

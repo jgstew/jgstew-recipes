@@ -6,7 +6,7 @@ Input:
   NAME: QRCodeGeneratorTest
 MinimumVersion: "2.4.1"
 Process:
-  # generate a QR code, print it to the log, and save a PNG:
+  # CASE 1: generate a QR code, print it to the log, and save a PNG:
   - Processor: com.github.jgstew.SharedProcessors/QRCodeGenerator
     Arguments:
       qr_data: "https://github.com/jgstew/jgstew-recipes"
@@ -21,3 +21,20 @@ Process:
     Arguments:
       input_string: "%file_mime_type%"
       assert_string: "image/png"
+
+  # CASE 2: ASCII-only mode (explicitly clear qr_output_path so no PNG is saved;
+  # AutoPkg env persists across processors, so CASE 1's value must be overridden):
+  - Processor: com.github.jgstew.SharedProcessors/QRCodeGenerator
+    Arguments:
+      qr_data: "ascii-only test"
+      qr_print_ascii: true
+      qr_output_path: ""
+
+  # qr_output_path should be empty when no PNG path was provided:
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: qr_output_path
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "[%qr_output_path%]"
+      assert_string: "[]"

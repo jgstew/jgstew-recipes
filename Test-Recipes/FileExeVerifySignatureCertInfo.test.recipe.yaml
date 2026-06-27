@@ -19,14 +19,36 @@ Process:
     Arguments:
       file_pathname: "%RECIPE_CACHE_DIR%/downloads/SoftwareUpdate.exe"
 
-  # confirm the signer common name was extracted:
+  # the signer common name should be Apple Inc.:
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_cert_subject_cn%"
       assert_string: "Apple Inc."
 
-  # confirm the serial number was extracted:
+  # the issuer should be the VeriSign code-signing CA:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_cert_issuer_cn%"
+      assert_string: "VeriSign Class 3 Code Signing 2004 CA"
+
+  # the serial number should be extracted exactly:
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_cert_serial_number%"
       assert_string: "12451790217711796967571790799059482938"
+
+  # the certificate validity window should be present:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_cert_valid_from%"
+      assert_string: "2007-06-27"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_cert_valid_to%"
+      assert_string: "2009-06-26"
+
+  # the SHA1 fingerprint should be extracted:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_cert_sha1_fingerprint%"
+      assert_string: "814145830c503915d23184a267c4aea99df1cc6e"

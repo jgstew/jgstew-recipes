@@ -6,7 +6,7 @@ Input:
   NAME: VersionCompareTest
 MinimumVersion: "2.4.1"
 Process:
-  # 1.2.10 is newer than 1.2.3 (numeric, not lexical, comparison):
+  # CASE 1: 1.2.10 is newer than 1.2.3 (numeric, not lexical, comparison):
   - Processor: com.github.jgstew.SharedProcessors/VersionCompare
     Arguments:
       version1: "1.2.10"
@@ -22,7 +22,16 @@ Process:
       input_string: "%version_newest%"
       assert_string: "1.2.10"
 
-  # equal versions:
+  # the integer result for newer should be 1:
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: version_comparison_int
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_comparison_int%"
+      assert_string: "1"
+
+  # CASE 2: equal versions:
   - Processor: com.github.jgstew.SharedProcessors/VersionCompare
     Arguments:
       version1: "3.0.0"
@@ -32,3 +41,28 @@ Process:
     Arguments:
       input_string: "%version_comparison_result%"
       assert_string: "equal"
+
+  # CASE 3: 1.0 is older than 2.0 (and newest should be 2.0):
+  - Processor: com.github.jgstew.SharedProcessors/VersionCompare
+    Arguments:
+      version1: "1.0"
+      version2: "2.0"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_comparison_result%"
+      assert_string: "older"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_newest%"
+      assert_string: "2.0"
+
+  # the integer result for older should be -1:
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: version_comparison_int
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_comparison_int%"
+      assert_string: "-1"

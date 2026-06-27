@@ -6,7 +6,7 @@ Input:
   NAME: FileGetMetadataTest
 MinimumVersion: "2.4.1"
 Process:
-  # download a small WAV with known properties:
+  # CASE 1: audio metadata from a small WAV:
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: https://upload.wikimedia.org/wikipedia/commons/9/98/Beepalert.wav
@@ -15,13 +15,49 @@ Process:
       COMPUTE_HASHES: False
       User_Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
 
-  # extract metadata with hachoir:
   - Processor: com.github.jgstew.SharedProcessors/FileGetMetadata
     Arguments:
       file_pathname: "%RECIPE_CACHE_DIR%/downloads/beep.wav"
 
-  # confirm hachoir detected the WAV MIME type:
+  # hachoir should detect the WAV MIME type:
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_metadata_mime%"
       assert_string: "audio/x-wav"
+
+  # a duration in seconds should be reported for audio (contains a decimal point):
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_metadata_duration_seconds%"
+      assert_string: "."
+
+  # the full metadata dict should include the sample rate field:
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: file_metadata
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_metadata%"
+      assert_string: "sample_rate"
+
+  # CASE 2: image metadata (width/height) from a PNG:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://raw.githubusercontent.com/jgstew/jgstew.github.io/refs/heads/master/images/BigFix/BigFix_logo_DevSite_512.png
+      filename: logo.png
+      download_version: ""
+      COMPUTE_HASHES: False
+
+  - Processor: com.github.jgstew.SharedProcessors/FileGetMetadata
+    Arguments:
+      file_pathname: "%RECIPE_CACHE_DIR%/downloads/logo.png"
+
+  # the 512x512 logo should report its dimensions:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_metadata_width%"
+      assert_string: "512"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_metadata_height%"
+      assert_string: "512"

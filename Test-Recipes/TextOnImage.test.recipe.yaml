@@ -14,7 +14,7 @@ Process:
       download_version: ""
       COMPUTE_HASHES: False
 
-  # overlay text onto the image:
+  # CASE 1: overlay text at the bottom (default-style usage):
   - Processor: com.github.jgstew.SharedProcessors/TextOnImage
     Arguments:
       file_pathname: "%RECIPE_CACHE_DIR%/downloads/%NAME%.png"
@@ -22,12 +22,45 @@ Process:
       position: bottom
       font_size: 48
 
-  # confirm the output is still a valid image:
+  # confirm the output is still a valid PNG and used the default _text suffix:
   - Processor: com.github.jgstew.SharedProcessors/FileGetMagicType
     Arguments:
       file_pathname: "%file_path_text%"
-
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_mime_type%"
       assert_string: "image/png"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_path_text%"
+      assert_string: "_text"
+
+  # CASE 2: explicit x,y coordinates, custom colors, and an explicit save path:
+  - Processor: com.github.jgstew.SharedProcessors/TextOnImage
+    Arguments:
+      file_pathname: "%RECIPE_CACHE_DIR%/downloads/%NAME%.png"
+      text_string: "TOP LEFT"
+      position: "10,10"
+      font_size: 24
+      text_color: "yellow"
+      outline_color: "red"
+      file_path_save: "%RECIPE_CACHE_DIR%/coords.png"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_path_text%"
+      assert_string: "coords.png"
+
+  # CASE 3: centered text written to a JPG (RGBA is flattened to RGB):
+  - Processor: com.github.jgstew.SharedProcessors/TextOnImage
+    Arguments:
+      file_pathname: "%RECIPE_CACHE_DIR%/downloads/%NAME%.png"
+      text_string: "CENTERED"
+      position: center
+      file_path_save: "%RECIPE_CACHE_DIR%/centered.jpg"
+  - Processor: com.github.jgstew.SharedProcessors/FileGetMagicType
+    Arguments:
+      file_pathname: "%file_path_text%"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_mime_type%"
+      assert_string: "image/jpeg"

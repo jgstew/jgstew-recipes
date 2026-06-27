@@ -19,14 +19,47 @@ Process:
     Arguments:
       file_pathname: "%RECIPE_CACHE_DIR%/downloads/SoftwareUpdate.exe"
 
-  # confirm the architecture was detected as x86:
+  # architecture should be detected as x86:
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_pe_machine%"
       assert_string: "x86"
 
-  # confirm the compile date was read from the PE header:
+  # compile date should be read from the PE header:
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%file_pe_compile_date%"
       assert_string: "2008-07-25"
+
+  # subsystem should be a windowed GUI app:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_pe_subsystem%"
+      assert_string: "windows_gui"
+
+  # it is an EXE, not a DLL:
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: file_pe_is_exe
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_pe_is_exe%"
+      assert_string: "True"
+
+  # the standard .text code section should be present:
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: file_pe_sections
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_pe_sections%"
+      assert_string: ".text"
+
+  # it imports the core Windows KERNEL32.dll:
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: file_pe_imported_dlls
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_pe_imported_dlls%"
+      assert_string: "KERNEL32.dll"

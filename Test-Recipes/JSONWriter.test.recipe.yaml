@@ -6,7 +6,7 @@ Input:
   NAME: JSONWriterTest
 MinimumVersion: "2.4.1"
 Process:
-  # write a JSON string out to a file (parsed then re-serialized):
+  # CASE 1: write a JSON string out to a file (parsed then re-serialized):
   - Processor: com.github.jgstew.SharedProcessors/JSONWriter
     Arguments:
       json_output_path: "%RECIPE_CACHE_DIR%/test_output.json"
@@ -24,3 +24,39 @@ Process:
     Arguments:
       input_string: "%json_path_result%"
       assert_string: "John"
+
+  # CASE 2: write a native dictionary (YAML mapping) with nested values:
+  - Processor: com.github.jgstew.SharedProcessors/JSONWriter
+    Arguments:
+      json_output_path: "%RECIPE_CACHE_DIR%/dict_output.json"
+      indent: 2
+      sort_keys: true
+      json_input:
+        product: "ExampleApp"
+        version: "1.2.3"
+        nested:
+          build: 42
+
+  # confirm a top-level value round-tripped:
+  - Processor: com.github.jgstew.SharedProcessors/JsonPath
+    Arguments:
+      json_input: "%RECIPE_CACHE_DIR%/dict_output.json"
+      json_path: "$.product"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%json_path_result%"
+      assert_string: "ExampleApp"
+
+  # confirm a nested value round-tripped (build is an int, so stringify it
+  # before AssertInputContainsString can substitute it):
+  - Processor: com.github.jgstew.SharedProcessors/JsonPath
+    Arguments:
+      json_input: "%RECIPE_CACHE_DIR%/dict_output.json"
+      json_path: "$.nested.build"
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: json_path_result
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%json_path_result%"
+      assert_string: "42"

@@ -48,7 +48,7 @@ class TextToSpeech(Processor):  # pylint: disable=invalid-name
             os.system("spd-say %s" % text_shellquoted)
         elif syst == "Windows":
             os.system(
-                'PowerShell -Command "Add-Type –AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak(%s);"'
+                'PowerShell -Command "Add-Type -AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak(%s);"'
                 % input_string
             )
         elif syst == "Darwin":

@@ -6,7 +6,7 @@ Input:
   NAME: VersionSortTest
 MinimumVersion: "2.4.1"
 Process:
-  # sort a deliberately out-of-order list (1.2.10 must sort after 1.2.9):
+  # CASE 1: sort a deliberately out-of-order list (1.2.10 must sort after 1.2.9):
   - Processor: com.github.jgstew.SharedProcessors/VersionSort
     Arguments:
       version_array:
@@ -27,3 +27,44 @@ Process:
     Arguments:
       input_string: "%version_minimum%"
       assert_string: "1.2.3"
+
+  # ascending order should place 1.2.9 before 1.2.10 (version-aware, not lexical):
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: version_array_sorted
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_array_sorted%"
+      assert_string: "'1.2.9', '1.2.10'"
+
+  # CASE 2: descending sort should put the newest version first:
+  - Processor: com.github.jgstew.SharedProcessors/VersionSort
+    Arguments:
+      version_array:
+        - "1.2.3"
+        - "2.0.0"
+        - "1.10.0"
+      sort_descending: true
+
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: version_array_sorted
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_array_sorted%"
+      assert_string: "['2.0.0', '1.10.0', '1.2.3']"
+
+  # CASE 3: a single-element array - min and max are the same value:
+  - Processor: com.github.jgstew.SharedProcessors/VersionSort
+    Arguments:
+      version_array:
+        - "9.9.9"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_maximum%"
+      assert_string: "9.9.9"
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_minimum%"
+      assert_string: "9.9.9"

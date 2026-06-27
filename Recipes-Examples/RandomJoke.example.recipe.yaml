@@ -1,0 +1,60 @@
+---
+# A "for fun" demo recipe in the spirit of TextToSpeechWeather.example.recipe.yaml
+# It fetches a random joke from a free, no-API-key endpoint, then reads the
+# setup aloud, pauses for comedic timing, and delivers the punchline.
+# Uses only existing processors: URLDownloaderPython, JsonPath, Sleep, TextToSpeech.
+# https://github.com/jgstew/jgstew-recipes/tree/main/Recipes-Examples
+Description: Example RandomJoke recipe - fetches a random joke and reads the setup and punchline aloud with a dramatic pause in between.
+Identifier: com.github.jgstew.example.RandomJoke
+Input:
+  NAME: RandomJoke
+  # free, returns JSON by default - no API key or headers required:
+  joke_url: https://official-joke-api.appspot.com/random_joke
+  # seconds to pause between the setup and the punchline:
+  punchline_delay: "2"
+MinimumVersion: "2.4.1"
+Process:
+  # fetch a random joke as JSON:
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: "%joke_url%"
+      filename: joke.json
+      COMPUTE_HASHES: False
+
+  # extract the setup line:
+  - Processor: com.github.jgstew.SharedProcessors/JsonPath
+    Arguments:
+      json_input: "%RECIPE_CACHE_DIR%/downloads/joke.json"
+      json_path: "$.setup"
+
+  # read the setup aloud:
+  - Processor: com.github.jgstew.SharedProcessors/TextToSpeech
+    Arguments:
+      input_string: "%json_path_result%"
+
+  # dramatic pause for comedic timing:
+  - Processor: com.github.jgstew.SharedProcessors/Sleep
+    Arguments:
+      sleep_seconds: "%punchline_delay%"
+
+  # extract the punchline:
+  - Processor: com.github.jgstew.SharedProcessors/JsonPath
+    Arguments:
+      json_input: "%RECIPE_CACHE_DIR%/downloads/joke.json"
+      json_path: "$.punchline"
+
+  # deliver the punchline aloud:
+  - Processor: com.github.jgstew.SharedProcessors/TextToSpeech
+    Arguments:
+      input_string: "%json_path_result%"
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: "download_changed"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%download_changed%"
+      assert_string: "True"

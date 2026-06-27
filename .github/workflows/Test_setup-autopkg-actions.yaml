@@ -20,9 +20,16 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Read Python version
+        id: pyver
+        shell: bash
+        run: echo "version=$(cat .python-version)" >> $GITHUB_OUTPUT
+
       - name: test setup-autopkg-actions action
         # https://github.com/orgs/community/discussions/26073
         uses: autopkg/setup-autopkg-actions@main
+        with:
+          use-python-version: ${{ steps.pyver.outputs.version }}
 
       - name: run recipe autopkg
         run: python autopkg/Code/autopkg run -vv Test-Recipes/AutopkgCore.test.recipe.yaml

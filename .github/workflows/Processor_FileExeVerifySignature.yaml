@@ -27,8 +27,15 @@ jobs:
         if: matrix.os == 'ubuntu-22.04'
         run: sudo apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev python3-dev
 
-      - name: setup-autopkg local action
+      - name: Read Python version
+        id: pyver
+        shell: bash
+        run: echo "version=$(cat .python-version)" >> $GITHUB_OUTPUT
+
+      - name: setup-autopkg
         uses: ./.github/actions/setup-autopkg
+        with:
+          use-python-version: ${{ steps.pyver.outputs.version }}
 
       - name: Install requirements
         run: pip install --requirement requirements.txt

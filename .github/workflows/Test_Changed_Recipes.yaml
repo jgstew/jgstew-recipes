@@ -39,11 +39,17 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: sudo apt-get install -y msitools speech-dispatcher libssl-dev libxml2-dev libxslt1-dev zlib1g-dev python3-dev
 
-      - name: setup-autopkg local action
+      - name: Read Python version
+        if: steps.changed-files.outputs.any_changed == 'true'
+        id: pyver
+        shell: bash
+        run: echo "version=$(cat .python-version)" >> $GITHUB_OUTPUT
+
+      - name: setup-autopkg
         if: steps.changed-files.outputs.any_changed == 'true'
         uses: ./.github/actions/setup-autopkg
-        # with:
-        #   use-autopkg-branch: dev
+        with:
+          use-python-version: ${{ steps.pyver.outputs.version }}
 
       - name: Install repo requirements
         if: steps.changed-files.outputs.any_changed == 'true'

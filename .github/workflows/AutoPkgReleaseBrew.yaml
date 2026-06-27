@@ -34,8 +34,15 @@ jobs:
 
       - uses: actions/checkout@v6
 
-      - name: setup-autopkg local action
+      - name: Read Python version
+        id: pyver
+        shell: bash
+        run: echo "version=$(cat .python-version)" >> $GITHUB_OUTPUT
+
+      - name: setup-autopkg
         uses: ./.github/actions/setup-autopkg
+        with:
+          use-python-version: ${{ steps.pyver.outputs.version }}
 
       - name: Install requirements
         run: pip install --requirement requirements.txt

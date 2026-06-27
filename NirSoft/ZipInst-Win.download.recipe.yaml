@@ -23,5 +23,5 @@ Process:
 
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
-      template_file_path: NirSoft/ZipInst-Win.mustache
-      content_file_pathname: .templates/.partials/ActionPrefetchZipinst.mustache
+      template_file_path: "%RECIPE_DIR%/ZipInst-Win.mustache"
+      content_file_pathname: "%RECIPE_DIR%/../.templates/.partials/ActionPrefetchZipinst.mustache"

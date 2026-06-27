@@ -8,4 +8,4 @@ Process:
   - Processor: URLTextSearcher
     Arguments:
       url: https://obsproject.com/download
-      re_pattern: 'OBS-Studio-(?P<version>\d+(\.\d+)+)-Full-Installer-x64.exe'
+      re_pattern: 'OBS-Studio-(?P<version>\d+(\.\d+)+)-Windows-x64-Installer\.exe'

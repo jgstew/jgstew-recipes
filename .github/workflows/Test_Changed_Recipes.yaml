@@ -52,6 +52,7 @@ jobs:
             #   BigFix server test recipes    -> need a BigFix server + besapi creds
             #     (BigFixActioner / BigFixSessionRelevance / BigFixFileUploader)
             #   MSI-Win.local.recipe.yaml     -> needs a user-supplied MSI
+            #   ScreenConnect-Win.download    -> downloads moved behind a license/order portal
             find . -name "*.recipe.yaml" \
               -not -path "./autopkg/*" \
               -not -name "*.bigfix.recipe.yaml" \
@@ -62,6 +63,7 @@ jobs:
               -not -name "BigFixSessionRelevance.test.recipe.yaml" \
               -not -name "BigFixFileUploader.test.recipe.yaml" \
               -not -name "MSI-Win.local.recipe.yaml" \
+              -not -name "ScreenConnect-Win.download.recipe.yaml" \
               | sort > TestRecipesAction.txt
           else
             echo "Push/PR run: testing changed recipes only."

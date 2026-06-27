@@ -1,0 +1,91 @@
+name: "autopkg-report-summary"
+description: "Parse an AutoPkg --report-plist and write a pass/fail summary to the GitHub Actions job summary; fails if any recipe failed."
+inputs:
+  report-plist:
+    description: "Path to the AutoPkg report plist."
+    required: true
+  recipe-list:
+    description: "Path to the recipe-list file (used to count how many ran)."
+    required: true
+  title:
+    description: "Heading for the summary."
+    required: false
+    default: "AutoPkg Test Results"
+  item-label:
+    description: "Table column header for the item, e.g. Recipe. The count noun is its lowercase form."
+    required: false
+    default: "Recipe"
+runs:
+  using: "composite"
+  steps:
+    - name: Summarize failures
+      shell: bash
+      env:
+        REPORT_PLIST: ${{ inputs.report-plist }}
+        RECIPE_LIST: ${{ inputs.recipe-list }}
+        SUMMARY_TITLE: ${{ inputs.title }}
+        ITEM_LABEL: ${{ inputs.item-label }}
+      run: |
+          python3 - <<'PYEOF'
+          import os
+          import plistlib
+
+          # emoji via \u escapes so this workflow file stays pure ASCII:
+          ICON_FAIL = "\u274c"  # cross mark
+          ICON_PASS = "\u2705"  # check mark
+          ICON_WARN = "\u26a0\ufe0f"  # warning sign
+
+          report = os.environ["REPORT_PLIST"]
+          summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
+          title = os.environ.get("SUMMARY_TITLE", "AutoPkg Test Results")
+          label = os.environ.get("ITEM_LABEL", "Recipe")
+          noun = label.lower()
+
+          try:
+              with open(os.environ["RECIPE_LIST"], encoding="utf-8") as handle:
+                  total = len([line for line in handle if line.strip()])
+          except FileNotFoundError:
+              total = 0
+
+          failures = []
+          report_exists = os.path.isfile(report)
+          if report_exists:
+              with open(report, "rb") as handle:
+                  failures = plistlib.load(handle).get("failures", []) or []
+
+          lines = [f"# {title}", "", f"Ran **{total}** {noun}(s).", ""]
+
+          if failures:
+              lines.append(f"## {ICON_FAIL} {len(failures)} of {total} failed")
+              lines.append("")
+              lines.append(f"| {label} | Error |")
+              lines.append("| --- | --- |")
+              for item in failures:
+                  recipe = str(item.get("recipe", "?"))
+                  if recipe.startswith("./"):
+                      recipe = recipe[2:]
+                  message = " ".join(str(item.get("message", "")).split())
+                  if len(message) > 300:
+                      message = message[:297] + "..."
+                  recipe = recipe.replace("|", "\\|")
+                  message = message.replace("|", "\\|")
+                  lines.append(f"| `{recipe}` | {message} |")
+          elif report_exists:
+              lines.append(f"## {ICON_PASS} All {total} {noun}(s) passed")
+          else:
+              lines.append(
+                  f"## {ICON_WARN} No report produced "
+                  "(the run may have crashed before writing it)"
+              )
+
+          summary = "\n".join(lines) + "\n"
+          if summary_path:
+              with open(summary_path, "a", encoding="utf-8") as handle:
+                  handle.write(summary)
+          print(summary)
+
+          # fail the job if any recipe failed (covers the case where autopkg
+          # somehow exits 0 despite failures):
+          if failures:
+              raise SystemExit(1)
+          PYEOF

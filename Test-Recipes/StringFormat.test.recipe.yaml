@@ -1,0 +1,113 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/StringFormat.py
+# Demonstrates the Python format mini-language:
+# https://docs.python.org/3/library/string.html#format-specification-mini-language
+Description: Test StringFormat Processor
+Identifier: com.github.jgstew.test.StringFormat
+Input:
+  NAME: StringFormatTest
+MinimumVersion: "2.4.1"
+Process:
+  # 1. zero-pad a single value to width 5:
+  - Processor: com.github.jgstew.SharedProcessors/StringFormat
+    Arguments:
+      format_string: "{value:0>5}"
+      format_value: "42"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%formatted_string%"
+      assert_string: "00042"
+
+  # 2. build a string from named kwargs:
+  - Processor: com.github.jgstew.SharedProcessors/StringFormat
+    Arguments:
+      format_string: "{name}-v{version}"
+      format_kwargs:
+        name: "MyApp"
+        version: "1.2.3"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%formatted_string%"
+      assert_string: "MyApp-v1.2.3"
+
+  # 3. right-align within a fixed width (padded with spaces):
+  - Processor: com.github.jgstew.SharedProcessors/StringFormat
+    Arguments:
+      format_string: "[{value:>10}]"
+      format_value: "right"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%formatted_string%"
+      assert_string: "[     right]"
+
+  # 4. center within a width, padded with a custom fill character:
+  - Processor: com.github.jgstew.SharedProcessors/StringFormat
+    Arguments:
+      format_string: "{value:*^11}"
+      format_value: "TITLE"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%formatted_string%"
+      assert_string: "***TITLE***"
+
+  # 5. fixed-decimal float, zero-padded to width 8 (value is a YAML float):
+  - Processor: com.github.jgstew.SharedProcessors/StringFormat
+    Arguments:
+      format_string: "{value:08.2f}"
+      format_value: 3.14159
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%formatted_string%"
+      assert_string: "00003.14"
+
+  # 6. thousands separator on a large integer (value is a YAML int):
+  - Processor: com.github.jgstew.SharedProcessors/StringFormat
+    Arguments:
+      format_string: "{value:,}"
+      format_value: 1234567
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%formatted_string%"
+      assert_string: "1,234,567"
+
+  # 7. integer to hexadecimal with 0x prefix:
+  - Processor: com.github.jgstew.SharedProcessors/StringFormat
+    Arguments:
+      format_string: "{value:#x}"
+      format_value: 255
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%formatted_string%"
+      assert_string: "0xff"
+
+  # 8. format a fraction as a percentage with one decimal place:
+  - Processor: com.github.jgstew.SharedProcessors/StringFormat
+    Arguments:
+      format_string: "{value:.1%}"
+      format_value: 0.0825
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%formatted_string%"
+      assert_string: "8.2%"
+
+  # 9. assemble a semantic version from separate components:
+  - Processor: com.github.jgstew.SharedProcessors/StringFormat
+    Arguments:
+      format_string: "v{major}.{minor}.{patch}"
+      format_kwargs:
+        major: 2
+        minor: 9
+        patch: 14
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%formatted_string%"
+      assert_string: "v2.9.14"

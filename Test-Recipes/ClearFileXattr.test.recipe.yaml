@@ -9,4 +9,4 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: com.github.jgstew.SharedProcessors/ClearFileXattr
     Arguments:
-      file_path: "Test-Recipes/ClearFileXattr.test.recipe.yaml"
+      file_path: "%RECIPE_DIR%/ClearFileXattr.test.recipe.yaml"

@@ -9,7 +9,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
   - Processor: com.github.jgstew.SharedProcessors/FileHasher
     Arguments:
-      file_path: "BigFix/BigFix_logo_DevSiteToOriginal_128px.png"
+      file_path: "%RECIPE_DIR%/../BigFix/BigFix_logo_DevSiteToOriginal_128px.png"
   - Processor: com.github.jgstew.SharedProcessors/BigFixPrefetchItem
     Arguments:
       file_name: "BigFix_Logo.png"

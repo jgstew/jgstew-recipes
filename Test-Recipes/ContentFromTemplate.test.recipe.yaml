@@ -11,7 +11,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
       # template_partials_path: "./ZZZ-Nonexistent-Path"
-      template_file_path: "./BigFix/BigFix-Agent-Windows-Update.bes.mustashe"
+      template_file_path: "%RECIPE_DIR%/../BigFix/BigFix-Agent-Windows-Update.bes.mustashe"
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%-BigFix-Win.bes"
       template_dictionary:
         {
@@ -24,12 +24,12 @@ Process:
         }
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
-      template_file_path: "./.templates/Example-Win-Install_Update.bes.mustache"
+      template_file_path: "%RECIPE_DIR%/../.templates/Example-Win-Install_Update.bes.mustache"
       # NOTE: this won't be valid, just a test:
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%-ValidXML-NotWorkingAction.bes"
   - Processor: com.github.jgstew.SharedProcessors/ContentFromTemplate
     Arguments:
-      template_file_path: "./.templates/Example-Test-Partials.mustache"
+      template_file_path: "%RECIPE_DIR%/../.templates/Example-Test-Partials.mustache"
       # NOTE: this won't be valid, just a test:
       content_file_pathname: "%RECIPE_CACHE_DIR%/%NAME%-Test-Partials.txt"
       template_dictionary:

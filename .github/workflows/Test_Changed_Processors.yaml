@@ -56,7 +56,9 @@ jobs:
 
       - name: Install prereq
         if: steps.map-tests.outputs.has_tests == 'true'
-        run: sudo apt-get install -y msitools speech-dispatcher libssl-dev libxml2-dev libxslt1-dev zlib1g-dev python3-dev ffmpeg p7zip-full libmagic1 libcairo2
+        run: |
+          sudo apt-get install -y msitools speech-dispatcher libssl-dev libxml2-dev libxslt1-dev zlib1g-dev python3-dev ffmpeg p7zip-full libmagic1 libcairo2
+          sudo ln -sf /usr/bin/7z /usr/local/bin/7z
 
       - name: Read Python version
         if: steps.map-tests.outputs.has_tests == 'true'

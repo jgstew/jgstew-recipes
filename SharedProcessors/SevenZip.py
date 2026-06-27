@@ -59,6 +59,7 @@ class SevenZip(Processor):
 
     def main(self):
         """Execution starts here."""
+        original_directory = os.getcwd()
         working_directory = self.env.get("RECIPE_CACHE_DIR")
         relative_directory = self.env.get("relative_directory", False)
         ignore_errors = self.env.get("ignore_errors", True)
@@ -94,10 +95,11 @@ class SevenZip(Processor):
             self.output(f"ERROR: {err}", 2)
             if not ignore_errors:
                 raise
-
-        # reset working dir
-        if relative_directory:
-            os.chdir(working_directory)
+        finally:
+            # restore the original working directory so cwd does not leak into
+            # later recipes in the same autopkg run:
+            if relative_directory:
+                os.chdir(original_directory)
 
 
 if __name__ == "__main__":

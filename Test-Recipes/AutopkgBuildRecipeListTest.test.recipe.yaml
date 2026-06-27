@@ -9,14 +9,14 @@ Process:
 
   - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
     Arguments:
-      search_path: "Test-Recipes"
+      search_path: "%RECIPE_DIR%"
       file_search_results_var: "file_search_results_var"
       # get identifiers from in scope recipes:
       # exclude BigFix specific recipes:
       search_pattern: 'Identifier: +(com.github.jgstew.test.(?!BigFix|BES)["\w\.]+)'
       search_extension: "test.recipe.yaml"
       # write recipe list output to file:
-      output_file_path: Test-Recipes/Test-Recipes.recipelist.txt
+      output_file_path: "%RECIPE_DIR%/Test-Recipes.recipelist.txt"
 
   # run recipe list:
   # python ../autopkg/Code/autopkg run -vv --recipe-list Test-Recipes/Test-Recipes.recipelist.txt

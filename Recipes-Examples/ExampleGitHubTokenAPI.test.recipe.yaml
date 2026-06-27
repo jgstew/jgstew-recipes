@@ -12,7 +12,7 @@ Process:
       # create a read only limited personal access token on GitHub.com
       # set the expiration to 1 year
       # put the token in this file:
-      pattern: "/Users/*/.autopkg_gh_token"
+      pattern: "/*/*/.autopkg_gh_token"
 
   - Processor: com.github.jgstew.SharedProcessors/FileTextSearcher
     Arguments:

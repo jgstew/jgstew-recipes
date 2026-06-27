@@ -48,11 +48,20 @@ jobs:
             #   *.bigfix.recipe.yaml          -> require a BigFix server + credentials
             #   AutoPkgRelease.nupkg.recipe   -> windows only
             #   TextToSpeechWeather.example   -> requires API_IPINFO / API_OPENWEATHER keys
+            #   *.Chocolatey*.recipe.yaml     -> need choco.exe / Windows
+            #   BigFix server test recipes    -> need a BigFix server + besapi creds
+            #     (BigFixActioner / BigFixSessionRelevance / BigFixFileUploader)
+            #   MSI-Win.local.recipe.yaml     -> needs a user-supplied MSI
             find . -name "*.recipe.yaml" \
               -not -path "./autopkg/*" \
               -not -name "*.bigfix.recipe.yaml" \
               -not -name "AutoPkgRelease.nupkg.recipe.yaml" \
               -not -name "TextToSpeechWeather.example.recipe.yaml" \
+              -not -name "*.Chocolatey*.recipe.yaml" \
+              -not -name "BigFixActioner.test.recipe.yaml" \
+              -not -name "BigFixSessionRelevance.test.recipe.yaml" \
+              -not -name "BigFixFileUploader.test.recipe.yaml" \
+              -not -name "MSI-Win.local.recipe.yaml" \
               | sort > TestRecipesAction.txt
           else
             echo "Push/PR run: testing changed recipes only."
@@ -70,7 +79,9 @@ jobs:
 
       - name: Install prereq
         if: steps.build-list.outputs.should_run == 'true'
-        run: sudo apt-get install -y msitools speech-dispatcher libssl-dev libxml2-dev libxslt1-dev zlib1g-dev python3-dev ffmpeg p7zip-full libmagic1 libcairo2
+        run: |
+          sudo apt-get install -y msitools speech-dispatcher libssl-dev libxml2-dev libxslt1-dev zlib1g-dev python3-dev ffmpeg p7zip-full libmagic1 libcairo2
+          sudo ln -sf /usr/bin/7z /usr/local/bin/7z
 
       - name: Read Python version
         if: steps.build-list.outputs.should_run == 'true'

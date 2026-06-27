@@ -1,0 +1,33 @@
+---
+# A "for fun" (but genuinely useful) demo recipe in the spirit of
+# TextToSpeechWeather.example.recipe.yaml
+# It builds a standard WIFI QR code string and renders a scannable QR code -
+# scan it with a phone to join the network. Fully offline, no API needed.
+# Uses only existing processors: StringFormat, QRCodeGenerator.
+# https://github.com/jgstew/jgstew-recipes/tree/main/Recipes-Examples
+Description: Example WifiQR recipe - builds a standard WIFI QR code from an SSID and password so a phone can scan it to join the network.
+Identifier: com.github.jgstew.example.WifiQR
+Input:
+  NAME: WifiQR
+  wifi_ssid: "FakeGuestNetwork"
+  wifi_password: "SuperSecret123"
+  # security type: WPA (covers WPA/WPA2/WPA3), WEP, or nopass for open networks:
+  wifi_security: "WPA"
+MinimumVersion: "2.4.1"
+Process:
+  # assemble the standard WIFI QR string: WIFI:S:<ssid>;T:<type>;P:<password>;;
+  - Processor: com.github.jgstew.SharedProcessors/StringFormat
+    Arguments:
+      format_string: "WIFI:S:{ssid};T:{security};P:{password};;"
+      format_kwargs:
+        ssid: "%wifi_ssid%"
+        security: "%wifi_security%"
+        password: "%wifi_password%"
+
+  # render a scannable QR code (printed to the log and saved as a PNG):
+  - Processor: com.github.jgstew.SharedProcessors/QRCodeGenerator
+    Arguments:
+      qr_data: "%formatted_string%"
+      qr_output_path: "%RECIPE_CACHE_DIR%/%NAME%.png"
+
+  - Processor: EndOfCheckPhase

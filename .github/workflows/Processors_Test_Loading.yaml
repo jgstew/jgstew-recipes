@@ -59,10 +59,15 @@ jobs:
           & "C:\msys64\usr\bin\pacman.exe" -S --noconfirm --needed mingw-w64-x86_64-cairo mingw-w64-x86_64-file
           Add-Content $env:GITHUB_PATH "C:\msys64\mingw64\bin"
 
+      - name: Read Python version
+        id: pyver
+        shell: bash
+        run: echo "version=$(cat .python-version)" >> $GITHUB_OUTPUT
+
       - name: setup-autopkg
         uses: ./.github/actions/setup-autopkg
         with:
-          use-python-version: "3.11"
+          use-python-version: ${{ steps.pyver.outputs.version }}
 
       - name: Install requirements
         run: pip install --requirement requirements.txt

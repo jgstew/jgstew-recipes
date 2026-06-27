@@ -35,10 +35,15 @@ jobs:
         run: |
           brew install libxml2 libxslt
 
+      - name: Read Python version
+        id: pyver
+        shell: bash
+        run: echo "version=$(cat .python-version)" >> $GITHUB_OUTPUT
+
       - name: setup-autopkg local action
         uses: ./.github/actions/setup-autopkg
         with:
-          use-python-version: "3.11"
+          use-python-version: ${{ steps.pyver.outputs.version }}
 
       # the processors being tested don't need these:
       # - name: Install requirements

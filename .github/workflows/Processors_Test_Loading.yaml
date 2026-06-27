@@ -19,7 +19,7 @@ jobs:
   test-processor-loading:
     strategy:
       matrix:
-        os: [macOS-latest]
+        os: [macOS-latest, ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v6

@@ -1,6 +1,9 @@
 #!/usr/local/autopkg/python
 
 import asyncio
+import logging
+import os
+import platform
 
 from autopkglib import Processor, ProcessorError
 
@@ -15,6 +18,12 @@ except ImportError as e:
     ) from e
 
 __all__ = ["Notifier"]
+
+# On a headless host (e.g. CI), desktop-notifier's D-Bus backend logs a full
+# traceback at WARNING level instead of raising, so it can't be caught normally.
+# Silence those loggers; the headless case is handled gracefully in main().
+logging.getLogger("desktop_notifier").setLevel(logging.CRITICAL)
+logging.getLogger("dbus_fast").setLevel(logging.CRITICAL)
 
 
 class Notifier(Processor):
@@ -49,6 +58,23 @@ class Notifier(Processor):
     }
     output_variables = {}
 
+    @staticmethod
+    def _desktop_available():
+        """Return False on a headless host where no notification daemon exists.
+
+        On Linux a desktop notification needs a D-Bus session bus (or at least a
+        display); in headless CI neither is present. macOS and Windows are assumed
+        to have a notification center available.
+
+        Returns:
+            True if a desktop notification can plausibly be delivered.
+        """
+        if platform.system() == "Linux":
+            return bool(
+                os.environ.get("DBUS_SESSION_BUS_ADDRESS") or os.environ.get("DISPLAY")
+            )
+        return True
+
     async def _send_notification_async(self, title, message, app_name):
         """
         Private async method to configure and send the notification.
@@ -77,6 +103,13 @@ class Notifier(Processor):
         self.output(f"  Title: {title}")
         self.output(f"  Message: {message}")
         self.output(f"  App Name: {app_name}")
+
+        # Skip cleanly on a headless host (no desktop to notify).
+        if not self._desktop_available():
+            self.output(
+                "No desktop session detected (headless); skipping notification."
+            )
+            return
 
         # Because the desktop-notifier library is async, we must run its
         # functions within an asyncio event loop.

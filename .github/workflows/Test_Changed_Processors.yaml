@@ -85,6 +85,12 @@ jobs:
           git config --global user.email "actions@github"
           git config --global user.name "GitHub Actions"
 
+      - name: Fix oscrypto for Linux
+        if: runner.os == 'Linux' && steps.map-tests.outputs.has_tests == 'true'
+        run: |
+          pip uninstall oscrypto -y
+          pip install git+https://github.com/wbond/oscrypto.git@d5f3437
+
       - name: run matched test recipes
         if: steps.map-tests.outputs.has_tests == 'true'
         run: python autopkg/Code/autopkg run -vv --recipe-list TestProcessorsAction.txt

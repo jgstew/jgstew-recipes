@@ -56,11 +56,11 @@ Process:
       search_path: "%RECIPE_CACHE_DIR%/tmp/CatalogPC_converted.xml"
       # output_variable: "file_search_results"
       file_search_results_var: "url_part"
-      search_pattern: "(Dell-Alienware-Digital-Delivery-Application)"
+      search_pattern: "(downloads.dell.com)"
       search_extension: ".xml"
       output_file_path: ""
 
   - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
     Arguments:
       input_string: "%url_part%"
-      assert_string: "Dell-Alienware-Digital-Delivery-Application"
+      assert_string: "downloads.dell.com"

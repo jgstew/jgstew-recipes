@@ -1,0 +1,27 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/ColorThief.py
+Description: Test ColorThief Processor
+Identifier: com.github.jgstew.test.ColorThief
+Input:
+  NAME: ColorThiefTest
+MinimumVersion: "2.4.1"
+Process:
+  # download an image to analyze:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://raw.githubusercontent.com/jgstew/jgstew.github.io/refs/heads/master/images/BigFix/BigFix_logo_DevSite_512.png
+      filename: "%NAME%.png"
+      download_version: ""
+      COMPUTE_HASHES: False
+
+  # extract the dominant color and palette:
+  - Processor: com.github.jgstew.SharedProcessors/ColorThief
+    Arguments:
+      file_pathname: "%RECIPE_CACHE_DIR%/downloads/%NAME%.png"
+      color_count: 5
+
+  # confirm the dominant color came back as a hex string:
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%dominant_color_hex%"
+      assert_string: "#"

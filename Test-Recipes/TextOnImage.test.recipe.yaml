@@ -1,0 +1,33 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/TextOnImage.py
+Description: Test TextOnImage Processor
+Identifier: com.github.jgstew.test.TextOnImage
+Input:
+  NAME: TextOnImageTest
+MinimumVersion: "2.4.1"
+Process:
+  # download a PNG to draw on:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: https://raw.githubusercontent.com/jgstew/jgstew.github.io/refs/heads/master/images/BigFix/BigFix_logo_DevSite_512.png
+      filename: "%NAME%.png"
+      download_version: ""
+      COMPUTE_HASHES: False
+
+  # overlay text onto the image:
+  - Processor: com.github.jgstew.SharedProcessors/TextOnImage
+    Arguments:
+      file_pathname: "%RECIPE_CACHE_DIR%/downloads/%NAME%.png"
+      text_string: "v11 RELEASED!"
+      position: bottom
+      font_size: 48
+
+  # confirm the output is still a valid image:
+  - Processor: com.github.jgstew.SharedProcessors/FileGetMagicType
+    Arguments:
+      file_pathname: "%file_path_text%"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%file_mime_type%"
+      assert_string: "image/png"

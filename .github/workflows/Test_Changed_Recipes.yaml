@@ -1,6 +1,9 @@
 ---
 name: Test Changed Recipes
 
+# On push/PR: test only the changed recipes.
+# Once a month (and on manual dispatch): test ALL recipes that can run headless,
+# to catch vendor URL rot and processor regressions over time.
 on:
   push:
     paths:
@@ -8,12 +11,17 @@ on:
   pull_request:
     paths:
       - "**.recipe.yaml"
+  schedule:
+    # 08:00 UTC on the 1st of every month
+    - cron: "0 8 1 * *"
+  workflow_dispatch: {}
 
 jobs:
   TestChangedRecipes:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
-    name: Test changed-files
+    # the monthly all-recipes run needs much more time than a changed-files run:
+    timeout-minutes: 300
+    name: Test recipes
     steps:
       - uses: actions/checkout@v6
         with:
@@ -21,6 +29,7 @@ jobs:
 
       - name: Get changed files
         id: changed-files
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: tj-actions/changed-files@v47
         with:
           files: "**.recipe.yaml"
@@ -28,51 +37,82 @@ jobs:
           files_ignore: |
             AutoPkgRecipe/AutoPkgRelease.nupkg.recipe.yaml
 
-      - name: List all changed files
-        if: steps.changed-files.outputs.any_changed == 'true'
+      # Build the recipe list. On a scheduled/manual run, include ALL recipes that
+      # can run headless in CI; on push/PR, use only the changed recipes.
+      - name: Build recipe list
+        id: build-list
         run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_and_modified_files }}; do
-            echo "$file" >> TestRecipesAction.txt
-          done
-          cat TestRecipesAction.txt
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Scheduled/manual run: testing ALL headless-runnable recipes."
+            # Exclusions:
+            #   *.bigfix.recipe.yaml          -> require a BigFix server + credentials
+            #   AutoPkgRelease.nupkg.recipe   -> windows only
+            #   TextToSpeechWeather.example   -> requires API_IPINFO / API_OPENWEATHER keys
+            find . -name "*.recipe.yaml" \
+              -not -path "./autopkg/*" \
+              -not -name "*.bigfix.recipe.yaml" \
+              -not -name "AutoPkgRelease.nupkg.recipe.yaml" \
+              -not -name "TextToSpeechWeather.example.recipe.yaml" \
+              | sort > TestRecipesAction.txt
+          else
+            echo "Push/PR run: testing changed recipes only."
+            for file in ${{ steps.changed-files.outputs.all_changed_and_modified_files }}; do
+              echo "$file" >> TestRecipesAction.txt
+            done
+          fi
+          if [ -s TestRecipesAction.txt ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "--- recipes to test ($(wc -l < TestRecipesAction.txt)): ---"
+            cat TestRecipesAction.txt
+          else
+            echo "No recipes to test."
+          fi
 
       - name: Install prereq
-        if: steps.changed-files.outputs.any_changed == 'true'
-        run: sudo apt-get install -y msitools speech-dispatcher libssl-dev libxml2-dev libxslt1-dev zlib1g-dev python3-dev ffmpeg
+        if: steps.build-list.outputs.should_run == 'true'
+        run: sudo apt-get install -y msitools speech-dispatcher libssl-dev libxml2-dev libxslt1-dev zlib1g-dev python3-dev ffmpeg p7zip-full libmagic1 libcairo2
 
       - name: Read Python version
-        if: steps.changed-files.outputs.any_changed == 'true'
+        if: steps.build-list.outputs.should_run == 'true'
         id: pyver
         shell: bash
         run: echo "version=$(cat .python-version)" >> $GITHUB_OUTPUT
 
       - name: setup-autopkg
-        if: steps.changed-files.outputs.any_changed == 'true'
+        if: steps.build-list.outputs.should_run == 'true'
         uses: ./.github/actions/setup-autopkg
         with:
           use-python-version: ${{ steps.pyver.outputs.version }}
 
       - name: Install repo requirements
-        if: steps.changed-files.outputs.any_changed == 'true'
+        if: steps.build-list.outputs.should_run == 'true'
         run: pip install --requirement requirements.txt
 
       - name: add recipe repos
-        if: steps.changed-files.outputs.any_changed == 'true'
+        if: steps.build-list.outputs.should_run == 'true'
         run: |
           for line in $(cat .autopkg_repos.txt); do python autopkg/Code/autopkg repo-add $line; done
 
       - name: config git for 1 particular recipe
-        if: steps.changed-files.outputs.any_changed == 'true'
+        if: steps.build-list.outputs.should_run == 'true'
         run: |
           git config --global user.email "actions@github"
           git config --global user.name "GitHub Actions"
 
       - name: Fix oscrypto for Linux
-        if: runner.os == 'Linux' && steps.changed-files.outputs.any_changed == 'true'
+        if: runner.os == 'Linux' && steps.build-list.outputs.should_run == 'true'
         run: |
           pip uninstall oscrypto -y
           pip install git+https://github.com/wbond/oscrypto.git@d5f3437
 
+      - name: Set token
+        # required for githubreleaseinfoprovider in github actions
+        # without this, API limits will be hit
+        if: steps.build-list.outputs.should_run == 'true'
+        run: |
+          cd ~
+          echo ${{ secrets.GITHUB_TOKEN }} > ".autopkg_gh_token"
+
       - name: run recipe autopkg
-        if: steps.changed-files.outputs.any_changed == 'true'
+        if: steps.build-list.outputs.should_run == 'true'
         run: python autopkg/Code/autopkg run -vv --recipe-list TestRecipesAction.txt

@@ -1,0 +1,34 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/VersionCompare.py
+Description: Test VersionCompare Processor
+Identifier: com.github.jgstew.test.VersionCompare
+Input:
+  NAME: VersionCompareTest
+MinimumVersion: "2.4.1"
+Process:
+  # 1.2.10 is newer than 1.2.3 (numeric, not lexical, comparison):
+  - Processor: com.github.jgstew.SharedProcessors/VersionCompare
+    Arguments:
+      version1: "1.2.10"
+      version2: "1.2.3"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_comparison_result%"
+      assert_string: "newer"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_newest%"
+      assert_string: "1.2.10"
+
+  # equal versions:
+  - Processor: com.github.jgstew.SharedProcessors/VersionCompare
+    Arguments:
+      version1: "3.0.0"
+      version2: "3.0.0"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%version_comparison_result%"
+      assert_string: "equal"

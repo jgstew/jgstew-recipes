@@ -1,0 +1,26 @@
+---
+# https://github.com/jgstew/jgstew-recipes/tree/main/SharedProcessors/JSONWriter.py
+Description: Test JSONWriter Processor
+Identifier: com.github.jgstew.test.JSONWriter
+Input:
+  NAME: JSONWriterTest
+MinimumVersion: "2.4.1"
+Process:
+  # write a JSON string out to a file (parsed then re-serialized):
+  - Processor: com.github.jgstew.SharedProcessors/JSONWriter
+    Arguments:
+      json_output_path: "%RECIPE_CACHE_DIR%/test_output.json"
+      json_input: |
+        {"firstName": "John", "lastName": "doe", "age": 26}
+      sort_keys: true
+
+  # read it back and confirm a value round-tripped correctly:
+  - Processor: com.github.jgstew.SharedProcessors/JsonPath
+    Arguments:
+      json_input: "%RECIPE_CACHE_DIR%/test_output.json"
+      json_path: "$.firstName"
+
+  - Processor: com.github.jgstew.SharedProcessors/AssertInputContainsString
+    Arguments:
+      input_string: "%json_path_result%"
+      assert_string: "John"

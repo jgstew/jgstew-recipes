@@ -1,0 +1,37 @@
+---
+# A "for fun" (but genuinely useful) demo recipe in the spirit of
+# TextToSpeechWeather.example.recipe.yaml
+# It builds an iCalendar VEVENT and renders it as a scannable QR code -
+# scan it with a phone to add the event to a calendar. Fully offline.
+# Uses only existing processors: StringFormat, QRCodeGenerator.
+# Note: DTSTART/DTEND use iCal UTC basic format: YYYYMMDDTHHMMSSZ
+# https://github.com/jgstew/jgstew-recipes/tree/main/Recipes-Examples
+Description: Example CalendarEventQR recipe - builds an iCalendar event and renders it as a scannable QR code to add to a calendar.
+Identifier: com.github.jgstew.example.CalendarEventQR
+Input:
+  NAME: CalendarEventQR
+  event_summary: "Automate Anything! AutoPkg Processors for Everything"
+  event_location: "Deans Hall 1"
+  # iCal UTC basic format: YYYYMMDDTHHMMSSZ
+  # Wednesday July 8, 2026, 3:15pm - 4:30pm EDT (UTC-4) = 19:15 - 20:30 UTC
+  event_start: "20260708T191500Z"
+  event_end: "20260708T203000Z"
+MinimumVersion: "2.4.1"
+Process:
+  # assemble a standard iCalendar VEVENT string:
+  - Processor: com.github.jgstew.SharedProcessors/StringFormat
+    Arguments:
+      format_string: "BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:{summary}\nLOCATION:{location}\nDTSTART:{start}\nDTEND:{end}\nEND:VEVENT\nEND:VCALENDAR"
+      format_kwargs:
+        summary: "%event_summary%"
+        location: "%event_location%"
+        start: "%event_start%"
+        end: "%event_end%"
+
+  # render a scannable QR code (printed to the log and saved as a PNG):
+  - Processor: com.github.jgstew.SharedProcessors/QRCodeGenerator
+    Arguments:
+      qr_data: "%formatted_string%"
+      qr_output_path: "%RECIPE_CACHE_DIR%/%NAME%.png"
+
+  - Processor: EndOfCheckPhase

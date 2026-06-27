@@ -1,0 +1,25 @@
+---
+# A "for fun" (but genuinely useful) demo recipe in the spirit of
+# TextToSpeechWeather.example.recipe.yaml
+# It renders a geo: URI as a scannable QR code - scan it with a phone to open
+# the location in a maps app. Fully offline, no API needed.
+# Uses only existing processors: QRCodeGenerator.
+# geo URI scheme: https://en.wikipedia.org/wiki/Geo_URI_scheme
+# https://github.com/jgstew/jgstew-recipes/tree/main/Recipes-Examples
+Description: Example MapItQR recipe - renders a geo location as a scannable QR code to open in a maps app.
+Identifier: com.github.jgstew.example.MapItQR
+Input:
+  NAME: MapItQR
+  # default coordinates: Apple Park, Cupertino, CA
+  map_latitude: "37.3349"
+  map_longitude: "-122.0090"
+MinimumVersion: "2.4.1"
+Process:
+  # render a scannable QR code of the geo: URI (a geo URI needs no assembly,
+  # so it can be substituted directly into qr_data):
+  - Processor: com.github.jgstew.SharedProcessors/QRCodeGenerator
+    Arguments:
+      qr_data: "geo:%map_latitude%,%map_longitude%"
+      qr_output_path: "%RECIPE_CACHE_DIR%/%NAME%.png"
+
+  - Processor: EndOfCheckPhase

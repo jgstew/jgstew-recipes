@@ -1,0 +1,38 @@
+---
+# A "for fun" demo recipe in the spirit of TextToSpeechWeather.example.recipe.yaml
+# It downloads a free sound effect (.oga), converts it to .wav, then plays it -
+# e.g. a round of applause when a recipe run finishes. This exercises the full
+# audio pipeline: download -> FileAudioConvert -> PlaySound.
+# Uses only existing processors: URLDownloaderPython, FileAudioConvert, PlaySound.
+# Requires ffmpeg for the conversion: brew/apt/choco install ffmpeg
+# https://github.com/jgstew/jgstew-recipes/tree/main/Recipes-Examples
+Description: Example Soundboard recipe - downloads a free sound effect, converts it from .oga to .wav, and plays it aloud.
+Identifier: com.github.jgstew.example.Soundboard
+Input:
+  NAME: Soundboard
+  # free sound effect from Wikimedia Commons:
+  sound_url: https://upload.wikimedia.org/wikipedia/commons/e/e0/Phrase_de_Neil_Armstrong.oga
+MinimumVersion: "2.4.1"
+Process:
+  # download the sound effect (.oga / Ogg Vorbis):
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      url: "%sound_url%"
+      filename: soundboard.oga
+      download_version: ""
+      COMPUTE_HASHES: False
+      User_Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36
+
+  # convert .oga -> .wav (broadest playback compatibility):
+  - Processor: com.github.jgstew.SharedProcessors/FileAudioConvert
+    Arguments:
+      file_pathname: "%RECIPE_CACHE_DIR%/downloads/soundboard.oga"
+      output_format: wav
+      file_path_save: "%RECIPE_CACHE_DIR%/soundboard.wav"
+
+  # play the converted sound (best-effort: won't fail on a headless host):
+  - Processor: com.github.jgstew.SharedProcessors/PlaySound
+    Arguments:
+      sound_file_path: "%file_path_audio%"
+
+  - Processor: EndOfCheckPhase

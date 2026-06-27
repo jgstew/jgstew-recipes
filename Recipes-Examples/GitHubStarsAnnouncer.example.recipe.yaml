@@ -1,0 +1,47 @@
+---
+# A "for fun" demo recipe in the spirit of TextToSpeechWeather.example.recipe.yaml
+# It fetches a GitHub repo's star count and reads it aloud - a nice
+# self-referential demo when presenting the very repo on screen.
+# Uses only existing processors: URLDownloaderPython, JsonPath, StringFormat, TextToSpeech.
+# Unauthenticated GitHub API is rate-limited to 60 requests/hour - plenty for a demo.
+# https://github.com/jgstew/jgstew-recipes/tree/main/Recipes-Examples
+Description: Example GitHubStarsAnnouncer recipe - fetches a GitHub repo's star count and reads it aloud.
+Identifier: com.github.jgstew.example.GitHubStarsAnnouncer
+Input:
+  NAME: GitHubStarsAnnouncer
+  github_repo: "jgstew/jgstew-recipes"
+MinimumVersion: "2.4.1"
+Process:
+  # fetch the repo metadata as JSON (GitHub API requires a User-Agent):
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: https://api.github.com/repos/%github_repo%
+      filename: repo.json
+      download_version: ""
+      COMPUTE_HASHES: False
+      User_Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+
+  # extract the star count:
+  - Processor: com.github.jgstew.SharedProcessors/JsonPath
+    Arguments:
+      json_input: "%RECIPE_CACHE_DIR%/downloads/repo.json"
+      json_path: "$.stargazers_count"
+
+  - Processor: com.github.jgstew.SharedProcessors/VariableToString
+    Arguments:
+      input_variable: json_path_result
+
+  # build a friendly announcement:
+  - Processor: com.github.jgstew.SharedProcessors/StringFormat
+    Arguments:
+      format_string: "The {repo} repository has {stars} stars on GitHub!"
+      format_kwargs:
+        repo: "%github_repo%"
+        stars: "%json_path_result%"
+
+  # read it aloud:
+  - Processor: com.github.jgstew.SharedProcessors/TextToSpeech
+    Arguments:
+      input_string: "%formatted_string%"
+
+  - Processor: EndOfCheckPhase

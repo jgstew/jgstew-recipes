@@ -1,0 +1,38 @@
+---
+# A "for fun" (but genuinely useful) demo recipe in the spirit of
+# TextToSpeechWeather.example.recipe.yaml
+# It builds a vCard contact card and renders it as a scannable QR code -
+# scan it with a phone to save the contact. Fully offline, no API needed.
+# Uses only existing processors: StringFormat, QRCodeGenerator.
+# https://github.com/jgstew/jgstew-recipes/tree/main/Recipes-Examples
+Description: Example vCardQR recipe - builds a vCard contact card and renders it as a scannable QR code to save the contact.
+Identifier: com.github.jgstew.example.vCardQR
+Input:
+  NAME: vCardQR
+  vcard_first: "James"
+  vcard_last: "Stewart"
+  vcard_org: "HCL BigFix"
+  vcard_title: "Software Developer"
+  vcard_email: "@jgstew"
+  vcard_url: "https://github.com/jgstew"
+MinimumVersion: "2.4.1"
+Process:
+  # assemble a standard vCard 3.0 string:
+  - Processor: com.github.jgstew.SharedProcessors/StringFormat
+    Arguments:
+      format_string: "BEGIN:VCARD\nVERSION:3.0\nN:{last};{first}\nFN:{first} {last}\nORG:{org}\nTITLE:{title}\nEMAIL:{email}\nURL:{url}\nEND:VCARD"
+      format_kwargs:
+        first: "%vcard_first%"
+        last: "%vcard_last%"
+        org: "%vcard_org%"
+        title: "%vcard_title%"
+        email: "%vcard_email%"
+        url: "%vcard_url%"
+
+  # render a scannable QR code (printed to the log and saved as a PNG):
+  - Processor: com.github.jgstew.SharedProcessors/QRCodeGenerator
+    Arguments:
+      qr_data: "%formatted_string%"
+      qr_output_path: "%RECIPE_CACHE_DIR%/%NAME%.png"
+
+  - Processor: EndOfCheckPhase

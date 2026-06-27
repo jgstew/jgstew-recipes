@@ -14,6 +14,11 @@ Process:
       COMPUTE_HASHES: True
       # Seems like ETag and Last-Modified change every time, which is annoying
       CHECK_FILESIZE_ONLY: True
+      # NOTE: Kaspersky's CDN geo/region-blocks this download (HTTP 403) from US
+      # IPs (a real browser is blocked too), so this recipe is excluded from the
+      # CI all-recipes run. The browser User-Agent below is harmless and helps in
+      # regions where the download is reachable:
+      User_Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
 
   - Processor: EndOfCheckPhase
 

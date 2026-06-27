@@ -6,7 +6,7 @@ Input:
 MinimumVersion: "2.4.1"
 Process:
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: https://feeds.buzzsprout.com/1248878.rss
       filename: podcast.rss.xml
@@ -20,7 +20,7 @@ Process:
       url: "file://%RECIPE_CACHE_DIR%/downloads/podcast.rss.xml"
       re_pattern: 'enclosure url="(?P<url>https://www.buzzsprout.com/.+.mp3)" length="(?P<ep_file_size>\d+)"'
 
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       # url: https://www.buzzsprout.com/1248878/13899237-bigfix-insider-interview-michelle-mcgough-bigfix-technical-engagement.mp3
       filename: podcast_episode.mp3

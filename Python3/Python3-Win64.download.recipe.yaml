@@ -10,7 +10,7 @@ Process:
       url: https://www.python.org/downloads/windows/
       # Example: https://www.python.org/ftp/python/3.9.6/python-3.9.6-amd64.exe
       re_pattern: (?P<url>https://.*/python-(?P<version>3\.\d+\.\d+).*\-amd64.exe)
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       download_version: "%version%"
   - Processor: EndOfCheckPhase  # how do I stop here if nothing changed?

@@ -13,7 +13,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/VersionGetMajorMinor
     Arguments:
       separator_string: ""
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: https://software.bigfix.com/download/bes/%version_major_minor%/BigFix-BES-Relay-%version_maximum%.exe
       download_version: "%version_maximum%"

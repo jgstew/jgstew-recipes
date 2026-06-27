@@ -13,7 +13,7 @@ Input:
 MinimumVersion: "2.4.1"
 Process:
   # fetch the repo metadata as JSON (GitHub API requires a User-Agent):
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: https://api.github.com/repos/%github_repo%
       filename: repo.json

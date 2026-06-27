@@ -9,5 +9,5 @@ Process:
     Arguments:
       github_repo: git-for-windows/git
       asset_regex: Git-.*-64-bit.exe
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
   - Processor: EndOfCheckPhase

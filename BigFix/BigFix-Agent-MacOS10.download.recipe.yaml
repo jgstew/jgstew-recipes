@@ -16,7 +16,7 @@ Process:
     Arguments:
       separator_string: ""
 
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       # https://software.bigfix.com/download/bes/100/BESAgent-10.0.15.70-BigFix_MacOSX10.14.pkg
       url: https://software.bigfix.com/download/bes/%version_major_minor%/BESAgent-%version_maximum%-BigFix_MacOSX10.14.pkg

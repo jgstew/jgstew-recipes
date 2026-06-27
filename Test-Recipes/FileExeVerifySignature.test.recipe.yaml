@@ -12,7 +12,7 @@ Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
 
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       # good signature example
       url: https://raw.githubusercontent.com/ralphje/signify/master/tests/test_data/SoftwareUpdate.exe
@@ -29,7 +29,7 @@ Process:
       # assert `VALID` result
       assert_string: "VALID"
 
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       # bad / unsigned example
       url: http://software.bigfix.com/download/redist/unzip-5.52.exe

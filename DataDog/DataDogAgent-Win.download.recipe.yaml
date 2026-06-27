@@ -15,7 +15,7 @@ Process:
   # get the maximum version:
   - Processor: com.github.jgstew.SharedProcessors/VersionMaximumArray
 
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       # %version_maximum%
       url: https://s3.amazonaws.com/ddagent-windows-stable/ddagent-cli-%version_maximum%.msi

@@ -31,7 +31,7 @@ Process:
 
   # --- consumer 2: FileArchiveListContents imports find_7zip from
   #     SharedUtilityMethods to locate 7z, then lists an archive's contents ---
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: http://software.bigfix.com/download/redist/unzip-5.52.exe
       COMPUTE_HASHES: False

@@ -12,7 +12,7 @@ Process:
       url: https://screenconnect.connectwise.com/download
       re_pattern: "(?P<url>https://.+?.cloudfront.net/ScreenConnect_.+?_Release.msi)"
 
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       filename: ScreenConnect_Release.msi
       download_version: ""

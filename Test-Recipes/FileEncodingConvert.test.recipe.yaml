@@ -9,7 +9,7 @@ Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
 
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       # url: http://ftp.dell.com/catalog/CatalogPC.cab
       url: https://downloads.dell.com/catalog/catalogpc.cab

@@ -7,7 +7,7 @@ MinimumVersion: "2.4.1"
 Process:
   # `SharedUtilityMethods` must come first
   - Processor: com.github.jgstew.SharedProcessors/SharedUtilityMethods
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       # url: https://deploymenttools.acp.adobeoobe.com/RUM/Win/RemoteUpdateManager.zip
       url: http://software.bigfix.com/download/redist/unzip-5.52.exe

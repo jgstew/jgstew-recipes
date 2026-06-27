@@ -5,7 +5,7 @@ Input:
   NAME: FileExeGetIconTest
 MinimumVersion: "2.4.1"
 Process:
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       # good signature example
       url: https://raw.githubusercontent.com/ralphje/signify/master/tests/test_data/SoftwareUpdate.exe

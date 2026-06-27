@@ -5,7 +5,7 @@ Input:
   NAME: ExampleVersionFromEXE
 MinimumVersion: "2.4.1"
 Process:
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: https://github.com/ShareX/ShareX/releases/download/v14.1.0/ShareX-14.1.0-setup.exe
       filename: test.exe

@@ -15,7 +15,7 @@ Input:
 MinimumVersion: "2.4.1"
 Process:
   # fetch a random joke as JSON:
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: "%joke_url%"
       filename: joke.json

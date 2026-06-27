@@ -8,7 +8,7 @@ Process:
   # https://github.com/autopkg/homebysix-recipes/blob/master/GoToMeeting/GoToMeetingURLProvider.py
   - Processor: com.github.homebysix.download.GoToMeeting/GoToMeetingURLProvider
   # URLDownloader seems to redownload the file if only the etag changed: https://github.com/jgstew/jgstew-recipes/issues/3
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       # https://builds.cdn.getgo.com/g2mupdater/live/config.json
       url: "https://bbuilds2.getgocdn.com/builds/g2m/%build%/G2MCoreInstExtractor.exe"

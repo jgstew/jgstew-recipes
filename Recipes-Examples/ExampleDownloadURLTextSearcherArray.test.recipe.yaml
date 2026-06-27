@@ -15,7 +15,7 @@ Process:
   - Processor: com.github.jgstew.SharedProcessors/VersionGetMajorMinor
     Arguments:
       separator_string: ""
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: https://software.bigfix.com/download/bes/%version_major_minor%/BigFix-BES-Client-%version_maximum%.exe
       # Last-Modified headers do not work properly for software.bigfix.com so `download_version` is used

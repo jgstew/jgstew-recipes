@@ -15,7 +15,7 @@ Process:
       url: https://www.virtualbox.org/wiki/Downloads
       # example match `https://download.virtualbox.org/virtualbox/6.1.34/VirtualBox-6.1.34a-150636-Win.exe`
       re_pattern: '(?P<url>https://download.virtualbox.org/virtualbox/(?P<version>\d+(?:\.\d+)+)/VirtualBox-.+-Win.exe)'
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       # the url used to download is from re_pattern result from `(?P<url>)`
       filename: VirtualBox-Win.exe

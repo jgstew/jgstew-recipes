@@ -10,7 +10,7 @@ Input:
   ARCH: Win
 MinimumVersion: "2.4.1"
 Process:
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       # Example URLs:
       # - https://deploymenttools.acp.adobeoobe.com/RUM/Win/RemoteUpdateManager.zip

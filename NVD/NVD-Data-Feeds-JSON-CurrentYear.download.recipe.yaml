@@ -20,14 +20,14 @@ Process:
     Arguments:
       # set current YEAR if unset
       evaluate_string: 'if not self.env.get("YEAR"): from datetime import datetime; self.env["YEAR"] = datetime.today().strftime("%Y")'
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       # FROM: https://nvd.nist.gov/vuln/data-feeds#divJson20Feeds
       # https://nvd.nist.gov/feeds/json/cve/2.0/nvdcve-2.0-2026.json.zip
       url: https://nvd.nist.gov/feeds/json/cve/2.0/nvdcve-2.0-%YEAR%.json.%TYPE%
   - Processor: EndOfCheckPhase
   # - Processor: com.github.jgstew.SharedProcessors/StopProcessingIfDownloadUnchanged
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: https://nvd.nist.gov/feeds/json/cve/2.0/nvdcve-2.0-%YEAR%.meta
   - Processor: com.github.jgstew.SharedDangerousProcessors/DangerousEvaluate

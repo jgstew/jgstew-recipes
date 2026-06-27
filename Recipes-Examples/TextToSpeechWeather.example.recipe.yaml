@@ -10,7 +10,7 @@ Input:
 MinimumVersion: "2.4.1"
 Process:
   # https://ipinfo.io/?token=APIKEY
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: https://ipinfo.io/?token=%API_IPINFO%
       filename: ipinfo.json
@@ -28,7 +28,7 @@ Process:
       re_pattern: '.*?(?P<lat>-?\d+\.\d+),(?P<lon>-?\d+\.\d+)'
 
   # https://api.openweathermap.org/data/2.5/weather?units=imperial&lat=33.44&lon=-94.04&appid=
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: https://api.openweathermap.org/data/2.5/weather?units=imperial&lat=%lat%&lon=%lon%&appid=%API_OPENWEATHER%
       filename: weather.json

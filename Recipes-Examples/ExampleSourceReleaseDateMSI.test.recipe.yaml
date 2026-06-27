@@ -11,7 +11,7 @@ Process:
       asset_regex: PowerShell-.*-win-x64.msi$
       include_prereleases: False
 
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       filename: PowerShell-Setup-Win-x64.msi
       download_version: ""

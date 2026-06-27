@@ -14,7 +14,7 @@ Input:
 MinimumVersion: "2.4.1"
 Process:
   # 1. download the app:
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
     Arguments:
       url: "%download_url%"
       COMPUTE_HASHES: False

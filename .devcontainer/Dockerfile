@@ -44,7 +44,7 @@ RUN sudo pip3 --disable-pip-version-check --no-cache-dir install besapi bigfix_p
 
 RUN sudo update-ca-certificates --fresh
 
-RUN python3 /workspaces/autopkg/Code/autopkg repo-add hansen-m-recipes homebysix-recipes https://github.com/jgstew/jgstew-recipes.git
+RUN python3 /workspaces/autopkg/Code/autopkg repo-add hansen-m-recipes homebysix-recipes jgstew-recipes
 
 # add alias for autopkg for vscode user:
 RUN echo 'alias autopkg="python3 /workspaces/autopkg/Code/autopkg"' >> /home/vscode/.bashrc

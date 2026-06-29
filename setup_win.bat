@@ -95,7 +95,7 @@ if not exist %UserProfile%\_Code (
 
 cd %UserProfile%\_Code
 
-git clone https://github.com/jgstew/jgstew-recipes.git
+git clone jgstew-recipes
 
 git clone https://github.com/jgstew/autopkg.git
 

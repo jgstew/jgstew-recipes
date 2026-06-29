@@ -1,3 +1,7 @@
+## READ ONLY! Dev moved to autopkg/jgstew-recipes
+
+READ ONLY! Dev moved to: https://github.com/autopkg/jgstew-recipes
+
 # jgstew-recipes
 
 AutoPkg recipes which anyone can use from [JGStew](https://github.com/jgstew).

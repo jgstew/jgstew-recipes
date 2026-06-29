@@ -54,10 +54,12 @@ class QRCodeGenerator(Processor):  # pylint: disable=invalid-name
 
     def main(self):
         """Execution starts here."""
+        # Reading input_variables
         qr_data = self.env.get("qr_data")
         qr_output_path = self.env.get("qr_output_path", "")
         qr_print_ascii = bool(self.env.get("qr_print_ascii", True))
 
+        # Running Process
         qr_code = qrcode.QRCode(border=2)
         qr_code.add_data(qr_data)
         qr_code.make(fit=True)
@@ -76,6 +78,7 @@ class QRCodeGenerator(Processor):  # pylint: disable=invalid-name
             qr_image.save(qr_output_path)
             self.output(f"Saved QR code PNG to: {qr_output_path}", 2)
 
+        # Writing output_variables
         self.env["qr_output_path"] = qr_output_path
         self.env["qr_ascii"] = qr_ascii
 

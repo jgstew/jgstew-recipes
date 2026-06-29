@@ -39,18 +39,21 @@ class TemplateDictionaryAppendDict(Processor):  # pylint: disable=invalid-name
     def main(self):
         """Execution starts here."""
 
+        # Reading input_variables
         # get the current dictionary
         dictionary_name = self.env.get("dictionary_name", "template_dictionary")
         dictionary_to_append = self.env.get(dictionary_name, {})
 
         append_dict = self.env.get("append_dict")
 
+        # Running Process
         self.output(f"type(dictionary_to_append): {type(dictionary_to_append)}", 2)
         self.output(f"type(append_dict): {type(append_dict)}", 2)
 
         # https://stackoverflow.com/a/8930969/861745
         dictionary_to_append.update(append_dict)
 
+        # Writing output_variables
         # write back the dict to itself
         self.env[dictionary_name] = dictionary_to_append
         self.env["dictionary_appended"] = dictionary_to_append

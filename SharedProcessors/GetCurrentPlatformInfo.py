@@ -46,7 +46,10 @@ class GetCurrentPlatformInfo(Processor):  # pylint: disable=invalid-name
 
     def main(self):
         """Execution starts here."""
+        # Reading input_variables
         lowercase_results = self.env.get("lowercase_results", False)
+
+        # Running Process
         sys_platform = str(sys.platform)
         # sys_maxsize_raw = str(sys.maxsize)
         sys_maxsize_bits = str(int((math.log(int(sys.maxsize)) / math.log(2)) + 1))
@@ -79,6 +82,7 @@ class GetCurrentPlatformInfo(Processor):  # pylint: disable=invalid-name
             platform_python_version = platform_python_version.lower()
             # platform_system_alias = platform_system_alias.lower()
 
+        # Writing output_variables
         self.env["sys_platform"] = sys_platform
         self.env["sys_maxsize_bits"] = sys_maxsize_bits
         self.env["platform_system"] = platform_system

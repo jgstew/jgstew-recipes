@@ -40,8 +40,11 @@ class JsonPath(Processor):  # pylint: disable=invalid-name
 
     def main(self):
         """Execution starts here."""
+        # Reading input_variables
         json_input = self.env.get("json_input", None)
         json_path = self.env.get("json_path", None)
+
+        # Running Process
         json_input_obj = None
 
         if os.path.isfile(json_input):
@@ -58,6 +61,7 @@ class JsonPath(Processor):  # pylint: disable=invalid-name
 
         self.output(json_path_result, 4)
 
+        # Writing output_variables
         self.env["json_path_result"] = json_path_result
 
 

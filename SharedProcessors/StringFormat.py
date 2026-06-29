@@ -54,10 +54,12 @@ class StringFormat(Processor):  # pylint: disable=invalid-name
 
     def main(self):
         """Execution starts here."""
+        # Reading input_variables
         format_string = self.env.get("format_string")
         format_value = self.env.get("format_value", "")
         format_kwargs = self.env.get("format_kwargs", {})
 
+        # Running Process
         # `value` is the built-in alias for the single positional value;
         # any matching key in format_kwargs takes precedence.
         kwargs = {"value": format_value}
@@ -72,6 +74,7 @@ class StringFormat(Processor):  # pylint: disable=invalid-name
 
         self.output(f"Formatted string: {formatted_string}")
 
+        # Writing output_variables
         self.env["formatted_string"] = formatted_string
 
 

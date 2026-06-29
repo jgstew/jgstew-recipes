@@ -56,6 +56,7 @@ class GetRecipeParentFolderName(Processor):  # pylint: disable=invalid-name
 
     def main(self):
         """Execution starts here."""
+        # Reading input_variables
         ouput_variable_name = self.env.get("ouput_variable_name", "VendorFolder")
         # recipe_dir = self.env.get("RECIPE_DIR", "")
         current_variable_value = self.env.get(ouput_variable_name, "")
@@ -66,10 +67,12 @@ class GetRecipeParentFolderName(Processor):  # pylint: disable=invalid-name
         # print(self.env)
         # print(self.env["RECIPE_DIR"])
 
+        # Running Process
         parent_folder_name = current_variable_value
         if current_variable_value == "":
             parent_folder_name = self.get_parent_folder_name()
 
+        # Writing output_variables
         self.env["ouput_variable_name"] = ouput_variable_name
         self.env[ouput_variable_name] = parent_folder_name
         self.env["parent_folder_result"] = parent_folder_name

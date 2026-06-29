@@ -61,12 +61,14 @@ class TemplateDictionaryAppendInput(Processor):  # pylint: disable=invalid-name
     def main(self):
         """Execution starts here."""
 
+        # Reading input_variables
         # get the current dictionary
         dictionary_name = self.env.get("dictionary_name", "template_dictionary")
         dictionary_to_append = self.env.get(dictionary_name, {})
         input_keys_prefix = str(self.env.get("input_keys_prefix", "Template_"))
         input_keys_array = self.env.get("input_keys_array", DEFAULT_input_keys_array)
 
+        # Running Process
         if not isinstance(input_keys_array, (list, tuple)):
             self.output(f"""
 WARNING: input_keys_array was not a list, setting default value:
@@ -90,6 +92,7 @@ WARNING: input_keys_array was not a list, setting default value:
                 print(f"{item} in array")
                 dictionary_to_append[str(item)] = self.env[item]
 
+        # Writing output_variables
         # write back the dict to itself
         self.env[dictionary_name] = dictionary_to_append
         self.env["dictionary_appended"] = dictionary_to_append

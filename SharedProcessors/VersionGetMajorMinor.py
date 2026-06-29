@@ -51,12 +51,15 @@ class VersionGetMajorMinor(Processor):  # pylint: disable=too-few-public-methods
 
     def main(self):
         """Execution starts here."""
+        # Reading input_variables
         # Get `version_string` else `version_maximum`
         version_string = self.env.get("version_string", self.env.get("version_maximum"))
         separator_string = self.env.get("separator_string", ".")
 
+        # Running Process
         version_major_minor = get_version_major_minor(version_string, separator_string)
 
+        # Writing output_variables
         self.env["version_major_minor"] = version_major_minor
 
 

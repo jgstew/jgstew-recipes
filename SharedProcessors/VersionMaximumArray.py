@@ -36,9 +36,12 @@ class VersionMaximumArray(Processor):  # pylint: disable=too-few-public-methods
     def main(self):
         """Execution starts here."""
 
+        # Reading input_variables
         # Get `version_array` else `match`
         version_array = self.env.get("version_array", self.env.get("match"))
         version_major_minor_match = self.env.get("version_major_minor_match", "")
+
+        # Running Process
         filtered_array = []
 
         # NOTE: this should be done by using `packaging.version.parse` instead
@@ -53,6 +56,7 @@ class VersionMaximumArray(Processor):  # pylint: disable=too-few-public-methods
         # get maximum version:
         version_maximum = max(version_array, key=looseversion.LooseVersion)
 
+        # Writing output_variables
         self.env["version_maximum"] = version_maximum
 
 

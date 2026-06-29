@@ -66,9 +66,11 @@ class VersionCompare(Processor):  # pylint: disable=invalid-name
 
     def main(self):
         """Execution starts here."""
+        # Reading input_variables
         version1 = self.env.get("version1")
         version2 = self.env.get("version2")
 
+        # Running Process
         comparison_int = compare_versions(version1, version2)
 
         if comparison_int < 0:
@@ -83,6 +85,7 @@ class VersionCompare(Processor):  # pylint: disable=invalid-name
 
         self.output(f"`{version1}` is {result} than/to `{version2}`")
 
+        # Writing output_variables
         self.env["version_comparison_result"] = result
         self.env["version_comparison_int"] = comparison_int
         self.env["version_newest"] = newest

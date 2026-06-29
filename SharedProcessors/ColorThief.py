@@ -92,9 +92,11 @@ class ColorThief(Processor):  # pylint: disable=invalid-name
 
     def main(self):
         """Execution starts here."""
+        # Reading input_variables
         file_pathname = self.env.get("file_pathname", self.env.get("pathname"))
         color_count = int(self.env.get("color_count", 5))
 
+        # Running Process
         if not file_pathname or not os.path.isfile(file_pathname):
             raise ProcessorError(f"Image file not found: {file_pathname}")
 
@@ -110,6 +112,7 @@ class ColorThief(Processor):  # pylint: disable=invalid-name
         self.output(f"Dominant color: {rgb_to_hex(dominant_rgb)} {dominant_rgb}")
         self.output(f"Palette: {palette_hex}", 2)
 
+        # Writing output_variables
         self.env["dominant_color_hex"] = rgb_to_hex(dominant_rgb)
         self.env["dominant_color_rgb"] = ",".join(str(int(c)) for c in dominant_rgb)
         self.env["palette_colors"] = palette_hex

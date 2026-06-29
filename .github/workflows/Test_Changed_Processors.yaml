@@ -20,7 +20,7 @@ jobs:
     timeout-minutes: 60
     name: Test changed processors
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 2 # OR "2" -> To retrieve the preceding commit.
 

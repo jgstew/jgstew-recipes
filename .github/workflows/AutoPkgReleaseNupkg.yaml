@@ -25,7 +25,7 @@ jobs:
           cd ~
           echo ${{ secrets.GITHUB_TOKEN }} > ".autopkg_gh_token"
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Read Python version
         id: pyver

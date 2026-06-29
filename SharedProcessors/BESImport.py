@@ -50,6 +50,7 @@ class BESImport(Processor):
     }
     output_variables = {
         "bes_id": {"description": "The returned ID of the bigfix content imported."},
+        "bes_title": {"description": "The title parsed from the imported BES content."},
         "bes_import_summary_result": {
             "description": "Description of BigFix import results."
         },

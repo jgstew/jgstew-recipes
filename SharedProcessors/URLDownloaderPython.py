@@ -137,6 +137,9 @@ class URLDownloaderPython(URLDownloader):
             "description": "last-modified header for the downloaded item."
         },
         "etag": {"description": "etag header for the downloaded item."},
+        "download_url": {
+            "description": "The final URL the file was downloaded from (after redirects)."
+        },
         "download_changed": {
             "description": (
                 "Boolean indicating if the download has changed since the "

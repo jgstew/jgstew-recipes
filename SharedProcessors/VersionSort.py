@@ -44,16 +44,19 @@ class VersionSort(Processor):  # pylint: disable=invalid-name
 
     def main(self):
         """Execution starts here."""
+        # Reading input_variables
         # Get `version_array` else `match`
         version_array = self.env.get("version_array", self.env.get("match"))
         sort_descending = bool(self.env.get("sort_descending", False))
 
+        # Running Process
         if not version_array:
             raise ProcessorError("version_array is empty or not provided")
 
         # ascending order using version-aware comparison:
         ascending = sorted(version_array, key=looseversion.LooseVersion)
 
+        # Writing output_variables
         self.env["version_minimum"] = ascending[0]
         self.env["version_maximum"] = ascending[-1]
         self.env["version_array_sorted"] = (
